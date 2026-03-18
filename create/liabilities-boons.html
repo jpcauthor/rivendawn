@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Liabilities &amp; Boons — Rivendawn</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root {
+  --header-height: 72px;
+  --footer-height: 72px;
+  --content-max-width: 960px;
+  --page-max-width: 1400px;
+  --ink-color: #3a2a1a;
+  --accent: #fff1d6;
+  --nav-color: #f2e3c6;
+  --nav-shadow: rgba(0,0,0,0.85);
+  --footer-bg: rgba(0,0,0,0.88);
+  --ink:        #2a1c0e;
+  --ink-mid:    #4a2e06;
+  --ink-dim:    #7a5a30;
+  --ink-faint:  #a08050;
+  --gold:       #c8922a;
+  --gold-light: #d4a84a;
+  --gold-pale:  #e8c87a;
+  --border:     rgba(74,46,6,0.20);
+  --border-strong: rgba(74,46,6,0.40);
+  --surface:    rgba(255,248,230,0.80);
+  --danger:     #8b2a2a;
+  --danger-bg:  rgba(139,42,42,0.08);
+  --boon-color: #2a5a3a;
+  --boon-bg:    rgba(42,90,58,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--ink);
+  min-height: 100dvh;
+  background: #000;
+  line-height: 1.75;
+  font-size: 1.08rem;
+}
+
+.page-wrapper {
+  min-height: 100dvh;
+  display: flex; flex-direction: column;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  background-color: #000;
+  background-image: url('../images/bg.jpg');
+  background-size: contain;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  box-shadow: 0 0 80px rgba(0,0,0,0.85);
+}
+
+/* ── Header ── */
+header {
+  position: fixed; top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--page-max-width));
+  height: var(--header-height);
+  background-image: url('../images/header.png');
+  background-size: contain; background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1000;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+}
+
+nav {
+  max-width: var(--content-max-width);
+  width: 100%; height: 100%;
+  margin: 0 auto;
+  display: flex; align-items: center; justify-content: center;
+  gap: 2rem; padding: 0 1.5rem;
+}
+
+nav a {
+  color: var(--nav-color); text-decoration: none;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 1.25rem; letter-spacing: 0.14em; text-transform: uppercase;
+  transition: all .25s ease;
+  text-shadow: 0 1px 2px var(--nav-shadow);
+}
+nav a:hover { color: var(--accent); }
+
+/* ── Main ── */
+main {
+  flex: 1;
+  margin-top: var(--header-height);
+  padding: 3.25rem 1rem calc(var(--footer-height) + 3rem);
+  display: flex; justify-content: center;
+}
+
+.content-container {
+  max-width: var(--content-max-width);
+  width: 100%; padding: 40px 60px 120px;
+  margin: 0 auto; border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  background-image: url('../images/content-scroll-bg.png');
+  background-repeat: repeat-y;
+  background-position: top center;
+  background-size: 100% auto;
+}
+
+/* ── Page Title ── */
+.page-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--ink-mid); text-align: center;
+  letter-spacing: .08em; margin-bottom: 8px;
+}
+
+.title-rule {
+  display: flex; align-items: center;
+  gap: 16px; justify-content: center;
+  margin-bottom: 0.75rem;
+}
+.title-rule::before, .title-rule::after {
+  content: ''; flex: 1; max-width: 200px; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(74,46,6,0.35));
+}
+.title-rule::after {
+  background: linear-gradient(to left, transparent, rgba(74,46,6,0.35));
+}
+.title-rule span {
+  color: var(--ink-faint); font-size: .75rem;
+  letter-spacing: .28em; text-transform: uppercase;
+  font-family: 'Cinzel', serif;
+}
+
+/* ── Intro block ── */
+.intro-block {
+  background: rgba(200,146,42,0.06);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+  font-style: italic;
+  font-size: 1.02rem;
+  color: var(--ink-dim);
+  line-height: 1.75;
+}
+
+.intro-block strong { font-style: normal; color: var(--ink-mid); }
+
+/* ── Tracker ── */
+.tracker {
+  position: sticky;
+  top: calc(var(--header-height) + 0.5rem);
+  z-index: 200;
+  background: linear-gradient(180deg, #f8eed8, #f2e4c4);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  box-shadow: 0 4px 16px rgba(42,28,14,0.18);
+  flex-wrap: wrap;
+}
+
+.tracker-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.2rem;
+}
+
+.tracker-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+}
+
+.tracker-val {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.6rem;
+  color: var(--ink-mid);
+  line-height: 1;
+}
+
+.tracker-val.danger { color: var(--danger); }
+.tracker-val.boon   { color: var(--boon-color); }
+
+.tracker-divider {
+  width: 1px; height: 36px;
+  background: var(--border-strong);
+}
+
+.tracker-bar-wrap {
+  flex: 1; min-width: 160px;
+}
+
+.tracker-bar-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.52rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.3rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tracker-bar-track {
+  height: 6px;
+  background: rgba(74,46,6,0.12);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 0.35rem;
+}
+
+.tracker-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s ease, background 0.3s ease;
+  background: var(--danger);
+  width: 0%;
+}
+
+.tracker-bar-fill.boon {
+  background: var(--boon-color);
+}
+
+.tracker-reset {
+  appearance: none; border: none;
+  background: transparent;
+  font-family: 'Cinzel', serif;
+  font-size: 0.52rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  transition: all 0.18s ease;
+}
+.tracker-reset:hover {
+  color: var(--ink-mid);
+  border-color: var(--border-strong);
+  background: rgba(74,46,6,0.05);
+}
+
+.tracker-note {
+  width: 100%;
+  font-family: 'Crimson Text', serif;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--ink-faint);
+  text-align: center;
+}
+
+/* ── Section Label ── */
+.section-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4px;
+  margin: 2rem 0 1rem;
+}
+
+/* ── Rules summary ── */
+.rules-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.rule-pill {
+  background: rgba(255,248,230,0.65);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  font-family: 'Crimson Text', serif;
+  font-size: 0.92rem;
+  color: var(--ink-dim);
+  line-height: 1.55;
+}
+
+.rule-pill strong {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  margin-bottom: 0.25rem;
+}
+
+/* ── Category header ── */
+.cat-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.5rem 0 0.75rem;
+}
+
+.cat-header span {
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+.cat-header::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ── Liability card ── */
+.liability-card {
+  background: rgba(255,248,230,0.60);
+  border: 1px solid var(--border);
+  border-left: 4px solid rgba(139,42,42,0.5);
+  border-radius: 0 8px 8px 0;
+  margin-bottom: 0.65rem;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease;
+}
+
+.liability-card:hover { box-shadow: 0 4px 14px rgba(42,28,14,0.10); }
+
+.liability-card.selected {
+  border-left-color: var(--danger);
+  background: rgba(139,42,42,0.05);
+  box-shadow: 0 0 0 1px rgba(139,42,42,0.2), 0 4px 14px rgba(42,28,14,0.10);
+}
+
+.liability-header {
+  display: flex;
+  align-items: center;
+  padding: 0.85rem 1rem 0.75rem;
+  cursor: pointer;
+  user-select: none;
+  gap: 0.75rem;
+}
+
+.liability-num {
+  font-family: 'Cinzel', serif;
+  font-size: 0.52rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.1em;
+  min-width: 24px;
+  flex-shrink: 0;
+}
+
+.liability-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.82rem;
+  color: var(--ink-mid);
+  letter-spacing: 0.04em;
+  flex: 1;
+}
+
+.liability-def {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+  flex: 2;
+}
+
+.liability-chevron {
+  font-size: 0.6rem;
+  color: var(--ink-faint);
+  transition: transform 0.22s ease;
+  flex-shrink: 0;
+}
+
+.liability-card.open .liability-chevron { transform: rotate(180deg); }
+
+/* Severity selector */
+.liability-body {
+  display: none;
+  padding: 0 1rem 1rem 1rem;
+  border-top: 1px solid rgba(74,46,6,0.08);
+  animation: bodyIn 0.2s ease both;
+}
+
+.liability-card.open .liability-body { display: block; }
+
+@keyframes bodyIn {
+  from { opacity:0; transform:translateY(-4px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.severity-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.52rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0.75rem 0 0.5rem;
+}
+
+.severity-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.sev-btn {
+  appearance: none; border: none;
+  background: rgba(255,248,230,0.7);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.4rem 0.2rem;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.sev-btn:hover {
+  background: rgba(139,42,42,0.07);
+  border-color: rgba(139,42,42,0.3);
+}
+
+.sev-btn.active {
+  background: rgba(139,42,42,0.12);
+  border-color: var(--danger);
+  box-shadow: 0 0 0 1px rgba(139,42,42,0.15);
+}
+
+.sev-num {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.85rem;
+  color: var(--ink-mid);
+  line-height: 1;
+}
+
+.sev-btn.active .sev-num { color: var(--danger); }
+
+.sev-desc {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.62rem;
+  color: var(--ink-faint);
+  line-height: 1.3;
+  text-align: center;
+}
+
+.sev-btn.active .sev-desc { color: var(--danger); }
+
+.sev-none {
+  appearance: none; border: none;
+  background: transparent;
+  font-family: 'Cinzel', serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  transition: all 0.18s ease;
+}
+.sev-none:hover {
+  color: var(--danger);
+  border-color: rgba(139,42,42,0.25);
+}
+
+/* ── Boon card ── */
+.boon-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-bottom: 0.5rem;
+}
+
+.boon-card {
+  background: rgba(255,248,230,0.60);
+  border: 1px solid var(--border);
+  border-left: 4px solid rgba(42,90,58,0.4);
+  border-radius: 0 8px 8px 0;
+  padding: 0.9rem 1rem 0.85rem;
+  position: relative;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  cursor: default;
+}
+
+.boon-card:hover {
+  box-shadow: 0 4px 14px rgba(42,28,14,0.10);
+  transform: translateY(-1px);
+}
+
+.boon-card.affordable { border-left-color: var(--boon-color); }
+.boon-card.too-costly {
+  opacity: 0.55;
+  border-left-color: rgba(74,46,6,0.2);
+}
+
+.boon-cost-badge {
+  position: absolute;
+  top: 0.7rem; right: 0.75rem;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.82rem;
+  color: var(--boon-color);
+  line-height: 1;
+}
+
+.boon-card.too-costly .boon-cost-badge { color: var(--ink-faint); }
+
+.boon-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.78rem;
+  color: var(--ink-mid);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.2rem;
+  padding-right: 2rem;
+}
+
+.boon-category {
+  font-family: 'Cinzel', serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.4rem;
+}
+
+.boon-desc {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.88rem;
+  color: var(--ink-dim);
+  line-height: 1.55;
+}
+
+.boon-req {
+  display: inline-block;
+  margin-top: 0.4rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.48rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--danger);
+  background: var(--danger-bg);
+  border: 1px solid rgba(139,42,42,0.2);
+  border-radius: 3px;
+  padding: 0.15rem 0.45rem;
+}
+
+.boon-card.full { grid-column: 1 / -1; }
+
+/* ── Callout ── */
+.callout {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--ink-mid);
+  padding: 0.85rem 1.1rem;
+  margin: 1.25rem 0;
+  background: rgba(74,46,6,0.04);
+  font-size: 0.92rem;
+  border-radius: 0 4px 4px 0;
+  color: var(--ink-dim);
+  line-height: 1.65;
+}
+.callout strong { color: var(--ink-mid); }
+
+/* ── Footer ── */
+footer {
+  position: fixed; bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--page-max-width));
+  height: var(--footer-height);
+  background: var(--footer-bg);
+  color: #ccc;
+  display: flex; align-items: center;
+  justify-content: center; text-align: center;
+  padding: 0 1rem; font-size: .95rem;
+  border-top: 1px solid #444; z-index: 1000;
+  font-family: 'Crimson Text', serif;
+}
+footer a { color: #d4a373; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* ── Responsive ── */
+@media (max-width: 680px) {
+  .content-container { padding: 28px 20px 100px; }
+  .rules-grid { grid-template-columns: 1fr; }
+  .boon-grid { grid-template-columns: 1fr; }
+  .severity-grid { grid-template-columns: repeat(3, 1fr); }
+  .liability-def { display: none; }
+  .tracker { top: calc(var(--header-height) + 0.25rem); }
+}
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+
+<header>
+  <nav>
+    <a href="geography.html">GEOGRAPHY</a>
+    <a href="lore.html">LORE</a>
+    <a href="rules.html">RULES</a>
+    <a href="create.html">CREATE</a>
+    <a href="tables.html">TABLES</a>
+  </nav>
+</header>
+
+<main>
+<div class="content-container">
+
+  <h1 class="page-title">Liabilities &amp; Boons</h1>
+  <div class="title-rule"><span>The Weight of a Life</span></div>
+
+  <div class="intro-block">
+    No soul walks the Song untouched. Every life in Rivendawn is shaped by pressures both visible and unseen — history, circumstance, memory, blessing, loss. <strong>Liabilities</strong> are the burdens that complicate your every step. <strong>Boons</strong> are the gifts that set you apart. Together, they define not just what your character can do — but what they must overcome, and why their story matters.
+  </div>
+
+  <!-- ── TRACKER ── -->
+  <div class="tracker" id="tracker">
+    <div class="tracker-group">
+      <div class="tracker-label">Liability Points</div>
+      <div class="tracker-val danger" id="liabilityTotal">0</div>
+    </div>
+    <div class="tracker-divider"></div>
+    <div class="tracker-bar-wrap">
+      <div class="tracker-bar-label">
+        <span>Liability Pool</span>
+        <span id="liabilityBarLabel">0 / 6</span>
+      </div>
+      <div class="tracker-bar-track">
+        <div class="tracker-bar-fill" id="liabilityBar"></div>
+      </div>
+      <div class="tracker-bar-label">
+        <span>Boon Points Available</span>
+        <span id="boonBarLabel">0 / 6</span>
+      </div>
+      <div class="tracker-bar-track">
+        <div class="tracker-bar-fill boon" id="boonBar"></div>
+      </div>
+    </div>
+    <div class="tracker-divider"></div>
+    <div class="tracker-group">
+      <div class="tracker-label">Boon Points</div>
+      <div class="tracker-val boon" id="boonTotal">0</div>
+    </div>
+    <div class="tracker-note" id="trackerNote">Select Liabilities below to earn Boon Points. Cap: 6.</div>
+    <button class="tracker-reset" onclick="resetAll()">Reset</button>
+  </div>
+
+  <!-- ── RULES ── -->
+  <p class="section-label">How It Works</p>
+  <div class="rules-grid">
+    <div class="rule-pill">
+      <strong>The Cap</strong>
+      You may take up to <strong>6 Severity Points</strong> of Liabilities total. This is an absolute cap.
+    </div>
+    <div class="rule-pill">
+      <strong>The Conversion</strong>
+      Each Liability Point converts <strong>1:1 into Boon Points</strong>. 6 Liability Points = 6 Boon Points.
+    </div>
+    <div class="rule-pill">
+      <strong>Spend or Lose</strong>
+      Boon Points must be spent during character creation. <strong>Unspent points are lost</strong> when creation ends.
+    </div>
+    <div class="rule-pill">
+      <strong>Permanent</strong>
+      Once creation is complete, selections are <strong>fixed</strong>. Liabilities cannot be bought off mechanically — only resolved through story.
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>The Watcher's Note:</strong> The Watcher is a storyteller. When you hand them the ammunition to complicate your group's life — that part is on you. Choose carefully. And choose boldly.
+  </div>
+
+  <!-- ════════════════════════════════════
+       LIABILITIES
+  ════════════════════════════════════ -->
+  <p class="section-label">Liabilities — The Risks</p>
+  <p style="font-family:'Crimson Text',serif; font-size:0.95rem; color:#7a5a30; font-style:italic; margin-bottom:1.25rem;">Select a Liability and choose its Severity (1–6). Each point earned funds one Boon Point.</p>
+
+  <!-- Social / Legal -->
+  <div class="cat-header"><span>Social &amp; Legal</span></div>
+
+  <!-- Wanted -->
+  <div class="liability-card" id="l-wanted">
+    <div class="liability-header" onclick="toggleCard('l-wanted')">
+      <span class="liability-num">01</span>
+      <span class="liability-name">Wanted</span>
+      <span class="liability-def">Authorities seek your capture for real or alleged crimes.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-wanted',1)"><span class="sev-num">1</span><span class="sev-desc">Minor Warrant</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-wanted',2)"><span class="sev-num">2</span><span class="sev-desc">Local Pursuit</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-wanted',3)"><span class="sev-num">3</span><span class="sev-desc">Regional Manhunt</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-wanted',4)"><span class="sev-num">4</span><span class="sev-desc">Inter-City Coordination</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-wanted',5)"><span class="sev-num">5</span><span class="sev-desc">Elite Trackers</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-wanted',6)"><span class="sev-num">6</span><span class="sev-desc">Existential Threat Status</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-wanted',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Persona Non-Grata -->
+  <div class="liability-card" id="l-png">
+    <div class="liability-header" onclick="toggleCard('l-png')">
+      <span class="liability-num">02</span>
+      <span class="liability-name">Persona Non-Grata</span>
+      <span class="liability-def">Unwelcome and actively rejected by a specific community or polity.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-png',1)"><span class="sev-num">1</span><span class="sev-desc">Socially Unwelcome</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-png',2)"><span class="sev-num">2</span><span class="sev-desc">Barred from Services</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-png',3)"><span class="sev-num">3</span><span class="sev-desc">Denied Entry</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-png',4)"><span class="sev-num">4</span><span class="sev-desc">Actively Expelled</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-png',5)"><span class="sev-num">5</span><span class="sev-desc">Kill-on-Sight in Region</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-png',6)"><span class="sev-num">6</span><span class="sev-desc">Bounty Enforced by Law</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-png',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Infamy -->
+  <div class="liability-card" id="l-infamy">
+    <div class="liability-header" onclick="toggleCard('l-infamy')">
+      <span class="liability-num">03</span>
+      <span class="liability-name">Infamy</span>
+      <span class="liability-def">Widely known for immoral or reprehensible acts.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-infamy',1)"><span class="sev-num">1</span><span class="sev-desc">Local Rumors</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-infamy',2)"><span class="sev-num">2</span><span class="sev-desc">Bad Reputation</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-infamy',3)"><span class="sev-num">3</span><span class="sev-desc">Community Distrust</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-infamy',4)"><span class="sev-num">4</span><span class="sev-desc">Widespread Condemnation</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-infamy',5)"><span class="sev-num">5</span><span class="sev-desc">Symbol of Wrongdoing</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-infamy',6)"><span class="sev-num">6</span><span class="sev-desc">Name Incites Violence</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-infamy',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Outcast -->
+  <div class="liability-card" id="l-outcast">
+    <div class="liability-header" onclick="toggleCard('l-outcast')">
+      <span class="liability-num">04</span>
+      <span class="liability-name">Outcast</span>
+      <span class="liability-def">Socially rejected without formal decree.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-outcast',1)"><span class="sev-num">1</span><span class="sev-desc">Subtle Exclusion</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-outcast',2)"><span class="sev-num">2</span><span class="sev-desc">Open Avoidance</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-outcast',3)"><span class="sev-num">3</span><span class="sev-desc">Social Penalties</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-outcast',4)"><span class="sev-num">4</span><span class="sev-desc">Collective Rejection</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-outcast',5)"><span class="sev-num">5</span><span class="sev-desc">Hostile Treatment</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-outcast',6)"><span class="sev-num">6</span><span class="sev-desc">Violent Exclusion</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-outcast',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Excommunicated -->
+  <div class="liability-card" id="l-excomm">
+    <div class="liability-header" onclick="toggleCard('l-excomm')">
+      <span class="liability-num">05</span>
+      <span class="liability-name">Excommunicated</span>
+      <span class="liability-def">Formally cast out by a religious, cultural, or ideological body.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-excomm',1)"><span class="sev-num">1</span><span class="sev-desc">Loss of Standing</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-excomm',2)"><span class="sev-num">2</span><span class="sev-desc">Denied Rites</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-excomm',3)"><span class="sev-num">3</span><span class="sev-desc">Public Condemnation</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-excomm',4)"><span class="sev-num">4</span><span class="sev-desc">Social Enforcement</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-excomm',5)"><span class="sev-num">5</span><span class="sev-desc">Doctrinal Enemy</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-excomm',6)"><span class="sev-num">6</span><span class="sev-desc">Sacred Target</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-excomm',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Notoriety -->
+  <div class="liability-card" id="l-notoriety">
+    <div class="liability-header" onclick="toggleCard('l-notoriety')">
+      <span class="liability-num">06</span>
+      <span class="liability-name">Notoriety</span>
+      <span class="liability-def">Widely recognized, making anonymity difficult.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-notoriety',1)"><span class="sev-num">1</span><span class="sev-desc">Recognized Locally</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-notoriety',2)"><span class="sev-num">2</span><span class="sev-desc">Known in Circles</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-notoriety',3)"><span class="sev-num">3</span><span class="sev-desc">Identifiable on Sight</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-notoriety',4)"><span class="sev-num">4</span><span class="sev-desc">Public Figure</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-notoriety',5)"><span class="sev-num">5</span><span class="sev-desc">Constant Attention</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-notoriety',6)"><span class="sev-num">6</span><span class="sev-desc">Mythic Visibility</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-notoriety',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Factions / Ties -->
+  <div class="cat-header"><span>Factions &amp; Ties</span></div>
+
+  <!-- Enemy -->
+  <div class="liability-card" id="l-enemy">
+    <div class="liability-header" onclick="toggleCard('l-enemy')">
+      <span class="liability-num">07</span>
+      <span class="liability-name">Enemy</span>
+      <span class="liability-def">A specific individual actively seeks to harm, ruin, or eliminate you.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-enemy',1)"><span class="sev-num">1</span><span class="sev-desc">Petty Grudge</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-enemy',2)"><span class="sev-num">2</span><span class="sev-desc">Local Adversary</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-enemy',3)"><span class="sev-num">3</span><span class="sev-desc">Connected Nemesis</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-enemy',4)"><span class="sev-num">4</span><span class="sev-desc">Unknown but Capable</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-enemy',5)"><span class="sev-num">5</span><span class="sev-desc">Regional-Level Foe</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-enemy',6)"><span class="sev-num">6</span><span class="sev-desc">Major Power Fixated</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-enemy',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Debt -->
+  <div class="liability-card" id="l-debt">
+    <div class="liability-header" onclick="toggleCard('l-debt')">
+      <span class="liability-num">08</span>
+      <span class="liability-name">Debt</span>
+      <span class="liability-def">You owe an obligation enforceable by coercion or consequence.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-debt',1)"><span class="sev-num">1</span><span class="sev-desc">Small Unpaid Debt</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-debt',2)"><span class="sev-num">2</span><span class="sev-desc">Persistent Creditor</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-debt',3)"><span class="sev-num">3</span><span class="sev-desc">Dangerous Lender</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-debt',4)"><span class="sev-num">4</span><span class="sev-desc">Enforced Repayment</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-debt',5)"><span class="sev-num">5</span><span class="sev-desc">Collateral is Freedom</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-debt',6)"><span class="sev-num">6</span><span class="sev-desc">Debt Defines Life</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-debt',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Bound Service -->
+  <div class="liability-card" id="l-bound">
+    <div class="liability-header" onclick="toggleCard('l-bound')">
+      <span class="liability-num">09</span>
+      <span class="liability-name">Bound Service</span>
+      <span class="liability-def">You are compelled to serve a specific authority.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-bound',1)"><span class="sev-num">1</span><span class="sev-desc">Limited Term</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-bound',2)"><span class="sev-num">2</span><span class="sev-desc">Defined Duties</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-bound',3)"><span class="sev-num">3</span><span class="sev-desc">Restricted Freedom</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-bound',4)"><span class="sev-num">4</span><span class="sev-desc">Punitive Enforcement</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-bound',5)"><span class="sev-num">5</span><span class="sev-desc">Ownership-Like Control</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-bound',6)"><span class="sev-num">6</span><span class="sev-desc">Total Subjugation</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-bound',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Blood Feud -->
+  <div class="liability-card" id="l-bloodfeud">
+    <div class="liability-header" onclick="toggleCard('l-bloodfeud')">
+      <span class="liability-num">10</span>
+      <span class="liability-name">Blood Feud</span>
+      <span class="liability-def">A lineage or group is bound to seek vengeance against you.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-bloodfeud',1)"><span class="sev-num">1</span><span class="sev-desc">Personal Vendetta</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-bloodfeud',2)"><span class="sev-num">2</span><span class="sev-desc">Family Feud</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-bloodfeud',3)"><span class="sev-num">3</span><span class="sev-desc">Clan Hostility</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-bloodfeud',4)"><span class="sev-num">4</span><span class="sev-desc">Generational Hatred</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-bloodfeud',5)"><span class="sev-num">5</span><span class="sev-desc">Ritualized Violence</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-bloodfeud',6)"><span class="sev-num">6</span><span class="sev-desc">Annihilation Mandate</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-bloodfeud',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Hunted -->
+  <div class="liability-card" id="l-hunted">
+    <div class="liability-header" onclick="toggleCard('l-hunted')">
+      <span class="liability-num">11</span>
+      <span class="liability-name">Hunted</span>
+      <span class="liability-def">Skilled agents actively track you.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-hunted',1)"><span class="sev-num">1</span><span class="sev-desc">Amateur Pursuers</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-hunted',2)"><span class="sev-num">2</span><span class="sev-desc">Professionals</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-hunted',3)"><span class="sev-num">3</span><span class="sev-desc">Coordinated Hunters</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-hunted',4)"><span class="sev-num">4</span><span class="sev-desc">Elite Trackers</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-hunted',5)"><span class="sev-num">5</span><span class="sev-desc">Relentless Pursuit</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-hunted',6)"><span class="sev-num">6</span><span class="sev-desc">Specialized Kill Teams</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-hunted',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Blacklisted -->
+  <div class="liability-card" id="l-blacklist">
+    <div class="liability-header" onclick="toggleCard('l-blacklist')">
+      <span class="liability-num">12</span>
+      <span class="liability-name">Blacklisted</span>
+      <span class="liability-def">Denied access to institutions, guilds, or services.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-blacklist',1)"><span class="sev-num">1</span><span class="sev-desc">Single Group Refusal</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-blacklist',2)"><span class="sev-num">2</span><span class="sev-desc">Multiple Denials</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-blacklist',3)"><span class="sev-num">3</span><span class="sev-desc">Industry-Wide Block</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-blacklist',4)"><span class="sev-num">4</span><span class="sev-desc">Institutional Exclusion</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-blacklist',5)"><span class="sev-num">5</span><span class="sev-desc">Coordinated Enforcement</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-blacklist',6)"><span class="sev-num">6</span><span class="sev-desc">Total Economic Isolation</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-blacklist',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Personal / Mental -->
+  <div class="cat-header"><span>Personal &amp; Mental</span></div>
+
+  <!-- Chronic Injury -->
+  <div class="liability-card" id="l-injury">
+    <div class="liability-header" onclick="toggleCard('l-injury')">
+      <span class="liability-num">13</span>
+      <span class="liability-name">Chronic Injury</span>
+      <span class="liability-def">A permanent physical impairment limits your capability.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-injury',1)"><span class="sev-num">1</span><span class="sev-desc">Lingering Pain</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-injury',2)"><span class="sev-num">2</span><span class="sev-desc">Reduced Endurance</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-injury',3)"><span class="sev-num">3</span><span class="sev-desc">Impaired Function</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-injury',4)"><span class="sev-num">4</span><span class="sev-desc">Major Limitation</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-injury',5)"><span class="sev-num">5</span><span class="sev-desc">Constant Management</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-injury',6)"><span class="sev-num">6</span><span class="sev-desc">Crippling Condition</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-injury',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Addiction -->
+  <div class="liability-card" id="l-addiction">
+    <div class="liability-header" onclick="toggleCard('l-addiction')">
+      <span class="liability-num">14</span>
+      <span class="liability-name">Addiction</span>
+      <span class="liability-def">Dependence on a specific substance or behavior.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-addiction',1)"><span class="sev-num">1</span><span class="sev-desc">Habitual Use</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-addiction',2)"><span class="sev-num">2</span><span class="sev-desc">Withdrawal Penalties</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-addiction',3)"><span class="sev-num">3</span><span class="sev-desc">Functional Impairment</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-addiction',4)"><span class="sev-num">4</span><span class="sev-desc">Social Consequences</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-addiction',5)"><span class="sev-num">5</span><span class="sev-desc">Dangerous Dependence</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-addiction',6)"><span class="sev-num">6</span><span class="sev-desc">Life-Controlling Need</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-addiction',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Phobia -->
+  <div class="liability-card" id="l-phobia">
+    <div class="liability-header" onclick="toggleCard('l-phobia')">
+      <span class="liability-num">15</span>
+      <span class="liability-name">Phobia</span>
+      <span class="liability-def">An irrational fear that overrides reason.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-phobia',1)"><span class="sev-num">1</span><span class="sev-desc">Discomfort</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-phobia',2)"><span class="sev-num">2</span><span class="sev-desc">Avoidance</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-phobia',3)"><span class="sev-num">3</span><span class="sev-desc">Panic Response</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-phobia',4)"><span class="sev-num">4</span><span class="sev-desc">Paralysis</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-phobia',5)"><span class="sev-num">5</span><span class="sev-desc">Triggered Breakdown</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-phobia',6)"><span class="sev-num">6</span><span class="sev-desc">Incapacitating Terror</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-phobia',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Obsession -->
+  <div class="liability-card" id="l-obsession">
+    <div class="liability-header" onclick="toggleCard('l-obsession')">
+      <span class="liability-num">16</span>
+      <span class="liability-name">Obsession</span>
+      <span class="liability-def">A fixation that overrides all other priorities.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-obsession',1)"><span class="sev-num">1</span><span class="sev-desc">Persistent Thoughts</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-obsession',2)"><span class="sev-num">2</span><span class="sev-desc">Compulsive Behavior</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-obsession',3)"><span class="sev-num">3</span><span class="sev-desc">Neglect of Duties</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-obsession',4)"><span class="sev-num">4</span><span class="sev-desc">Self-Destructive Focus</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-obsession',5)"><span class="sev-num">5</span><span class="sev-desc">Alienation</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-obsession',6)"><span class="sev-num">6</span><span class="sev-desc">Identity Consumed</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-obsession',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Paranoia -->
+  <div class="liability-card" id="l-paranoia">
+    <div class="liability-header" onclick="toggleCard('l-paranoia')">
+      <span class="liability-num">17</span>
+      <span class="liability-name">Paranoia</span>
+      <span class="liability-def">Distrust that distorts perception.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-paranoia',1)"><span class="sev-num">1</span><span class="sev-desc">Suspicion</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-paranoia',2)"><span class="sev-num">2</span><span class="sev-desc">Hypervigilance</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-paranoia',3)"><span class="sev-num">3</span><span class="sev-desc">Misinterpretation</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-paranoia',4)"><span class="sev-num">4</span><span class="sev-desc">Isolation</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-paranoia',5)"><span class="sev-num">5</span><span class="sev-desc">Delusional Beliefs</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-paranoia',6)"><span class="sev-num">6</span><span class="sev-desc">Reality Fracture</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-paranoia',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Illness -->
+  <div class="liability-card" id="l-illness">
+    <div class="liability-header" onclick="toggleCard('l-illness')">
+      <span class="liability-num">18</span>
+      <span class="liability-name">Illness</span>
+      <span class="liability-def">A recurring or persistent medical condition.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-illness',1)"><span class="sev-num">1</span><span class="sev-desc">Mild Symptoms</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-illness',2)"><span class="sev-num">2</span><span class="sev-desc">Periodic Debilitation</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-illness',3)"><span class="sev-num">3</span><span class="sev-desc">Frequent Episodes</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-illness',4)"><span class="sev-num">4</span><span class="sev-desc">Severe Flare-Ups</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-illness',5)"><span class="sev-num">5</span><span class="sev-desc">Life-Altering</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-illness',6)"><span class="sev-num">6</span><span class="sev-desc">Terminal or Consuming</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-illness',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Circumstantial -->
+  <div class="cat-header"><span>Circumstantial</span></div>
+
+  <!-- Poverty -->
+  <div class="liability-card" id="l-poverty">
+    <div class="liability-header" onclick="toggleCard('l-poverty')">
+      <span class="liability-num">19</span>
+      <span class="liability-name">Poverty</span>
+      <span class="liability-def">You lack material resources and must rely on others.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-poverty',1)"><span class="sev-num">1</span><span class="sev-desc">Chronically Poor</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-poverty',2)"><span class="sev-num">2</span><span class="sev-desc">No Savings</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-poverty',3)"><span class="sev-num">3</span><span class="sev-desc">Dependent on Charity</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-poverty',4)"><span class="sev-num">4</span><span class="sev-desc">Vowed Poverty</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-poverty',5)"><span class="sev-num">5</span><span class="sev-desc">Destitute &amp; Conspicuous</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-poverty',6)"><span class="sev-num">6</span><span class="sev-desc">Survival on Others</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-poverty',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Exiled -->
+  <div class="liability-card" id="l-exiled">
+    <div class="liability-header" onclick="toggleCard('l-exiled')">
+      <span class="liability-num">20</span>
+      <span class="liability-name">Exiled</span>
+      <span class="liability-def">Forcibly removed from a homeland or authority.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-exiled',1)"><span class="sev-num">1</span><span class="sev-desc">Informal Exile</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-exiled',2)"><span class="sev-num">2</span><span class="sev-desc">Legal Banishment</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-exiled',3)"><span class="sev-num">3</span><span class="sev-desc">Asset Seizure</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-exiled',4)"><span class="sev-num">4</span><span class="sev-desc">Enforced Return Penalty</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-exiled',5)"><span class="sev-num">5</span><span class="sev-desc">Kill-on-Return</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-exiled',6)"><span class="sev-num">6</span><span class="sev-desc">Historical Erasure</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-exiled',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Fugitive -->
+  <div class="liability-card" id="l-fugitive">
+    <div class="liability-header" onclick="toggleCard('l-fugitive')">
+      <span class="liability-num">21</span>
+      <span class="liability-name">Fugitive</span>
+      <span class="liability-def">You are actively evading capture.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-fugitive',1)"><span class="sev-num">1</span><span class="sev-desc">Short-Term Flight</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-fugitive',2)"><span class="sev-num">2</span><span class="sev-desc">False Identities</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-fugitive',3)"><span class="sev-num">3</span><span class="sev-desc">Constant Movement</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-fugitive',4)"><span class="sev-num">4</span><span class="sev-desc">Network Reliance</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-fugitive',5)"><span class="sev-num">5</span><span class="sev-desc">Life in Hiding</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-fugitive',6)"><span class="sev-num">6</span><span class="sev-desc">No Safe Ground</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-fugitive',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Forbidden Knowledge -->
+  <div class="liability-card" id="l-forbidden">
+    <div class="liability-header" onclick="toggleCard('l-forbidden')">
+      <span class="liability-num">22</span>
+      <span class="liability-name">Forbidden Knowledge</span>
+      <span class="liability-def">You possess information others will kill to suppress.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-forbidden',1)"><span class="sev-num">1</span><span class="sev-desc">Sensitive Secret</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-forbidden',2)"><span class="sev-num">2</span><span class="sev-desc">Dangerous Insight</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-forbidden',3)"><span class="sev-num">3</span><span class="sev-desc">Targeted for Silence</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-forbidden',4)"><span class="sev-num">4</span><span class="sev-desc">Multiple Factions</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-forbidden',5)"><span class="sev-num">5</span><span class="sev-desc">Constant Threat</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-forbidden',6)"><span class="sev-num">6</span><span class="sev-desc">World-Altering Truth</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-forbidden',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- Oathbreaker -->
+  <div class="liability-card" id="l-oath">
+    <div class="liability-header" onclick="toggleCard('l-oath')">
+      <span class="liability-num">23</span>
+      <span class="liability-name">Oathbreaker</span>
+      <span class="liability-def">You are known to have broken a binding oath.</span>
+      <span class="liability-chevron">▼</span>
+    </div>
+    <div class="liability-body">
+      <div class="severity-label">Choose Severity</div>
+      <div class="severity-grid">
+        <button class="sev-btn" onclick="setSeverity('l-oath',1)"><span class="sev-num">1</span><span class="sev-desc">Moral Stain</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-oath',2)"><span class="sev-num">2</span><span class="sev-desc">Social Consequences</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-oath',3)"><span class="sev-num">3</span><span class="sev-desc">Loss of Credibility</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-oath',4)"><span class="sev-num">4</span><span class="sev-desc">Institutional Punishment</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-oath',5)"><span class="sev-num">5</span><span class="sev-desc">Supernatural Backlash</span></button>
+        <button class="sev-btn" onclick="setSeverity('l-oath',6)"><span class="sev-num">6</span><span class="sev-desc">Permanent Mark</span></button>
+      </div>
+      <button class="sev-none" onclick="setSeverity('l-oath',0)">✕ Remove</button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════
+       BOONS
+  ════════════════════════════════════ -->
+  <p class="section-label" style="margin-top:2.5rem;">Boons — The Rewards</p>
+  <p style="font-family:'Crimson Text',serif; font-size:0.95rem; color:#7a5a30; font-style:italic; margin-bottom:1.25rem;">Spend your Boon Points below. Boons with prerequisites require the listed Liability. Costs shown in the top-right of each card.</p>
+
+  <!-- Combat -->
+  <div class="cat-header"><span>Combat</span></div>
+  <div class="boon-grid">
+    <div class="boon-card" id="b-dualwield">
+      <span class="boon-cost-badge">3</span>
+      <p class="boon-name">Dual Wield</p>
+      <p class="boon-category">Combat</p>
+      <p class="boon-desc">You may effectively fight with two weapons simultaneously.</p>
+      <span class="boon-req">Mutually exclusive with Double Attack</span>
+    </div>
+    <div class="boon-card" id="b-doubleattack">
+      <span class="boon-cost-badge">3</span>
+      <p class="boon-name">Double Attack</p>
+      <p class="boon-category">Combat</p>
+      <p class="boon-desc">You may make two attacks with a single weapon in one action.</p>
+      <span class="boon-req">Mutually exclusive with Dual Wield</span>
+    </div>
+  </div>
+
+  <!-- Resources -->
+  <div class="cat-header"><span>Resources &amp; Equipment</span></div>
+  <div class="boon-grid">
+    <div class="boon-card" id="b-wealth">
+      <span class="boon-cost-badge">4</span>
+      <p class="boon-name">Wealth</p>
+      <p class="boon-category">Resources</p>
+      <p class="boon-desc">You begin play with significant financial resources and access tied to wealth. Requires Wealth 3 base.</p>
+    </div>
+    <div class="boon-card" id="b-artifact">
+      <span class="boon-cost-badge">5</span>
+      <p class="boon-name">Artifact Weapon</p>
+      <p class="boon-category">Resources</p>
+      <p class="boon-desc">You possess a rare, powerful weapon of notable origin with properties beyond the ordinary.</p>
+      <span class="boon-req">Requires: Enemy Liability</span>
+    </div>
+    <div class="boon-card" id="b-elitegear">
+      <span class="boon-cost-badge">4</span>
+      <p class="boon-name">Elite Gear Access</p>
+      <p class="boon-category">Resources</p>
+      <p class="boon-desc">You begin play with high-quality equipment unavailable to most characters.</p>
+    </div>
+    <div class="boon-card" id="b-cache">
+      <span class="boon-cost-badge">3</span>
+      <p class="boon-name">Emergency Cache</p>
+      <p class="boon-category">Resources</p>
+      <p class="boon-desc">You have access to a hidden reserve of gear, currency, or materials — somewhere only you know.</p>
+    </div>
+  </div>
+
+  <!-- Training -->
+  <div class="cat-header"><span>Training &amp; Knowledge</span></div>
+  <div class="boon-grid">
+    <div class="boon-card" id="b-military">
+      <span class="boon-cost-badge">4</span>
+      <p class="boon-name">Military Academy</p>
+      <p class="boon-category">Training</p>
+      <p class="boon-desc">Begin with Tactics 4 instead of 3, plus a unique benefit from your specific academy of origin.</p>
+    </div>
+    <div class="boon-card" id="b-trainer">
+      <span class="boon-cost-badge">3</span>
+      <p class="boon-name">Renowned Trainer</p>
+      <p class="boon-category">Training</p>
+      <p class="boon-desc">You trained under a master. Advancement in one chosen discipline is meaningfully easier.</p>
+    </div>
+    <div class="boon-card" id="b-prepared">
+      <span class="boon-cost-badge">2</span>
+      <p class="boon-name">Prepared Mind</p>
+      <p class="boon-category">Training</p>
+      <p class="boon-desc">You begin play with an additional language, formal doctrine, or specialized knowledge set.</p>
+    </div>
+    <div class="boon-card" id="b-medic">
+      <span class="boon-cost-badge">3</span>
+      <p class="boon-name">Field Medic Training</p>
+      <p class="boon-category">Training</p>
+      <p class="boon-desc">You can stabilize, treat, and manage injuries outside formal medical facilities.</p>
+    </div>
+    <div class="boon-card" id="b-craft">
+      <span class="boon-cost-badge">3</span>
+      <p class="boon-name">Craft Mastery</p>
+      <p class="boon-category">Training</p>
+      <p class="boon-desc">You are highly skilled in one practical craft with significant economic or tactical value.</p>
+    </div>
+    <div class="boon-card" id="b-cultural">
+      <span class="boon-cost-badge">2</span>
+      <p class="boon-name">Cultural Fluency</p>
+      <p class="boon-category">Training</p>
+      <p class="boon-desc">You avoid penalties when operating within unfamiliar cultures or social structures.</p>
+    </div>
+  </div>
+
+  <!-- Social -->
+  <div class="cat-header"><span>Social &amp; Political</span></div>
+  <div class="boon-grid">
+    <div class="boon-card" id="b-benefactor">
+      <span class="boon-cost-badge">5</span>
+      <p class="boon-name">Benevolent Benefactor</p>
+      <p class="boon-category">Social</p>
+      <p class="boon-desc">A powerful individual actively supports and favors you. They may intervene — but on their terms, not yours.</p>
+    </div>
+    <div class="boon-card" id="b-favor">
+      <span class="boon-cost-badge">4</span>
+      <p class="boon-name">Personal Favor</p>
+      <p class="boon-category">Social</p>
+      <p class="boon-desc">You are owed a major favor by a powerful figure. Calling it in is significant — and carries risk.</p>
+    </div>
+    <div class="boon-card" id="b-faction">
+      <span class="boon-cost-badge">4</span>
+      <p class="boon-name">Faction Backing</p>
+      <p class="boon-category">Social</p>
+      <p class="boon-desc">A faction provides you with aid, shelter, or limited resources when needed.</p>
+    </div>
+    <div class="boon-card" id="b-informant">
+      <span class="boon-cost-badge">3</span>
+      <p class="boon-name">Informant Network</p>
+      <p class="boon-category">Social</p>
+      <p class="boon-desc">You can reliably acquire information through established contacts across regions.</p>
+    </div>
+    <div class="boon-card" id="b-legacy">
+      <span class="boon-cost-badge">3</span>
+      <p class="boon-name">Legacy Name</p>
+      <p class="boon-category">Social</p>
+      <p class="boon-desc">Your name carries weight in certain circles — opening doors or silencing opposition.</p>
+    </div>
+    <div class="boon-card" id="b-retinue">
+      <span class="boon-cost-badge">4</span>
+      <p class="boon-name">Household Retinue</p>
+      <p class="boon-category">Social</p>
+      <p class="boon-desc">You maintain a small group of non-combat aides who support logistics and operations.</p>
+    </div>
+  </div>
+
+  <!-- Legal / Mobility -->
+  <div class="cat-header"><span>Legal &amp; Mobility</span></div>
+  <div class="boon-grid">
+    <div class="boon-card" id="b-papers">
+      <span class="boon-cost-badge">2</span>
+      <p class="boon-name">Travel Papers</p>
+      <p class="boon-category">Legal</p>
+      <p class="boon-desc">Legitimate documentation allowing lawful cross-border movement without standard scrutiny.</p>
+    </div>
+    <div class="boon-card" id="b-carry">
+      <span class="boon-cost-badge">2</span>
+      <p class="boon-name">Sanctioned Carry</p>
+      <p class="boon-category">Legal</p>
+      <p class="boon-desc">You are legally permitted to bear restricted arms or equipment in designated territories.</p>
+    </div>
+    <div class="boon-card" id="b-immunity">
+      <span class="boon-cost-badge">5</span>
+      <p class="boon-name">Legal Immunity</p>
+      <p class="boon-category">Legal</p>
+      <p class="boon-desc">Certain authorities cannot easily act against you. Partial protection — not absolute.</p>
+    </div>
+    <div class="boon-card" id="b-witness">
+      <span class="boon-cost-badge">5</span>
+      <p class="boon-name">Witness Protection</p>
+      <p class="boon-category">Legal</p>
+      <p class="boon-desc">A powerful institution will conceal or relocate you if absolutely necessary.</p>
+    </div>
+  </div>
+
+  <!-- Resonance -->
+  <div class="cat-header"><span>Resonance</span></div>
+  <div class="boon-grid">
+    <div class="boon-card" id="b-affinity">
+      <span class="boon-cost-badge">4</span>
+      <p class="boon-name">Resonant Affinity</p>
+      <p class="boon-category">Resonance</p>
+      <p class="boon-desc">You interact with Resonance more efficiently or safely than most practitioners. Effects defined by Calling.</p>
+    </div>
+    <div class="boon-card" id="b-recovery">
+      <span class="boon-cost-badge">4</span>
+      <p class="boon-name">Resonant Recovery</p>
+      <p class="boon-category">Resonance</p>
+      <p class="boon-desc">Your Wellspring recovers faster or more completely under conditions that would leave others depleted.</p>
+    </div>
+  </div>
+
+  <!-- Companions -->
+  <div class="cat-header"><span>Companions</span></div>
+  <div class="boon-grid">
+    <div class="boon-card full" id="b-companion">
+      <span class="boon-cost-badge">3–6</span>
+      <p class="boon-name">Bestial Companion</p>
+      <p class="boon-category">Companions</p>
+      <p class="boon-desc">A trained predator ally accompanies you. Cost determines the companion's power tier: 3 (Minor predator), 4 (Mid-tier), 5 (Major), 6 (Apex). Companions are not expendable — their loss is permanent and narrative.</p>
+    </div>
+  </div>
+
+  <!-- Influence -->
+  <div class="cat-header"><span>Influence &amp; Networks</span></div>
+  <div class="boon-grid">
+    <div class="boon-card" id="b-underworld">
+      <span class="boon-cost-badge">4</span>
+      <p class="boon-name">Underworld Ties</p>
+      <p class="boon-category">Influence</p>
+      <p class="boon-desc">Standing connections within organized crime provide access, protection, or illicit services.</p>
+    </div>
+    <div class="boon-card" id="b-street">
+      <span class="boon-cost-badge">3</span>
+      <p class="boon-name">Street Network</p>
+      <p class="boon-category">Influence</p>
+      <p class="boon-desc">Reliable relationships with locals, fixers, and ground-level contacts across a region.</p>
+    </div>
+    <div class="boon-card" id="b-social">
+      <span class="boon-cost-badge">4</span>
+      <p class="boon-name">Social Capital</p>
+      <p class="boon-category">Influence</p>
+      <p class="boon-desc">Your standing allows you to influence etiquette, access, and outcomes in elite or formal settings.</p>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:2rem;">
+    <strong>Back to Character Creation:</strong> <a href="create.html" style="color:var(--ink-mid); font-style:italic;">← Return to the Character Creation Guide</a>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <div>
+    Email: <a href="mailto:jpcauthor@rivendawn.com">jpcauthor@rivendawn.com</a>
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    © 2026 jpcauthor. All rights reserved.
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    <a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+  </div>
+</footer>
+
+</div>
+
+<script>
+const MAX_LIABILITY = 6;
+const severities = {};
+
+function toggleCard(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+
+function setSeverity(id, val) {
+  const card = document.getElementById(id);
+  const old = severities[id] || 0;
+
+  // Check cap before setting
+  const currentTotal = Object.values(severities).reduce((a,b) => a+b, 0);
+  const newTotal = currentTotal - old + val;
+
+  if (val > 0 && newTotal > MAX_LIABILITY) {
+    flashTracker();
+    return;
+  }
+
+  severities[id] = val;
+
+  // Update button states
+  card.querySelectorAll('.sev-btn').forEach((btn, idx) => {
+    btn.classList.toggle('active', idx + 1 === val);
+  });
+
+  // Update card selected state
+  card.classList.toggle('selected', val > 0);
+
+  updateTracker();
+  updateBoons();
+}
+
+function updateTracker() {
+  const total = Object.values(severities).reduce((a,b) => a+b, 0);
+
+  document.getElementById('liabilityTotal').textContent = total;
+  document.getElementById('boonTotal').textContent = total;
+
+  document.getElementById('liabilityBarLabel').textContent = `${total} / ${MAX_LIABILITY}`;
+  document.getElementById('boonBarLabel').textContent = `${total} / ${MAX_LIABILITY}`;
+
+  const pct = Math.min((total / MAX_LIABILITY) * 100, 100);
+  document.getElementById('liabilityBar').style.width = pct + '%';
+  document.getElementById('boonBar').style.width = pct + '%';
+
+  const note = document.getElementById('trackerNote');
+  if (total === 0) {
+    note.textContent = 'Select Liabilities below to earn Boon Points. Cap: 6.';
+  } else if (total < MAX_LIABILITY) {
+    note.textContent = `${MAX_LIABILITY - total} point${MAX_LIABILITY - total !== 1 ? 's' : ''} remaining. Earn more by adding Liabilities.`;
+  } else {
+    note.textContent = `Maximum reached. You have ${total} Boon Points to spend.`;
+  }
+}
+
+function updateBoons() {
+  const available = Object.values(severities).reduce((a,b) => a+b, 0);
+  document.querySelectorAll('.boon-card').forEach(card => {
+    const costEl = card.querySelector('.boon-cost-badge');
+    if (!costEl) return;
+    const costText = costEl.textContent;
+    const minCost = parseInt(costText.split('–')[0]);
+    card.classList.toggle('affordable', available >= minCost);
+    card.classList.toggle('too-costly', available < minCost);
+  });
+}
+
+function flashTracker() {
+  const tracker = document.getElementById('tracker');
+  tracker.style.transition = 'box-shadow 0.15s ease';
+  tracker.style.boxShadow = '0 0 0 2px rgba(139,42,42,0.6), 0 4px 16px rgba(42,28,14,0.18)';
+  const note = document.getElementById('trackerNote');
+  const prev = note.textContent;
+  note.textContent = '⚠ Cap reached — 6 points maximum.';
+  note.style.color = 'var(--danger)';
+  setTimeout(() => {
+    tracker.style.boxShadow = '';
+    note.textContent = prev;
+    note.style.color = '';
+  }, 1400);
+}
+
+function resetAll() {
+  Object.keys(severities).forEach(k => { severities[k] = 0; });
+  document.querySelectorAll('.liability-card').forEach(card => {
+    card.classList.remove('selected');
+    card.querySelectorAll('.sev-btn').forEach(btn => btn.classList.remove('active'));
+  });
+  updateTracker();
+  updateBoons();
+}
+
+// Init
+updateTracker();
+updateBoons();
+</script>
+</body>
+</html>

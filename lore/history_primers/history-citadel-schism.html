@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Schism</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- Styles -->
+<style>
+
+:root {
+--header-height: 72px;
+--footer-height: 72px;
+--content-max-width: 960px;
+--page-max-width: 1400px;
+--ink-color: #3a2a1a;
+--accent: #fff1d6;
+--nav-color: #f2e3c6;
+--nav-shadow: rgba(0,0,0,0.85);
+--footer-bg: rgba(0,0,0,0.88);
+--toggle-bg: rgba(255,248,235,0.55);
+--toggle-border: rgba(90,60,30,0.24);
+--toggle-hover: rgba(255,241,214,0.78);
+--toggle-doc-bg: rgba(255,248,235,0.48);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Crimson Text',Georgia,serif;
+color:var(--ink-color);
+min-height:100dvh;
+background:#000;
+line-height:1.75;
+font-size:1.18rem;
+}
+
+.page-wrapper{
+min-height:100dvh;
+display:flex;
+flex-direction:column;
+max-width:var(--page-max-width);
+margin:0 auto;
+background-color:#000;
+background-image:url('../../images/bg.jpg');
+background-size:contain;
+background-position:center top;
+background-repeat:no-repeat;
+background-attachment:fixed;
+box-shadow:0 0 80px rgba(0,0,0,0.85);
+position:relative;
+}
+
+header{
+position:fixed;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--header-height);
+background-image:url('../../images/header.png');
+background-size:contain;
+background-position:center;
+background-repeat:no-repeat;
+z-index:1000;
+box-shadow:0 6px 16px rgba(0,0,0,0.5);
+}
+
+header::after{
+content:"";
+position:absolute;
+left:0;
+right:0;
+bottom:-14px;
+height:18px;
+background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0));
+pointer-events:none;
+}
+
+nav{
+max-width:var(--content-max-width);
+width:100%;
+height:100%;
+margin:0 auto;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:2rem;
+padding:0 1.5rem;
+}
+
+nav a{
+color:var(--nav-color);
+text-decoration:none;
+font-family:Consolas,"Courier New",monospace;
+font-size:1.25rem;
+letter-spacing:0.14em;
+text-transform:uppercase;
+transition:all .25s ease;
+position:relative;
+display:inline-flex;
+align-items:center;
+gap:.5rem;
+padding:.2rem .1rem;
+text-shadow:
+0 1px 2px var(--nav-shadow),
+0 0 6px rgba(0,0,0,0.45);
+}
+
+nav a i{
+color:inherit;
+font-size:1.1rem;
+margin-right:4px;
+position:relative;
+top:-1px;
+}
+
+nav a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-4px;
+width:0;
+height:2px;
+background:var(--accent);
+transition:width .28s ease;
+}
+
+nav a:hover{
+color:var(--accent);
+transform:translateY(-1px);
+}
+
+nav a:hover::after{
+width:100%;
+}
+
+main{
+flex:1;
+margin-top:var(--header-height);
+padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+display:flex;
+justify-content:center;
+}
+
+.content-container{
+max-width:var(--content-max-width);
+width:100%;
+padding:40px 80px 180px;
+color:var(--ink-color);
+margin:0 auto;
+border-radius:8px;
+box-shadow:0 20px 60px rgba(0,0,0,0.55);
+background-image:url('../../images/content-scroll-bg.png');
+background-repeat:repeat-y;
+background-position:top center;
+background-size:100% auto;
+}
+
+.content-container h1,
+.content-container h2,
+.content-container h3{
+font-family:'Cinzel Decorative',serif;
+letter-spacing:.06em;
+}
+
+.content-container h1{
+font-size:3rem;
+text-align:center;
+margin:0 0 .75rem;
+}
+
+.content-container h2{
+font-size:2.15rem;
+margin:2.8rem 0 1.4rem;
+border-bottom:1px solid rgba(139,0,0,0.15);
+padding-bottom:.6rem;
+text-align:center;
+}
+
+.content-container h3{
+font-size:1.3rem;
+margin:2rem 0 1rem;
+text-align:center;
+}
+
+.content-container p{
+margin-bottom:1.25rem;
+}
+
+.lore-toggle{
+margin-top:2rem;
+border:1px solid var(--toggle-border);
+border-radius:10px;
+background:var(--toggle-bg);
+overflow:hidden;
+box-shadow:0 10px 24px rgba(0,0,0,0.12);
+}
+
+.lore-toggle summary{
+list-style:none;
+cursor:pointer;
+padding:1rem 1.25rem;
+font-family:'Cinzel Decorative',serif;
+font-size:1.05rem;
+color:#6b1f1f;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:.75rem;
+text-align:center;
+transition:background .25s ease, color .25s ease;
+}
+
+.lore-toggle summary::-webkit-details-marker{
+display:none;
+}
+
+.lore-toggle summary::before{
+content:"\f078";
+font-family:"Font Awesome 6 Free";
+font-weight:900;
+font-size:.9rem;
+transition:transform .25s ease;
+}
+
+.lore-toggle[open] summary::before{
+transform:rotate(180deg);
+}
+
+.lore-toggle summary:hover{
+background:var(--toggle-hover);
+color:#8b2323;
+}
+
+.lore-document{
+padding:1.5rem 1.5rem 1.25rem;
+background:var(--toggle-doc-bg);
+border-top:1px solid rgba(90,60,30,0.15);
+}
+
+.lore-document h3{
+margin-top:0;
+}
+
+footer{
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--footer-height);
+background:var(--footer-bg);
+color:#ccc;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:0 1rem;
+font-size:.95rem;
+border-top:1px solid #444;
+z-index:1000;
+}
+
+footer a{
+color:#d4a373;
+text-decoration:none;
+}
+
+footer a:hover{
+text-decoration:underline;
+}
+
+@media (max-width: 768px){
+
+nav{
+gap:1rem;
+padding:0 1rem;
+flex-wrap:wrap;
+}
+
+nav a{
+font-size:.9rem;
+letter-spacing:.08em;
+}
+
+.content-container{
+padding:36px 32px 150px;
+}
+
+.content-container h1{
+font-size:2.2rem;
+}
+
+.content-container h2{
+font-size:1.7rem;
+}
+
+.content-container h3{
+font-size:1.15rem;
+}
+}
+
+@media (max-width: 480px){
+
+body{
+font-size:1.05rem;
+}
+
+.content-container{
+padding:28px 20px 130px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+<header>
+<nav>
+<a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+<a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+<a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+<a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+<a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+
+<div class="content-container">
+
+<h1>The Schism</h1>
+
+
+
+<p>The long peace of the Plateau shattered in a single decade of blood and betrayal. The Citadel Schism was born from an internal war that tore the elite Vanguard asunder, sparked by the slaying of Lorn Zyreth and the rise of the ambitious Grevon.</p>
+
+<p>What was once a unified bastion of knowledge was split into rival hearts: the Crimson Citadel, holding the ancient seat of power, and the Azure Citadel, founded in exile to preserve the spirit of independence.</p>
+
+<p>This was an age where loyalty was tested and the pursuit of truth became a political weapon. The echoes of this fracture still vibrate through the halls of every archive in the land.</p>
+
+<p>The tragedy of our division is written in every line of this chronicle.</p>
+
+<p>Witness the moment the world’s keepers turned against themselves.</p>
+
+<details class="lore-toggle">
+  <summary>To read the full document, click here</summary>
+
+  <div class="lore-document">
+    
+    <p><strong>The Citadel Schism (860–870 RC)</strong></p>
+
+<p>The period between 860 RC and 870 RC is known to historians as the Citadel Schism, a turbulent decade during which the institution that had long served as Rivendawn’s center of scholarship fractured under internal conflict and political upheaval.</p>
+
+<p>For centuries, the Citadel had maintained its reputation as a neutral body devoted to the preservation of knowledge. Its scholars gathered information from across the world, trained students in numerous disciplines, and served as custodians of the historical record. Although disagreements and rivalries existed within its halls, the institution itself had remained largely stable throughout the Citadel Plateau.</p>
+
+<p>This stability began to unravel in 860 RC, when the actions of the Citadel scholar Lorn Zyreth triggered a series of events that would permanently alter the balance of power within the institution.</p>
+
+<p>Lorn’s research into the more dangerous aspects of Resonance—particularly those associated with shadow manipulation—raised serious concerns among other scholars. What began as academic disagreement soon escalated into accusations that Lorn’s experiments posed a threat to the Citadel itself. Tensions within the institution grew rapidly as factions formed around differing interpretations of the danger.</p>
+
+<p>The situation reached its breaking point in 865 RC, when Greighton Lastlight, then a member of the Citadel’s elite Vanguard order, killed Lorn Zyreth. Greighton later claimed that his actions were necessary to prevent greater catastrophe. The Citadel’s leadership, however, condemned the act as murder and declared Greighton a traitor to the institution he had sworn to protect.</p>
+
+<p>This decision divided the Vanguard itself. Some members supported the Citadel’s ruling and remained loyal to its leadership. Others believed Greighton’s actions had been justified. The resulting conflict, sometimes referred to as the Internal Vanguard War, fractured the once-unified order that had long served as the Citadel’s guardians.</p>
+
+<p>In the aftermath of this conflict, a rising political figure within the Citadel—Grevon—began consolidating influence. Through a combination of political maneuvering and the support of powerful allies, Grevon gradually assumed greater authority over the institution’s direction. His leadership would ultimately transform the character of the Citadel itself.</p>
+
+<p>Events soon took another decisive turn in 867 RC with the exile of the scholar Veysha, whose work and associations were declared suspect by the new Citadel authorities. Forced to flee, Veysha and a number of surviving Vanguard supporters established a new institution devoted to the preservation of knowledge independent of Grevon’s influence.</p>
+
+<p>This institution became known as the Azure Citadel.</p>
+
+<p>With the founding of the Azure Citadel, the unified scholarly authority that had once defined Rivendawn effectively split into two competing institutions. The original Citadel—now commonly referred to as the Crimson Citadel—continued under Grevon’s leadership, while the newly established Azure Citadel sought to maintain the traditions of scholarship and intellectual independence that its founders believed had been compromised.</p>
+
+<p>The decade of conflict known as the Citadel Schism reshaped the political and intellectual landscape of Rivendawn. The Citadel that had once served as a single guiding institution for the preservation of knowledge now existed in two rival forms, each claiming to represent the true continuation of its mission.</p>
+
+<p>The consequences of this division continue to influence the world today. The rivalry between the Crimson and Azure Citadels, combined with the growing ambitions of the regions beyond their walls, has created a complex and uncertain political environment.</p>
+
+<p>These developments define the beginning of the Present Age, the era in which the world of Rivendawn now stands.</p>
+  </div>
+</details>
+
+</div>
+
+</main>
+
+<footer>
+<div>
+Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+&nbsp;&nbsp;•&nbsp;&nbsp;
+© 2026 jpcauthor. All rights reserved.
+&nbsp;&nbsp;•&nbsp;&nbsp;
+<a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+</div>
+</footer>
+
+</div>
+
+</body>
+</html>

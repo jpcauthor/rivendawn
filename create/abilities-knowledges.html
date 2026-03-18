@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abilities & Knowledges — Rivendawn</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root {
+  --header-height: 72px;
+  --footer-height: 72px;
+  --content-max-width: 960px;
+  --page-max-width: 1400px;
+  --ink-color: #3a2a1a;
+  --accent: #fff1d6;
+  --nav-color: #f2e3c6;
+  --nav-shadow: rgba(0,0,0,0.85);
+  --footer-bg: rgba(0,0,0,0.88);
+  --parchment: rgba(255,248,230,0.92);
+  --parchment-mid: rgba(244,230,204,0.88);
+  --border-warm: rgba(94,62,33,0.25);
+  --gold: #c8922a;
+  --gold-light: #e8b84b;
+  --gold-dim: rgba(200,146,42,0.18);
+  --ink-mid: #4a2d18;
+  --ink-faint: rgba(58,42,26,0.45);
+  --domain-physical: #2e1a08;
+  --domain-social: #3a4a28;
+  --domain-technical: #28364a;
+  --domain-tactical: #4a2828;
+  --domain-metaphysical: #3a2848;
+  --overlay-bg: rgba(10,6,2,0.82);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--ink-color);
+  min-height: 100dvh;
+  background: #000;
+  line-height: 1.75;
+  font-size: 1.18rem;
+}
+
+.page-wrapper {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  background-color: #000;
+  background-image: url('../images/bg.jpg');
+  background-size: contain;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  box-shadow: 0 0 80px rgba(0,0,0,0.85);
+  position: relative;
+}
+
+header {
+  position: fixed;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--page-max-width));
+  height: var(--header-height);
+  background-image: url('../images/header.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1000;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+}
+
+header::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -14px;
+  height: 18px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.28), rgba(0,0,0,0));
+  pointer-events: none;
+}
+
+nav {
+  max-width: var(--content-max-width);
+  width: 100%; height: 100%;
+  margin: 0 auto;
+  display: flex; align-items: center; justify-content: center;
+  gap: 2rem; padding: 0 1.5rem;
+}
+
+nav a {
+  color: var(--nav-color);
+  text-decoration: none;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 1.25rem; letter-spacing: 0.14em; text-transform: uppercase;
+  transition: all .25s ease;
+  position: relative;
+  display: inline-flex; align-items: center;
+  gap: .5rem; padding: .2rem .1rem;
+  text-shadow: 0 1px 2px var(--nav-shadow), 0 0 6px rgba(0,0,0,0.45);
+}
+
+nav a i { color: inherit; font-size: 1.1rem; margin-right: 4px; position: relative; top: -1px; }
+nav a::after { content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px; background: var(--accent); transition: width .28s ease; }
+nav a:hover { color: var(--accent); transform: translateY(-1px); }
+nav a:hover::after { width: 100%; }
+
+main {
+  flex: 1;
+  margin-top: var(--header-height);
+  padding: 3.25rem 1rem calc(var(--footer-height) + 3rem);
+  display: flex;
+  justify-content: center;
+}
+
+.content-container {
+  max-width: var(--content-max-width);
+  width: 100%;
+  padding: 40px 80px 180px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  background-image: url('../images/content-scroll-bg.png');
+  background-repeat: repeat-y;
+  background-position: top center;
+  background-size: 100% auto;
+}
+
+.content-container h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: var(--ink-mid);
+  letter-spacing: .06em;
+}
+
+.page-subtitle {
+  text-align: center;
+  font-style: italic;
+  color: var(--ink-faint);
+  font-size: 1.05rem;
+  margin-bottom: 2.5rem;
+}
+
+/* ── Domain sections ── */
+.domain-section {
+  margin-bottom: 2.25rem;
+}
+
+.domain-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-warm);
+}
+
+.domain-icon {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.domain-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #f2e3c6;
+  background: rgba(42,22,8,0.78);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+}
+
+/* Domain color themes */
+.domain-physical .domain-icon { background: rgba(46,26,8,0.22); color: var(--domain-physical); border: 1px solid rgba(46,26,8,0.4); }
+.domain-social .domain-icon   { background: rgba(58,74,40,0.15); color: var(--domain-social);   border: 1px solid rgba(58,74,40,0.25); }
+.domain-technical .domain-icon{ background: rgba(40,54,74,0.15); color: var(--domain-technical); border: 1px solid rgba(40,54,74,0.25); }
+.domain-tactical .domain-icon { background: rgba(74,40,40,0.15); color: var(--domain-tactical);  border: 1px solid rgba(74,40,40,0.25); }
+.domain-metaphysical .domain-icon { background: rgba(58,40,72,0.15); color: var(--domain-metaphysical); border: 1px solid rgba(58,40,72,0.25); }
+
+/* ── Ability chips ── */
+.ability-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.ability-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem 0.3rem 0.6rem;
+  background: var(--parchment-mid);
+  border: 1px solid var(--border-warm);
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: 'Crimson Text', serif;
+  font-size: 1rem;
+  color: var(--ink-mid);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+  clip-path: polygon(0 0, 94% 0, 100% 50%, 94% 100%, 0 100%);
+  padding-right: 1.1rem;
+}
+
+.ability-chip::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.6;
+  flex-shrink: 0;
+  transition: opacity 0.2s ease;
+}
+
+.ability-chip:hover {
+  background: rgba(255,241,214,0.95);
+  border-color: rgba(200,146,42,0.45);
+  color: #3a1a08;
+  transform: translateX(3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.ability-chip:hover::before {
+  opacity: 1;
+}
+
+/* Domain-colored dots */
+.domain-physical .ability-chip::before   { background: var(--domain-physical); }
+.domain-social .ability-chip::before     { background: var(--domain-social); }
+.domain-technical .ability-chip::before  { background: var(--domain-technical); }
+.domain-tactical .ability-chip::before   { background: var(--domain-tactical); }
+.domain-metaphysical .ability-chip::before { background: var(--domain-metaphysical); }
+
+/* ── Modal overlay ── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-bg);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-card {
+  background: var(--parchment);
+  border: 1px solid rgba(200,146,42,0.35);
+  border-radius: 4px;
+  max-width: 500px;
+  width: 100%;
+  padding: 0;
+  box-shadow:
+    0 0 0 1px rgba(200,146,42,0.12),
+    0 32px 64px rgba(0,0,0,0.7),
+    inset 0 1px 0 rgba(255,255,255,0.15);
+  transform: translateY(18px) scale(0.98);
+  transition: transform 0.28s ease;
+  overflow: hidden;
+  background-image: url('../images/content-scroll-bg.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.modal-overlay.active .modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.modal-header {
+  padding: 1.4rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--border-warm);
+  position: relative;
+}
+
+.modal-archive-tag {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.45rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modal-archive-tag::before,
+.modal-archive-tag::after {
+  content: '';
+  height: 1px;
+  background: var(--gold);
+  opacity: 0.35;
+  flex: 1;
+}
+
+.modal-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.45rem;
+  color: var(--ink-mid);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+}
+
+.modal-domain-badge {
+  display: inline-block;
+  margin-top: 0.4rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.18rem 0.6rem;
+  border-radius: 2px;
+  border: 1px solid;
+  opacity: 0.75;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  width: 28px; height: 28px;
+  border: 1px solid var(--border-warm);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: rgba(200,146,42,0.12);
+  border-color: rgba(200,146,42,0.4);
+  color: var(--ink-mid);
+}
+
+.modal-body {
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.modal-desc {
+  font-size: 1.08rem;
+  color: var(--ink-color);
+  margin-bottom: 1.25rem;
+  line-height: 1.7;
+  font-style: italic;
+}
+
+.modal-mastery-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.65rem;
+}
+
+.mastery-track {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border-warm);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.mastery-step {
+  flex: 1;
+  padding: 0.45rem 0.3rem;
+  text-align: center;
+  font-family: 'Crimson Text', serif;
+  font-size: 0.82rem;
+  color: #f2e3c6;
+  background: rgba(42,22,8,0.72);
+  border-right: 1px solid var(--border-warm);
+  line-height: 1.2;
+  transition: background 0.2s ease;
+  cursor: default;
+}
+
+.mastery-step:last-child { border-right: none; }
+
+.mastery-step.tier-1 { background: rgba(42,22,8,0.60); }
+.mastery-step.tier-2 { background: rgba(42,22,8,0.65); }
+.mastery-step.tier-3 { background: rgba(42,22,8,0.70); }
+.mastery-step.tier-4 { background: rgba(42,22,8,0.75); }
+.mastery-step.tier-5 { background: rgba(42,22,8,0.82); color: #f2e3c6; font-weight: 600; }
+.mastery-step.tier-6 { background: rgba(42,22,8,0.92); color: #e8b84b; font-weight: 600; }
+
+.mastery-step-number {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+  margin-bottom: 0.2rem;
+  opacity: 1;
+  font-weight: 700;
+}
+
+.modal-footer {
+  padding: 0.75rem 1.5rem;
+  border-top: 1px solid var(--border-warm);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-return {
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  cursor: pointer;
+  background: none;
+  border: 1px solid var(--border-warm);
+  padding: 0.4rem 1rem;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modal-return:hover {
+  background: rgba(200,146,42,0.1);
+  border-color: rgba(200,146,42,0.4);
+  color: var(--ink-mid);
+}
+
+footer {
+  position: fixed;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--page-max-width));
+  height: var(--footer-height);
+  background: var(--footer-bg);
+  color: #ccc;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 0 1rem;
+  font-size: .95rem;
+  border-top: 1px solid #444;
+  z-index: 1000;
+}
+
+footer a { color: #d4a373; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+@media (max-width: 768px) {
+  nav { gap: 1rem; padding: 0 1rem; flex-wrap: wrap; }
+  nav a { font-size: .9rem; letter-spacing: .08em; }
+  .content-container { padding: 36px 32px 150px; }
+  .content-container h1 { font-size: 2.2rem; }
+  .modal-name { font-size: 1.2rem; }
+  .mastery-step { font-size: 0.72rem; padding: 0.35rem 0.2rem; }
+}
+
+@media (max-width: 480px) {
+  body { font-size: 1.05rem; }
+  .content-container { padding: 28px 20px 130px; }
+  .mastery-track { flex-direction: column; }
+  .mastery-step { border-right: none; border-bottom: 1px solid var(--border-warm); }
+  .mastery-step:last-child { border-bottom: none; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+<header>
+<nav>
+  <a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+  <a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+  <a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+  <a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+  <a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+<div class="content-container">
+
+  <h1>Abilities & Knowledges</h1>
+  <p class="page-subtitle">Select any entry to consult the Citadel Archive.</p>
+
+  <!-- DOMAIN 1: Physicality & Environment -->
+  <div class="domain-section domain-physical">
+    <div class="domain-header">
+      <div class="domain-icon"><i class="fa-solid fa-person-running"></i></div>
+      <span class="domain-title">Physicality &amp; Environment</span>
+    </div>
+    <div class="ability-cloud">
+      <span class="ability-chip" data-id="acrobatics">Acrobatics</span>
+      <span class="ability-chip" data-id="athletics">Athletics</span>
+      <span class="ability-chip" data-id="climb">Climb</span>
+      <span class="ability-chip" data-id="endurance">Endurance</span>
+      <span class="ability-chip" data-id="swim">Swim</span>
+      <span class="ability-chip" data-id="survival">Survival</span>
+      <span class="ability-chip" data-id="nature">Nature</span>
+      <span class="ability-chip" data-id="envscience">Environmental Science</span>
+    </div>
+  </div>
+
+  <!-- DOMAIN 2: Social & Perceptual -->
+  <div class="domain-section domain-social">
+    <div class="domain-header">
+      <div class="domain-icon"><i class="fa-solid fa-comments"></i></div>
+      <span class="domain-title">Social &amp; Perceptual</span>
+    </div>
+    <div class="ability-cloud">
+      <span class="ability-chip" data-id="deception">Deception</span>
+      <span class="ability-chip" data-id="diplomacy">Diplomacy</span>
+      <span class="ability-chip" data-id="intimidation">Intimidation</span>
+      <span class="ability-chip" data-id="performance">Performance</span>
+      <span class="ability-chip" data-id="persuasion">Persuasion</span>
+      <span class="ability-chip" data-id="perception">Perception</span>
+      <span class="ability-chip" data-id="insight">Insight</span>
+      <span class="ability-chip" data-id="psychology">Psychology</span>
+    </div>
+  </div>
+
+  <!-- DOMAIN 3: Technical -->
+  <div class="domain-section domain-technical">
+    <div class="domain-header">
+      <div class="domain-icon"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+      <span class="domain-title">Technical</span>
+    </div>
+    <div class="ability-cloud">
+      <span class="ability-chip" data-id="combatmed">Combat Medicine</span>
+      <span class="ability-chip" data-id="disable">Disable Device</span>
+      <span class="ability-chip" data-id="sleight">Sleight of Hand</span>
+      <span class="ability-chip" data-id="engineering">Engineering</span>
+      <span class="ability-chip" data-id="medicine">Medicine</span>
+      <span class="ability-chip" data-id="investigation">Investigation</span>
+      <span class="ability-chip" data-id="inscribing">Inscribing</span>
+      <span class="ability-chip" data-id="provisioning">Provisioning</span>
+    </div>
+  </div>
+
+  <!-- DOMAIN 4: Tactical & Martial -->
+  <div class="domain-section domain-tactical">
+    <div class="domain-header">
+      <div class="domain-icon"><i class="fa-solid fa-chess-knight"></i></div>
+      <span class="domain-title">Tactical &amp; Martial</span>
+    </div>
+    <div class="ability-cloud">
+      <span class="ability-chip" data-id="combatfocus">Combat Focus</span>
+      <span class="ability-chip" data-id="reaction">Reaction Timing</span>
+      <span class="ability-chip" data-id="tactics">Tactics</span>
+      <span class="ability-chip" data-id="weaponmastery">Weapon Mastery</span>
+      <span class="ability-chip" data-id="navigation">Navigation</span>
+      <span class="ability-chip" data-id="militaryhistory">Military History</span>
+    </div>
+  </div>
+
+  <!-- DOMAIN 5: Metaphysical & Scholarly -->
+  <div class="domain-section domain-metaphysical">
+    <div class="domain-header">
+      <div class="domain-icon"><i class="fa-solid fa-star-and-crescent"></i></div>
+      <span class="domain-title">Metaphysical &amp; Scholarly</span>
+    </div>
+    <div class="ability-cloud">
+      <span class="ability-chip" data-id="resinfusion">Resonant Infusion</span>
+      <span class="ability-chip" data-id="soothsaying">Soothsaying</span>
+      <span class="ability-chip" data-id="resonancetheory">Resonance Theory</span>
+      <span class="ability-chip" data-id="paths">Paths (Resonant)</span>
+      <span class="ability-chip" data-id="rivendawnlore">Rivendawn Lore</span>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<!-- ── MODAL OVERLAY ── -->
+<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal-card" id="modal-card">
+    <div class="modal-header">
+      <div class="modal-archive-tag">Citadel Archive</div>
+      <h2 class="modal-name" id="modal-name">—</h2>
+      <span class="modal-domain-badge" id="modal-badge">—</span>
+      <button class="modal-close" id="modal-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="modal-body">
+      <p class="modal-desc" id="modal-desc">—</p>
+      <p class="modal-mastery-label">Mastery Progression</p>
+      <div class="mastery-track" id="mastery-track"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-return" id="modal-return">
+        <i class="fa-solid fa-arrow-left"></i> Return to Archive
+      </button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div>
+    Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    © 2026 jpcauthor. All rights reserved.
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    <a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+  </div>
+</footer>
+
+</div>
+
+<script>
+const ABILITIES = {
+  acrobatics:      { name:"Acrobatics",          domain:"Physicality & Environment", desc:"Balance, tumbling, and controlled falling. The body as instrument — redirecting momentum rather than fighting it.", tiers:["Clumsy","Unsteady","Capable","Athletic","Graceful","Gravity-Defiant"] },
+  athletics:       { name:"Athletics",            domain:"Physicality & Environment", desc:"Raw strength, sprinting, lifting, and grappling force. The foundation of every physical contest where power decides the outcome.", tiers:["Weak","Average","Fit","Powerful","Explosive","Feat-Worthy"] },
+  climb:           { name:"Climb",                domain:"Physicality & Environment", desc:"Vertical ascent and difficult surface traversal. Every wall has weakness — the climber finds it.", tiers:["Slipping","Clinging","Secure","Nimble","Rapid","Wall-Walker"] },
+  endurance:       { name:"Endurance",            domain:"Physicality & Environment", desc:"Sustaining physical strain and resisting fatigue. The body that refuses to stop is the body that outlasts every threat.", tiers:["Tired","Tested","Resilient","Tough","Unyielding","Marathon Runner"] },
+  swim:            { name:"Swim",                 domain:"Physicality & Environment", desc:"Movement and control in water environments. The current has no preference for who drowns.", tiers:["Flailing","Dog-Paddle","Capable","Strong","Aquatic","Water-Born"] },
+  survival:        { name:"Survival",             domain:"Physicality & Environment", desc:"Finding shelter, food, and safe passage in the wilderness. The In-Between does not forgive the unprepared.", tiers:["Lost","Struggling","Prepared","Resourceful","Self-Sufficient","Wild-Wise"] },
+  nature:          { name:"Nature",               domain:"Physicality & Environment", desc:"Understanding flora, fauna, and natural cycles. The world speaks continuously to those who have learned its language.", tiers:["Ignorant","Familiar","Informed","Versed","Expert","Wild-Savant"] },
+  envscience:      { name:"Environmental Science",domain:"Physicality & Environment", desc:"Analyzing ecological systems and environmental responses. The world is not backdrop — it is participant.", tiers:["Unaware","Observant","Analytical","Theoretical","Mastery","Environment-Literate"] },
+
+  deception:       { name:"Deception",            domain:"Social & Perceptual", desc:"Actively misleading others. The most dangerous lies are the ones the target helps construct.", tiers:["Transparent","Calculating","Convincing","Smooth","Masterful","Infamous"] },
+  diplomacy:       { name:"Diplomacy",            domain:"Social & Perceptual", desc:"Negotiation and conflict easing. Some wars end at tables. A skilled envoy knows how to build one.", tiers:["Inept","Polite","Professional","Tactful","Statesman","Envoy-Known"] },
+  intimidation:    { name:"Intimidation",         domain:"Social & Perceptual", desc:"Imposing compliance through presence. Fear is a force — those who wield it precisely require no weapon.", tiers:["Dismissed","Stern","Forceful","Overbearing","Terrifying","Name-Whispered"] },
+  performance:     { name:"Performance",          domain:"Social & Perceptual", desc:"Expressive projection through art or storytelling. A Songweaver who cannot hold a room is merely making noise.", tiers:["Flat","Adequate","Entertaining","Compelling","Captivating","Celebrated"] },
+  persuasion:      { name:"Persuasion",           domain:"Social & Perceptual", desc:"Convincing through logic and appeal. The truth, presented correctly, rarely needs to shout.", tiers:["Ineffective","Rational","Logical","Inspiring","Irresistible","Voice-Trusted"] },
+  perception:      { name:"Perception",           domain:"Social & Perceptual", desc:"Immediate sensory awareness. The Assassin in the room is not there to be found — but someone always finds them.", tiers:["Oblivious","Alert","Sharp","Vigilant","Acute","All-Seeing"] },
+  insight:         { name:"Insight",              domain:"Social & Perceptual", desc:"Reading motives and emotional cues. Words are often the last thing a person says — the Truthseeker reads everything else.", tiers:["Oblivious","Observant","Intuitive","Empathic","Penetrating","Soul-Reader"] },
+  psychology:      { name:"Psychology",           domain:"Social & Perceptual", desc:"Understanding mental processes and behavior. Grevon understood this well. So did those who eventually stopped him.", tiers:["Oblivious","Informed","Academic","Clinical","Expert","Mind-Literate"] },
+
+  combatmed:       { name:"Combat Medicine",      domain:"Technical", desc:"Emergency stabilization under stress. The Physicker does not wait for the fighting to stop — they work through it.", tiers:["Panicked","Functional","Reliable","Skilled","Veteran","Lifesaver"] },
+  disable:         { name:"Disable Device",       domain:"Technical", desc:"Neutralizing mechanical hazards. Patience and precision — the wrong approach here is a very short story.", tiers:["Guessing","Cautious","Competent","Precise","Expert","Trap-Breaker"] },
+  sleight:         { name:"Sleight of Hand",      domain:"Technical", desc:"Concealing or manipulating objects undetected. Attention is a resource. Spend someone else's.", tiers:["Obvious","Quick","Hidden","Fluid","Ghost-Touch","Hand-Legend"] },
+  engineering:     { name:"Engineering",          domain:"Technical", desc:"Structural analysis and mechanical understanding. Everything built can be unmade — if you understand how it holds together.", tiers:["Guessing","Familiar","Informed","Calculated","Systems-Aware","Failure-Prophet"] },
+  medicine:        { name:"Medicine",             domain:"Technical", desc:"Diagnosis and long-term treatment. Conventional knowledge grounds the Physicker when Resonance runs dry.", tiers:["Untrained","First-Aid","Medic","Surgeon","Specialist","Physician-Known"] },
+  investigation:   { name:"Investigation",        domain:"Technical", desc:"Reconstructing events from evidence. Every scene is a story. The investigator simply reads it in the right order.", tiers:["Clueless","Curious","Methodical","Analytical","Thorough","Case-Breaker"] },
+  inscribing:      { name:"Inscribing",           domain:"Technical", desc:"Written language mastery. The Scribes of the Citadel understood that words, properly inscribed, outlast empires.", tiers:["Illiterate","Conversant","Fluent","Polyglot","Tongue-Master","Script-Sage"] },
+  provisioning:    { name:"Provisioning",         domain:"Technical", desc:"Logistical food and supply preparation. Armies move on their stomachs. Everything else is tactics.", tiers:["Lost","Struggling","Prepared","Resourceful","Self-Sufficient","Wild-Wise"] },
+
+  combatfocus:     { name:"Combat Focus",         domain:"Tactical & Martial", desc:"Mental clarity under threat. Greighton in a body bag, counting footsteps, identifying enemies by gait alone — that is Combat Focus.", tiers:["Distracted","Composed","Steady","Locked-In","Cold","Battle-Locked"] },
+  reaction:        { name:"Reaction Timing",      domain:"Tactical & Martial", desc:"Acting within split-second windows. The Assassin lives here — in the gap between intention and consequence.", tiers:["Late","Average","Quick","Fast","Reflexive","Instant"] },
+  tactics:         { name:"Tactics",              domain:"Tactical & Martial", desc:"Directing multi-person combat engagements. A Warden does not stand anywhere. They stand where they have decided.", tiers:["Reactive","Basic","Strategic","Insightful","Brilliant","Battle-Mind"] },
+  weaponmastery:   { name:"Weapon Mastery",       domain:"Tactical & Martial", desc:"Skilled use of weapon systems. Every weapon is a philosophy. Mastery is understanding the argument it's making.", tiers:["Untrained","Student","Combatant","Veteran","Elite","Master"] },
+  navigation:      { name:"Navigation",           domain:"Tactical & Martial", desc:"Land-based orientation and route-finding. The Wayfarer Knight knows every road — especially the ones that are not on maps.", tiers:["Always Lost","Directions-Needed","Oriented","Mapped","Pathfinder","Never Lost"] },
+  militaryhistory: { name:"Military History",     domain:"Tactical & Martial", desc:"Understanding strategic doctrines and historic formations. The Shield Warden studies collapse — to ensure they never repeat it.", tiers:["Unaware","Enthusiast","Historian","Academic","Strategist","War-Scholar"] },
+
+  resinfusion:     { name:"Resonant Infusion",    domain:"Metaphysical & Scholarly", desc:"Embedding resonance into objects. Greighton's blades hum with something that has no clean name. This is how that happens.", tiers:["Unstable","Flickering","Steady","Resonant","Harmonic","Signature-Bound"] },
+  soothsaying:     { name:"Soothsaying",          domain:"Metaphysical & Scholarly", desc:"Interpreting resonance omens and harmonic signs. The Watcher would call this guesswork. He would be wrong.", tiers:["Guessing","Sensitive","Attuned","Sight-Gifted","Seer","Oracle-Bound"] },
+  resonancetheory: { name:"Resonance Theory",     domain:"Metaphysical & Scholarly", desc:"Academic study of resonance mechanics. The Song does not require understanding to function — but those who understand it go further.", tiers:["Uninitiated","Student","Scholar","Theoretical","Advanced","Theory-Bearer"] },
+  paths:           { name:"Paths (Resonant)",     domain:"Metaphysical & Scholarly", desc:"Knowledge of individual Resonant Paths. Seven paths. Seven ways the world answers back to those willing to listen.", tiers:["Unaware","Familiar","Learned","Studied","Specialist","Path-Historian"] },
+  rivendawnlore:   { name:"Rivendawn Lore",       domain:"Metaphysical & Scholarly", desc:"History, myth, and cultural memory of the world. 877 years of recorded history — and most of it is wrong. The rest is dangerous.", tiers:["Outsider","Curious","Informed","Lore-Keeper","Chronicler","Rivendawn-Bound"] },
+};
+
+const DOMAIN_BADGE_STYLES = {
+  "Physicality & Environment": "color:#2e1a08; border-color:rgba(46,26,8,0.55); background:rgba(46,26,8,0.12);",
+  "Social & Perceptual":       "color:#3a4a28; border-color:rgba(58,74,40,0.4); background:rgba(58,74,40,0.08);",
+  "Technical":                 "color:#28364a; border-color:rgba(40,54,74,0.4); background:rgba(40,54,74,0.08);",
+  "Tactical & Martial":        "color:#4a2828; border-color:rgba(74,40,40,0.4); background:rgba(74,40,40,0.08);",
+  "Metaphysical & Scholarly":  "color:#3a2848; border-color:rgba(58,40,72,0.4); background:rgba(58,40,72,0.08);",
+};
+
+const overlay  = document.getElementById('modal-overlay');
+const modalName  = document.getElementById('modal-name');
+const modalDesc  = document.getElementById('modal-desc');
+const modalBadge = document.getElementById('modal-badge');
+const masteryTrack = document.getElementById('mastery-track');
+
+function openModal(id) {
+  const data = ABILITIES[id];
+  if (!data) return;
+
+  modalName.textContent  = data.name;
+  modalDesc.textContent  = data.desc;
+  modalBadge.textContent = data.domain;
+  modalBadge.style.cssText = DOMAIN_BADGE_STYLES[data.domain] || '';
+
+  masteryTrack.innerHTML = data.tiers.map((t, i) => `
+    <div class="mastery-step tier-${i+1}">
+      <span class="mastery-step-number">${i+1}</span>${t}
+    </div>`).join('');
+
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.querySelectorAll('.ability-chip').forEach(chip => {
+  chip.addEventListener('click', () => openModal(chip.dataset.id));
+});
+
+document.getElementById('modal-close').addEventListener('click', closeModal);
+document.getElementById('modal-return').addEventListener('click', closeModal);
+
+overlay.addEventListener('click', e => {
+  if (e.target === overlay) closeModal();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+</script>
+
+</body>
+</html>

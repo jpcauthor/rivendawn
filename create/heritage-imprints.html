@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heritage Imprints — The Echo That Stays</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+:root {
+  --header-height: 72px;
+  --footer-height: 72px;
+  --content-max-width: 960px;
+  --page-max-width: 1400px;
+  --ink-color: #3a2a1a;
+  --accent: #fff1d6;
+  --nav-color: #f2e3c6;
+  --nav-shadow: rgba(0,0,0,0.85);
+  --footer-bg: rgba(0,0,0,0.88);
+  --calling-primary: #4a2e06;
+  --calling-dark: #5a3a08;
+  --calling-light: #d4a84a;
+  --calling-muted: #a07828;
+  --calling-bg-tint: rgba(200,150,40,0.07);
+  --calling-border: rgba(139,105,20,0.22);
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+
+body{
+  font-family:'Crimson Text',Georgia,serif;
+  color:var(--ink-color);
+  min-height:100dvh;
+  background:#000;
+  line-height:1.75;
+  font-size:1.18rem;
+}
+
+.page-wrapper{
+  min-height:100dvh;
+  display:flex; flex-direction:column;
+  max-width:var(--page-max-width);
+  margin:0 auto;
+  background-color:#000;
+  background-image:url('../images/bg.jpg');
+  background-size:contain;
+  background-position:center top;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  box-shadow:0 0 80px rgba(0,0,0,0.85);
+  position:relative;
+}
+
+header{
+  position:fixed; top:0; left:50%;
+  transform:translateX(-50%);
+  width:min(100%,var(--page-max-width));
+  height:var(--header-height);
+  background-image:url('../images/header.png');
+  background-size:contain; background-position:center;
+  background-repeat:no-repeat;
+  z-index:1000;
+  box-shadow:0 6px 16px rgba(0,0,0,0.5);
+}
+
+header::after{
+  content:""; position:absolute;
+  left:0; right:0; bottom:-14px; height:18px;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0));
+  pointer-events:none;
+}
+
+nav{
+  max-width:var(--content-max-width);
+  width:100%; height:100%;
+  margin:0 auto;
+  display:flex; align-items:center; justify-content:center;
+  gap:2rem; padding:0 1.5rem;
+}
+
+nav a{
+  color:var(--nav-color); text-decoration:none;
+  font-family:Consolas,"Courier New",monospace;
+  font-size:1.25rem; letter-spacing:0.14em; text-transform:uppercase;
+  transition:all .25s ease; position:relative;
+  display:inline-flex; align-items:center;
+  gap:.5rem; padding:.2rem .1rem;
+  text-shadow:0 1px 2px var(--nav-shadow),0 0 6px rgba(0,0,0,0.45);
+}
+nav a i{ color:inherit; font-size:1.1rem; margin-right:4px; position:relative; top:-1px; }
+nav a::after{ content:""; position:absolute; left:0; bottom:-4px; width:0; height:2px; background:var(--accent); transition:width .28s ease; }
+nav a:hover{ color:var(--accent); transform:translateY(-1px); }
+nav a:hover::after{ width:100%; }
+
+main{
+  flex:1;
+  margin-top:var(--header-height);
+  padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+  display:flex; justify-content:center;
+}
+
+.content-container{
+  max-width:var(--content-max-width);
+  width:100%; padding:40px 80px 180px;
+  color:var(--ink-color); margin:0 auto;
+  border-radius:8px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.55);
+  background-image:url('../images/content-scroll-bg.png');
+  background-repeat:repeat-y;
+  background-position:top center;
+  background-size:100% auto;
+}
+
+.content-container h1{
+  font-family:'Cinzel Decorative',serif;
+  font-size:2.8rem; text-align:center;
+  margin:0 0 .4rem; letter-spacing:.06em;
+}
+
+.content-container p{ margin-bottom:1.25rem; }
+
+/* ── Page subtitle ── */
+.page-subtitle{
+  font-family:'Crimson Text',serif;
+  font-size:1.1rem; font-style:italic;
+  color:#4a2e06;
+  text-align:center; letter-spacing:0.08em;
+  margin:0 0 0.5rem;
+}
+
+.page-divider{
+  display:flex; align-items:center; gap:0.75rem;
+  margin:0.5rem auto 2.5rem; max-width:420px;
+}
+.page-divider span{ flex:1; height:1px; background:linear-gradient(to right,transparent,rgba(139,105,20,0.45)); }
+.page-divider span:last-child{ background:linear-gradient(to left,transparent,rgba(139,105,20,0.45)); }
+.page-divider em{ color:#4a2e06; font-size:0.65rem; font-style:normal; }
+
+/* ── Section label ── */
+.section-label{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.6rem; letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:#4a2e06;
+  text-align:center;
+  margin:2.5rem 0 0.8rem;
+}
+
+/* ── Intro soul block ── */
+.soul-block{
+  background:var(--calling-bg-tint);
+  border:1px solid var(--calling-border);
+  border-left:4px solid var(--calling-light);
+  border-radius:0 10px 10px 0;
+  padding:1.3rem 1.6rem; margin-bottom:2rem;
+  font-style:italic; font-size:1.05rem;
+  color:#4a3010; line-height:1.75;
+}
+
+/* ── Allocation box ── */
+.allocation-block{
+  background:var(--calling-bg-tint);
+  border:1px solid var(--calling-border);
+  border-radius:10px;
+  padding:1.3rem 1.6rem;
+  margin-bottom:2rem;
+}
+
+.allocation-block p{
+  font-family:'Crimson Text',serif;
+  font-size:0.97rem; color:#4a3010;
+  line-height:1.7; margin-bottom:0.5rem;
+}
+.allocation-block p:last-child{ margin-bottom:0; }
+
+.allocation-row{
+  display:flex; align-items:baseline;
+  justify-content:space-between;
+  padding:0.3rem 0;
+  border-bottom:1px solid rgba(139,105,20,0.10);
+  font-family:'Crimson Text',serif;
+  font-size:0.95rem; color:#4a3010;
+}
+.allocation-row:last-child{ border-bottom:none; }
+
+.allocation-name{ font-style:italic; }
+.allocation-val{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.85rem; color:#4a2e06;
+  font-weight:700;
+}
+.allocation-locked{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.55rem; letter-spacing:0.14em;
+  text-transform:uppercase;
+  background:rgba(139,80,20,0.10);
+  color:#8b5014;
+  border:1px solid rgba(139,80,20,0.25);
+  border-radius:20px;
+  padding:0.1rem 0.5rem;
+  margin-left:0.5rem;
+}
+
+/* ── Imprint cards ── */
+.imprint-card{
+  background:rgba(255,248,235,0.6);
+  border:1px solid var(--calling-border);
+  border-radius:10px;
+  padding:1.4rem 1.6rem 1.3rem;
+  margin-bottom:1.4rem;
+  position:relative; overflow:hidden;
+  transition:box-shadow 0.2s ease, transform 0.2s ease;
+}
+.imprint-card:hover{ box-shadow:0 6px 20px rgba(139,105,20,0.12); transform:translateY(-2px); }
+
+.imprint-card::before{
+  content:""; position:absolute;
+  top:0; left:0; width:5px; height:100%;
+  border-radius:10px 0 0 10px;
+}
+
+/* Each imprint gets its own accent color */
+.imprint-card.physicality::before{ background:#7a8c42; }
+.imprint-card.social::before{ background:#8b6030; }
+.imprint-card.technical::before{ background:#507890; }
+.imprint-card.tactical::before{ background:#8b3a2a; }
+.imprint-card.metaphysical::before{ background:#6a4a90; }
+
+.imprint-header{
+  display:flex; align-items:center;
+  gap:0.8rem; margin-bottom:0.8rem;
+}
+
+.imprint-icon{
+  width:36px; height:36px;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.95rem; flex-shrink:0;
+}
+.imprint-card.physicality .imprint-icon{ background:rgba(122,140,66,0.15); color:#5a7030; border:1px solid rgba(122,140,66,0.3); }
+.imprint-card.social .imprint-icon{ background:rgba(139,96,48,0.12); color:#8b6030; border:1px solid rgba(139,96,48,0.28); }
+.imprint-card.technical .imprint-icon{ background:rgba(80,120,144,0.12); color:#507890; border:1px solid rgba(80,120,144,0.28); }
+.imprint-card.tactical .imprint-icon{ background:rgba(139,58,42,0.12); color:#8b3a2a; border:1px solid rgba(139,58,42,0.28); }
+.imprint-card.metaphysical .imprint-icon{ background:rgba(106,74,144,0.12); color:#6a4a90; border:1px solid rgba(106,74,144,0.28); }
+
+.imprint-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:1rem; color:var(--ink-color);
+  letter-spacing:0.05em;
+}
+
+.imprint-summary{
+  font-family:'Crimson Text',serif;
+  font-size:0.97rem; color:#4a3010;
+  line-height:1.7; margin-bottom:0.9rem;
+}
+
+.imprint-whisper{
+  font-family:'Crimson Text',serif;
+  font-size:0.92rem; font-style:italic;
+  color:#4a2e06;
+  border-top:1px solid rgba(139,105,20,0.15);
+  padding-top:0.7rem; margin-bottom:0.9rem;
+  line-height:1.65;
+}
+
+/* Vocation pills inside imprint card */
+.vocation-row{
+  display:flex; flex-wrap:wrap; gap:0.5rem;
+  margin-top:0.3rem;
+}
+
+.vocation-pill{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.52rem; letter-spacing:0.12em;
+  text-transform:uppercase;
+  padding:0.25rem 0.75rem;
+  border-radius:20px;
+  background:rgba(200,150,40,0.08);
+  border:1px solid rgba(139,105,20,0.22);
+  color:#4a2e06;
+}
+
+.vocation-label{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.52rem; letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:#4a2e06;
+  margin-bottom:0.4rem;
+  display:block;
+}
+
+/* ── Cap note ── */
+.cap-note{
+  background:rgba(139,80,20,0.06);
+  border:1px solid rgba(139,80,20,0.20);
+  border-radius:10px;
+  padding:1.1rem 1.4rem;
+  margin-bottom:2rem;
+  font-family:'Crimson Text',serif;
+  font-size:0.95rem; color:#4a3010;
+  line-height:1.7;
+  text-align:center;
+  font-style:italic;
+}
+
+/* ── Closing hook ── */
+.closing-hook{
+  background:var(--calling-bg-tint);
+  border:1px solid var(--calling-border);
+  border-radius:10px;
+  padding:1.4rem 1.6rem;
+  text-align:center;
+  font-style:italic;
+  font-size:1.05rem;
+  color:#4a3010;
+  line-height:1.75;
+  margin-top:0.5rem;
+}
+
+footer{
+  position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+  width:min(100%,var(--page-max-width));
+  height:var(--footer-height);
+  background:var(--footer-bg);
+  color:#ccc; display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:0 1rem; font-size:.95rem;
+  border-top:1px solid #444; z-index:1000;
+}
+footer a{ color:#d4a373; text-decoration:none; }
+footer a:hover{ text-decoration:underline; }
+
+@media(max-width:768px){
+  nav{ gap:1rem; padding:0 1rem; flex-wrap:wrap; }
+  nav a{ font-size:.9rem; }
+  .content-container{ padding:36px 32px 150px; }
+  .content-container h1{ font-size:2rem; }
+}
+@media(max-width:480px){
+  body{ font-size:1.05rem; }
+  .content-container{ padding:28px 20px 130px; }
+}
+
+</style>
+</head>
+
+<body>
+<div class="page-wrapper">
+
+<header>
+<nav>
+  <a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+  <a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+  <a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+  <a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+  <a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+<div class="content-container">
+
+  <h1>Heritage Imprints</h1>
+  <p class="page-subtitle">The Echo That Stays</p>
+  <div class="page-divider"><span></span><em>◆</em><span></span></div>
+
+  <p>Your Heritage Imprint is the lasting mark your old life left on your soul — the deep, instinctive way you see, move, and feel the world because of what you did every day for years. It is not something you can lose or outgrow; it is the quiet strength woven into your bones, the lens through which your past still colors every choice.</p>
+
+  <p>Before you became a hero, you were someone who <em>did</em> something, and that doing left fingerprints on your very being. The five Imprints are the five ways that history shaped you — not as forgotten skills, but as living resonances that still catch you when you need them most.</p>
+
+  <!-- Cap note -->
+  <div class="cap-note">
+    It has long since passed that any true Mastery of a Heritage Imprint (Rating 6) has been achieved — which is why there is a hard cap at <strong>Rating 4</strong>. Rating 4 means "practiced and reliable" — not legendary mastery anymore, but a strong, trustworthy echo that still catches you when you need it.
+  </div>
+
+  <!-- Allocation -->
+  <p class="section-label">At Creation</p>
+  <div class="allocation-block">
+    <p>Your <strong>Primary Heritage Imprint</strong> is locked at 4 — tied to your Vocation. You were really good once. The rest you place freely wherever your story feels true:</p>
+    <div style="margin:1rem 0 0.8rem;">
+      <div class="allocation-row"><span class="allocation-name">Primary Imprint <span class="allocation-locked">Vocation Locked</span></span><span class="allocation-val">4</span></div>
+      <div class="allocation-row"><span class="allocation-name">Second Imprint</span><span class="allocation-val">3</span></div>
+      <div class="allocation-row"><span class="allocation-name">Third Imprint</span><span class="allocation-val">2</span></div>
+      <div class="allocation-row"><span class="allocation-name">Fourth Imprint</span><span class="allocation-val">1</span></div>
+      <div class="allocation-row"><span class="allocation-name">Fifth Imprint</span><span class="allocation-val">1</span></div>
+    </div>
+    <p style="font-style:italic; font-size:0.9rem; color:#4a2e06;"><strong>Example:</strong> Social &amp; Perceptual 4 · Tactical &amp; Martial 3 · Metaphysical &amp; Scholarly 2 · Physicality &amp; Environment 1 · Technical 1</p>
+  </div>
+
+  <!-- The Five Imprints -->
+  <p class="section-label">The Five Heritage Imprints</p>
+
+  <!-- Physicality & Environment -->
+  <div class="imprint-card physicality">
+    <div class="imprint-header">
+      <div class="imprint-icon"><i class="fa-solid fa-mountain"></i></div>
+      <span class="imprint-title">Physicality &amp; Environment</span>
+    </div>
+    <p class="imprint-summary">The raw, grounded knowing of body and world — how to move through storm and stone, endure hunger and cold, survive where others falter. This is the echo of those who once kept the world standing through sheer physical will, lives spent in constant conversation with the physical: lifting, carrying, enduring, coaxing life from earth.</p>
+    <p class="imprint-summary">You feel the land in your bones — the way stone holds or gives, the way rivers carve secrets into valleys, the way a storm's breath changes before it breaks. This imprint is not delicate theory; it is muscle memory, scar tissue, and the quiet certainty that survival is earned one steady step at a time.</p>
+    <p class="imprint-whisper">"I have carried worse. I know how to keep going."</p>
+    <span class="vocation-label">Vocations in this Imprint</span>
+    <div class="vocation-row">
+      <span class="vocation-pill">Baker</span>
+      <span class="vocation-pill">Courier</span>
+      <span class="vocation-pill">Laborer</span>
+      <span class="vocation-pill">Preserver</span>
+      <span class="vocation-pill">Scout</span>
+    </div>
+  </div>
+
+  <!-- Social & Perceptual -->
+  <div class="imprint-card social">
+    <div class="imprint-header">
+      <div class="imprint-icon"><i class="fa-solid fa-eye"></i></div>
+      <span class="imprint-title">Social &amp; Perceptual</span>
+    </div>
+    <p class="imprint-summary">The subtle art of reading hearts and rooms — sensing intent before it is spoken, navigating power without raising a voice, understanding people as living songs. This is the echo of those who once kept communities whole through understanding, lives spent in the quiet dance of human connection: listening, mediating, watching, serving.</p>
+    <p class="imprint-summary">You carry the quiet art of seeing people as they truly are: the fear behind bravado, the hope behind silence, the lie behind a smile, the trust that can be earned or shattered in a single breath. This imprint is not cold calculation; it is empathy sharpened by necessity, observation honed into instinct.</p>
+    <p class="imprint-whisper">"I see you. I know what moves you. And I know how to reach you."</p>
+    <span class="vocation-label">Vocations in this Imprint</span>
+    <div class="vocation-row">
+      <span class="vocation-pill">Hearthwarden</span>
+      <span class="vocation-pill">Manservant</span>
+      <span class="vocation-pill">Mediator</span>
+      <span class="vocation-pill">Nightwatchman</span>
+    </div>
+  </div>
+
+  <!-- Technical -->
+  <div class="imprint-card technical">
+    <div class="imprint-header">
+      <div class="imprint-icon"><i class="fa-solid fa-gear"></i></div>
+      <span class="imprint-title">Technical</span>
+    </div>
+    <p class="imprint-summary">The patient mastery of systems and tools — knowing how things fit, break, mend, and endure, turning chaos into order with steady hands. This is the echo of those who once built and mended the world piece by piece, lives spent in the logic of making and fixing: crafting, healing, studying, preserving through precision and care.</p>
+    <p class="imprint-summary">You carry the quiet certainty of the maker and healer — the instinct to see not just the object, but the sequence that brought it to this moment, and the sequence that will carry it forward. This imprint is not flashy brilliance; it is steady, methodical care.</p>
+    <p class="imprint-whisper">"There is a cause. There is a way. Let me find it."</p>
+    <span class="vocation-label">Vocations in this Imprint</span>
+    <div class="vocation-row">
+      <span class="vocation-pill">Artisan</span>
+      <span class="vocation-pill">Caretaker</span>
+    </div>
+  </div>
+
+  <!-- Tactical & Martial -->
+  <div class="imprint-card tactical">
+    <div class="imprint-header">
+      <div class="imprint-icon"><i class="fa-solid fa-shield"></i></div>
+      <span class="imprint-title">Tactical &amp; Martial</span>
+    </div>
+    <p class="imprint-summary">The calm instinct for conflict and protection — reading threats, holding lines, commanding when needed, turning force into purpose. This is the echo of those who once kept order and lives intact through readiness, lives spent standing between harm and the vulnerable: guarding, strategizing, leading, enduring the storm so others reach safety.</p>
+    <p class="imprint-summary">You carry the calm of the line-holder — the instinct to step forward when others step back, to absorb force so others can breathe, to turn chaos into order with a single, deliberate action. This imprint is not blind rage or flashy dueling; it is disciplined readiness.</p>
+    <p class="imprint-whisper">"I know how this ends if no one acts. I will be the one who acts."</p>
+    <span class="vocation-label">Vocations in this Imprint</span>
+    <div class="vocation-row">
+      <span class="vocation-pill">Protector</span>
+      <span class="vocation-pill">Steward</span>
+      <span class="vocation-pill">Waykeeper</span>
+    </div>
+  </div>
+
+  <!-- Metaphysical & Scholarly -->
+  <div class="imprint-card metaphysical">
+    <div class="imprint-header">
+      <div class="imprint-icon"><i class="fa-solid fa-scroll"></i></div>
+      <span class="imprint-title">Metaphysical &amp; Scholarly</span>
+    </div>
+    <p class="imprint-summary">The quiet attunement to the Song, history, and hidden patterns — hearing echoes of what was, sensing what might be, understanding the deeper truths beneath the surface. This is the echo of those who once kept the world's memory alive, lives spent in pursuit of meaning: studying, remembering, interpreting, guarding knowledge so the past is not lost.</p>
+    <p class="imprint-summary">You carry the quiet fire of the seeker — the instinct to ask "what does this mean?" when others shrug and move on, the patience to sit with mystery until it speaks, the ache when something ancient begins to fade. This imprint is not detached academia; it is devotion to the invisible threads that bind past to present, truth to dream, the Song to the souls who hear it.</p>
+    <p class="imprint-whisper">"I remember. I understand. And I will not let it be lost."</p>
+    <span class="vocation-label">Vocations in this Imprint</span>
+    <div class="vocation-row">
+      <span class="vocation-pill">Initiate Resonant</span>
+      <span class="vocation-pill">Lorekeeper</span>
+      <span class="vocation-pill">Student</span>
+    </div>
+  </div>
+
+  <!-- Closing -->
+  <div class="closing-hook">
+    Your past is not gone. It is the quiet strength that walks with you now.<br><br>
+    <strong>What echo still sings inside you?</strong>
+  </div>
+
+</div>
+</main>
+
+<footer>
+<div>
+  Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+  &nbsp;&nbsp;•&nbsp;&nbsp;
+  © 2026 jpcauthor. All rights reserved.
+  &nbsp;&nbsp;•&nbsp;&nbsp;
+  <a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+</div>
+</footer>
+
+</div>
+</body>
+</html>

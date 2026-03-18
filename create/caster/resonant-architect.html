@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resonant Architect &mdash; The Shaper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+:root {
+  --header-height: 72px;
+  --footer-height: 72px;
+  --content-max-width: 960px;
+  --page-max-width: 1400px;
+  --ink-color: #3a2a1a;
+  --accent: #fff1d6;
+  --nav-color: #f2e3c6;
+  --nav-shadow: rgba(0,0,0,0.85);
+  --footer-bg: rgba(0,0,0,0.88);
+  --calling-primary: #4a2e06;
+  --calling-dark: #5a3a08;
+  --calling-light: #d4a84a;
+  --calling-muted: #a07828;
+  --calling-bg-tint: rgba(200,150,40,0.07);
+  --calling-border: rgba(139,105,20,0.22);
+}
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{ font-family:'Crimson Text',Georgia,serif; color:var(--ink-color); min-height:100dvh; background:#000; line-height:1.75; font-size:1.18rem; }
+.page-wrapper{ min-height:100dvh; display:flex; flex-direction:column; max-width:var(--page-max-width); margin:0 auto; background-color:#000; background-image:url('../../images/bg.jpg'); background-size:contain; background-position:center top; background-repeat:no-repeat; background-attachment:fixed; box-shadow:0 0 80px rgba(0,0,0,0.85); position:relative; }
+header{ position:fixed; top:0; left:50%; transform:translateX(-50%); width:min(100%,var(--page-max-width)); height:var(--header-height); background-image:url('../../images/header.png'); background-size:contain; background-position:center; background-repeat:no-repeat; z-index:1000; box-shadow:0 6px 16px rgba(0,0,0,0.5); }
+header::after{ content:""; position:absolute; left:0; right:0; bottom:-14px; height:18px; background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0)); pointer-events:none; }
+nav{ max-width:var(--content-max-width); width:100%; height:100%; margin:0 auto; display:flex; align-items:center; justify-content:center; gap:2rem; padding:0 1.5rem; }
+nav a{ color:var(--nav-color); text-decoration:none; font-family:Consolas,"Courier New",monospace; font-size:1.25rem; letter-spacing:0.14em; text-transform:uppercase; transition:all .25s ease; position:relative; display:inline-flex; align-items:center; gap:.5rem; padding:.2rem .1rem; text-shadow:0 1px 2px var(--nav-shadow),0 0 6px rgba(0,0,0,0.45); }
+nav a i{ color:inherit; font-size:1.1rem; margin-right:4px; position:relative; top:-1px; }
+nav a::after{ content:""; position:absolute; left:0; bottom:-4px; width:0; height:2px; background:var(--accent); transition:width .28s ease; }
+nav a:hover{ color:var(--accent); transform:translateY(-1px); }
+nav a:hover::after{ width:100%; }
+main{ flex:1; margin-top:var(--header-height); padding:3.25rem 1rem calc(var(--footer-height) + 3rem); display:flex; justify-content:center; }
+.content-container{ max-width:var(--content-max-width); width:100%; padding:40px 80px 180px; color:var(--ink-color); margin:0 auto; border-radius:8px; box-shadow:0 20px 60px rgba(0,0,0,0.55); background-image:url('../../images/content-scroll-bg.png'); background-repeat:repeat-y; background-position:top center; background-size:100% auto; }
+.content-container h1{ font-family:'Cinzel Decorative',serif; font-size:3rem; text-align:center; margin:0 0 .4rem; letter-spacing:.06em; }
+.content-container p{ margin-bottom:1.25rem; }
+.calling-subtitle{ font-family:'Crimson Text',serif; font-size:1.1rem; font-style:italic; color:#4a2e06; text-align:center; letter-spacing:0.08em; margin:0 0 0.5rem; }
+.calling-divider{ display:flex; align-items:center; gap:0.75rem; margin:0.5rem auto 2rem; max-width:420px; }
+.calling-divider span{ flex:1; height:1px; background:linear-gradient(to right,transparent,rgba(139,105,20,0.45)); }
+.calling-divider span:last-child{ background:linear-gradient(to left,transparent,rgba(139,105,20,0.45)); }
+.calling-divider em{ color:var(--calling-primary); font-size:0.65rem; font-style:normal; }
+.soul-block{ background:var(--calling-bg-tint); border:1px solid var(--calling-border); border-left:4px solid var(--calling-light); border-radius:0 10px 10px 0; padding:1.3rem 1.6rem; margin-bottom:2rem; font-style:italic; font-size:1.05rem; color:#4a3010; line-height:1.75; }
+.section-label{ font-family:'Cinzel Decorative',serif; font-size:0.6rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--calling-primary); text-align:center; margin:2rem 0 0.8rem; }
+.resonance-grid{ display:grid; grid-template-columns:1fr; gap:1rem; margin-bottom:1.5rem; }
+.resonance-card{ background:rgba(255,248,235,0.6); border:1px solid var(--calling-border); border-radius:10px; padding:1.1rem 1.3rem 1rem; position:relative; overflow:hidden; transition:box-shadow 0.2s ease,transform 0.2s ease; }
+.resonance-card:hover{ box-shadow:0 6px 20px rgba(139,105,20,0.12); transform:translateY(-2px); }
+.resonance-card::before{ content:""; position:absolute; top:0; left:0; width:4px; height:100%; border-radius:10px 0 0 10px; }
+.resonance-card.pure::before{ background:#6b4a8a; }
+.resonance-badge{ display:inline-block; font-family:'Cinzel Decorative',serif; font-size:0.48rem; letter-spacing:0.15em; padding:0.12rem 0.45rem; border-radius:20px; text-transform:uppercase; margin-bottom:0.5rem; }
+.resonance-badge.pure{ background:rgba(107,74,138,0.15); color:#6b4a8a; border:1px solid rgba(107,74,138,0.3); }
+.resonance-card-title{ font-family:'Cinzel Decorative',serif; font-size:0.78rem; color:var(--ink-color); letter-spacing:0.05em; margin-bottom:0.6rem; }
+.resonance-row{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.25rem; font-family:'Crimson Text',serif; font-size:0.92rem; color:#5a4030; }
+.resonance-val{ font-family:'Cinzel Decorative',serif; font-size:0.85rem; color:var(--ink-color); font-weight:700; }
+.stat-block{ background:var(--calling-bg-tint); border:1px solid var(--calling-border); border-radius:10px; padding:1.2rem 1.5rem; margin-bottom:1.5rem; display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:1.2rem; }
+.stat-item{ display:flex; flex-direction:column; align-items:center; gap:0.15rem; min-width:70px; }
+.stat-value{ font-family:'Cinzel Decorative',serif; font-size:1.7rem; color:var(--ink-color); line-height:1; text-shadow:0 1px 3px rgba(0,0,0,0.08); }
+.stat-label{ font-family:'Crimson Text',serif; font-size:0.72rem; color:#4a2e06; font-style:italic; letter-spacing:0.04em; text-align:center; }
+.stat-divider{ width:1px; height:40px; background:rgba(139,105,20,0.5); }
+.stat-note{ font-family:'Crimson Text',serif; font-size:0.88rem; color:#4a2e06; text-align:center; font-style:italic; margin-top:0.5rem; line-height:1.6; width:100%; }
+.skills-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem; }
+.skill-card{ background:rgba(255,248,235,0.6); border:1px solid rgba(139,80,20,0.20); border-radius:10px; padding:1.1rem 1.2rem 1rem; display:flex; flex-direction:column; gap:0.4rem; position:relative; overflow:hidden; transition:box-shadow 0.2s ease,transform 0.2s ease; }
+.skill-card:hover{ box-shadow:0 6px 20px rgba(139,80,20,0.12); transform:translateY(-2px); }
+.skill-card::before{ content:""; position:absolute; top:0; left:0; width:4px; height:100%; border-radius:10px 0 0 10px; }
+.skill-card.knowledge::before{ background:#6b8c42; }
+.skill-card.ability::before{ background:#8b5014; }
+.skill-card-header{ display:flex; align-items:center; gap:0.6rem; }
+.skill-badge{ font-family:'Cinzel Decorative',serif; font-size:0.55rem; letter-spacing:0.15em; padding:0.15rem 0.5rem; border-radius:20px; text-transform:uppercase; font-weight:700; }
+.skill-badge.k{ background:rgba(107,140,66,0.15); color:#4a6a20; border:1px solid rgba(107,140,66,0.3); }
+.skill-badge.a{ background:rgba(139,80,20,0.12); color:#8b5014; border:1px solid rgba(139,80,20,0.25); }
+.skill-name{ font-family:'Cinzel Decorative',serif; font-size:0.85rem; color:var(--ink-color); letter-spacing:0.05em; }
+.skill-desc{ font-family:'Crimson Text',serif; font-size:0.95rem; color:#5a4030; line-height:1.6; margin:0; }
+.ambage-row{ display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin-bottom:1.5rem; }
+.ambage-pill{ font-family:'Cinzel Decorative',serif; font-size:0.62rem; letter-spacing:0.12em; padding:0.4rem 1.2rem; border-radius:30px; transition:transform 0.18s ease; }
+.ambage-pill:hover{ transform:translateY(-2px); }
+.ambage-pill.resonant{ background:rgba(107,140,66,0.12); border:1px solid rgba(107,140,66,0.3); color:#4a6a20; }
+.posture-grid{ display:grid; grid-template-columns:1fr 1fr; gap:0.85rem; margin-bottom:1.2rem; }
+.posture-card{ background:rgba(255,248,235,0.55); border:1px solid var(--calling-border); border-radius:10px; padding:1rem 1.1rem 0.9rem; text-align:center; transition:box-shadow 0.2s ease,transform 0.2s ease; }
+.posture-card:hover{ box-shadow:0 5px 16px rgba(139,105,20,0.12); transform:translateY(-2px); }
+.posture-name{ font-family:'Cinzel Decorative',serif; font-size:0.75rem; color:var(--ink-color); letter-spacing:0.06em; margin-bottom:0.5rem; }
+.posture-desc{ font-family:'Crimson Text',serif; font-size:0.88rem; color:#5a4030; line-height:1.55; }
+.gift-card{ background:var(--calling-bg-tint); border:1px solid var(--calling-border); border-radius:10px; padding:1.3rem 1.5rem 1.2rem; margin-bottom:1.1rem; position:relative; overflow:hidden; }
+.gift-card::before{ content:""; position:absolute; top:0; left:0; width:100%; height:3px; border-radius:10px 10px 0 0; }
+.gift-card.defensive::before{ background:linear-gradient(to right,#6b8c42,transparent); }
+.gift-card.offensive::before{ background:linear-gradient(to right,#8b5014,transparent); }
+.gift-card.surge-off::before{ background:linear-gradient(to right,#c47820,transparent); }
+.gift-card.surge-def::before{ background:linear-gradient(to right,#4a6a20,transparent); }
+.gift-type{ font-family:'Cinzel Decorative',serif; font-size:0.6rem; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:0.3rem; }
+.gift-type.defensive{ color:#4a6a20; }
+.gift-type.offensive{ color:#8b5014; }
+.gift-type.surge-off{ color:#c47820; }
+.gift-type.surge-def{ color:#4a6a20; }
+.gift-name{ font-family:'Cinzel Decorative',serif; font-size:0.95rem; color:var(--ink-color); letter-spacing:0.05em; margin-bottom:0.8rem; }
+.gift-body{ font-family:'Crimson Text',serif; font-size:0.97rem; color:#4a3010; line-height:1.7; }
+.gift-body p{ margin-bottom:0.6rem; }
+.gift-body p:last-child{ margin-bottom:0; }
+.gift-trigger{ font-family:'Cinzel Decorative',serif; font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; color:#4a2e06; margin:0.7rem 0 0.25rem; }
+.gift-effect-list{ margin:0.4rem 0 0.6rem 1.2rem; }
+.gift-effect-list li{ margin-bottom:0.3rem; }
+.gift-narrative{ font-style:italic; font-size:0.9rem; color:#4a2e06; border-top:1px solid rgba(139,105,20,0.15); padding-top:0.7rem; margin-top:0.7rem; }
+.weapon-row{ display:flex; justify-content:center; gap:0.8rem; flex-wrap:wrap; margin-bottom:1.5rem; }
+.weapon-pill{ font-family:'Cinzel Decorative',serif; font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.35rem 1.1rem; border-radius:30px; background:rgba(200,150,40,0.10); border:1px solid rgba(139,105,20,0.28); color:var(--calling-dark); }
+.playstyle-hook{ background:var(--calling-bg-tint); border:1px solid var(--calling-border); border-radius:10px; padding:1.3rem 1.6rem; text-align:center; font-style:italic; font-size:1.05rem; color:#4a3010; line-height:1.75; margin-top:0.5rem; }
+.callout-box{ background:#1a0f05; color:#d4a84a; border-radius:8px; padding:1.1rem 1.4rem; margin-bottom:1.5rem; font-family:'Crimson Text',serif; font-size:0.95rem; line-height:1.65; }
+.callout-box strong{ color:#e8c87a; }
+footer{ position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:min(100%,var(--page-max-width)); height:var(--footer-height); background:var(--footer-bg); color:#ccc; display:flex; align-items:center; justify-content:center; text-align:center; padding:0 1rem; font-size:.95rem; border-top:1px solid #444; z-index:1000; }
+footer a{ color:#d4a373; text-decoration:none; }
+footer a:hover{ text-decoration:underline; }
+@media(max-width:768px){ nav{ gap:1rem; padding:0 1rem; flex-wrap:wrap; } nav a{ font-size:.9rem; } .content-container{ padding:36px 32px 150px; } .content-container h1{ font-size:2.2rem; } .skills-grid{ grid-template-columns:1fr; } .posture-grid{ grid-template-columns:1fr; } }
+@media(max-width:480px){ body{ font-size:1.05rem; } .content-container{ padding:28px 20px 130px; } }
+</style>
+</head>
+
+<body>
+<div class="page-wrapper">
+
+<!-- ============================================================ -->
+<!-- CALLING RESONANT ARCHITECT BEGINNING                                       -->
+<!-- FILE: callings/resonant-architect.html                                     -->
+<!-- ============================================================ -->
+
+<header>
+<nav>
+  <a href="../../geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+  <a href="../../lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+  <a href="../../rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+  <a href="../../create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+  <a href="../../tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+<div class="content-container">
+
+  <h1>Resonant Architect</h1>
+  <p class="calling-subtitle">The Shaper</p>
+  <div class="calling-divider"><span></span><em>&#10022;</em><span></span></div>
+
+  <div class="soul-block">The Resonant Architect is the Shaper. Reality is not sacred. It is schematic. Space is measurable. Distance is adjustable. Terrain is provisional. Where others see battlefield, the Architect sees structure. Where others react to environment, the Architect edits it. Through disciplined calculation and Resonant precision, they alter geometry itself. Angles bend. Lines shift. The battlefield becomes draftwork in motion.</div>
+
+  <!-- Identity -->
+  <p class="section-label">Identity — Calculated Reality</p>
+  <p>The Resonant Architect studies trajectory, elevation, velocity, structural load, and spatial tension. They understand that distance determines survival and that terrain dictates outcome. Through Resonant alignment and geometric will, they shift footing, redirect force, and reshape engagement zones. The battlefield is not chaos; it is an equation waiting to be solved.</p>
+
+  <!-- Resonance Profile -->
+  <p class="section-label">Resonance Profile</p>
+  <div class="resonance-grid">
+    <div class="resonance-card pure">
+      <div><span class="resonance-badge pure">True Resonant Caster</span></div>
+      <p class="resonance-card-title">Resonant Path</p>
+      <div class="resonance-row"><span>Wellspring Die</span><span class="resonance-val">d12</span></div>
+      <div class="resonance-row"><span>Base Wellspring</span><span class="resonance-val">36 WP</span></div>
+      <div class="resonance-row"><span>Path Points at Creation</span><span class="resonance-val">6</span></div>
+      <div class="resonance-row"><span>Per-Path Cap</span><span class="resonance-val">4</span></div>
+      <div class="resonance-row"><span>Lineage Path Nudge</span><span class="resonance-val">Stacks normally</span></div>
+      <div class="resonance-row"><span>Path Selection</span><span class="resonance-val">Player's Choice</span></div>
+    </div>
+  </div>
+
+  <!-- Health & Armor -->
+  <p class="section-label">Health &amp; Armor</p>
+  <div class="stat-block">
+    <div class="stat-item"><span class="stat-value">d8</span><span class="stat-label">Health Die</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><span class="stat-value">27</span><span class="stat-label">Min HP</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><span class="stat-value">48</span><span class="stat-label">Max HP</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><span class="stat-value">3</span><span class="stat-label">Starting Armor Tier</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><span class="stat-value">5</span><span class="stat-label">Max Armor Tier</span></div>
+    <p class="stat-note">The Architect relies on control of space rather than brute endurance. Mobility and clarity take precedence over heavy armor.</p>
+  </div>
+
+  <!-- Skills -->
+  <p class="section-label">Skill Matrix</p>
+  <p style="font-family:'Crimson Text',serif; font-size:0.85rem; color:#4a2e06; text-align:center; font-style:italic; margin:0 0 0.8rem;">Choose two from the four below</p>
+  <div class="skills-grid">
+    <div class="skill-card ability">
+      <div class="skill-card-header"><span class="skill-badge a">Ability</span><span class="skill-name">Tactics</span></div>
+      <p class="skill-desc">Spatial manipulation is useless without strategic intent. The Architect positions allies and distorts enemy movement through calculated control.</p>
+    </div>
+    <div class="skill-card ability">
+      <div class="skill-card-header"><span class="skill-badge a">Ability</span><span class="skill-name">Athletics</span></div>
+      <p class="skill-desc">Understanding motion allows the Architect to exploit the geometry they create. Repositioning complements structural alteration.</p>
+    </div>
+    <div class="skill-card ability">
+      <div class="skill-card-header"><span class="skill-badge a">Ability</span><span class="skill-name">Perception</span></div>
+      <p class="skill-desc">The Architect must read subtle elevation changes, structural weakness, and opportunity windows before reshaping them.</p>
+    </div>
+    <div class="skill-card knowledge">
+      <div class="skill-card-header"><span class="skill-badge k">Knowledge</span><span class="skill-name">Mathematics</span></div>
+      <p class="skill-desc">Resonant shaping requires internalized geometry. Angles, vectors, and proportional distortion guide their manipulation of space.</p>
+    </div>
+  </div>
+
+  <!-- Combat Ambage -->
+  <p class="section-label">Combat Ambage</p>
+  <div class="ambage-row">
+    <span class="ambage-pill resonant">Resonant Combat Master</span>
+  </div>
+  <p style="font-family:'Crimson Text',serif; font-size:0.85rem; color:#4a2e06; text-align:center; font-style:italic; margin-bottom:2rem;">The Resonant Architect pursues mastery as a Resonant Combat Master. Reality is not fixed — it is drafted.</p>
+
+  <!-- Defensive Postures -->
+  <p class="section-label">Defensive Postures</p>
+  <p style="font-family:'Crimson Text',serif; font-size:0.85rem; color:#4a2e06; text-align:center; font-style:italic; margin-bottom:0.75rem;">Resonant Casters &mdash; Unlocked at Creation</p>
+  <div class="posture-grid">
+    <div class="posture-card">
+      <p class="posture-name">Absorption Shield</p>
+      <p class="posture-desc">Aqua or Terra. Increase attacker's TN by <strong>1</strong>. Roll d4 equal to Path Rating and add total to Armor Points as Bonus Armor.</p>
+    </div>
+    <div class="posture-card">
+      <p class="posture-name">Damage Shield</p>
+      <p class="posture-desc">Ignis. No avoidance bonus. When struck in melee, the attacker takes retaliatory Ignis damage.</p>
+    </div>
+  </div>
+
+  <!-- Gifts -->
+  <p class="section-label">Bestowed Gifts of the Calling</p>
+
+  <div class="gift-card defensive">
+    <p class="gift-type defensive">Defensive Gift</p>
+    <p class="gift-name">Structural Repositioning</p>
+    <div class="gift-body">
+      <p>The Resonant Architect intuitively occupies mathematically optimal space. They gain <strong>+1 to Defensive Rating at all times</strong>, representing continuous micro-adjustment of stance, angle, and spatial relation to incoming force. This is not reflex alone; it is calculation applied instinctively.</p>
+    </div>
+  </div>
+
+  <div class="gift-card offensive">
+    <p class="gift-type offensive">Offensive Gift</p>
+    <p class="gift-name">Warped Terrain Equation</p>
+    <div class="gift-body">
+      <p>On an <strong>Ultimate Success</strong>, the Architect distorts a <strong>10-foot square</strong> surrounding the target, altering its spatial stability. All creatures within that square increase their <strong>TN by 2</strong> on attack rolls while inside the warped terrain. The distortion lasts for <strong>2 rounds</strong>. Footing shifts, angles misalign, and predictable motion becomes unreliable.</p>
+    </div>
+  </div>
+
+  <!-- Surges -->
+  <p class="section-label">Combat Surges</p>
+
+  <div class="gift-card surge-off">
+    <p class="gift-type surge-off">Offensive Surge</p>
+    <p class="gift-name">Warped Equation</p>
+    <div class="gift-body">
+      <p>The Resonant Architect temporarily distorts the geometry of the battlefield, forcing enemies to operate within unstable spatial conditions.</p><p class="gift-trigger">Trigger &mdash; Declare at the start of your turn</p><p>Choose a <strong>3-meter square area</strong> within 6 meters. For <strong>2 rounds</strong>, all enemies inside that area suffer <strong>+2 TN on attack rolls</strong>.</p><p class="gift-narrative">Reality bends slightly as the Architect overlays a flawed geometric solution onto the battlefield. Footing becomes unreliable, trajectories misalign, and predictable motion fails.</p>
+    </div>
+  </div>
+
+  <div class="gift-card surge-def">
+    <p class="gift-type surge-def">Defensive Surge</p>
+    <p class="gift-name">Stabilized Geometry</p>
+    <div class="gift-body">
+      <p>The Resonant Architect reinforces the spatial structure around themselves, diffusing incoming force through controlled distortion. May be declared after taking damage &mdash; <strong>cannot be used while stunned, disoriented, unconscious, or surprised</strong>.</p><p class="gift-trigger">Trigger &mdash; After taking damage</p><p>Reduce the incoming damage by <strong>50%</strong>.</p><p class="gift-narrative">The Architect recalculates the structural tension of the space around them, dispersing the impact before it can fully resolve.</p>
+    </div>
+  </div>
+
+  <!-- Weapons -->
+  <p class="section-label">Weapon Affinity</p>
+  <div class="weapon-row">
+    <span class="weapon-pill">Staff</span>
+    <span class="weapon-pill">Compass</span>
+    <span class="weapon-pill">Drafting Quill</span>
+  </div>
+  <p style="font-family:'Crimson Text',serif; font-size:0.88rem; color:#4a2e06; text-align:center; font-style:italic; margin-bottom:2rem;">These implements serve as symbolic and practical conduits of calculation rather than conventional weapons.</p>
+
+  <!-- Playstyle -->
+  <p class="section-label">Playstyle Hook</p>
+  <div class="playstyle-hook">You do not overpower enemies; you redesign their environment. You alter angles, redefine footing, and force adversaries to fight inside flawed geometry. Where others clash, you solve. Where others endure, you edit. Reality is not fixed — it is drafted.</div>
+
+</div>
+</main>
+
+<footer>
+<div>
+  Email: <a href="mailto:jpcauthor@rivendawn.com">jpcauthor@rivendawn.com</a>
+  &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+  &copy; 2026 jpcauthor. All rights reserved.
+  &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+  <a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+</div>
+</footer>
+
+</div>
+
+<!-- ============================================================ -->
+<!-- CALLING RESONANT ARCHITECT END                                             -->
+<!-- FILE: callings/resonant-architect.html                                     -->
+<!-- ============================================================ -->
+
+</body>
+</html>

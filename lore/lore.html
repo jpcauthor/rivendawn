@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rivendawn</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- Styles -->
+<style>
+
+:root {
+--header-height: 72px;
+--footer-height: 72px;
+--content-max-width: 960px;
+--page-max-width: 1400px;
+--ink-color: #3a2a1a;
+--accent: #fff1d6;
+--nav-color: #f2e3c6;
+--nav-shadow: rgba(0,0,0,0.85);
+--footer-bg: rgba(0,0,0,0.88);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Crimson Text',Georgia,serif;
+color:var(--ink-color);
+min-height:100dvh;
+background:#000;
+line-height:1.75;
+font-size:1.18rem;
+}
+
+.page-wrapper{
+min-height:100dvh;
+display:flex;
+flex-direction:column;
+max-width:var(--page-max-width);
+margin:0 auto;
+background-color:#000;
+background-image:url('../images/bg.jpg');
+background-size:contain;
+background-position:center top;
+background-repeat:no-repeat;
+background-attachment:fixed;
+box-shadow:0 0 80px rgba(0,0,0,0.85);
+position:relative;
+}
+
+header{
+position:fixed;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--header-height);
+background-image:url('../images/header.png');
+background-size:contain;
+background-position:center;
+background-repeat:no-repeat;
+z-index:1000;
+box-shadow:0 6px 16px rgba(0,0,0,0.5);
+}
+
+header::after{
+content:"";
+position:absolute;
+left:0;
+right:0;
+bottom:-14px;
+height:18px;
+background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0));
+pointer-events:none;
+}
+
+nav{
+max-width:var(--content-max-width);
+width:100%;
+height:100%;
+margin:0 auto;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:2rem;
+padding:0 1.5rem;
+}
+
+nav a{
+color:var(--nav-color);
+text-decoration:none;
+font-family:Consolas,"Courier New",monospace;
+font-size:1.25rem;
+letter-spacing:0.14em;
+text-transform:uppercase;
+transition:all .25s ease;
+position:relative;
+display:inline-flex;
+align-items:center;
+gap:.5rem;
+padding:.2rem .1rem;
+text-shadow:
+0 1px 2px var(--nav-shadow),
+0 0 6px rgba(0,0,0,0.45);
+}
+
+nav a i{
+color:inherit;
+font-size:1.1rem;
+margin-right:4px;
+position:relative;
+top:-1px;
+}
+
+nav a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-4px;
+width:0;
+height:2px;
+background:var(--accent);
+transition:width .28s ease;
+}
+
+nav a:hover{
+color:var(--accent);
+transform:translateY(-1px);
+}
+
+nav a:hover::after{
+width:100%;
+}
+
+main{
+flex:1;
+margin-top:var(--header-height);
+padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+display:flex;
+justify-content:center;
+}
+
+.content-container{
+max-width:var(--content-max-width);
+width:100%;
+padding:40px 80px 180px;
+color:var(--ink-color);
+margin:0 auto;
+border-radius:8px;
+box-shadow:0 20px 60px rgba(0,0,0,0.55);
+background-image:url('../images/content-scroll-bg.png');
+background-repeat:repeat-y;
+background-position:top center;
+background-size:100% auto;
+}
+
+.content-container h1,
+.content-container h2{
+font-family:'Cinzel Decorative',serif;
+letter-spacing:.06em;
+}
+
+.content-container h1{
+font-size:3rem;
+text-align:center;
+margin:0 0 .75rem;
+}
+
+.content-container h2{
+font-size:2.15rem;
+margin:.9rem 0 .75rem;
+border-bottom:1px solid rgba(139,0,0,0.15);
+padding-bottom:.6rem;
+}
+
+.content-container p{
+margin-bottom:1.25rem;
+}
+
+.lore-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:1.6rem;
+margin:2rem 0 3rem;
+}
+
+.lore-card{
+background:rgba(255,248,235,0.75);
+border:1px solid rgba(90,60,30,0.25);
+border-radius:10px;
+padding:1.4rem;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+transition:transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lore-card:hover{
+transform:translateY(-4px);
+box-shadow:0 16px 32px rgba(0,0,0,0.25);
+}
+
+.lore-card h3{
+font-family:'Cinzel Decorative',serif;
+font-size:1.25rem;
+margin-bottom:.6rem;
+}
+
+.lore-card p{
+font-size:0.95rem;
+margin-bottom:1rem;
+}
+
+.lore-card a{
+text-decoration:none;
+font-weight:bold;
+color:#7a1f1f;
+}
+
+.lore-card a:hover{
+color:#a52a2a;
+}
+
+footer{
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--footer-height);
+background:var(--footer-bg);
+color:#ccc;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:0 1rem;
+font-size:.95rem;
+border-top:1px solid #444;
+z-index:1000;
+}
+
+footer a{
+color:#d4a373;
+text-decoration:none;
+}
+
+footer a:hover{
+text-decoration:underline;
+}
+
+@media (max-width:768px){
+.content-container{
+padding:80px 40px 140px;
+}
+
+.content-container h1{
+font-size:2.2rem;
+}
+
+.content-container h2{
+font-size:1.7rem;
+}
+}
+
+@media (max-width:480px){
+.content-container{
+padding:70px 24px 110px;
+}
+
+.content-container h1{
+font-size:1.85rem;
+}
+
+.content-container h2{
+font-size:1.45rem;
+}
+
+body{
+font-size:1.05rem;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+<header>
+<nav>
+<a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+<a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+<a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+<a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+<a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+
+<div class="content-container">
+
+<h1>Origins &amp; Identity</h1>
+
+<!--<p style="text-align:center;">The crucible of self.</p>-->
+
+<h2 style="text-align:center;">Primer Archive</h2>
+
+<p style="text-align:center;">
+Explore the foundational identities, inheritances, burdens, and choices that shape a soul in Rivendawn.
+</p>
+
+<section class="lore-grid">
+
+<div class="lore-card">
+<h3>A Primer of Rivendawn History</h3>
+<p>The long memory of the world — from the first stirrings of the Song to the rise and fall of empires that shaped the present age.</p>
+<a href="history-primer.html">Read the Chronicle →</a>
+</div>
+
+<div class="lore-card">
+<h3>A Primer of the Citadels</h3>
+<p>The Crimson Citadel and its sister strongholds stand as pillars of civilization, power, and knowledge across Rivendawn.</p>
+<a href="citadels-primer.html">Explore the Citadels →</a>
+</div>
+
+<div class="lore-card">
+<h3>A Primer of the Regions of Rivendawn</h3>
+<p>From fertile valleys to hostile frontiers, the lands of Rivendawn shape the people who struggle to survive within them.</p>
+<a href="regions-primer.html">Survey the Lands →</a>
+</div>
+
+<div class="lore-card">
+<h3>A Primer on the Peoples of Rivendawn</h3>
+<p>The cultures, lineages, and societies that populate the world — each shaped by history, environment, and the Song.</p>
+<a href="peoples-primer.html">Meet the Peoples →</a>
+</div>
+
+<div class="lore-card">
+<h3>Faith and Belief in Rivendawn</h3>
+<p>Gods, doctrines, cults, and philosophies — the beliefs that give meaning to life, death, and everything between.</p>
+<a href="faith-belief-primer.html">Examine the Faiths →</a>
+</div>
+
+<div class="lore-card">
+<h3>The World Today</h3>
+<p>A snapshot of the present age — the powers in motion, the tensions rising, and the fragile balance of the modern era.</p>
+<a href="world-today.html">View the Present →</a>
+</div>
+
+</section>
+
+</div>
+
+</main>
+
+<footer>
+<div>
+Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+&nbsp;&nbsp;•&nbsp;&nbsp;
+© 2026 jpcauthor. All rights reserved.
+&nbsp;&nbsp;•&nbsp;&nbsp;
+<a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+</div>
+</footer>
+
+</div>
+
+</body>
+</html>

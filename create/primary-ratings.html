@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Primary Ratings — The Foundations of Capability</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+:root {
+  --header-height: 72px;
+  --footer-height: 72px;
+  --content-max-width: 960px;
+  --page-max-width: 1400px;
+  --ink-color: #3a2a1a;
+  --accent: #fff1d6;
+  --nav-color: #f2e3c6;
+  --nav-shadow: rgba(0,0,0,0.85);
+  --footer-bg: rgba(0,0,0,0.88);
+  --pr-primary: #4a2e06;
+  --pr-border: rgba(139,105,20,0.22);
+  --pr-bg-tint: rgba(200,150,40,0.07);
+  --pr-light: #d4a84a;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+
+body{
+  font-family:'Crimson Text',Georgia,serif;
+  color:var(--ink-color);
+  min-height:100dvh;
+  background:#000;
+  line-height:1.75;
+  font-size:1.18rem;
+}
+
+.page-wrapper{
+  min-height:100dvh;
+  display:flex; flex-direction:column;
+  max-width:var(--page-max-width);
+  margin:0 auto;
+  background-color:#000;
+  background-image:url('../images/bg.jpg');
+  background-size:contain;
+  background-position:center top;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  box-shadow:0 0 80px rgba(0,0,0,0.85);
+  position:relative;
+}
+
+header{
+  position:fixed; top:0; left:50%;
+  transform:translateX(-50%);
+  width:min(100%,var(--page-max-width));
+  height:var(--header-height);
+  background-image:url('../images/header.png');
+  background-size:contain; background-position:center;
+  background-repeat:no-repeat;
+  z-index:1000;
+  box-shadow:0 6px 16px rgba(0,0,0,0.5);
+}
+header::after{
+  content:""; position:absolute;
+  left:0; right:0; bottom:-14px; height:18px;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0));
+  pointer-events:none;
+}
+
+nav{
+  max-width:var(--content-max-width);
+  width:100%; height:100%;
+  margin:0 auto;
+  display:flex; align-items:center; justify-content:center;
+  gap:2rem; padding:0 1.5rem;
+}
+nav a{
+  color:var(--nav-color); text-decoration:none;
+  font-family:Consolas,"Courier New",monospace;
+  font-size:1.25rem; letter-spacing:0.14em; text-transform:uppercase;
+  transition:all .25s ease; position:relative;
+  display:inline-flex; align-items:center;
+  gap:.5rem; padding:.2rem .1rem;
+  text-shadow:0 1px 2px var(--nav-shadow),0 0 6px rgba(0,0,0,0.45);
+}
+nav a i{ color:inherit; font-size:1.1rem; margin-right:4px; position:relative; top:-1px; }
+nav a::after{ content:""; position:absolute; left:0; bottom:-4px; width:0; height:2px; background:var(--accent); transition:width .28s ease; }
+nav a:hover{ color:var(--accent); transform:translateY(-1px); }
+nav a:hover::after{ width:100%; }
+
+main{
+  flex:1;
+  margin-top:var(--header-height);
+  padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+  display:flex; justify-content:center;
+}
+
+.content-container{
+  max-width:var(--content-max-width);
+  width:100%; padding:40px 80px 180px;
+  color:var(--ink-color); margin:0 auto;
+  border-radius:8px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.55);
+  background-image:url('../images/content-scroll-bg.png');
+  background-repeat:repeat-y;
+  background-position:top center;
+  background-size:100% auto;
+}
+
+.content-container h1{
+  font-family:'Cinzel Decorative',serif;
+  font-size:3rem; text-align:center;
+  margin:0 0 .4rem; letter-spacing:.06em;
+}
+.content-container p{ margin-bottom:1.25rem; }
+
+.page-subtitle{
+  font-family:'Crimson Text',serif;
+  font-size:1.1rem; font-style:italic;
+  color:#4a2e06; text-align:center;
+  letter-spacing:0.08em; margin:0 0 0.5rem;
+}
+.page-divider{
+  display:flex; align-items:center; gap:0.75rem;
+  margin:0.5rem auto 2.5rem; max-width:420px;
+}
+.page-divider span{ flex:1; height:1px; background:linear-gradient(to right,transparent,rgba(139,105,20,0.45)); }
+.page-divider span:last-child{ background:linear-gradient(to left,transparent,rgba(139,105,20,0.45)); }
+.page-divider em{ color:#4a2e06; font-size:0.65rem; font-style:normal; }
+
+.section-label{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.6rem; letter-spacing:0.22em;
+  text-transform:uppercase; color:#4a2e06;
+  text-align:center; margin:2rem 0 0.8rem;
+}
+
+.mechanic-note{
+  background:#1a0f05;
+  border:1px solid rgba(139,105,20,0.35);
+  border-radius:10px;
+  padding:1.1rem 1.4rem; margin-bottom:2rem;
+  font-family:'Crimson Text',serif;
+  font-size:0.95rem; color:#d4a84a;
+  line-height:1.7; text-align:center; font-style:italic;
+}
+
+.scale-table{
+  width:100%; border-collapse:collapse;
+  margin-bottom:1.5rem; font-size:0.95rem;
+}
+.scale-table th{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.55rem; letter-spacing:0.14em; text-transform:uppercase;
+  background:var(--pr-bg-tint); color:#4a2e06;
+  padding:0.5rem 0.9rem; border:1px solid var(--pr-border); text-align:left;
+}
+.scale-table td{
+  padding:0.5rem 0.9rem; border:1px solid var(--pr-border);
+  color:#4a3010; line-height:1.55;
+}
+.scale-table tr:nth-child(even) td{ background:var(--pr-bg-tint); }
+.scale-table td:first-child{ font-family:'Cinzel Decorative',serif; font-size:0.78rem; color:#4a2e06; white-space:nowrap; }
+.scale-table td.cap-row{ font-weight:700; color:#8b3a14; background:rgba(139,58,20,0.07); }
+
+.anchor-table{
+  width:100%; border-collapse:collapse;
+  margin-bottom:1.5rem; font-size:0.92rem;
+}
+.anchor-table th{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.52rem; letter-spacing:0.14em; text-transform:uppercase;
+  background:var(--pr-bg-tint); color:#4a2e06;
+  padding:0.5rem 0.9rem; border:1px solid var(--pr-border); text-align:left;
+}
+.anchor-table td{ padding:0.5rem 0.9rem; border:1px solid var(--pr-border); color:#4a3010; }
+.anchor-table tr:nth-child(even) td{ background:var(--pr-bg-tint); }
+.anchor-table td:first-child{ font-family:'Cinzel Decorative',serif; font-size:0.78rem; color:#4a2e06; }
+.anchor-table td:nth-child(2){ font-style:italic; color:#7a5030; }
+
+/* ── Expand/Collapse controls ── */
+.rating-controls{
+  display:flex; justify-content:flex-end; gap:0.6rem;
+  margin-bottom:1rem;
+}
+.control-btn{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.52rem; letter-spacing:0.16em; text-transform:uppercase;
+  color:#6b4f33; background:rgba(58,42,26,0.05);
+  border:1px solid rgba(58,42,26,0.20); border-radius:4px;
+  padding:0.3rem 0.75rem; cursor:pointer;
+  transition:background 0.2s ease, color 0.2s ease;
+}
+.control-btn:hover{ background:rgba(58,42,26,0.12); color:#2e1f0e; }
+
+/* ── Collapsible rating toggle ── */
+.rating-toggle{
+  margin-bottom:1rem;
+  border:1px solid var(--pr-border);
+  border-radius:10px;
+  overflow:hidden;
+  transition:box-shadow 0.2s ease;
+}
+.rating-toggle:hover{ box-shadow:0 4px 16px rgba(139,105,20,0.10); }
+
+.rating-toggle > summary{
+  list-style:none; cursor:pointer;
+  padding:1rem 1.3rem;
+  display:flex; align-items:center; gap:0.75rem;
+  background:rgba(255,248,235,0.6);
+  transition:background 0.2s ease;
+  user-select:none;
+}
+.rating-toggle > summary::-webkit-details-marker{ display:none; }
+.rating-toggle > summary:hover{ background:rgba(255,248,235,0.85); }
+
+/* Left accent stripe on the summary */
+.rating-toggle.agility > summary      { border-left:5px solid #6b9abf; }
+.rating-toggle.strength > summary     { border-left:5px solid #8b3a14; }
+.rating-toggle.vitality > summary     { border-left:5px solid #3a7a6a; }
+.rating-toggle.intelligence > summary { border-left:5px solid #c47a20; }
+.rating-toggle.wisdom > summary       { border-left:5px solid #7a6abf; }
+.rating-toggle.social > summary       { border-left:5px solid #8b6a3a; }
+
+.summary-icon{
+  width:34px; height:34px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.9rem; flex-shrink:0;
+}
+.rating-toggle.agility .summary-icon      { background:rgba(107,154,191,0.15); color:#4a7aaa; border:1px solid rgba(107,154,191,0.30); }
+.rating-toggle.strength .summary-icon     { background:rgba(139,58,20,0.12); color:#8b3a14; border:1px solid rgba(139,58,20,0.28); }
+.rating-toggle.vitality .summary-icon     { background:rgba(58,122,106,0.12); color:#3a7a6a; border:1px solid rgba(58,122,106,0.28); }
+.rating-toggle.intelligence .summary-icon { background:rgba(196,122,32,0.12); color:#c47a20; border:1px solid rgba(196,122,32,0.28); }
+.rating-toggle.wisdom .summary-icon       { background:rgba(122,106,191,0.12); color:#7a6abf; border:1px solid rgba(122,106,191,0.28); }
+.rating-toggle.social .summary-icon       { background:rgba(139,106,58,0.12); color:#8b6a3a; border:1px solid rgba(139,106,58,0.28); }
+
+.summary-name{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.95rem; color:var(--ink-color);
+  letter-spacing:0.05em; flex:1;
+}
+.summary-anchor{
+  font-family:'Crimson Text',serif;
+  font-size:0.82rem; font-style:italic;
+  color:#8b5014; margin-right:0.5rem;
+}
+.summary-chevron{
+  flex-shrink:0; color:#6b4f33; font-size:0.75rem;
+  transition:transform 0.25s ease;
+}
+.rating-toggle[open] > summary .summary-chevron{
+  transform:rotate(180deg);
+}
+
+/* ── Rating card body (inside details) ── */
+.rating-body-wrap{
+  padding:1.2rem 1.6rem 1.3rem;
+  background:rgba(255,248,235,0.45);
+  border-top:1px solid var(--pr-border);
+  animation:fadeIn 0.2s ease;
+}
+@keyframes fadeIn{
+  from{ opacity:0; transform:translateY(-4px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+.rating-anchor-line{
+  font-family:'Crimson Text',serif;
+  font-size:0.88rem; font-style:italic;
+  color:#8b5014; margin-bottom:0.8rem;
+}
+.rating-text{
+  font-family:'Crimson Text',serif;
+  font-size:0.97rem; color:#4a3010;
+  line-height:1.7; margin-bottom:0.7rem;
+}
+.rating-essence{
+  font-family:'Crimson Text',serif;
+  font-size:0.97rem; font-style:italic;
+  font-weight:700; color:#4a2e06;
+  margin-bottom:1rem;
+}
+
+.ladder-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.52rem; letter-spacing:0.18em;
+  text-transform:uppercase; color:#4a2e06;
+  margin-bottom:0.5rem; display:block;
+}
+.ladder-grid{
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:0.35rem;
+}
+@media(max-width:580px){ .ladder-grid{ grid-template-columns:repeat(2,1fr); } }
+
+.ladder-step{
+  background:rgba(200,150,40,0.06);
+  border:1px solid rgba(139,105,20,0.18);
+  border-radius:8px; padding:0.4rem 0.6rem;
+  font-family:'Crimson Text',serif;
+  font-size:0.88rem; line-height:1.4;
+}
+.ladder-step .step-num{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.72rem; color:#4a2e06;
+  font-weight:700; display:block;
+}
+.ladder-step .step-label{ color:#8b5014; font-weight:700; display:block; font-size:0.88rem; }
+.ladder-step .step-desc{ color:#6a5040; font-size:0.82rem; display:block; font-style:italic; }
+.ladder-step.cap-step{ background:rgba(139,58,20,0.08); border-color:rgba(139,58,20,0.28); }
+.ladder-step.cap-step .step-num{ color:#8b3a14; }
+.ladder-step.cap-step .step-label{ color:#8b3a14; }
+
+footer{
+  position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+  width:min(100%,var(--page-max-width));
+  height:var(--footer-height);
+  background:var(--footer-bg);
+  color:#ccc; display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:0 1rem; font-size:.95rem;
+  border-top:1px solid #444; z-index:1000;
+}
+footer a{ color:#d4a373; text-decoration:none; }
+footer a:hover{ text-decoration:underline; }
+
+@media(max-width:768px){
+  nav{ gap:1rem; padding:0 1rem; flex-wrap:wrap; }
+  nav a{ font-size:.9rem; }
+  .content-container{ padding:36px 32px 150px; }
+  .content-container h1{ font-size:2.2rem; }
+}
+@media(max-width:480px){
+  body{ font-size:1.05rem; }
+  .content-container{ padding:28px 20px 130px; }
+}
+
+</style>
+</head>
+
+<body>
+<div class="page-wrapper">
+
+<header>
+<nav>
+  <a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+  <a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+  <a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+  <a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+  <a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+<div class="content-container">
+
+  <h1>Primary Ratings</h1>
+  <p class="page-subtitle">The Foundations of Capability</p>
+  <div class="page-divider"><span></span><em>◆</em><span></span></div>
+
+  <p>Every character in Rivendawn possesses fundamental capabilities that shape how they interact with the world. These capabilities are known as <strong>Primary Ratings</strong>.</p>
+
+  <p>Primary Ratings represent the natural foundations of a character's body, mind, and presence. They describe what a person is inherently capable of supporting before training, specialization, or Resonant power refines those abilities further.</p>
+
+  <p>Where skills represent learned techniques, Primary Ratings describe the deeper structure that makes those techniques possible. In moments of pressure — when danger, discovery, or decisive action defines the course of events — Primary Ratings reveal the limits and potential of a character's capabilities.</p>
+
+  <p>They are the core measurements of what a person can reliably accomplish when the Song is in motion.</p>
+
+  <!-- Mechanic note -->
+  <div class="mechanic-note">
+    <strong>How Primary Ratings Work in Play</strong><br><br>
+    Primary Ratings serve as your foundational input in the Core Resolution Engine.<br><br>
+    <strong>Capability = Primary Rating + Ability or Knowledge + Context Rating</strong><br><br>
+    The hard cap of 4 applies at creation and remains in place. There are no exceptions.
+  </div>
+
+  <!-- Six-Step Scale -->
+  <p class="section-label">The Six-Step Scale</p>
+  <p style="font-family:'Crimson Text',serif; font-size:0.95rem; color:#4a2e06; text-align:center; font-style:italic; margin:0 0 0.8rem;">All ratings use a 1–6 scale. Each point represents a meaningful increase in competence — not a marginal statistical bump.</p>
+  <table class="scale-table">
+    <thead><tr><th>Rating</th><th>Label</th><th>What It Means</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Minimal</td><td>Minimal training or instinctive capability.</td></tr>
+      <tr><td>2</td><td>Basic</td><td>Familiarity or limited experience.</td></tr>
+      <tr><td>3</td><td>Solid</td><td>Dependable competence.</td></tr>
+      <tr><td>4</td><td class="cap-row">Practiced ✦ Cap</td><td class="cap-row">Confident, reliable execution. <strong>Maximum at creation — no exceptions.</strong></td></tr>
+      <tr><td>5</td><td>Exceptional</td><td>Rare capability beyond the ordinary.</td></tr>
+      <tr><td>6</td><td>Mastery</td><td>Uncommon even among heroes.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Anchor Table -->
+  <p class="section-label">The Anchor Mechanic</p>
+  <p style="font-family:'Crimson Text',serif; font-size:0.95rem; color:#4a2e06; text-align:center; font-style:italic; margin:0 0 0.8rem;">Every Resonant Path is anchored to a specific Primary Rating, used when calculating Resonant capability.</p>
+  <table class="anchor-table">
+    <thead><tr><th>Primary Rating</th><th>Resonant Anchor</th><th>Path Essence</th></tr></thead>
+    <tbody>
+      <tr><td>Agility</td><td>Aeris &amp; Obtenebrate</td><td>Motion, Instinct, Displacement / Deception, Precision, Misdirection</td></tr>
+      <tr><td>Vitality</td><td>Aqua</td><td>Memory, Flow, Endurance</td></tr>
+      <tr><td>Intelligence</td><td>Ignis</td><td>Combustion, Surge, Release</td></tr>
+      <tr><td>Strength</td><td>Terra</td><td>Grounding, Refusal, Stability</td></tr>
+      <tr><td>Wisdom</td><td>Vitae</td><td>Growth, Adaptation, Preservation</td></tr>
+      <tr><td>Social</td><td>None</td><td>Interpersonal Awareness and Leverage</td></tr>
+    </tbody>
+  </table>
+  <p style="font-family:'Crimson Text',serif; font-size:0.88rem; color:#4a2e06; font-style:italic; text-align:center; margin-bottom:2rem;">Social is not anchored to a Resonant Path. It represents influence and leverage rather than elemental resonance.</p>
+
+  <!-- Rating cards header + controls -->
+  <p class="section-label">Primary Definitions &amp; Ladders</p>
+  <div class="rating-controls">
+    <button class="control-btn" onclick="toggleAll(true)">Expand All</button>
+    <button class="control-btn" onclick="toggleAll(false)">Collapse All</button>
+  </div>
+
+  <!-- AGILITY -->
+  <details class="rating-toggle agility">
+    <summary>
+      <div class="summary-icon"><i class="fa-solid fa-wind"></i></div>
+      <span class="summary-name">Agility</span>
+      <span class="summary-anchor">Aeris &amp; Obtenebrate</span>
+      <span class="summary-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+    </summary>
+    <div class="rating-body-wrap">
+      <p class="rating-anchor-line">Resonant Anchor: Aeris &amp; Obtenebrate</p>
+      <p class="rating-text">Agility measures total bodily coordination, precision, and control. It reflects how naturally a character moves through space and how accurately they execute physical action. Agility governs balance, footwork, posture, breath alignment, and the seamless transition between motion and stillness.</p>
+      <p class="rating-text">Agility governs dodging, repositioning, acrobatic movement, and all weapon attacks that rely on timing, alignment, and spatial precision. It also governs fine motor control: delicate manipulation, sleight of hand, lockpicking, trap disarming, steady aim, and any task requiring controlled physical exactness.</p>
+      <p class="rating-text"><em>Aeris expresses Agility as open motion, displacement, and instinctive flow. Obtenebrate expresses Agility as concealed precision, misdirection, and controlled subtlety.</em></p>
+      <p class="rating-essence">Agility is not brute force and it is not endurance. It is execution — motion and control unified.</p>
+      <span class="ladder-title">Ladder — Increasing control over physical execution</span>
+      <div class="ladder-grid">
+        <div class="ladder-step"><span class="step-num">1</span><span class="step-label">Clumsy</span><span class="step-desc">Frequently misaligned or inaccurate.</span></div>
+        <div class="ladder-step"><span class="step-num">2</span><span class="step-label">Unsteady</span><span class="step-desc">Basic control that falters under pressure.</span></div>
+        <div class="ladder-step"><span class="step-num">3</span><span class="step-label">Coordinated</span><span class="step-desc">Reliable movement in ordinary conditions.</span></div>
+        <div class="ladder-step cap-step"><span class="step-num">4 ✦</span><span class="step-label">Precise</span><span class="step-desc">Consistent accuracy in demanding situations.</span></div>
+        <div class="ladder-step"><span class="step-num">5</span><span class="step-label">Fluid</span><span class="step-desc">Effortless, efficient execution.</span></div>
+        <div class="ladder-step"><span class="step-num">6</span><span class="step-label">Preternatural</span><span class="step-desc">Supernaturally exact control.</span></div>
+      </div>
+    </div>
+  </details>
+
+  <!-- STRENGTH -->
+  <details class="rating-toggle strength">
+    <summary>
+      <div class="summary-icon"><i class="fa-solid fa-dumbbell"></i></div>
+      <span class="summary-name">Strength</span>
+      <span class="summary-anchor">Terra</span>
+      <span class="summary-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+    </summary>
+    <div class="rating-body-wrap">
+      <p class="rating-anchor-line">Resonant Anchor: Terra</p>
+      <p class="rating-text">Strength measures raw physical power and force generation. It reflects a character's ability to apply mass, leverage, and momentum to overcome resistance. Strength governs lifting, breaking, forcing movement, and delivering heavy blows.</p>
+      <p class="rating-essence">Strength is commitment made physical.</p>
+      <span class="ladder-title">Ladder — Increasing reliable force output</span>
+      <div class="ladder-grid">
+        <div class="ladder-step"><span class="step-num">1</span><span class="step-label">Weak</span><span class="step-desc">Struggles with significant physical strain.</span></div>
+        <div class="ladder-step"><span class="step-num">2</span><span class="step-label">Slight</span><span class="step-desc">Limited force capability.</span></div>
+        <div class="ladder-step"><span class="step-num">3</span><span class="step-label">Solid</span><span class="step-desc">Reliable physical effort.</span></div>
+        <div class="ladder-step cap-step"><span class="step-num">4 ✦</span><span class="step-label">Powerful</span><span class="step-desc">Strong and dependable under strain.</span></div>
+        <div class="ladder-step"><span class="step-num">5</span><span class="step-label">Mighty</span><span class="step-desc">Exceptional force beyond the ordinary.</span></div>
+        <div class="ladder-step"><span class="step-num">6</span><span class="step-label">Overwhelming</span><span class="step-desc">Force that reshapes resistance.</span></div>
+      </div>
+    </div>
+  </details>
+
+  <!-- VITALITY -->
+  <details class="rating-toggle vitality">
+    <summary>
+      <div class="summary-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+      <span class="summary-name">Vitality</span>
+      <span class="summary-anchor">Aqua</span>
+      <span class="summary-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+    </summary>
+    <div class="rating-body-wrap">
+      <p class="rating-anchor-line">Resonant Anchor: Aqua</p>
+      <p class="rating-text">Vitality represents endurance, resilience, and sustained effort. It reflects a character's ability to absorb strain, maintain posture, and continue functioning under prolonged stress. Vitality governs resistance to fatigue, sustained defense, and survival under hardship.</p>
+      <p class="rating-essence">Vitality is not force; it is refusal to fail.</p>
+      <span class="ladder-title">Ladder — Increasing resilience and endurance</span>
+      <div class="ladder-grid">
+        <div class="ladder-step"><span class="step-num">1</span><span class="step-label">Frail</span><span class="step-desc">Easily exhausted or overwhelmed.</span></div>
+        <div class="ladder-step"><span class="step-num">2</span><span class="step-label">Winded</span><span class="step-desc">Can endure briefly before fatigue sets in.</span></div>
+        <div class="ladder-step"><span class="step-num">3</span><span class="step-label">Resilient</span><span class="step-desc">Maintains performance through moderate strain.</span></div>
+        <div class="ladder-step cap-step"><span class="step-num">4 ✦</span><span class="step-label">Hardy</span><span class="step-desc">Endures prolonged stress reliably.</span></div>
+        <div class="ladder-step"><span class="step-num">5</span><span class="step-label">Unyielding</span><span class="step-desc">Rarely falters under pressure.</span></div>
+        <div class="ladder-step"><span class="step-num">6</span><span class="step-label">Relentless</span><span class="step-desc">Persists beyond normal human limits.</span></div>
+      </div>
+    </div>
+  </details>
+
+  <!-- INTELLIGENCE -->
+  <details class="rating-toggle intelligence">
+    <summary>
+      <div class="summary-icon"><i class="fa-solid fa-brain"></i></div>
+      <span class="summary-name">Intelligence</span>
+      <span class="summary-anchor">Ignis</span>
+      <span class="summary-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+    </summary>
+    <div class="rating-body-wrap">
+      <p class="rating-anchor-line">Resonant Anchor: Ignis</p>
+      <p class="rating-text">Intelligence measures structured reasoning, analysis, and formal understanding. It reflects the ability to observe factual details, compare information, recognize patterns, and apply logic. Intelligence governs investigation, technical knowledge, strategic planning, and the diagnosis of observable systems.</p>
+      <p class="rating-text">When a character analyzes evidence, studies physical changes, or applies learned theory to understand a situation, they use Intelligence.</p>
+      <p class="rating-essence">Intelligence understands through analysis.</p>
+      <span class="ladder-title">Ladder — Increasing reliability in structured reasoning and pattern recognition</span>
+      <div class="ladder-grid">
+        <div class="ladder-step"><span class="step-num">1</span><span class="step-label">Limited</span><span class="step-desc">Struggles to connect complex details.</span></div>
+        <div class="ladder-step"><span class="step-num">2</span><span class="step-label">Basic</span><span class="step-desc">Understands straightforward patterns.</span></div>
+        <div class="ladder-step"><span class="step-num">3</span><span class="step-label">Reasoned</span><span class="step-desc">Applies clear logic in most situations.</span></div>
+        <div class="ladder-step cap-step"><span class="step-num">4 ✦</span><span class="step-label">Sharp</span><span class="step-desc">Quickly recognizes inconsistencies.</span></div>
+        <div class="ladder-step"><span class="step-num">5</span><span class="step-label">Brilliant</span><span class="step-desc">Exceptional analytical insight.</span></div>
+        <div class="ladder-step"><span class="step-num">6</span><span class="step-label">Formidable</span><span class="step-desc">Sees systems and consequences with extraordinary clarity.</span></div>
+      </div>
+    </div>
+  </details>
+
+  <!-- WISDOM -->
+  <details class="rating-toggle wisdom">
+    <summary>
+      <div class="summary-icon"><i class="fa-solid fa-eye"></i></div>
+      <span class="summary-name">Wisdom</span>
+      <span class="summary-anchor">Vitae</span>
+      <span class="summary-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+    </summary>
+    <div class="rating-body-wrap">
+      <p class="rating-anchor-line">Resonant Anchor: Vitae</p>
+      <p class="rating-text">Wisdom represents experiential awareness, judgment, and intuitive understanding. It reflects recognition born of lived experience, empathy, and instinct. Wisdom governs situational awareness, sensing danger, recognizing emotional truth, and discerning significance before formal analysis begins.</p>
+      <p class="rating-text">When a character feels that something is wrong, reads emotional shifts through experience, or recognizes meaning without visible proof, they use Wisdom.</p>
+      <p class="rating-essence">Wisdom understands through experience.</p>
+      <span class="ladder-title">Ladder — Increasing reliability in perceiving significance and responding with sound judgment</span>
+      <div class="ladder-grid">
+        <div class="ladder-step"><span class="step-num">1</span><span class="step-label">Naïve</span><span class="step-desc">Frequently misreads danger or meaning.</span></div>
+        <div class="ladder-step"><span class="step-num">2</span><span class="step-label">Uncertain</span><span class="step-desc">Notices obvious signs but misses subtle significance.</span></div>
+        <div class="ladder-step"><span class="step-num">3</span><span class="step-label">Sound</span><span class="step-desc">Generally aware of what matters.</span></div>
+        <div class="ladder-step cap-step"><span class="step-num">4 ✦</span><span class="step-label">Insightful</span><span class="step-desc">Quickly recognizes shifts in mood or danger.</span></div>
+        <div class="ladder-step"><span class="step-num">5</span><span class="step-label">Sage</span><span class="step-desc">Deep experiential understanding of people and circumstance.</span></div>
+        <div class="ladder-step"><span class="step-num">6</span><span class="step-label">Profound</span><span class="step-desc">Recognizes meaning before it becomes visible.</span></div>
+      </div>
+    </div>
+  </details>
+
+  <!-- SOCIAL -->
+  <details class="rating-toggle social">
+    <summary>
+      <div class="summary-icon"><i class="fa-solid fa-comments"></i></div>
+      <span class="summary-name">Social</span>
+      <span class="summary-anchor">No Resonant Anchor</span>
+      <span class="summary-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+    </summary>
+    <div class="rating-body-wrap">
+      <p class="rating-anchor-line">No Resonant Anchor — Social represents influence and leverage rather than elemental resonance.</p>
+      <p class="rating-text">Social measures interpersonal awareness and influence. It reflects how well a character understands power, emotion, and leverage within human interaction. Social governs persuasion, deception, intimidation, negotiation, and shaping outcomes through presence and communication.</p>
+      <p class="rating-essence">Social influences what others believe and how they respond.</p>
+      <span class="ladder-title">Ladder — Increasing effectiveness in social influence and navigation</span>
+      <div class="ladder-grid">
+        <div class="ladder-step"><span class="step-num">1</span><span class="step-label">Off-Putting</span><span class="step-desc">Struggles to influence or connect.</span></div>
+        <div class="ladder-step"><span class="step-num">2</span><span class="step-label">Uneasy</span><span class="step-desc">Inconsistent presence or impact.</span></div>
+        <div class="ladder-step"><span class="step-num">3</span><span class="step-label">Personable</span><span class="step-desc">Capable of ordinary persuasion.</span></div>
+        <div class="ladder-step cap-step"><span class="step-num">4 ✦</span><span class="step-label">Compelling</span><span class="step-desc">Strong presence and persuasive ability.</span></div>
+        <div class="ladder-step"><span class="step-num">5</span><span class="step-label">Magnetic</span><span class="step-desc">Naturally influential.</span></div>
+        <div class="ladder-step"><span class="step-num">6</span><span class="step-label">Commanding</span><span class="step-desc">Shapes the direction of a room.</span></div>
+      </div>
+    </div>
+  </details>
+
+</div>
+</main>
+
+<footer>
+<div>
+  Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+  &nbsp;&nbsp;•&nbsp;&nbsp;
+  © 2026 jpcauthor. All rights reserved.
+  &nbsp;&nbsp;•&nbsp;&nbsp;
+  <a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+</div>
+</footer>
+
+</div>
+
+<script>
+function toggleAll(open) {
+  document.querySelectorAll('details.rating-toggle').forEach(d => {
+    if (open) d.setAttribute('open', '');
+    else d.removeAttribute('open');
+  });
+}
+</script>
+
+</body>
+</html>

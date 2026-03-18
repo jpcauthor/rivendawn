@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resonance — The Song &amp; Its Paths</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+/* ── Site Variables ── */
+:root {
+  --header-height: 72px;
+  --footer-height: 72px;
+  --content-max-width: 960px;
+  --page-max-width: 1400px;
+  --ink-color: #3a2a1a;
+  --accent-site: #fff1d6;
+  --nav-color: #f2e3c6;
+  --nav-shadow: rgba(0,0,0,0.85);
+  --footer-bg: rgba(0,0,0,0.88);
+
+  --border:        rgba(58, 42, 26, 0.18);
+  --border-strong: rgba(58, 42, 26, 0.35);
+  --gold-dim:      #3a2a1a;
+  --amber:         #2e1f0e;
+  --text:          #2e1f0e;
+  --text-dim:      #6b4f33;
+  --accent:        #5a3a1a;
+  --surface:       rgba(255, 248, 230, 0.72);
+}
+
+*, *::before, *::after {
+  margin: 0; padding: 0;
+  box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Crimson Text', 'EB Garamond', Georgia, serif;
+  color: var(--ink-color);
+  min-height: 100dvh;
+  background: #000;
+  line-height: 1.75;
+  font-size: 1.08rem;
+}
+
+/* ── Page Shell ── */
+.page-wrapper {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  background-color: #000;
+  background-image: url('../images/bg.jpg');
+  background-size: contain;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  box-shadow: 0 0 80px rgba(0,0,0,0.85);
+  position: relative;
+}
+
+/* ── Header / Nav ── */
+header {
+  position: fixed;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--page-max-width));
+  height: var(--header-height);
+  background-image: url('../images/header.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1000;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+}
+
+nav {
+  max-width: var(--content-max-width);
+  width: 100%; height: 100%;
+  margin: 0 auto;
+  display: flex; align-items: center; justify-content: center;
+  gap: 2rem; padding: 0 1.5rem;
+}
+
+nav a {
+  color: var(--nav-color); text-decoration: none;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 1.25rem; letter-spacing: 0.14em; text-transform: uppercase;
+  transition: all .25s ease;
+}
+nav a:hover { color: var(--accent-site); }
+
+/* ── Main ── */
+main {
+  flex: 1;
+  margin-top: var(--header-height);
+  padding: 3.25rem 1rem calc(var(--footer-height) + 3rem);
+  display: flex; justify-content: center;
+}
+
+/* ── Content Container ── */
+.content-container {
+  max-width: var(--content-max-width);
+  width: 100%; padding: 40px 60px 180px;
+  margin: 0 auto; border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  background-image: url('../images/content-scroll-bg.png');
+  background-repeat: repeat-y;
+  background-position: top center;
+  background-size: 100% auto;
+}
+
+/* ── Page Title ── */
+.page-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: #2e1f0e; text-align: center;
+  letter-spacing: .1em; margin-bottom: 10px;
+}
+
+.title-rule {
+  display: flex; align-items: center;
+  gap: 16px; justify-content: center;
+  margin-bottom: 12px;
+}
+.title-rule::before, .title-rule::after {
+  content: ''; flex: 1; max-width: 200px; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(58,42,26,0.35));
+}
+.title-rule::after {
+  background: linear-gradient(to left, transparent, rgba(58,42,26,0.35));
+}
+.title-rule span {
+  color: #6b4f33; font-size: .8rem;
+  letter-spacing: .3em; text-transform: uppercase;
+  font-family: 'Cinzel', serif;
+}
+
+/* ── Watcher Epigraph ── */
+.watcher-epigraph {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 1.0rem;
+  color: #6b4f33;
+  text-align: center;
+  max-width: 580px;
+  margin: 0 auto 2.5rem;
+  line-height: 1.75;
+  border-left: 2px solid rgba(58,42,26,0.18);
+  border-right: 2px solid rgba(58,42,26,0.18);
+  padding: 0.6rem 1.5rem;
+}
+.watcher-epigraph cite {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-style: normal;
+  color: #8b5a30;
+  font-family: 'Cinzel', serif;
+}
+
+/* ── Expand / Collapse All Controls ── */
+.step-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+
+.control-btn {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #6b4f33;
+  background: rgba(58,42,26,0.05);
+  border: 1px solid rgba(58,42,26,0.20);
+  border-radius: 4px;
+  padding: 0.3rem 0.75rem;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.control-btn:hover {
+  background: rgba(58,42,26,0.12);
+  color: #2e1f0e;
+}
+
+/* ── Step (details element) ── */
+.step {
+  margin: 0 auto 14px;
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--gold-dim);
+  background: var(--surface);
+  position: relative;
+  border-radius: 10px;
+  color: var(--text);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  transition: box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+.step:hover {
+  box-shadow: 0 16px 32px rgba(0,0,0,0.16);
+}
+
+/* ── Summary (always-visible header) ── */
+.step > summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 22px 36px 20px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  user-select: none;
+  transition: background 0.2s ease;
+  position: relative;
+}
+
+.step > summary::-webkit-details-marker { display: none; }
+
+.step > summary:hover {
+  background: rgba(58,42,26,0.03);
+}
+
+/* Badge */
+.step-badge {
+  flex-shrink: 0;
+  background: var(--gold-dim);
+  color: #fff8ee;
+  font-family: 'Cinzel', serif;
+  font-size: .58rem;
+  font-weight: 600;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* Path-colored badges */
+.step-badge.aeris    { background: #3a5a7a; }
+.step-badge.aqua     { background: #2a5a58; }
+.step-badge.ignis    { background: #7a2e10; }
+.step-badge.obten    { background: #2e2a4a; }
+.step-badge.terra    { background: #4a3010; }
+.step-badge.vitae    { background: #2a5a3a; }
+.step-badge.shadow   { background: #1a1a1a; }
+.step-badge.law      { background: #5a4020; }
+.step-badge.core     { background: #4a2e06; }
+
+.step-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--amber);
+  letter-spacing: .03em;
+  flex: 1;
+  margin: 0;
+}
+
+/* Chevron */
+.step-chevron {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  color: #6b4f33;
+  font-size: 0.75rem;
+  transition: transform 0.25s ease;
+}
+
+.step[open] > summary .step-chevron {
+  transform: rotate(180deg);
+}
+
+/* ── Step Body ── */
+.step-body {
+  padding: 0 36px 28px;
+  border-top: 1px solid rgba(58,42,26,0.10);
+  animation: stepOpen 0.2s ease;
+}
+
+@keyframes stepOpen {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.step-directive {
+  font-style: italic;
+  color: var(--text-dim);
+  margin: 14px 0 16px;
+  font-size: .96rem;
+}
+
+/* ── Section Label ── */
+.section-label {
+  font-family: 'Cinzel', serif;
+  font-size: .68rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4px;
+  margin: 20px 0 10px;
+}
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.5em; }
+li { margin-bottom: 4px; }
+li > ul, li > ol { margin-top: 4px; }
+ul li::marker { color: var(--gold-dim); }
+ol li::marker { color: var(--gold-dim); font-family: 'Cinzel', serif; font-size: .85em; }
+
+/* ── Highlight spans ── */
+.mech  { color: var(--amber); font-weight: 700; }
+.note  { color: var(--text-dim); font-style: italic; }
+.ref   { color: var(--accent); font-style: italic; }
+
+/* ── Table ── */
+.data-table {
+  width: 100%; border-collapse: collapse;
+  margin-top: 14px; font-size: .92rem;
+}
+.data-table th {
+  font-family: 'Cinzel', serif; font-size: .66rem;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--gold-dim); border-bottom: 1px solid var(--border-strong);
+  padding: 6px 12px; text-align: left;
+}
+.data-table td {
+  padding: 6px 12px; border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: rgba(58,42,26,.04); }
+
+/* ── Formula blocks ── */
+.formula-block {
+  background: rgba(58, 42, 26, 0.06);
+  border-left: 3px solid var(--gold-dim);
+  padding: 12px 16px; margin: 14px 0;
+  font-size: .92rem; border-radius: 0 4px 4px 0;
+}
+.formula-block p { margin-bottom: 4px; }
+.formula-block p:last-child { margin-bottom: 0; }
+.formula-block .label {
+  font-family: 'Cinzel', serif; font-size: .66rem;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--gold-dim); margin-bottom: 6px;
+}
+
+/* ── Callout box ── */
+.callout {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 10px 16px; margin: 14px 0;
+  background: rgba(58, 42, 26, 0.05);
+  font-size: .92rem; border-radius: 0 4px 4px 0;
+}
+.callout strong { color: var(--amber); }
+
+/* ── Warning callout (Shadowmancy) ── */
+.callout-warning {
+  border: 1px solid rgba(100, 30, 10, 0.30);
+  border-left: 3px solid #7a2e10;
+  padding: 10px 16px; margin: 14px 0;
+  background: rgba(80, 20, 5, 0.06);
+  font-size: .92rem; border-radius: 0 4px 4px 0;
+}
+.callout-warning strong { color: #7a2e10; }
+
+/* ── Path Cards grid ── */
+.path-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+  margin: 0.5rem 0 1.5rem;
+}
+@media(max-width: 600px) { .path-grid { grid-template-columns: 1fr; } }
+
+.path-card {
+  background: rgba(255,248,235,0.55);
+  border: 1px solid rgba(139,80,20,0.18);
+  border-radius: 10px; padding: 1rem 1.1rem 0.9rem;
+  position: relative; overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.path-card:hover {
+  box-shadow: 0 5px 18px rgba(139,80,20,0.10);
+  transform: translateY(-2px);
+}
+.path-card::before {
+  content: ""; position: absolute;
+  top: 0; left: 0; width: 4px; height: 100%;
+  border-radius: 10px 0 0 10px;
+}
+.path-card.aeris::before    { background: #4a7aaa; }
+.path-card.aqua::before     { background: #3a8a80; }
+.path-card.ignis::before    { background: #aa4020; }
+.path-card.obten::before    { background: #4a4070; }
+.path-card.terra::before    { background: #6a4820; }
+.path-card.vitae::before    { background: #3a7a50; }
+
+.path-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.88rem; color: #3a2a1a;
+  margin: 0 0 0.1rem; letter-spacing: 0.05em;
+}
+.path-law {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem; letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin: 0 0 0.4rem;
+}
+.path-card.aeris  .path-law { color: #3a6a9a; }
+.path-card.aqua   .path-law { color: #2a6a68; }
+.path-card.ignis  .path-law { color: #8a3010; }
+.path-card.obten  .path-law { color: #3a3060; }
+.path-card.terra  .path-law { color: #5a3810; }
+.path-card.vitae  .path-law { color: #2a6a40; }
+
+.path-anchor {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.78rem; font-style: italic;
+  color: #8b5014; margin: 0 0 0.5rem;
+}
+.path-desc {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.92rem; color: #5a4030;
+  line-height: 1.55; margin: 0 0 0.5rem;
+}
+.path-does-well {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.85rem; color: #4a3820;
+  margin: 0 0 0.2rem;
+}
+.path-drift {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.82rem; font-style: italic;
+  color: #8b5014; margin: 0;
+}
+
+/* ── Wellspring reference table ── */
+.ws-table {
+  width: 100%; border-collapse: collapse;
+  margin-top: 14px; font-size: .92rem;
+}
+.ws-table th {
+  font-family: 'Cinzel', serif; font-size: .66rem;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--gold-dim); border-bottom: 1px solid var(--border-strong);
+  padding: 6px 12px; text-align: left;
+}
+.ws-table td {
+  padding: 6px 12px; border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+.ws-table tr:last-child td { border-bottom: none; }
+.ws-table tr:hover td { background: rgba(58,42,26,.04); }
+.ws-table .die { font-family: 'Cinzel Decorative', serif; color: #5a3010; }
+.ws-table .wp  { font-weight: 700; color: #2e1f0e; }
+.ws-table .pts { color: #4a6a20; font-weight: 700; }
+
+/* ── Magnitude tiers ── */
+.tier-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem;
+  margin: 14px 0;
+}
+.tier-card {
+  background: rgba(255,248,235,0.55);
+  border: 1px solid rgba(139,80,20,0.18);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  text-align: center;
+}
+.tier-name {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #5a3a1a;
+  margin-bottom: 0.35rem;
+}
+.tier-mod {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.1rem;
+  color: #2e1f0e;
+  margin-bottom: 0.25rem;
+}
+.tier-desc {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.83rem;
+  color: #6b4f33;
+  font-style: italic;
+}
+
+/* ── Cost pills ── */
+.cost-row {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  margin: 12px 0;
+}
+.cost-pill {
+  background: rgba(58,42,26,0.07);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem 1rem;
+  font-family: 'Crimson Text', serif;
+  font-size: 0.9rem;
+  color: #3a2a1a;
+  flex: 1; min-width: 180px;
+  text-align: center;
+}
+.cost-pill strong { color: #2e1f0e; font-family: 'Cinzel Decorative', serif; font-size: 1rem; display: block; margin-bottom: 2px; }
+.cost-pill.fail { border-color: rgba(100,30,10,0.25); background: rgba(100,30,10,0.05); }
+.cost-pill.fail strong { color: #7a2e10; }
+
+/* ── Anchor links in checklist ── */
+.anchor-link {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #5a3a1a;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(90,58,26,0.3);
+  transition: color 0.2s ease, border-color 0.2s ease;
+  white-space: nowrap;
+}
+.anchor-link:hover {
+  color: #2e1f0e;
+  border-bottom-color: rgba(46,31,14,0.6);
+}
+
+
+footer {
+  position: fixed; bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--page-max-width));
+  height: var(--footer-height);
+  background: var(--footer-bg);
+  color: #ccc; display: flex; align-items: center;
+  justify-content: center; text-align: center;
+  padding: 0 1rem; font-size: .95rem;
+  border-top: 1px solid #444; z-index: 1000;
+}
+footer a { color: #d4a373; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* ── Responsive ── */
+@media (max-width: 680px) {
+  .content-container { padding: 28px 20px 140px; }
+  .step > summary { padding: 18px 20px 16px; }
+  .step-body { padding: 0 20px 24px; }
+  body { font-size: .97rem; }
+  .tier-row { grid-template-columns: 1fr; }
+  .path-grid { grid-template-columns: 1fr; }
+}
+
+</style>
+</head>
+
+<body>
+<div class="page-wrapper">
+
+  <header>
+    <nav>
+      <a href="geography.html">GEOGRAPHY</a>
+      <a href="lore.html">LORE</a>
+      <a href="rules.html">RULES</a>
+      <a href="create.html">CREATE</a>
+      <a href="tables.html">TABLES</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="content-container">
+
+      <h1 class="page-title">Resonance</h1>
+      <div class="title-rule"><span>The Song &amp; Its Paths</span></div>
+
+      <p class="watcher-epigraph">
+        "The Song is not magic. It is not a gift from gods. It is not a curse placed upon you. It is not a toy. It is what remains."
+        <cite>— The Watcher</cite>
+      </p>
+
+      <!-- Expand / Collapse All -->
+      <div class="step-controls">
+        <button class="control-btn" onclick="toggleAll(true)">Expand All</button>
+        <button class="control-btn" onclick="toggleAll(false)">Collapse All</button>
+      </div>
+
+      <!-- ═══ SECTION I — CHECKLIST (open by default) ═══ -->
+      <details class="step" open>
+        <summary>
+          <span class="step-badge core">I</span>
+          <h2 class="step-title">Resonance at Creation — Checklist</h2>
+          <span class="step-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+        </summary>
+        <div class="step-body">
+          <p class="step-directive">Work through this checklist in order. Each item links to the full reference section below.</p>
+
+          <div class="callout">
+            <strong>Shield Wardens &amp; Forged Combatants:</strong> Resonance does not apply to your Calling. Skip this page entirely and proceed directly to Step 9 of Character Creation.
+          </div>
+
+          <ol>
+            <li style="margin-bottom:0.85rem;"><strong>Confirm your Calling type.</strong> — True Resonant, Hybrid, or Songweaver. &nbsp;<a href="#section-ii" class="anchor-link" onclick="openSection('section-ii')">Resonant Types &amp; Path Points →</a></li>
+            <li style="margin-bottom:0.85rem;"><strong>Record your Path Point pool.</strong> — 6 (True Resonant) · 3 (Hybrid) · 4 (Songweaver). &nbsp;<a href="#section-ii" class="anchor-link" onclick="openSection('section-ii')">Resonant Types &amp; Path Points →</a></li>
+            <li style="margin-bottom:0.85rem;"><strong>Choose your Paths.</strong> Distribute Path Points across the six lawful Paths. No single Path may exceed your per-Path cap — <span class="mech">cap of 3 per Path for Hybrids</span>, cap of 4 per Path for True Resonants. &nbsp;<a href="#section-iii" class="anchor-link" onclick="openSection('section-iii')">The Six Lawful Paths →</a></li>
+            <li style="margin-bottom:0.85rem;"><strong>Apply Lineage Path Affinity.</strong> (+1 to the Path listed on your Lineage.) Hybrids: this bonus does not raise any single Path above <span class="mech">3</span>. &nbsp;<a href="#section-ii" class="anchor-link" onclick="openSection('section-ii')">Resonant Types &amp; Path Points →</a></li>
+            <li style="margin-bottom:0.85rem;"><strong>Note your Governing Attribute</strong> for each Path you invested in. This feeds directly into your Capability formula. &nbsp;<a href="#section-ii" class="anchor-link" onclick="openSection('section-ii')">Governing Attributes →</a></li>
+            <li style="margin-bottom:0.85rem;"><strong>Record your Wellspring Pool.</strong> Fixed by your Calling type (36 / 24 / 4 Cadence). &nbsp;<a href="#section-iv" class="anchor-link" onclick="openSection('section-iv')">Determining Your Wellspring →</a></li>
+            <li style="margin-bottom:0.85rem;"><strong>Understand Cast resolution.</strong> Your Path Rating, Governing Attribute, and Wellspring all interact during play. &nbsp;<a href="#section-v" class="anchor-link" onclick="openSection('section-v')">Resolving a Cast →</a></li>
+            <li><strong>Songweavers:</strong> You use the Cadence Discipline system, not Path-based Resonance. See the Songweaver Calling page.</li>
+          </ol>
+
+          <p class="section-label">Back to Character Creation</p>
+          <p><a href="create.html" class="ref">← Return to the Character Creation Guide</a></p>
+        </div>
+      </details>
+
+      <!-- ═══ SECTION II — RESONANT TYPES ═══ -->
+      <details class="step" id="section-ii">
+        <summary>
+          <span class="step-badge core">II</span>
+          <h2 class="step-title">Resonant Types &amp; Path Points</h2>
+          <span class="step-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+        </summary>
+        <div class="step-body">
+          <p class="step-directive">Your Calling determines your relationship with the Song — how deeply you can reach into it, and how much of it you can sustain.</p>
+
+          <p class="section-label">The Three Types</p>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Path Points</th>
+                <th>Per-Path Cap</th>
+                <th>Wellspring Die</th>
+                <th>Base WP</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>True Resonant Caster</strong></td>
+                <td><span class="mech">6</span></td>
+                <td><span class="mech">4</span></td>
+                <td><span class="mech">d12</span></td>
+                <td><span class="mech">36 WP</span></td>
+              </tr>
+              <tr>
+                <td><span class="note">Martial OR cap at creation</span></td>
+                <td colspan="4"><span class="note">Pure Resonant Offensive Rating caps at 2 at creation. Unspent Combat Points convert — player's choice — to +1 Path Point (per 2 pts) or +5 Wellspring (per 1 pt).</span></td>
+              </tr>
+              <tr>
+                <td><strong>Hybrid</strong></td>
+                <td><span class="mech">3</span></td>
+                <td><span class="mech">3</span></td>
+                <td><span class="mech">d8</span></td>
+                <td><span class="mech">24 WP</span></td>
+              </tr>
+              <tr>
+                <td><strong>Songweaver</strong></td>
+                <td><span class="mech">4</span></td>
+                <td><span class="mech">4</span></td>
+                <td>Cadence System</td>
+                <td><span class="mech">4 Cadence Pts</span></td>
+              </tr>
+              <tr>
+                <td><strong>Forged Combatant</strong></td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>Skip this page</td>
+              </tr>
+              <tr>
+                <td><strong>Shield Warden</strong></td>
+                <td>—</td>
+                <td>—</td>
+                <td>—</td>
+                <td>Skip this page</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p class="section-label">Distributing Path Points</p>
+          <p>Distribute your Path Points freely across the six lawful Paths. You may concentrate all points in one Path or spread them across several.</p>
+          <ul>
+            <li><strong>Specialization</strong> — Deep investment in one or two Paths increases precision and power within those harmonics.</li>
+            <li><strong>Versatility</strong> — Spreading points across multiple Paths increases your options at the cost of depth.</li>
+            <li>Both approaches are lawful. The choice defines your identity as a practitioner.</li>
+          </ul>
+
+          <div class="callout">
+            <strong>Hybrid Cap:</strong> No individual Path Rating may exceed <span class="mech">3 per Path</span>. Lineage Affinity bonuses do not raise this cap.
+          </div>
+          <div class="callout">
+            <strong>Lineage Path Affinity:</strong> Your Lineage grants <span class="mech">+1 Path Affinity</span>. Apply this after distributing your base Path Points. This bonus <em>can</em> raise a True Resonant's rating toward 4, but does not override the Hybrid cap of 3 per Path.
+          </div>
+
+          <p class="section-label">Governing Attributes</p>
+          <p>Each Path draws its reliability from a Primary Rating. Low governing Attributes reduce the precision of Resonant resolution.</p>
+          <table class="data-table">
+            <thead><tr><th>Path</th><th>Governing Attribute</th></tr></thead>
+            <tbody>
+              <tr><td>Aeris</td><td>Agility</td></tr>
+              <tr><td>Aqua</td><td>Vitality</td></tr>
+              <tr><td>Ignis</td><td>Intelligence</td></tr>
+              <tr><td>Obtenebrate</td><td>Agility</td></tr>
+              <tr><td>Terra</td><td>Strength</td></tr>
+              <tr><td>Vitae</td><td>Wisdom</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+
+      <!-- ═══ SECTION III — THE SIX PATHS ═══ -->
+      <details class="step" id="section-iii">
+        <summary>
+          <span class="step-badge core">III</span>
+          <h2 class="step-title">The Six Lawful Paths</h2>
+          <span class="step-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+        </summary>
+        <div class="step-body">
+          <p class="step-directive">These are the governing harmonics through which the Song expresses itself. A practitioner does not invent a Path — they align with it.</p>
+
+          <p style="margin-bottom:1.2rem;">Each Path is defined by a <strong>First Law</strong> — an immutable governing principle from which all expression derives. Attempting to bend a First Law does not produce an unusual result. It produces resistance, misalignment, and failure.</p>
+
+          <div class="path-grid">
+
+            <div class="path-card aeris">
+              <p class="path-name">Aeris</p>
+              <p class="path-law">First Law: Displacement</p>
+              <p class="path-anchor">Governing Attribute: Agility</p>
+              <p class="path-desc">The harmonic of survival through motion. Aeris favors reaction over preparation, repositioning over resistance, and momentum over mass. Where others brace, Aeris relocates.</p>
+              <p class="path-does-well"><strong>Excels at:</strong> Speed, pursuit, escape, spatial disruption, momentum redirection.</p>
+              <p class="path-drift"><strong>Drift toward failure:</strong> Recklessness. Avoidance. Abandonment disguised as survival.</p>
+            </div>
+
+            <div class="path-card aqua">
+              <p class="path-name">Aqua</p>
+              <p class="path-law">First Law: Absorption</p>
+              <p class="path-anchor">Governing Attribute: Vitality</p>
+              <p class="path-desc">Aqua survives by receiving rather than resisting. It carries strain inward and redistributes it rather than shattering. Stability through endurance.</p>
+              <p class="path-does-well"><strong>Excels at:</strong> Pressure regulation, sustained resilience, emotional attunement, burden carrying.</p>
+              <p class="path-drift"><strong>Drift toward failure:</strong> Stagnation. Emotional suppression. Drowning in accumulated burden.</p>
+            </div>
+
+            <div class="path-card ignis">
+              <p class="path-name">Ignis</p>
+              <p class="path-law">First Law: Combustive Transformation</p>
+              <p class="path-anchor">Governing Attribute: Intelligence</p>
+              <p class="path-desc">Ignis ends stalemates through escalation. It burns to reshape. Change through decisive ignition — it does not maintain, it transforms.</p>
+              <p class="path-does-well"><strong>Excels at:</strong> Rapid alteration, catalytic breakthrough, decisive escalation.</p>
+              <p class="path-drift"><strong>Drift toward failure:</strong> Volatility. Destruction without purpose.</p>
+            </div>
+
+            <div class="path-card obten">
+              <p class="path-name">Obtenebrate</p>
+              <p class="path-law">First Law: Perceptual Distortion</p>
+              <p class="path-anchor">Governing Attribute: Agility</p>
+              <p class="path-desc">Obtenebrate alters awareness rather than substance. It wins before confrontation begins. Victory through misdirection — it does not dominate openly.</p>
+              <p class="path-does-well"><strong>Excels at:</strong> Concealment, infiltration, perceptual manipulation, subtle redirection.</p>
+              <p class="path-drift"><strong>Drift toward failure:</strong> Manipulation without purpose. Deception as identity.</p>
+            </div>
+
+            <div class="path-card terra">
+              <p class="path-name">Terra</p>
+              <p class="path-law">First Law: Refusal through Solidity</p>
+              <p class="path-anchor">Governing Attribute: Strength</p>
+              <p class="path-desc">Terra survives by refusing displacement. It meets force directly and denies motion. Security through immovability — it does not flow or adapt rapidly.</p>
+              <p class="path-does-well"><strong>Excels at:</strong> Fortification, anchoring, structural reinforcement, sustained resistance.</p>
+              <p class="path-drift"><strong>Drift toward failure:</strong> Rigidity. Obstruction. Inflexible dominance.</p>
+            </div>
+
+            <div class="path-card vitae">
+              <p class="path-name">Vitae</p>
+              <p class="path-law">First Law: Adaptive Growth</p>
+              <p class="path-anchor">Governing Attribute: Wisdom</p>
+              <p class="path-desc">Vitae preserves through refinement. It stabilizes and strengthens what lives. Preservation through adaptive correction — it cannot weaponize the life it tends.</p>
+              <p class="path-does-well"><strong>Excels at:</strong> Healing, reinforcement, regenerative stabilization, biological correction.</p>
+              <p class="path-drift"><strong>Drift toward failure:</strong> Overgrowth. Control disguised as care.</p>
+            </div>
+
+          </div>
+
+          <p class="section-label">What Resonance Cannot Do</p>
+          <ul>
+            <li>Vitae cannot kill. It preserves and adapts — it does not weaponize life.</li>
+            <li>Aeris cannot anchor. It displaces — it does not lock.</li>
+            <li>Terra cannot flow. It refuses — it does not redirect.</li>
+            <li>Ignis cannot preserve. It transforms — it does not maintain.</li>
+            <li>Aqua cannot erase what it absorbs. It carries burden — it does not annihilate.</li>
+            <li>Obtenebrate cannot overpower through open force. It misdirects — it does not dominate.</li>
+            <li>Resonance may not instantly unmake living internal structures. The world protects its living patterns.</li>
+          </ul>
+
+        </div>
+      </details>
+
+      <!-- ═══ SECTION IV — WELLSPRING ═══ -->
+      <details class="step" id="section-iv">
+        <summary>
+          <span class="step-badge core">IV</span>
+          <h2 class="step-title">Determining Your Wellspring</h2>
+          <span class="step-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+        </summary>
+        <div class="step-body">
+          <p class="step-directive">Your Wellspring Pool is the total volume of Resonant energy your mind and spirit can navigate before focus shatters. This is determined by your Calling, not your choices.</p>
+
+          <p class="section-label">Wellspring Formula</p>
+          <div class="formula-block">
+            <p class="label">Standard Formula</p>
+            <p><span class="mech">Total WP = Die Value + (Die Value × 2)</span></p>
+            <p class="note">The die value is taken as the maximum value of the Wellspring Die.</p>
+          </div>
+
+          <p class="section-label">Wellspring Reference</p>
+          <table class="ws-table">
+            <thead>
+              <tr>
+                <th>Calling Type</th>
+                <th>Wellspring Die</th>
+                <th>Calculation</th>
+                <th>Total WP</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>True Resonant</strong></td>
+                <td><span class="die">d12</span></td>
+                <td>12 + (12 × 2)</td>
+                <td><span class="wp">36 WP</span></td>
+              </tr>
+              <tr>
+                <td><strong>Hybrid</strong></td>
+                <td><span class="die">d8</span></td>
+                <td>8 + (8 × 2)</td>
+                <td><span class="wp">24 WP</span></td>
+              </tr>
+              <tr>
+                <td><strong>Songweaver</strong></td>
+                <td>Cadence</td>
+                <td>Fixed starting pool</td>
+                <td><span class="wp">4 Cadence Pts</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="callout">
+            <strong>Note:</strong> Wellspring is fixed at creation — it reflects the maximum capacity of your Calling's connection to the Song, not variance.
+          </div>
+        </div>
+      </details>
+
+      <!-- ═══ SECTION V — RESOLVING A CAST ═══ -->
+      <details class="step" id="section-v">
+        <summary>
+          <span class="step-badge core">V</span>
+          <h2 class="step-title">Resolving a Cast</h2>
+          <span class="step-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+        </summary>
+        <div class="step-body">
+          <p class="step-directive">When you instruct the Song during play, resolution follows a unified model. Understanding this at creation will shape how you invest your Path Points and Primary Ratings.</p>
+
+          <p class="section-label">What Is Resonance?</p>
+          <p>Resonance is not spellcasting. It is not prayer. It is the structured instruction of the Song — a pervasive lattice woven through all matter, motion, and breath within Rivendawn. The Song does not think. It does not judge. <strong>It responds.</strong> A Resonant practitioner does not cast — they <em>instruct</em>. And the Song obeys, within law.</p>
+
+          <p class="section-label">Three Conditions of Every Cast</p>
+          <ul>
+            <li><strong>Clarity of Instruction</strong> — The Song answers structured will, not vague desire.</li>
+            <li><strong>Magnitude of Disruption</strong> — The greater the alteration, the greater the resistance.</li>
+            <li><strong>Cost of Sustenance</strong> — The Wellspring is finite. No instruction is without burden.</li>
+          </ul>
+
+          <p class="section-label">Capability Formula</p>
+          <div class="formula-block">
+            <p class="label">Your Capability</p>
+            <p><span class="mech">Capability = Primary Attribute + Ability or Knowledge + Path Rating</span></p>
+          </div>
+          <div class="formula-block">
+            <p class="label">Target Number</p>
+            <p><span class="mech">Target Number = Baseline − Capability</span></p>
+            <p class="note">Roll 1d20. Meet or exceed the Target Number to succeed.</p>
+          </div>
+
+          <p class="section-label">Magnitude Tiers</p>
+          <p>Scope of the Cast determines difficulty, not cost. Three tiers are defined:</p>
+          <div class="tier-row">
+            <div class="tier-card">
+              <p class="tier-name">Standard</p>
+              <p class="tier-mod">No Modifier</p>
+              <p class="tier-desc">Single target or contained effect</p>
+            </div>
+            <div class="tier-card">
+              <p class="tier-name">Expanded</p>
+              <p class="tier-mod">+3 TN</p>
+              <p class="tier-desc">Multiple targets or larger structural alteration</p>
+            </div>
+            <div class="tier-card">
+              <p class="tier-name">Mass</p>
+              <p class="tier-mod">+9 TN</p>
+              <p class="tier-desc">Battlefield scale or large environmental manipulation</p>
+            </div>
+          </div>
+
+          <p class="section-label">Resonance Cost per Cast</p>
+          <p style="margin-bottom:0.75rem;">Cost is flat per Cast. <strong>Failure costs more</strong> — harmonic invocation occurred without resolution. Energy was engaged but not harmonized.</p>
+          <div class="cost-row">
+            <div class="cost-pill">
+              <strong>5 RP</strong>
+              True Resonant — Successful Cast
+            </div>
+            <div class="cost-pill fail">
+              <strong>8 RP</strong>
+              True Resonant — Failed Cast
+            </div>
+          </div>
+          <div class="cost-row">
+            <div class="cost-pill">
+              <strong>7 RP</strong>
+              Hybrid — Successful Cast
+            </div>
+            <div class="cost-pill fail">
+              <strong>9 RP</strong>
+              Hybrid — Failed Cast
+            </div>
+          </div>
+
+          <p class="section-label">Special Resolutions</p>
+          <ul>
+            <li><strong>Natural 1 — Harmonic Inversion:</strong> The declared effect manifests upon the caster instead of the intended target. If declared at Expanded or Mass scope, the backlash reflects that magnitude. The Song does not punish — it mirrors.</li>
+            <li><strong>Natural 20 — Ultimate Success:</strong> The Cast succeeds regardless of Target Number. Additional effects are defined on your Calling sheet.</li>
+          </ul>
+
+          <p class="section-label">A Cast Is a Single Expression</p>
+          <p>A Cast cannot bundle multiple independent effects. The declaration must identify specific intent, scope, and target. If multiple discrete outcomes are desired, they require multiple Casts. <em>Resonance is applied, not stacked.</em></p>
+        </div>
+      </details>
+
+    </div><!-- /.content-container -->
+  </main>
+
+  <footer>
+    <div>
+      Email: <a href="mailto:jpcauthor@rivendawn.com">jpcauthor@rivendawn.com</a>
+      &nbsp;&nbsp;•&nbsp;&nbsp;
+      © 2026 jpcauthor. All rights reserved.
+      &nbsp;&nbsp;•&nbsp;&nbsp;
+      <a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+function toggleAll(open) {
+  document.querySelectorAll('details.step').forEach(d => {
+    d.open = open;
+  });
+}
+
+function openSection(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.open = true;
+    setTimeout(() => {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 50);
+  }
+}
+</script>
+
+</body>
+</html>

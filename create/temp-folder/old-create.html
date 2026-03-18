@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Character Creation</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+/* ── Site Variables ── */
+:root {
+  --header-height: 72px;
+  --footer-height: 72px;
+  --content-max-width: 960px;
+  --page-max-width: 1400px;
+  --ink-color: #3a2a1a;
+  --accent-site: #fff1d6;
+  --nav-color: #f2e3c6;
+  --nav-shadow: rgba(0,0,0,0.85);
+  --footer-bg: rgba(0,0,0,0.88);
+
+  /* Character creation palette — matches Origins & Identity ink on parchment */
+  --border:        rgba(58, 42, 26, 0.18);
+  --border-strong: rgba(58, 42, 26, 0.35);
+  --gold-dim:      #3a2a1a;
+  --amber:         #2e1f0e;
+  --text:          #2e1f0e;
+  --text-dim:      #6b4f33;
+  --accent:        #5a3a1a;
+  --surface:       rgba(255, 248, 230, 0.72);
+}
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Crimson Text', 'EB Garamond', Georgia, serif;
+  color: var(--ink-color);
+  min-height: 100dvh;
+  background: #000;
+  line-height: 1.75;
+  font-size: 1.08rem;
+}
+
+/* ── Page Shell ── */
+.page-wrapper {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  background-color: #000;
+  background-image: url('../images/bg.jpg');
+  background-size: contain;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  box-shadow: 0 0 80px rgba(0,0,0,0.85);
+  position: relative;
+}
+
+/* ── Header / Nav ── */
+header {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--page-max-width));
+  height: var(--header-height);
+  background-image: url('../images/header.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1000;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+}
+
+nav {
+  max-width: var(--content-max-width);
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 0 1.5rem;
+}
+
+nav a {
+  color: var(--nav-color);
+  text-decoration: none;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 1.25rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: all .25s ease;
+}
+
+nav a:hover { color: var(--accent-site); }
+
+/* ── Main ── */
+main {
+  flex: 1;
+  margin-top: var(--header-height);
+  padding: 3.25rem 1rem calc(var(--footer-height) + 3rem);
+  display: flex;
+  justify-content: center;
+}
+
+/* ── Content Container ── */
+.content-container {
+  max-width: var(--content-max-width);
+  width: 100%;
+  padding: 40px 60px 180px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  background-image: url('../images/content-scroll-bg.png');
+  background-repeat: repeat-y;
+  background-position: top center;
+  background-size: 100% auto;
+}
+
+/* ── Page Title ── */
+.page-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: #2e1f0e;
+  text-align: center;
+  letter-spacing: .1em;
+  text-shadow: none;
+  margin-bottom: 10px;
+}
+
+.title-rule {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 48px;
+}
+.title-rule::before,
+.title-rule::after {
+  content: '';
+  flex: 1;
+  max-width: 200px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(58,42,26,0.35));
+}
+.title-rule::after {
+  background: linear-gradient(to left, transparent, rgba(58,42,26,0.35));
+}
+.title-rule span {
+  color: #6b4f33;
+  font-size: .8rem;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  font-family: 'Cinzel', serif;
+}
+
+/* ── Step Cards ── */
+.step {
+  margin: 0 auto 20px;
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--gold-dim);
+  background: var(--surface);
+  padding: 32px 36px 28px;
+  position: relative;
+  border-radius: 10px;
+  color: var(--text);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.step:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.16);
+}
+
+.step-badge {
+  position: absolute;
+  top: -1px;
+  left: 36px;
+  background: var(--gold-dim);
+  color: #fff8ee;
+  font-family: 'Cinzel', serif;
+  font-size: .62rem;
+  font-weight: 600;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  padding: 3px 12px;
+  border-radius: 0 0 4px 4px;
+}
+
+.step-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--amber);
+  margin-top: 14px;
+  margin-bottom: 6px;
+  letter-spacing: .03em;
+}
+
+.step-directive {
+  font-style: italic;
+  color: var(--text-dim);
+  margin-bottom: 16px;
+  font-size: .96rem;
+}
+
+/* ── Section Label ── */
+.section-label {
+  font-family: 'Cinzel', serif;
+  font-size: .68rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4px;
+  margin: 20px 0 10px;
+}
+
+/* ── Lists ── */
+ul, ol { padding-left: 1.5em; }
+li { margin-bottom: 4px; }
+li > ul, li > ol { margin-top: 4px; }
+ul li::marker { color: var(--gold-dim); }
+ol li::marker { color: var(--gold-dim); font-family: 'Cinzel', serif; font-size: .85em; }
+
+/* ── Highlight spans ── */
+.mech  { color: var(--amber); font-weight: 700; }
+.note  { color: var(--text-dim); font-style: italic; }
+.ref   { color: var(--accent); font-style: italic; }
+
+/* ── Table ── */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+  font-size: .92rem;
+}
+.data-table th {
+  font-family: 'Cinzel', serif;
+  font-size: .66rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  border-bottom: 1px solid var(--border-strong);
+  padding: 6px 12px;
+  text-align: left;
+}
+.data-table td {
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: rgba(58,42,26,.04); }
+
+/* ── Formula blocks ── */
+.formula-block {
+  background: rgba(58, 42, 26, 0.06);
+  border-left: 3px solid var(--gold-dim);
+  padding: 12px 16px;
+  margin: 14px 0;
+  font-size: .92rem;
+  border-radius: 0 4px 4px 0;
+}
+.formula-block p { margin-bottom: 4px; }
+.formula-block p:last-child { margin-bottom: 0; }
+.formula-block .label {
+  font-family: 'Cinzel', serif;
+  font-size: .66rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 6px;
+}
+
+/* ── Callout box ── */
+.callout {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 10px 16px;
+  margin: 14px 0;
+  background: rgba(58, 42, 26, 0.05);
+  font-size: .92rem;
+  border-radius: 0 4px 4px 0;
+}
+.callout strong { color: var(--amber); }
+
+/* ── Footer ── */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--page-max-width));
+  height: var(--footer-height);
+  background: var(--footer-bg);
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 1rem;
+  font-size: .95rem;
+  border-top: 1px solid #444;
+  z-index: 1000;
+}
+footer a { color: #d4a373; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* ── Responsive ── */
+@media (max-width: 680px) {
+  .content-container { padding: 28px 20px 140px; }
+  .step { padding: 28px 18px 22px; }
+  body { font-size: .97rem; }
+}
+
+</style>
+</head>
+
+<body>
+<div class="page-wrapper">
+
+  <!-- ═══ HEADER ═══ -->
+  <header>
+    <nav>
+      <a href="geography.html">GEOGRAPHY</a>
+      <a href="lore.html">LORE</a>
+      <a href="rules.html">RULES</a>
+      <a href="create.html">CREATE</a>
+      <a href="tables.html">TABLES</a>
+    </nav>
+  </header>
+
+  <!-- ═══ MAIN ═══ -->
+  <main>
+    <div class="content-container">
+
+      <!-- Page Title -->
+      <h1 class="page-title">Character Creation</h1>
+      <div class="title-rule"><span>Guide &amp; Reference</span></div>
+
+      <!-- ═══ STEP 1 ═══ -->
+      <section class="step">
+        <div class="step-badge">Step 1</div>
+        <h2 class="step-title">Choose Your Name</h2>
+        <p class="step-directive">What You Are Doing: You are grounding your character in a world that is culturally layered and historically deep.</p>
+
+        <p class="section-label">Creative Directive</p>
+        <p>Avoid "normalized" names. Aim for distinct phonetics, uncommon syllable patterns, and a mythic tone.</p>
+
+        <p class="section-label">Examples</p>
+        <p><span class="mech">Vaelorin &nbsp;·&nbsp; Theska Vale &nbsp;·&nbsp; Drauven Karth &nbsp;·&nbsp; Lysendreth</span></p>
+		
+<p class="section-label">Still can't decide on a name?</p>
+<p><a href="../webapps/rivendawn-name-forge.html" target="_blank" rel="noopener noreferrer" class="ref">Use the Rivendawn Name Generator →</a></p>
+      </section>
+	  
+	  
+
+      <!-- ═══ STEP 2 ═══ -->
+      <section class="step">
+        <div class="step-badge">Step 2</div>
+        <h2 class="step-title">Choose Your Lineage</h2>
+        <p class="step-directive">What You Are Doing: You are selecting your biological and cultural foundation—your lineage origin.</p>
+
+        <p class="section-label">Mechanical Impact</p>
+        <ul>
+          <li>Innate gift of <span class="mech">+2 to two different Ability/Knowledge bonuses</span></li>
+          <li><span class="mech">+1 Path Affinity</span> (applied later)</li>
+        </ul>
+
+        <p class="section-label">What to Consider</p>
+        <ul>
+          <li>How does your society view Resonance?</li>
+          <li>Are you aligned with your people or in tension with them?</li>
+        </ul>
+
+        <p class="section-label">Reference</p>
+     <p><a href="../lore/peoples-primer.html" target="_blank" rel="noopener noreferrer" class="ref">Review your choices for Lineage→</a></p>
+      </section>
+
+      <!-- ═══ STEP 3 ═══ -->
+      <section class="step">
+        <div class="step-badge">Step 3</div>
+        <h2 class="step-title">Choose Your Harmonics</h2>
+        <p class="step-directive">What You Are Doing: You are declaring your internal alignment—how you resonate with the world morally and philosophically.</p>
+
+        <p class="section-label">Mechanical Impact</p>
+        <p>Establishes <span class="mech">Dissonance Triggers</span> and <span class="mech">Static Veil penalties</span>. It does not modify combat math or attributes.</p>
+
+        <p class="section-label">What to Consider</p>
+        <ul>
+          <li>What principle do you refuse to betray?</li>
+          <li>Where are you flexible?</li>
+        </ul>
+
+        <p class="section-label">Reference</p>
+		 <p><a href="harmonics.html" target="_blank" rel="noopener noreferrer" class="ref">Determine your Discipline and Dynamics→</a></p>
+      </section>
+
+      <!-- ═══ STEP 4 ═══ -->
+      <section class="step">
+        <div class="step-badge">Step 4</div>
+        <h2 class="step-title">Choose Your Vocation</h2>
+        <p class="step-directive">What You Are Doing: You are selecting your "former life"—the trade or discipline held before your Calling.</p>
+
+        <p class="section-label">Mechanical Impact</p>
+        <ul>
+          <li>One Primary Heritage Imprint is <span class="mech">Hard-Locked at 4</span></li>
+          <li>Two <span class="mech">+1 Ability/Knowledge bonuses</span></li>
+        </ul>
+
+        <p class="section-label">What to Consider</p>
+        <ul>
+          <li>Tension between Lineage and Vocation (e.g., a Noble-born Laborer) creates story</li>
+          <li class="ref">Review your choices for Vocation</li>
+        </ul>
+
+        <p class="section-label">Heritage Imprint</p>
+        <ul>
+          <li>Determined by your Vocation</li>
+          <li class="ref">Understanding Heritage Imprints</li>
+        </ul>
+		 <p class="section-label">Reference</p>
+		 <p><a href="vocations.html" target="_blank" rel="noopener noreferrer" class="ref">Things of the past - Vocations→</a></p>
+		 <p><a href="heritage-imprints.html" target="_blank" rel="noopener noreferrer" class="ref">The remants of Yesteryear -  Heritage Imprints</a></p>
+      </section>
+
+      <!-- ═══ STEP 5 ═══ -->
+      <section class="step">
+        <div class="step-badge">Step 5</div>
+        <h2 class="step-title">Choose Your Calling</h2>
+        <p class="step-directive">What You Are Doing: You are selecting your heroic identity and "transformation layer"—your present combat role.</p>
+
+        <p class="section-label">Technical Parameters</p>
+        <ul>
+          <li>Sets your <span class="mech">Health / Wellspring Dice</span></li>
+          <li>Sets your <span class="mech">Armor Tier Band</span></li>
+          <li>Sets your <span class="mech">Path access limits</span> (Hybrid cap for Path Rating is 3)</li>
+        </ul>
+
+        <p class="section-label">What to Consider</p>
+        <p>Are you steel, shadow, discipline, or resonance itself?</p>
+      </section>
+
+      <!-- ═══ STEP 6 ═══ -->
+<section class="step">
+  <div class="step-badge">Step 6</div>
+  <h2 class="step-title">Determine Primary Ratings</h2>
+  <p class="step-directive">What You Are Doing: You are establishing six foundational capabilities that define what your character's body, mind, and presence can naturally support. These are not skills — they are the bedrock everything else is built upon.</p>
+
+  <div class="formula-block">
+    <p class="label">Roll Method</p>
+    <p>Roll <span class="mech">2d8</span> → Take the highest → Divide by 2 (Round Down)</p>
+    <p class="note">e.g., an 8 result equals a Rating of 4</p>
+  </div>
+
+  <p class="section-label">Die Result Chart</p>
+  <table class="data-table">
+    <thead>
+      <tr><th>Highest Die</th><th>Rating</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1–1</td><td>1</td></tr>
+      <tr><td>2–3</td><td>1</td></tr>
+      <tr><td>4–5</td><td>2</td></tr>
+      <tr><td>6–7</td><td>3</td></tr>
+      <tr><td>8</td><td>4</td></tr>
+    </tbody>
+  </table>
+
+  <p class="section-label">The Six-Step Scale</p>
+  <table class="data-table">
+    <thead>
+      <tr><th>Rating</th><th>Label</th><th>What It Means</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Minimal</td><td>Instinctive or barely trained</td></tr>
+      <tr><td>2</td><td>Basic</td><td>Familiarity or limited experience</td></tr>
+      <tr><td>3</td><td>Solid</td><td>Dependable competence</td></tr>
+      <td>4</td><td>Practiced</td><td>Confident, reliable execution</td></tr>
+      <tr><td>5</td><td>Exceptional</td><td>Rare capability beyond the ordinary</td></tr>
+      <tr><td>6</td><td>Mastery</td><td>Uncommon even among heroes</td></tr>
+    </tbody>
+  </table>
+
+  <p class="section-label">System Cap</p>
+  <p>Maximum starting rating is <span class="mech">4 / Practiced</span>. This cap applies during and after Character Creation. <strong>There are no exceptions.</strong></p>
+
+  <div class="callout">
+    <strong>Forged Combatants:</strong> Receive a single <strong>FREE Rating Point</strong> to spend as they see fit. This free point cannot be used to bypass the creation cap of 4.
+  </div>
+
+  <p class="section-label">The Six Primary Ratings</p>
+  <p style="font-family:'Crimson Text',serif; font-size:1rem; color:#5a4030; font-style:italic; margin-bottom:1rem;">Roll once for each. Each Primary also serves as a Resonant Anchor — the foundation your Resonant Path draws from.</p>
+
+  <style>
+    .primary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+      margin: 0.5rem 0 1.5rem;
+    }
+    @media(max-width: 600px) { .primary-grid { grid-template-columns: 1fr; } }
+    .primary-card {
+      background: rgba(255,248,235,0.55);
+      border: 1px solid rgba(139,80,20,0.18);
+      border-radius: 10px;
+      padding: 1rem 1.1rem 0.9rem;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+    .primary-card:hover {
+      box-shadow: 0 5px 18px rgba(139,80,20,0.10);
+      transform: translateY(-2px);
+    }
+    .primary-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      border-radius: 10px 0 0 10px;
+    }
+    .primary-card.agility::before    { background: #6b9abf; }
+    .primary-card.strength::before   { background: #8b3a14; }
+    .primary-card.vitality::before   { background: #3a7a6a; }
+    .primary-card.intelligence::before { background: #c47a20; }
+    .primary-card.wisdom::before     { background: #7a6abf; }
+    .primary-card.social::before     { background: #8b6a3a; }
+    .primary-name {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.85rem;
+      color: #3a2a1a;
+      margin: 0 0 0.15rem;
+      letter-spacing: 0.05em;
+    }
+    .primary-anchor {
+      font-family: 'Crimson Text', serif;
+      font-size: 0.78rem;
+      font-style: italic;
+      color: #8b5014;
+      margin: 0 0 0.5rem;
+      letter-spacing: 0.02em;
+    }
+    .primary-desc {
+      font-family: 'Crimson Text', serif;
+      font-size: 0.92rem;
+      color: #5a4030;
+      line-height: 1.55;
+      margin: 0 0 0.6rem;
+    }
+    .primary-ladder {
+      display: flex;
+      gap: 0.3rem;
+      flex-wrap: wrap;
+      margin-top: 0.35rem;
+    }
+    .ladder-pip {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.5rem;
+      padding: 0.1rem 0.45rem;
+      border-radius: 20px;
+      border: 1px solid rgba(139,80,20,0.20);
+      background: rgba(200,160,80,0.08);
+      color: #7a5030;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+    .ladder-pip.current {
+      background: rgba(139,80,20,0.12);
+      border-color: rgba(139,80,20,0.35);
+      color: #5a2a08;
+      font-weight: bold;
+    }
+  </style>
+
+  <div class="primary-grid">
+
+    <div class="primary-card agility">
+      <p class="primary-name">Agility</p>
+      <p class="primary-anchor">Resonant Anchor: Aeris &amp; Obtenebrate</p>
+      <p class="primary-desc">Bodily coordination, precision, and control. Governs dodging, repositioning, weapon attacks relying on timing, fine motor tasks, sleight of hand, and steady aim. <em>Motion and control unified.</em></p>
+      <div class="primary-ladder">
+        <span class="ladder-pip">1 · Clumsy</span>
+        <span class="ladder-pip">2 · Unsteady</span>
+        <span class="ladder-pip">3 · Coordinated</span>
+        <span class="ladder-pip current">4 · Precise ✦</span>
+        <span class="ladder-pip">5 · Fluid</span>
+        <span class="ladder-pip">6 · Preternatural</span>
+      </div>
+    </div>
+
+    <div class="primary-card strength">
+      <p class="primary-name">Strength</p>
+      <p class="primary-anchor">Resonant Anchor: Terra</p>
+      <p class="primary-desc">Raw physical power and force generation. Governs lifting, breaking, forcing movement, and delivering heavy blows. <em>Commitment made physical.</em></p>
+      <div class="primary-ladder">
+        <span class="ladder-pip">1 · Weak</span>
+        <span class="ladder-pip">2 · Slight</span>
+        <span class="ladder-pip">3 · Solid</span>
+        <span class="ladder-pip current">4 · Powerful ✦</span>
+        <span class="ladder-pip">5 · Mighty</span>
+        <span class="ladder-pip">6 · Overwhelming</span>
+      </div>
+    </div>
+
+    <div class="primary-card vitality">
+      <p class="primary-name">Vitality</p>
+      <p class="primary-anchor">Resonant Anchor: Aqua</p>
+      <p class="primary-desc">Endurance, resilience, and sustained effort. Governs resistance to fatigue, sustained defense, and survival under hardship. <em>Not force — refusal to fail.</em></p>
+      <div class="primary-ladder">
+        <span class="ladder-pip">1 · Frail</span>
+        <span class="ladder-pip">2 · Winded</span>
+        <span class="ladder-pip">3 · Resilient</span>
+        <span class="ladder-pip current">4 · Hardy ✦</span>
+        <span class="ladder-pip">5 · Unyielding</span>
+        <span class="ladder-pip">6 · Relentless</span>
+      </div>
+    </div>
+
+    <div class="primary-card intelligence">
+      <p class="primary-name">Intelligence</p>
+      <p class="primary-anchor">Resonant Anchor: Ignis</p>
+      <p class="primary-desc">Structured reasoning, analysis, and formal understanding. Governs investigation, technical knowledge, strategic planning, and logical diagnosis. <em>Understands through analysis.</em></p>
+      <div class="primary-ladder">
+        <span class="ladder-pip">1 · Limited</span>
+        <span class="ladder-pip">2 · Basic</span>
+        <span class="ladder-pip">3 · Reasoned</span>
+        <span class="ladder-pip current">4 · Sharp ✦</span>
+        <span class="ladder-pip">5 · Brilliant</span>
+        <span class="ladder-pip">6 · Formidable</span>
+      </div>
+    </div>
+
+    <div class="primary-card wisdom">
+      <p class="primary-name">Wisdom</p>
+      <p class="primary-anchor">Resonant Anchor: Vitae</p>
+      <p class="primary-desc">Experiential awareness, judgment, and intuitive understanding. Governs situational awareness, sensing danger, and recognizing emotional truth. <em>Understands through experience.</em></p>
+      <div class="primary-ladder">
+        <span class="ladder-pip">1 · Naïve</span>
+        <span class="ladder-pip">2 · Uncertain</span>
+        <span class="ladder-pip">3 · Sound</span>
+        <span class="ladder-pip current">4 · Insightful ✦</span>
+        <span class="ladder-pip">5 · Sage</span>
+        <span class="ladder-pip">6 · Profound</span>
+      </div>
+    </div>
+
+    <div class="primary-card social">
+      <p class="primary-name">Social</p>
+      <p class="primary-anchor">No Resonant Anchor</p>
+      <p class="primary-desc">Interpersonal awareness and influence. Governs persuasion, deception, intimidation, and shaping outcomes through presence and communication. <em>Influences what others believe and how they respond.</em></p>
+      <div class="primary-ladder">
+        <span class="ladder-pip">1 · Off-Putting</span>
+        <span class="ladder-pip">2 · Uneasy</span>
+        <span class="ladder-pip">3 · Personable</span>
+        <span class="ladder-pip current">4 · Compelling ✦</span>
+        <span class="ladder-pip">5 · Magnetic</span>
+        <span class="ladder-pip">6 · Commanding</span>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="section-label">Reference</p>
+  <p><a href="primary-ratings.html" target="_blank" rel="noopener noreferrer" class="ref">Review the Full Primary Ratings Document →</a></p>
+  <p><a href="../webapps/rivendawn-2d8-rating-roller.html" target="_blank" rel="noopener noreferrer" class="ref">Lost yer dice? I got you!!</a></p>
+
+</section>
+      <!-- ═══ STEP 7 ═══ -->
+      <section class="step">
+        <div class="step-badge">Step 7</div>
+        <h2 class="step-title">Assign Abilities &amp; Knowledges</h2>
+        <p class="step-directive">What You Are Doing: You are allocating trained mastery (learned skill) vs. natural capacity.</p>
+
+        <p class="section-label">The Pool</p>
+        <ul>
+          <li>Spend <span class="mech">22 discretionary points</span></li>
+          <li>Forged Combatant Pool: <span class="mech">25 discretionary points</span></li>
+        </ul>
+
+        <p class="section-label">The Injection</p>
+        <p>Apply <span class="mech">Vocation (+1)</span> and <span class="mech">Lineage (+2)</span> bonuses <em>after</em> spending the pool.</p>
+
+        <p class="section-label">System Cap</p>
+        <p>Final totals cannot exceed <span class="mech">4</span></p>
+		<p class="section-label">Reference</p>
+		 <p><a href="abilities-knowledges.html" target="_blank" rel="noopener noreferrer" class="ref">The Abilities to Know, and the Knowhow to be Able</a></p>
+
+		
+      </section>
+
+      <!-- ═══ STEP 8 ═══ -->
+      <section class="step">
+        <div class="step-badge">Step 8</div>
+        <h2 class="step-title">Assign Path Rating &amp; Wellspring</h2>
+        <p class="step-directive">What You Are Doing: You are determining your character's depth of alignment with the Song. (Skip if Forged Combatant.)</p>
+
+        <p class="section-label">Starting Pools</p>
+        <ul>
+          <li>Hybrid: <span class="mech">3 pts</span></li>
+          <li>Pure Resonant: <span class="mech">6 pts</span></li>
+          <li>Songweaver: <span class="mech">4 pts</span></li>
+        </ul>
+
+        <p class="section-label">The Cap</p>
+        <ul>
+          <li>Hybrid cap is <span class="mech">3</span> (Lineage Affinity does not apply)</li>
+          <li>Others may reach <span class="mech">4 (Mastery)</span></li>
+        </ul>
+
+        <div class="callout">
+          <strong>Defensive Affinity (Resonant Casters):</strong> Becomes available if you possess Path Rating 4.
+        </div>
+
+        <p class="section-label">Starting Wellspring</p>
+        <p>Your starting Wellspring is determined by your Calling.</p>
+        <ul>
+          <li>Hybrid Callings — Wellspring Die: <span class="mech">d8</span></li>
+          <li>Pure Resonant Callings — Wellspring Die: <span class="mech">d12</span></li>
+          <li>Songweavers — Wellspring Die: <span class="mech">d10</span></li>
+        </ul>
+
+        <p class="section-label">Wellspring Die &amp; Base Wellspring</p>
+        <ul>
+          <li>Hybrid d8 — Base Wellspring of <span class="mech">8</span></li>
+          <li>Pure Resonant d12 — Base Wellspring of <span class="mech">12</span></li>
+        </ul>
+
+        <p class="section-label">Modifier Calculation</p>
+        <ol>
+          <li>Roll <span class="mech">2d(Wellspring Die)</span></li>
+          <li>Take highest of the two rolls</li>
+          <li>Multiply highest roll by 2</li>
+          <li>Add to Base Wellspring</li>
+        </ol>
+
+        <div class="formula-block">
+          <p class="label">Hybrid Example</p>
+          <p>2d8 rolled: <span class="mech">6 | 2</span> → Highest = 6 × 2 = 12 → Total: <span class="mech">8 + 12 = 20</span></p>
+        </div>
+
+        <div class="formula-block">
+          <p class="label">Pure Resonant Example</p>
+          <p>2d12 rolled: <span class="mech">11 | 3</span> → Highest = 11 × 2 = 22 → Total: <span class="mech">12 + 22 = 34</span></p>
+        </div>
+
+        <p>This value becomes your character's starting <span class="mech">Wellspring Pool</span>.</p>
+      </section>
+
+      <!-- ═══ STEP 9 ═══ -->
+      <section class="step">
+        <div class="step-badge">Step 9</div>
+        <h2 class="step-title">Determine Defensive Profile</h2>
+        <p class="step-directive">What You Are Doing: You are calculating your structural durability.</p>
+
+        <p class="section-label">HP Formula</p>
+        <div class="formula-block">
+          <p><span class="mech">24 + (Rolled Health Die × 3)</span></p>
+          <p class="note">Health Dice are listed in the Calling Section and multiplied by 3</p>
+        </div>
+
+        <p class="section-label">HP Examples</p>
+        <ul>
+          <li><strong>Scribe</strong> — 24 + d8 → rolls 6 × 3 = 18 → Total: <span class="mech">24 + 18 = 42</span></li>
+          <li><strong>Shield Warden</strong> — 24 + d12 → rolls 10 × 3 = 30 → Total: <span class="mech">24 + 30 = 54</span></li>
+        </ul>
+
+        <p class="section-label">AP Formula</p>
+        <div class="formula-block">
+          <p><span class="mech">AP = (Max HP × (Tier × 0.5))</span>, rounded up</p>
+        </div>
+
+        <p class="section-label">AP Examples</p>
+        <ul>
+          <li><strong>Scribe</strong> — 42 × 0.5 → Armor Points: <span class="mech">21</span></li>
+          <li><strong>Shield Warden</strong> — 52 × 0.5 → Armor Points: <span class="mech">26</span></li>
+        </ul>
+
+        <p class="section-label">Resolution</p>
+        <p>While AP &gt; 0, damage is split <span class="mech">50/50</span> between AP and HP.</p>
+      </section>
+
+      <!-- ═══ STEP 10 ═══ -->
+      <section class="step">
+        <div class="step-badge">Step 10</div>
+        <h2 class="step-title">Combat Configuration</h2>
+        <p class="step-directive">What You Are Doing: You are defining how your character applies force and survives on the battlefield.</p>
+
+        <p class="section-label">Forged Combatant (6 pts) / Hybrid (5 pts)</p>
+        <p>Distribute between <span class="mech">Offensive Rating (OR)</span> and <span class="mech">Base Defensive Rating (BDR)</span></p>
+        <ul>
+          <li>Minimum: <span class="mech">1</span> &nbsp;|&nbsp; Maximum: <span class="mech">4</span></li>
+          <li><span class="note">Rogue (Forged Combatant):</span> 3 pts OR / 2 pts BDR</li>
+          <li><span class="note">Hybrid Ranger:</span> 3 pts OR / 2 pts BDR</li>
+        </ul>
+
+        <p class="section-label">Defensive Rating + Defensive Posture</p>
+        <p>Base Defensive Rating + Defensive Posture = <span class="mech">Total Defensive Rating</span></p>
+        <ul>
+          <li><strong>Dodge:</strong> Gain <span class="mech">+2</span> to Base Defensive Rating</li>
+          <li><strong>Parry:</strong> If opponent misses, reduce your Target Number (TN) by 2 on your next attack against them</li>
+          <li><strong>Riposte:</strong> The attacker reduces their Target Number (TN) by 1</li>
+        </ul>
+
+        <p class="section-label">Pure Resonant (4 pts)</p>
+        <ul>
+          <li>Martial Combat: Start with a Rating of <span class="mech">1</span> (upgradable only with Freebie Points)</li>
+          <li>Spend 2 on Base Defensive Posture → Convert 2 remaining points to <span class="mech">+1 Path Point</span></li>
+          <li>Spend 3 on Base Defensive Posture → Convert 1 remaining point to <span class="mech">+5 Wellspring Capacity</span></li>
+        </ul>
+
+        <p class="section-label">Pure Resonant Defensive Postures</p>
+        <ul>
+          <li>
+            <strong>Absorption Shield (Aqua or Terra)</strong>
+            <ul>
+              <li>Roll a number of d4 equal to your Path Rating</li>
+              <li>Add the result to your Armor Points as Bonus Armor</li>
+              <li><span class="note">Bonus Armor: Functions like normal Armor; reduced first when Armor damage is applied; does not prevent Health damage from the 50/50 rule</span></li>
+              <li>Damage is resolved normally</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Damage Shield (Ignis)</strong>
+            <ul>
+              <li>Provides no avoidance bonus</li>
+              <li>When struck in melee, the attacker takes retaliatory Ignis damage</li>
+              <li>Damage determined using the Resonant Dice table</li>
+            </ul>
+          </li>
+          <li>
+            <strong>Dodge (Aeris)</strong>
+            <ul>
+              <li>Adds <span class="mech">+2</span> to Total Defensive Rating</li>
+              <li>Provides no Damage Shield or Absorption Shield</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+
+      <!-- ═══ STEP 11 ═══ -->
+      <section class="step">
+        <div class="step-badge">Step 11</div>
+        <h2 class="step-title">Determine Initiative</h2>
+        <p class="step-directive">What You Are Doing: You are establishing your combat tempo.</p>
+
+        <ul>
+          <li><strong>Forged / Hybrid:</strong> Primary Rating used for Combat (Str or Agi) <span class="mech">+ d20</span></li>
+          <li><strong>Pure Resonant:</strong> Highest Path Rating <span class="mech">+ d20</span></li>
+        </ul>
+      </section>
+
+      <!-- ═══ STEP 12 ═══ -->
+      <section class="step">
+        <div class="step-badge">Step 12</div>
+        <h2 class="step-title">Liabilities &amp; Boons</h2>
+        <p class="step-directive">What You Are Doing: You are defining the burdens and advantages that shape your character's edge.</p>
+
+        <p class="section-label">The Logic</p>
+        <p>Take up to <span class="mech">6 Severity Points</span> of Liabilities; convert them <span class="mech">1:1</span> into Boon Points.</p>
+
+        <div class="callout">
+          <strong>Constraint:</strong> Liabilities are permanent and cannot be bought off later.
+        </div>
+      </section>
+
+      <!-- ═══ STEP 13 ═══ -->
+      <section class="step">
+        <div class="step-badge">Step 13</div>
+        <h2 class="step-title">Freebie Points</h2>
+        <p class="step-directive">What You Are Doing: You are performing final optimization within system boundaries.</p>
+
+        <p class="section-label">The Pool</p>
+        <ul>
+          <li><span class="mech">10 Freebie Points</span></li>
+          <li>Forged Combatants gain an extra <span class="mech">5 Freebie Points</span></li>
+          <li class="note">Extra points still cannot exceed the hard cap of 4 for Primary Ratings or Abilities</li>
+        </ul>
+
+        <p class="section-label">Costs</p>
+        <table class="data-table">
+          <thead>
+            <tr><th>Category</th><th>Cost (FP)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Primary Rating</td><td>8</td></tr>
+            <tr><td>Ability / Knowledge</td><td>2</td></tr>
+            <tr><td>Path Point</td><td>10</td></tr>
+            <tr><td>Resources / Finances</td><td>2</td></tr>
+          </tbody>
+        </table>
+
+        <p class="section-label">System Cap</p>
+        <p>All expenditures must respect the <span class="mech">Creation Cap of 4</span>.</p>
+      </section>
+
+      <!-- ═══ STEP 14 ═══ -->
+      <section class="step">
+        <div class="step-badge">Step 14</div>
+        <h2 class="step-title">Resources &amp; Finances</h2>
+        <p class="step-directive">What You Are Doing: You are establishing your character's starting foundation in the economy and social strata.</p>
+
+        <div class="callout">
+          <strong>The Golden Rule:</strong> These are purchased exclusively with Freebie Points (FP) and cannot be subsidized by Liabilities. See Step 13 for FP costs.
+        </div>
+
+        <p class="section-label">Mechanical Impact</p>
+        <p><strong>Finances:</strong> Establish starting capital</p>
+        <ul>
+          <li>Rank 1 — <span class="mech">100 MK</span></li>
+          <li>Rank 2 — <span class="mech">500 MK</span></li>
+          <li>Rank 3 — <span class="mech">2,500 MK</span></li>
+        </ul>
+        <br>
+        <p><strong>Social Resources:</strong> Purchase advantages like Informant Networks, Benefactors, or Legal Immunity.</p>
+
+        <p class="section-label">System Cap</p>
+        <p>No category may exceed <span class="mech">Rank 3</span> at creation.</p>
+
+        <p class="section-label">Reference</p>
+        <p class="ref">TECHNICAL — RESOURCES &amp; FINANCES</p>
+      </section>
+
+    </div><!-- /.content-container -->
+  </main>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div>
+      Email: <a href="/cdn-cgi/l/email-protection#bdded2d3c9dcdec9fdcfd4cbd8d3d9dccad393ded2d0"><span class="__cf_email__" data-cfemail="d0b3bfbea4b1b3a490a2b9a6b5beb4b1a7befeb3bfbd">[email&#160;protected]<

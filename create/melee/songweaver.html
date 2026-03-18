@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Songweaver — The Living Cadence</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+:root {
+  --header-height: 72px;
+  --footer-height: 72px;
+  --content-max-width: 960px;
+  --page-max-width: 1400px;
+  --ink-color: #3a2a1a;
+  --accent: #fff1d6;
+  --nav-color: #f2e3c6;
+  --nav-shadow: rgba(0,0,0,0.85);
+  --footer-bg: rgba(0,0,0,0.88);
+  --calling-primary: #4a2e06;
+  --calling-dark: #5a3a08;
+  --calling-light: #d4a84a;
+  --calling-muted: #a07828;
+  --calling-bg-tint: rgba(200,150,40,0.07);
+  --calling-border: rgba(139,105,20,0.22);
+  /* Cadence accent — deep indigo/violet */
+  --cadence-color: #5a4880;
+  --cadence-light: #8070b8;
+  --cadence-tint: rgba(90,72,128,0.07);
+  --cadence-border: rgba(90,72,128,0.22);
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+
+body{
+  font-family:'Crimson Text',Georgia,serif;
+  color:var(--ink-color);
+  min-height:100dvh;
+  background:#000;
+  line-height:1.75;
+  font-size:1.18rem;
+}
+
+.page-wrapper{
+  min-height:100dvh;
+  display:flex; flex-direction:column;
+  max-width:var(--page-max-width);
+  margin:0 auto;
+  background-color:#000;
+  background-image:url('../../images/bg.jpg');
+  background-size:contain;
+  background-position:center top;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  box-shadow:0 0 80px rgba(0,0,0,0.85);
+  position:relative;
+}
+
+header{
+  position:fixed; top:0; left:50%;
+  transform:translateX(-50%);
+  width:min(100%,var(--page-max-width));
+  height:var(--header-height);
+  background-image:url('../../images/header.png');
+  background-size:contain; background-position:center;
+  background-repeat:no-repeat;
+  z-index:1000;
+  box-shadow:0 6px 16px rgba(0,0,0,0.5);
+}
+
+header::after{
+  content:""; position:absolute;
+  left:0; right:0; bottom:-14px; height:18px;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0));
+  pointer-events:none;
+}
+
+nav{
+  max-width:var(--content-max-width);
+  width:100%; height:100%;
+  margin:0 auto;
+  display:flex; align-items:center; justify-content:center;
+  gap:2rem; padding:0 1.5rem;
+}
+
+nav a{
+  color:var(--nav-color); text-decoration:none;
+  font-family:Consolas,"Courier New",monospace;
+  font-size:1.25rem; letter-spacing:0.14em; text-transform:uppercase;
+  transition:all .25s ease; position:relative;
+  display:inline-flex; align-items:center;
+  gap:.5rem; padding:.2rem .1rem;
+  text-shadow:0 1px 2px var(--nav-shadow),0 0 6px rgba(0,0,0,0.45);
+}
+nav a i{ color:inherit; font-size:1.1rem; margin-right:4px; position:relative; top:-1px; }
+nav a::after{ content:""; position:absolute; left:0; bottom:-4px; width:0; height:2px; background:var(--accent); transition:width .28s ease; }
+nav a:hover{ color:var(--accent); transform:translateY(-1px); }
+nav a:hover::after{ width:100%; }
+
+main{
+  flex:1;
+  margin-top:var(--header-height);
+  padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+  display:flex; justify-content:center;
+}
+
+.content-container{
+  max-width:var(--content-max-width);
+  width:100%; padding:40px 80px 180px;
+  color:var(--ink-color); margin:0 auto;
+  border-radius:8px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.55);
+  background-image:url('../../images/content-scroll-bg.png');
+  background-repeat:repeat-y;
+  background-position:top center;
+  background-size:100% auto;
+}
+
+.content-container h1{
+  font-family:'Cinzel Decorative',serif;
+  font-size:3rem; text-align:center;
+  margin:0 0 .4rem; letter-spacing:.06em;
+}
+.content-container p{ margin-bottom:1.25rem; }
+
+.calling-subtitle{
+  font-family:'Crimson Text',serif;
+  font-size:1.1rem; font-style:italic;
+  color:#4a2e06;
+  text-align:center; letter-spacing:0.08em;
+  margin:0 0 0.5rem;
+}
+
+.calling-divider{
+  display:flex; align-items:center; gap:0.75rem;
+  margin:0.5rem auto 2rem; max-width:420px;
+}
+.calling-divider span{ flex:1; height:1px; background:linear-gradient(to right,transparent,rgba(139,105,20,0.45)); }
+.calling-divider span:last-child{ background:linear-gradient(to left,transparent,rgba(139,105,20,0.45)); }
+.calling-divider em{ color:var(--calling-primary); font-size:0.65rem; font-style:normal; }
+
+.soul-block{
+  background:var(--calling-bg-tint);
+  border:1px solid var(--calling-border);
+  border-left:4px solid var(--calling-light);
+  border-radius:0 10px 10px 0;
+  padding:1.3rem 1.6rem; margin-bottom:2rem;
+  font-style:italic; font-size:1.05rem;
+  color:#4a3010; line-height:1.75;
+}
+
+.section-label{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.6rem; letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--calling-primary);
+  text-align:center;
+  margin:2rem 0 0.8rem;
+}
+
+/* Cadence-specific section label */
+.cadence-label{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.6rem; letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--cadence-color);
+  text-align:center;
+  margin:2rem 0 0.8rem;
+}
+
+/* Cadence profile block */
+.cadence-profile{
+  background:var(--cadence-tint);
+  border:1px solid var(--cadence-border);
+  border-radius:10px; padding:1.3rem 1.5rem 1.2rem;
+  margin-bottom:1.5rem;
+  position:relative; overflow:hidden;
+}
+.cadence-profile::before{
+  content:""; position:absolute; top:0; left:0;
+  width:4px; height:100%; border-radius:10px 0 0 10px;
+  background:var(--cadence-light);
+}
+
+.cadence-badge{
+  display:inline-block;
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.48rem; letter-spacing:0.15em;
+  padding:0.12rem 0.45rem; border-radius:20px;
+  text-transform:uppercase; margin-bottom:0.6rem;
+  background:rgba(90,72,128,0.12); color:#3a2870;
+  border:1px solid rgba(90,72,128,0.28);
+}
+
+.cadence-row{
+  display:flex; justify-content:space-between; align-items:baseline;
+  margin-bottom:0.3rem;
+  font-family:'Crimson Text',serif; font-size:0.92rem; color:#5a4030;
+}
+.cadence-val{ font-family:'Cinzel Decorative',serif; font-size:0.85rem; color:var(--ink-color); font-weight:700; }
+
+.cadence-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem; }
+
+.cadence-card{
+  background:rgba(255,248,235,0.6);
+  border:1px solid var(--cadence-border);
+  border-radius:10px; padding:1.1rem 1.3rem 1rem;
+  position:relative; overflow:hidden;
+  transition:box-shadow 0.2s ease,transform 0.2s ease;
+}
+.cadence-card:hover{ box-shadow:0 6px 20px rgba(90,72,128,0.10); transform:translateY(-2px); }
+.cadence-card::before{ content:""; position:absolute; top:0; left:0; width:4px; height:100%; border-radius:10px 0 0 10px; background:var(--cadence-light); }
+.cadence-card-title{ font-family:'Cinzel Decorative',serif; font-size:0.78rem; color:var(--ink-color); letter-spacing:0.05em; margin-bottom:0.6rem; }
+
+.stat-block{
+  background:var(--calling-bg-tint);
+  border:1px solid var(--calling-border);
+  border-radius:10px; padding:1.2rem 1.5rem;
+  margin-bottom:1.5rem;
+  display:flex; align-items:center; justify-content:center;
+  flex-wrap:wrap; gap:1.2rem;
+}
+.stat-item{ display:flex; flex-direction:column; align-items:center; gap:0.15rem; min-width:70px; }
+.stat-value{ font-family:'Cinzel Decorative',serif; font-size:1.7rem; color:var(--ink-color); line-height:1; text-shadow:0 1px 3px rgba(0,0,0,0.08); }
+.stat-label{ font-family:'Crimson Text',serif; font-size:0.72rem; color:#4a2e06; font-style:italic; letter-spacing:0.04em; text-align:center; }
+.stat-divider{ width:1px; height:40px; background:rgba(139,105,20,0.5); }
+.stat-note{ font-family:'Crimson Text',serif; font-size:0.88rem; color:#4a2e06; text-align:center; font-style:italic; margin-top:0.5rem; line-height:1.6; width:100%; }
+
+.posture-grid{ display:grid; grid-template-columns:1fr 1fr; gap:0.85rem; margin-bottom:1.5rem; }
+.posture-card{
+  background:rgba(255,248,235,0.55);
+  border:1px solid var(--cadence-border);
+  border-radius:10px; padding:1rem 1.1rem 0.9rem;
+  text-align:center;
+  transition:box-shadow 0.2s ease,transform 0.2s ease;
+}
+.posture-card:hover{ box-shadow:0 5px 16px rgba(90,72,128,0.10); transform:translateY(-2px); }
+.posture-name{ font-family:'Cinzel Decorative',serif; font-size:0.75rem; color:var(--ink-color); letter-spacing:0.06em; margin-bottom:0.5rem; }
+.posture-desc{ font-family:'Crimson Text',serif; font-size:0.88rem; color:#5a4030; line-height:1.55; }
+
+.gift-card{
+  background:var(--calling-bg-tint);
+  border:1px solid var(--calling-border);
+  border-radius:10px; padding:1.3rem 1.5rem 1.2rem;
+  margin-bottom:1.1rem; position:relative; overflow:hidden;
+}
+.gift-card::before{ content:""; position:absolute; top:0; left:0; width:100%; height:3px; border-radius:10px 10px 0 0; }
+.gift-card.defensive::before{ background:linear-gradient(to right,#6b8c42,transparent); }
+.gift-card.offensive::before{ background:linear-gradient(to right,#8b5014,transparent); }
+.gift-card.surge-off::before{ background:linear-gradient(to right,var(--cadence-light),transparent); }
+.gift-card.surge-def::before{ background:linear-gradient(to right,#4a6a20,transparent); }
+
+.gift-type{ font-family:'Cinzel Decorative',serif; font-size:1rem; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:0.3rem; }
+.gift-type.defensive{ color:#4a6a20; }
+.gift-type.offensive{ color:#8b5014; }
+.gift-type.surge-off{ color:var(--cadence-color); }
+.gift-type.surge-def{ color:#4a6a20; }
+
+.gift-name{ font-family:'Cinzel Decorative',serif; font-size:0.95rem; color:var(--ink-color); letter-spacing:0.05em; margin-bottom:0.8rem; }
+.gift-body{ font-family:'Crimson Text',serif; font-size:0.97rem; color:#4a3010; line-height:1.7; }
+.gift-body p{ margin-bottom:0.6rem; }
+.gift-body p:last-child{ margin-bottom:0; }
+.gift-trigger{ font-family:'Cinzel Decorative',serif; font-size:0.5rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--cadence-color); margin:0.7rem 0 0.25rem; }
+.gift-effect-list{ margin:0.4rem 0 0.6rem 0.8rem; font-family:'Crimson Text',serif; font-size:0.97rem; color:#4a3010; line-height:1.65; }
+.gift-narrative{ font-style:italic; font-size:0.9rem; color:#4a2e06; border-top:1px solid rgba(139,105,20,0.15); padding-top:0.7rem; margin-top:0.7rem; }
+
+/* Expression tables */
+.expression-section{ margin-bottom:1.8rem; }
+
+.expression-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.7rem; letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--cadence-color);
+  margin:1.4rem 0 0.5rem;
+}
+
+.expression-table{
+  width:100%; border-collapse:collapse;
+  font-family:'Crimson Text',serif; font-size:0.92rem;
+  margin-bottom:0.5rem;
+}
+
+.expression-table th{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.52rem; letter-spacing:0.12em;
+  text-transform:uppercase;
+  background:var(--cadence-tint);
+  color:var(--cadence-color);
+  padding:0.45rem 0.75rem;
+  border:1px solid var(--cadence-border);
+  text-align:left;
+}
+
+.expression-table td{
+  padding:0.45rem 0.75rem;
+  border:1px solid var(--cadence-border);
+  color:#4a3010;
+  line-height:1.5;
+}
+
+.expression-table tr:nth-child(even) td{
+  background:rgba(90,72,128,0.04);
+}
+
+.expression-table td:first-child{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.72rem;
+  color:var(--cadence-color);
+  white-space:nowrap;
+}
+
+.expression-table td:nth-child(2){
+  font-style:italic;
+  color:#7a6090;
+  white-space:nowrap;
+}
+
+/* Band table */
+.band-table{
+  width:100%; border-collapse:collapse;
+  font-family:'Crimson Text',serif; font-size:0.95rem;
+  margin-bottom:1.5rem;
+}
+.band-table th{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.55rem; letter-spacing:0.14em;
+  text-transform:uppercase;
+  background:var(--cadence-tint);
+  color:var(--cadence-color);
+  padding:0.5rem 0.9rem;
+  border:1px solid var(--cadence-border);
+  text-align:left;
+}
+.band-table td{
+  padding:0.5rem 0.9rem;
+  border:1px solid var(--cadence-border);
+  color:#4a3010;
+}
+.band-table tr:nth-child(even) td{ background:rgba(90,72,128,0.04); }
+.band-table td:first-child{ font-family:'Cinzel Decorative',serif; font-size:0.78rem; color:var(--cadence-color); }
+.band-table td:nth-child(2){ font-style:italic; color:#7a6090; }
+
+/* Resolution block */
+.resolution-block{
+  background:var(--cadence-tint);
+  border:1px solid var(--cadence-border);
+  border-radius:10px; padding:1.2rem 1.5rem;
+  margin-bottom:1.5rem;
+}
+.resolution-block p{
+  font-family:'Crimson Text',serif; font-size:0.95rem;
+  color:#3a2a1a; line-height:1.7;
+  margin:0 0 0.4rem;
+}
+.resolution-block p:last-child{ margin:0; }
+
+.playstyle-hook{ background:var(--calling-bg-tint); border:1px solid var(--calling-border); border-radius:10px; padding:1.3rem 1.6rem; text-align:center; font-style:italic; font-size:1.05rem; color:#4a3010; line-height:1.75; margin-top:0.5rem; }
+
+footer{
+  position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+  width:min(100%,var(--page-max-width));
+  height:var(--footer-height);
+  background:var(--footer-bg);
+  color:#ccc; display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:0 1rem; font-size:.95rem;
+  border-top:1px solid #444; z-index:1000;
+}
+footer a{ color:#d4a373; text-decoration:none; }
+footer a:hover{ text-decoration:underline; }
+
+@media(max-width:768px){
+  nav{ gap:1rem; padding:0 1rem; flex-wrap:wrap; }
+  nav a{ font-size:.9rem; }
+  .content-container{ padding:36px 32px 150px; }
+  .content-container h1{ font-size:2.2rem; }
+  .cadence-grid{ grid-template-columns:1fr; }
+  .posture-grid{ grid-template-columns:1fr; }
+}
+@media(max-width:480px){
+  body{ font-size:1.05rem; }
+  .content-container{ padding:28px 20px 130px; }
+}
+
+</style>
+</head>
+
+<body>
+<div class="page-wrapper">
+
+<header>
+<nav>
+  <a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+  <a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+  <a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+  <a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+  <a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+<div class="content-container">
+
+  <h1>Songweaver</h1>
+  <p class="calling-subtitle">The Living Cadence</p>
+  <div class="calling-divider"><span></span><em>♪</em><span></span></div>
+
+  <p>No one becomes a Songweaver by choice alone. The Cadence chooses those who learn — willingly or not — to keep pace with the structure beneath the world's hum.</p>
+
+  <p>A Songweaver aligns with the Cadence — the structural rhythm beneath existence. They do not use Paths or elemental disciplines. They sustain tempo, relationship, and continuity through precise structure.</p>
+
+  <!-- Soul -->
+  <p class="section-label">Soul of the Calling</p>
+  <div class="soul-block">No one becomes a Songweaver by choice alone. The Cadence chooses those who learn — willingly or not — to keep pace with the structure beneath the world's hum. A Songweaver aligns with the Cadence — the structural rhythm beneath existence. They do not use Paths or elemental disciplines. They sustain tempo, relationship, and continuity through precise structure.</div>
+
+  <!-- System Classification -->
+  <p class="section-label">System Classification</p>
+  <div class="cadence-profile">
+    <div><span class="cadence-badge">Cadence Discipline</span></div>
+    <p class="cadence-card-title" style="font-family:'Cinzel Decorative',serif; font-size:0.78rem; color:var(--ink-color); letter-spacing:0.05em; margin-bottom:0.7rem;">A Distinct Path — No Paths, No Path Rating, No RED</p>
+    <div class="cadence-row"><span>Starting Offensive Rating</span><span class="cadence-val">2</span></div>
+    <div class="cadence-row"><span>Starting Defensive Rating</span><span class="cadence-val">2</span></div>
+    <div class="cadence-row"><span>Available Cadence Points at Creation</span><span class="cadence-val">4</span></div>
+    <div class="cadence-row"><span>Ratings may be raised with</span><span class="cadence-val">Freebie Points</span></div>
+    <p style="font-family:'Crimson Text',serif; font-size:0.88rem; color:#6a5040; font-style:italic; line-height:1.6; margin-top:0.8rem; padding-top:0.8rem; border-top:1px solid rgba(90,72,128,0.15);">Expressions target Defensive Rating or Object DR. Dominant effects may be resisted at DC 12.</p>
+  </div>
+
+  <!-- Cadence Discipline -->
+  <p class="cadence-label">Cadence Discipline</p>
+  <div class="cadence-grid">
+    <div class="cadence-card">
+      <p class="cadence-card-title">Capability Formula</p>
+      <div class="cadence-row"><span>Primary Attribute</span><span class="cadence-val">+</span></div>
+      <div class="cadence-row"><span>Relevant Ability / Knowledge</span><span class="cadence-val">+</span></div>
+      <div class="cadence-row"><span>Cadence Rating (CR)</span><span class="cadence-val">= Total</span></div>
+      <p style="font-family:'Crimson Text',serif; font-size:0.82rem; color:#7a6090; font-style:italic; margin-top:0.6rem;">Medium used (voice, instrument, composition) approved by the Watcher.</p>
+    </div>
+    <div class="cadence-card">
+      <p class="cadence-card-title">Cadence Rating</p>
+      <div class="cadence-row"><span>Starting CR</span><span class="cadence-val">1</span></div>
+      <div class="cadence-row"><span>Maximum CR</span><span class="cadence-val">6</span></div>
+      <div class="cadence-row"><span>Casting Cost</span><span class="cadence-val">5 WP</span></div>
+      <div class="cadence-row"><span>Cost on Failure</span><span class="cadence-val">8 WP</span></div>
+      <div class="cadence-row"><span>Dominant Resistance</span><span class="cadence-val">DC 12</span></div>
+    </div>
+  </div>
+
+  <!-- Expression Selection -->
+  <p class="cadence-label">Expression Selection</p>
+  <div class="cadence-grid">
+    <div class="cadence-card">
+      <p class="cadence-card-title">A Capella (Base Discipline)</p>
+      <div class="cadence-row"><span>Expressions</span><span class="cadence-val">1 required</span></div>
+      <p style="font-family:'Crimson Text',serif; font-size:0.85rem; color:#7a6090; font-style:italic; margin-top:0.5rem;">A capella Expressions fail if the Songweaver is silenced.</p>
+    </div>
+    <div class="cadence-card">
+      <p class="cadence-card-title">Instrument-Based</p>
+      <div class="cadence-row"><span>Expressions</span><span class="cadence-val">2 required</span></div>
+      <p style="font-family:'Crimson Text',serif; font-size:0.85rem; color:#7a6090; font-style:italic; margin-top:0.5rem;">Instrument Expressions require the correct instrument in hand.</p>
+    </div>
+  </div>
+
+  <!-- Health -->
+  <p class="section-label">Health &amp; Armor</p>
+  <div class="stat-block">
+    <div class="stat-item"><span class="stat-value">d10</span><span class="stat-label">Health Die</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><span class="stat-value">24</span><span class="stat-label">Min HP</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><span class="stat-value">54</span><span class="stat-label">Max HP</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><span class="stat-value">5</span><span class="stat-label">Starting Armor Tier</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><span class="stat-value">7</span><span class="stat-label">Max Armor Tier</span></div>
+  </div>
+
+  <!-- Defensive Postures -->
+  <p class="section-label">Defensive Postures</p>
+  <p style="font-family:'Crimson Text',serif; font-size:0.85rem; color:#4a2e06  text-align:center; font-style:italic; margin:0 0 0.8rem;">Unlocked at Creation — Cadence-Based</p>
+  <div class="posture-grid">
+    <div class="posture-card">
+      <p class="posture-name">Absorption Shield</p>
+      <p class="posture-desc"><em>Aqua / Terra</em> — Increase attacker's TN by <strong>1</strong>. When activated, roll Xd4 equal to Cadence Rating and add the total to Armor Points as <strong>Bonus Armor</strong>.</p>
+    </div>
+    <div class="posture-card">
+      <p class="posture-name">Damage Shield</p>
+      <p class="posture-desc"><em>Ignis</em> — No avoidance bonus; <strong>attacker takes damage</strong> on a successful melee hit against the Songweaver.</p>
+    </div>
+  </div>
+
+  <!-- Gifts -->
+  <p class="section-label">Bestowed Gifts of the Calling</p>
+
+  <div class="gift-card offensive">
+    <p class="gift-type offensive">Offensive Gift</p>
+    <p class="gift-name">Echoed Cadence</p>
+    <div class="gift-body">
+      <p>On an Ultimate Success with an Expression, immediately repeat the same Expression against a <strong>second valid target within range</strong>.</p>
+      <ul class="gift-effect-list">
+        <li>No additional WP cost</li>
+        <li>Cannot trigger additional Gifts</li>
+        <li>Does not chain</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="gift-card defensive">
+    <p class="gift-type defensive">Defensive Gift</p>
+    <p class="gift-name">Harmonic Backlash</p>
+    <div class="gift-body">
+      <p>When an opponent rolls an Ultimate Failure against you, immediately apply a <strong>Minor Cadence effect</strong> of your choice to that opponent.</p>
+      <ul class="gift-effect-list">
+        <li>No WP cost</li>
+        <li>Cannot escalate beyond Minor</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Surges -->
+  <p class="section-label">Combat Surges</p>
+
+  <div class="gift-card surge-off">
+    <p class="gift-type surge-off">Offensive Surge</p>
+    <p class="gift-name">Perfect Echo</p>
+    <div class="gift-body">
+      <p>The Songweaver folds the Cadence back upon itself, producing a second identical expression before the rhythm dissipates.</p>
+      <p class="gift-trigger">Trigger — After successfully resolving a Cadence Expression</p>
+      <p>Repeat the <strong>same Expression against the same target</strong>.</p>
+      <ul class="gift-effect-list">
+        <li>No additional WP cost</li>
+        <li>Cannot trigger Gifts</li>
+        <li>Second result uses the <strong>same Band</strong> as the original</li>
+      </ul>
+      <p class="gift-narrative">The note reverberates through the structure of the moment. Before the rhythm fades, the Cadence strikes again.</p>
+    </div>
+  </div>
+
+  <div class="gift-card surge-def">
+    <p class="gift-type surge-def">Defensive Surge</p>
+    <p class="gift-name">Harmonic Shield</p>
+    <div class="gift-body">
+      <p>The Songweaver bends the Cadence around themselves to disperse incoming force. May be declared after being targeted — but <strong>cannot be used while stunned, disoriented, unconscious, or surprised</strong>.</p>
+      <p class="gift-trigger">Trigger — When taking damage</p>
+      <p>Reduce incoming damage by <strong>40%</strong>.</p>
+      <p class="gift-narrative">The strike lands against a shifting harmonic field. The impact disperses through layered resonance rather than flesh.</p>
+    </div>
+  </div>
+
+  <!-- Cadence Band -->
+  <p class="cadence-label">Cadence Band Determination</p>
+  <table class="band-table">
+    <thead>
+      <tr><th>Cadence Rating (CR)</th><th>Band</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1–2</td><td>Minor</td></tr>
+      <tr><td>3–4</td><td>Moderate</td></tr>
+      <tr><td>5</td><td>Severe</td></tr>
+      <tr><td>6</td><td>Severe+</td></tr>
+      <tr><td>CR 6 + Mass</td><td>Dominant</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Expressions -->
+  <p class="cadence-label">Expression Reference</p>
+
+  <div class="expression-section">
+    <p class="expression-title">Marcato — Force (Objects Only)</p>
+    <table class="expression-table">
+      <thead><tr><th>CR</th><th>Band</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td>1–2</td><td>Minor</td><td>Push object up to 5 ft</td></tr>
+        <tr><td>3–4</td><td>Moderate</td><td>Push object up to 10 ft</td></tr>
+        <tr><td>5</td><td>Severe</td><td>Push object up to 15 ft</td></tr>
+        <tr><td>6</td><td>Severe+</td><td>Push object up to 20 ft</td></tr>
+        <tr><td>6 + Mass</td><td>Dominant</td><td>Push 20 ft; DC 12 or Prone if struck</td></tr>
+      </tbody>
+    </table>
+
+    <p class="expression-title">Legato — Continuity</p>
+    <table class="expression-table">
+      <thead><tr><th>CR</th><th>Band</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td>1–2</td><td>Minor</td><td>Extend ongoing effect by 1 round</td></tr>
+        <tr><td>3–4</td><td>Moderate</td><td>Extend ongoing effect by 2 rounds</td></tr>
+        <tr><td>5</td><td>Severe</td><td>Extend ongoing effect by 3 rounds</td></tr>
+        <tr><td>6</td><td>Severe+</td><td>Extend 3 rounds; remove one minor penalty</td></tr>
+        <tr><td>6 + Mass</td><td>Dominant</td><td>Extend in small area; DC 12 if hostile</td></tr>
+      </tbody>
+    </table>
+
+    <p class="expression-title">Staccato — Disruption</p>
+    <table class="expression-table">
+      <thead><tr><th>CR</th><th>Band</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td>1–2</td><td>Minor</td><td>Target loses reactions next turn</td></tr>
+        <tr><td>3–4</td><td>Moderate</td><td>−2 to next action</td></tr>
+        <tr><td>5</td><td>Severe</td><td>Target rerolls first successful roll next turn</td></tr>
+        <tr><td>6</td><td>Severe+</td><td>No reactions and −2 to next roll</td></tr>
+        <tr><td>6 + Mass</td><td>Dominant</td><td>Target loses next action (DC 12 to resist)</td></tr>
+      </tbody>
+    </table>
+
+    <p class="expression-title">Crescendo — Escalation</p>
+    <table class="expression-table">
+      <thead><tr><th>CR</th><th>Band</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td>1–2</td><td>Minor</td><td>+2 to next effect</td></tr>
+        <tr><td>3–4</td><td>Moderate</td><td>+4 to next effect</td></tr>
+        <tr><td>5</td><td>Severe</td><td>Double next minor effect</td></tr>
+        <tr><td>6</td><td>Severe+</td><td>Double next moderate effect</td></tr>
+        <tr><td>6 + Mass</td><td>Dominant</td><td>Amplify next effect in small area (DC 12 if hostile)</td></tr>
+      </tbody>
+    </table>
+
+    <p class="expression-title">Diminuendo — Release</p>
+    <table class="expression-table">
+      <thead><tr><th>CR</th><th>Band</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td>1–2</td><td>Minor</td><td>Reduce next incoming damage by 2</td></tr>
+        <tr><td>3–4</td><td>Moderate</td><td>Reduce next incoming damage by 4</td></tr>
+        <tr><td>5</td><td>Severe</td><td>Halve next incoming damage</td></tr>
+        <tr><td>6</td><td>Severe+</td><td>Halve and remove minor condition</td></tr>
+        <tr><td>6 + Mass</td><td>Dominant</td><td>Halve damage for 1 round (DC 12 if hostile)</td></tr>
+      </tbody>
+    </table>
+
+    <p class="expression-title">Fermata — Suspension</p>
+    <table class="expression-table">
+      <thead><tr><th>CR</th><th>Band</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td>1–2</td><td>Minor</td><td>Hold small object 1 round</td></tr>
+        <tr><td>3–4</td><td>Moderate</td><td>Freeze object 1 round</td></tr>
+        <tr><td>5</td><td>Severe</td><td>Target movement 0 for 1 round</td></tr>
+        <tr><td>6</td><td>Severe+</td><td>Target Restrained for 1 round</td></tr>
+        <tr><td>6 + Mass</td><td>Dominant</td><td>Freeze target 1 round (DC 12 to resist)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Resolution -->
+  <p class="cadence-label">Cadence Effect Resolution</p>
+  <div class="resolution-block">
+    <p><strong>1.</strong> Roll Expression vs Defensive Rating or Object DR.</p>
+    <p><strong>2.</strong> On success, determine Band by Cadence Rating.</p>
+    <p><strong>3.</strong> Apply effect from the appropriate Cadence table.</p>
+    <p><strong>4.</strong> If Dominant, DC 12 may apply.</p>
+    <p><strong>5.</strong> WP cost is paid on attempt.</p>
+  </div>
+
+  <!-- Playstyle -->
+  <p class="section-label">Playstyle Hook</p>
+  <div class="playstyle-hook">You do not strike with steel or flame — you reshape the rhythm of the moment itself. You extend what helps, disrupt what threatens, suspend what must not move. The Cadence answers those who listen closely enough to keep pace with it. You are not the loudest voice in the room. You are the one that changes what every other voice does.</div>
+
+</div>
+</main>
+
+<footer>
+<div>
+  Email: <a href="/cdn-cgi/l/email-protection#01626e6f7560627541736877646f6560766f2f626e6c"><span class="__cf_email__" data-cfemail="284b47465c494b5c685a415e4d464c495f46064b4745">[email&#160;protected]</span></a>
+  &nbsp;&nbsp;•&nbsp;&nbsp;
+  © 2026 jpcauthor. All rights reserved.
+  &nbsp;

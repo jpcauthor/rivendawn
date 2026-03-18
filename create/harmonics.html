@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harmonics</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- Styles -->
+<style>
+
+:root {
+--header-height: 72px;
+--footer-height: 72px;
+--content-max-width: 960px;
+--page-max-width: 1400px;
+--ink-color: #3a2a1a;
+--accent: #fff1d6;
+--nav-color: #f2e3c6;
+--nav-shadow: rgba(0,0,0,0.85);
+--footer-bg: rgba(0,0,0,0.88);
+--toggle-bg: rgba(255,248,235,0.55);
+--toggle-border: rgba(90,60,30,0.24);
+--toggle-hover: rgba(255,241,214,0.78);
+--toggle-doc-bg: rgba(255,248,235,0.48);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Crimson Text',Georgia,serif;
+color:var(--ink-color);
+min-height:100dvh;
+background:#000;
+line-height:1.75;
+font-size:1.18rem;
+}
+
+.page-wrapper{
+min-height:100dvh;
+display:flex;
+flex-direction:column;
+max-width:var(--page-max-width);
+margin:0 auto;
+background-color:#000;
+background-image:url('../images/bg.jpg');
+background-size:contain;
+background-position:center top;
+background-repeat:no-repeat;
+background-attachment:fixed;
+box-shadow:0 0 80px rgba(0,0,0,0.85);
+position:relative;
+}
+
+header{
+position:fixed;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--header-height);
+background-image:url('../images/header.png');
+background-size:contain;
+background-position:center;
+background-repeat:no-repeat;
+z-index:1000;
+box-shadow:0 6px 16px rgba(0,0,0,0.5);
+}
+
+header::after{
+content:"";
+position:absolute;
+left:0;
+right:0;
+bottom:-14px;
+height:18px;
+background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0));
+pointer-events:none;
+}
+
+nav{
+max-width:var(--content-max-width);
+width:100%;
+height:100%;
+margin:0 auto;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:2rem;
+padding:0 1.5rem;
+}
+
+nav a{
+color:var(--nav-color);
+text-decoration:none;
+font-family:Consolas,"Courier New",monospace;
+font-size:1.25rem;
+letter-spacing:0.14em;
+text-transform:uppercase;
+transition:all .25s ease;
+position:relative;
+display:inline-flex;
+align-items:center;
+gap:.5rem;
+padding:.2rem .1rem;
+text-shadow:
+0 1px 2px var(--nav-shadow),
+0 0 6px rgba(0,0,0,0.45);
+}
+
+nav a i{
+color:inherit;
+font-size:1.1rem;
+margin-right:4px;
+position:relative;
+top:-1px;
+}
+
+nav a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-4px;
+width:0;
+height:2px;
+background:var(--accent);
+transition:width .28s ease;
+}
+
+nav a:hover{
+color:var(--accent);
+transform:translateY(-1px);
+}
+
+nav a:hover::after{
+width:100%;
+}
+
+main{
+flex:1;
+margin-top:var(--header-height);
+padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+display:flex;
+justify-content:center;
+}
+
+.content-container{
+max-width:var(--content-max-width);
+width:100%;
+padding:40px 80px 180px;
+color:var(--ink-color);
+margin:0 auto;
+border-radius:8px;
+box-shadow:0 20px 60px rgba(0,0,0,0.55);
+background-image:url('../images/content-scroll-bg.png');
+background-repeat:repeat-y;
+background-position:top center;
+background-size:100% auto;
+}
+
+.content-container h1,
+.content-container h2,
+.content-container h3{
+font-family:'Cinzel Decorative',serif;
+letter-spacing:.06em;
+}
+
+.content-container h1{
+font-size:3rem;
+text-align:center;
+margin:0 0 .75rem;
+}
+
+.content-container h2{
+font-size:2.15rem;
+margin:2.8rem 0 1.4rem;
+border-bottom:1px solid rgba(139,0,0,0.15);
+padding-bottom: 1.0rem;
+text-align:center;
+}
+
+.content-container h3{
+font-size:1.3rem;
+margin:2rem 0 1rem;
+text-align:center;
+}
+
+.content-container p{
+margin-bottom:0.35rem;
+}
+
+.content-container ul {
+  padding-left: 2rem;
+}
+
+.lore-toggle{
+margin-top:2rem;
+border:1px solid var(--toggle-border);
+border-radius:10px;
+background:var(--toggle-bg);
+overflow:hidden;
+box-shadow:0 10px 24px rgba(0,0,0,0.12);
+}
+
+.lore-toggle summary{
+list-style:none;
+cursor:pointer;
+padding:1rem 1.25rem;
+font-family:'Cinzel Decorative',serif;
+font-size:1.05rem;
+color:#6b1f1f;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:.75rem;
+text-align:center;
+transition:background .25s ease, color .25s ease;
+}
+
+.lore-toggle summary::-webkit-details-marker{
+display:none;
+}
+
+.lore-toggle summary::before{
+content:"\f078";
+font-family:"Font Awesome 6 Free";
+font-weight:900;
+font-size:.9rem;
+transition:transform .25s ease;
+}
+
+.lore-toggle[open] summary::before{
+transform:rotate(180deg);
+}
+
+.lore-toggle summary:hover{
+background:var(--toggle-hover);
+color:#8b2323;
+}
+
+.lore-document{
+padding:1.5rem 1.5rem 1.25rem;
+background:var(--toggle-doc-bg);
+border-top:1px solid rgba(90,60,30,0.15);
+}
+
+.lore-document h3{
+margin-top:0;
+}
+
+footer{
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--footer-height);
+background:var(--footer-bg);
+color:#ccc;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:0 1rem;
+font-size:.95rem;
+border-top:1px solid #444;
+z-index:1000;
+}
+
+footer a{
+color:#d4a373;
+text-decoration:none;
+}
+
+footer a:hover{
+text-decoration:underline;
+}
+
+@media (max-width: 768px){
+
+nav{
+gap:1rem;
+padding:0 1rem;
+flex-wrap:wrap;
+}
+
+nav a{
+font-size:.9rem;
+letter-spacing:.08em;
+}
+
+.content-container{
+padding:36px 32px 150px;
+}
+
+.content-container h1{
+font-size:2.2rem;
+}
+
+.content-container h2{
+font-size:1.7rem;
+}
+
+.content-container h3{
+font-size:1.15rem;
+}
+}
+
+@media (max-width: 480px){
+
+body{
+font-size:1.05rem;
+}
+
+.content-container{
+padding:28px 20px 130px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+<header>
+<nav>
+<a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+<a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+<a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+<a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+<a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+
+<div class="content-container">
+<h2>Harmonics - The Resonance of Self</h2>
+
+<h3>Introduction</h3>
+
+<p><em>"Harmony is often mistaken for equal measure, but the truth is far more turbulent. Consistency reveals truth, and in Rivendawn, deviation always demands an answer."</em></p>
+
+<p>Every soul in Rivendawn carries a personal harmony — a quiet balance between the self shown to the world and the self that lives beneath the surface. This harmony is not merely philosophy or personality. It is the living rhythm through which a character interacts with the Song itself.</p>
+
+<p>The Song listens.</p>
+
+<p>It remembers patterns.</p>
+
+<p>And it answers when a person lives — or strays — from the truth of who they are.</p>
+
+<p>Harmonics represent this inner resonance. They describe how a character's nature expresses power, restraint, conviction, and change. Where Callings define your role and Resonance defines your capability, Harmonics define the <strong>spiritual rhythm behind your choices</strong>.</p>
+
+<p>Each Harmonic identity is formed from two elements: a <strong>Dynamic</strong>, which describes the raw pulse of your inner power, and a <strong>Discipline</strong>, which defines the shape and purpose through which that power is expressed.</p>
+
+<p>Together they form the harmonic identity of the soul.</p>
+
+<h3>The Dynamic: The Pulse of Power</h3>
+
+<p>Your <strong>Dynamic</strong> represents the emotional and spiritual energy that fuels your actions. It is the instinctive current beneath your decisions — the way your strength naturally manifests when the world demands something of you.</p>
+
+<p>Some heroes restrain their power with care.<br>
+Others wield it boldly.<br>
+Some surge like storms, while others endure like mountains.</p>
+
+<p>The Dynamic you choose reflects how your inner force moves through the world.</p>
+
+<ul>
+<li><strong>Quieted</strong> — Gentle, careful strength held in reserve.</li>
+<li><strong>Assertive</strong> — Bold and confident power expressed with clarity.</li>
+<li><strong>Unbridled</strong> — Wild, instinctive energy that erupts when the moment demands it.</li>
+<li><strong>Surging</strong> — Sudden bursts of overwhelming intensity.</li>
+<li><strong>Enduring</strong> — Steady resilience that persists through hardship and time.</li>
+<li><strong>Flowing</strong> — Adaptive power that responds fluidly to changing circumstances.</li>
+</ul>
+<h3>The Discipline: The Shape of Action</h3>
+
+<p>If the Dynamic is the pulse of your power, the <strong>Discipline</strong> is the structure that gives it meaning.</p>
+
+<p>Discipline represents the principles, beliefs, and moral frameworks that guide your decisions. It is the lens through which you interpret responsibility, justice, protection, and mercy.</p>
+
+<p>Where the Dynamic describes <strong>how power rises within you</strong>, Discipline defines <strong>why and when you choose to use it</strong>.</p>
+
+<ul>
+<li><strong>Ordinate</strong> — Bound by oath, code, or lawful order.</li>
+<li><strong>Custodial</strong> — Dedicated to protecting what matters most.</li>
+<li><strong>Judicial</strong> — Measured and balanced in the pursuit of fairness.</li>
+<li><strong>Witnessed</strong> — Transparent, accountable, and willing to stand openly behind every action.</li>
+<li><strong>Necessary</strong> — Acting only when required, with deliberate restraint.</li>
+<li><strong>Redemptive</strong> — Offering mercy, healing, and second chances when others might not.</li>
+</ul>
+
+<h3>Harmony and Dissonance</h3>
+
+<p>When a character acts in accordance with their Dynamic and Discipline, their inner harmony strengthens. The Song flows more easily through them, and their presence aligns naturally with the rhythm of the world.</p>
+
+<p>But when a hero repeatedly acts against their own harmonic identity without reason or reflection, the balance begins to fracture.</p>
+
+<p>The <strong>Static Veil</strong> gathers.</p>
+
+<p>The air grows heavier.<br>
+The Song resists.<br>
+Reality itself seems to push back against the dissonance between who the hero claims to be and what their actions reveal.</p>
+
+<p>The mechanical consequences of this imbalance are defined within the <strong>Harmonic Dissonance</strong> rules.</p>
+
+<p>Yet harmony is never permanently lost. When a character realigns with their truth — through reflection, action, or sacrifice — the static clears, the veil lifts, and the Song answers once more.</p>
+
+<h3>Transition</h3>
+
+<p>Your Harmonic identity is uniquely yours. It is not a mask you wear for the world, but the deeper rhythm that guides your choices when the stakes are highest.</p>
+
+<p>As you prepare to define your character, consider the nature of the power that lives within them.</p>
+
+<p>What pulse drives their strength?</p>
+
+<p>What discipline shapes their choices?</p>
+
+<p>And when the moment arrives at the table, what truth will your soul allow the Song to hear?</p>
+
+
+<details class="lore-toggle">
+  <summary>To read the full document, click here</summary>
+
+  <div class="lore-document">
+    
+<h2>Harmonics</h2>
+
+<h3>The Dynamic: The Raw Pulse of Power</h3>
+
+<p>In the quiet aftermath of the Pulse, when the world's new Song first hummed through every soul, some felt it as a distant whisper, others as a roaring tide. These inner fires became the Dynamics — the unfiltered "why" that drives your actions, the emotional current that makes your power feel alive and personal. It's not a rule to follow; it's the heartbeat of your story, pulsing with raw truth. Choose the one that echoes in your chest, and watch how the Song dances with it.</p>
+
+<h3>Mythic Origins of the Dynamic</h3>
+
+<p>Dynamics arose from the Song's first breath after the remaking — wild, untamed energies that surged through the cracks in the world. They are the spark before the flame, the instinct before the choice. Where Disciplines shape and guide, Dynamics simply are: the quiet pull of a gentle heart, the bold rush of unyielding will, the wild storm of unchecked feeling.</p>
+
+<p>In Rivendawn, your Dynamic is your soul's first answer to the Song — raw, honest, and full of possibility. It colors every step, every word, every moment of resonance, inviting you to embrace what burns brightest inside.</p>
+
+<h3>The Six Dynamics</h3>
+
+<ul>
+
+<li>
+<strong>Quieted</strong>
+<p>Gentle, careful strength — a soft glow held close, like embers banked for the long night.</p>
+<p><strong>Resonant Feel:</strong> A faint, warm hum in your chest, like the Song slowing to match your steady breath.</p>
+<p><strong>At the Table:</strong> You pause in the chaos, hand outstretched, turning a tense standoff into a moment of shared calm.</p>
+</li>
+
+<li>
+<strong>Assertive</strong>
+<p>Bold and clear — a steady flame that lights the path, decisive and unafraid to shine.</p>
+<p><strong>Resonant Feel:</strong> A sharp, invigorating spark along your arms.</p>
+<p><strong>At the Table:</strong> You stand tall in the council, voice ringing true — “This is the way.”</p>
+</li>
+
+<li>
+<strong>Unbridled</strong>
+<p>Wild and instinctual — a storm unleashed, raw emotion crashing like waves.</p>
+<p><strong>Resonant Feel:</strong> A wild electric thrill through your veins.</p>
+<p><strong>At the Table:</strong> The danger closes in and you unleash a burst of raw power.</p>
+</li>
+
+<li>
+<strong>Surging</strong>
+<p>Sudden and overwhelming — a thunderclap from clear skies.</p>
+<p><strong>Resonant Feel:</strong> Pressure building in your core before bursting outward.</p>
+<p><strong>At the Table:</strong> A sudden surge turns defeat into victory.</p>
+</li>
+
+<li>
+<strong>Enduring</strong>
+<p>Steady through every storm — a deep root holding firm.</p>
+<p><strong>Resonant Feel:</strong> A grounding warmth in your bones.</p>
+<p><strong>At the Table:</strong> You keep the group moving forward when others falter.</p>
+</li>
+
+<li>
+<strong>Flowing</strong>
+<p>Adaptive and responsive — a river bending around stone.</p>
+<p><strong>Resonant Feel:</strong> A fluid current moving through your limbs.</p>
+<p><strong>At the Table:</strong> Plans crumble but you adapt instantly.</p>
+</li>
+
+</ul>
+
+<h3>Harmonic Tie-In</h3>
+
+<p>Your Dynamic pairs with a Discipline to create your full harmony — the raw fire shaped by care and restraint.</p>
+
+<p>Live true to it and the Song supports you with lighter paths and deeper connections. Stray too far and the Static Veil begins to gather.</p>
+
+<hr>
+
+<h3>The Discipline: The Gentle Shape of Power</h3>
+
+<p>The Song is wild and vast, but it sings clearest when given form. Disciplines are the quiet boundaries souls learned to weave after the Pulse — not chains, but loving hands guiding raw power into something kind and lasting.</p>
+
+<h3>The Six Disciplines</h3>
+
+<ul>
+
+<li>
+<strong>Ordinate</strong>
+<p>Bound by oath, code, or law — a steady line drawn in starlight.</p>
+<p><strong>Resonant Feel:</strong> A cool precise thread through your veins.</p>
+</li>
+
+<li>
+<strong>Custodial</strong>
+<p>Protecting what matters most — a shield raised instinctively.</p>
+<p><strong>Resonant Feel:</strong> A warm protective glow around your heart.</p>
+</li>
+
+<li>
+<strong>Judicial</strong>
+<p>Balanced and measured — weighing every side before acting.</p>
+<p><strong>Resonant Feel:</strong> A steady even pulse in your chest.</p>
+</li>
+
+<li>
+<strong>Witnessed</strong>
+<p>Transparent and accountable — power offered openly.</p>
+<p><strong>Resonant Feel:</strong> A bright warmth across your shoulders.</p>
+</li>
+
+<li>
+<strong>Necessary</strong>
+<p>Acting only when required — a blade drawn only when needed.</p>
+<p><strong>Resonant Feel:</strong> A cool focused clarity in your mind.</p>
+</li>
+
+<li>
+<strong>Redemptive</strong>
+<p>Mercy and restoration — lifting what has fallen.</p>
+<p><strong>Resonant Feel:</strong> A gentle golden warmth in your hands.</p>
+</li>
+
+</ul>
+
+<h3>Harmonic Dissonance</h3>
+
+<p>Every character carries a Harmonic signature: a Dynamic and a Discipline. When actions repeatedly contradict these Harmonics without narrative cause, Harmonic Dissonance occurs.</p>
+
+<ul>
+<li>Actions directly oppose the established Dynamic or Discipline.</li>
+<li>The deviation lacks narrative catalyst.</li>
+<li>The pattern becomes consistent rather than situational.</li>
+</ul>
+
+<h3>The Escalation Protocol</h3>
+
+<ul>
+<li><strong>First Instance:</strong> Alignment discussion between Watcher and Player.</li>
+<li><strong>Second Instance:</strong> Player may pursue Narrative Shift.</li>
+<li><strong>Third Instance:</strong> The Static Veil is applied.</li>
+</ul>
+
+<h3>The Static Veil</h3>
+
+<p>When dissonance takes hold, the Song no longer responds with clarity.</p>
+
+<ul>
+<li><strong>Mechanical Effect:</strong> Target Number (TN) for all Ability and Knowledge checks increases by +3.</li>
+</ul>
+
+<p>This penalty remains until the character realigns or completes a Narrative Shift.</p>
+
+<h3>Narrative Shift</h3>
+
+<p>If a character meaningfully evolves through story, their Harmonics may be redefined with Watcher approval.</p>
+
+<h3>Table Ethic</h3>
+
+<ul>
+<li>Harmonics matter.</li>
+<li>Identity has weight.</li>
+<li>Power reflects truth.</li>
+<li>Growth is intentional.</li>
+</ul>
+
+  </div>
+</details>
+
+</div>
+
+</main>
+
+<footer>
+<div>
+Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+&nbsp;&nbsp;•&nbsp;&nbsp;
+© 2026 jpcauthor. All rights reserved.
+&nbsp;&nbsp;•&nbsp;&nbsp;
+<a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+</div>
+</footer>
+
+</div>
+
+</body>
+</html>

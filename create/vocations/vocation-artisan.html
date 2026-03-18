@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artisan Vocation</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- Styles -->
+<style>
+
+:root {
+--header-height: 72px;
+--footer-height: 72px;
+--content-max-width: 960px;
+--page-max-width: 1400px;
+--ink-color: #3a2a1a;
+--accent: #fff1d6;
+--nav-color: #f2e3c6;
+--nav-shadow: rgba(0,0,0,0.85);
+--footer-bg: rgba(0,0,0,0.88);
+--toggle-bg: rgba(255,248,235,0.55);
+--toggle-border: rgba(90,60,30,0.24);
+--toggle-hover: rgba(255,241,214,0.78);
+--toggle-doc-bg: rgba(255,248,235,0.48);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Crimson Text',Georgia,serif;
+color:var(--ink-color);
+min-height:100dvh;
+background:#000;
+line-height:1.75;
+font-size:1.18rem;
+}
+
+.page-wrapper{
+min-height:100dvh;
+display:flex;
+flex-direction:column;
+max-width:var(--page-max-width);
+margin:0 auto;
+background-color:#000;
+background-image:url('../../images/bg.jpg');
+background-size:contain;
+background-position:center top;
+background-repeat:no-repeat;
+background-attachment:fixed;
+box-shadow:0 0 80px rgba(0,0,0,0.85);
+position:relative;
+}
+
+header{
+position:fixed;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--header-height);
+background-image:url('../../images/header.png');
+background-size:contain;
+background-position:center;
+background-repeat:no-repeat;
+z-index:1000;
+box-shadow:0 6px 16px rgba(0,0,0,0.5);
+}
+
+header::after{
+content:"";
+position:absolute;
+left:0;
+right:0;
+bottom:-14px;
+height:18px;
+background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0));
+pointer-events:none;
+}
+
+nav{
+max-width:var(--content-max-width);
+width:100%;
+height:100%;
+margin:0 auto;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:2rem;
+padding:0 1.5rem;
+}
+
+nav a{
+color:var(--nav-color);
+text-decoration:none;
+font-family:Consolas,"Courier New",monospace;
+font-size:1.25rem;
+letter-spacing:0.14em;
+text-transform:uppercase;
+transition:all .25s ease;
+position:relative;
+display:inline-flex;
+align-items:center;
+gap:.5rem;
+padding:.2rem .1rem;
+text-shadow:
+0 1px 2px var(--nav-shadow),
+0 0 6px rgba(0,0,0,0.45);
+}
+
+nav a i{
+color:inherit;
+font-size:1.1rem;
+margin-right:4px;
+position:relative;
+top:-1px;
+}
+
+nav a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-4px;
+width:0;
+height:2px;
+background:var(--accent);
+transition:width .28s ease;
+}
+
+nav a:hover{
+color:var(--accent);
+transform:translateY(-1px);
+}
+
+nav a:hover::after{
+width:100%;
+}
+
+main{
+flex:1;
+margin-top:var(--header-height);
+padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+display:flex;
+justify-content:center;
+}
+
+.content-container{
+max-width:var(--content-max-width);
+width:100%;
+padding:40px 80px 180px;
+color:var(--ink-color);
+margin:0 auto;
+border-radius:8px;
+box-shadow:0 20px 60px rgba(0,0,0,0.55);
+background-image:url('../../images/content-scroll-bg.png');
+background-repeat:repeat-y;
+background-position:top center;
+background-size:100% auto;
+}
+
+.content-container h1,
+.content-container h2,
+.content-container h3{
+font-family:'Cinzel Decorative',serif;
+letter-spacing:.06em;
+}
+
+.content-container h1{
+font-size:3rem;
+text-align:center;
+margin:0 0 .75rem;
+}
+
+.content-container h2{
+font-size:2.15rem;
+margin:2.8rem 0 1.4rem;
+border-bottom:1px solid rgba(139,0,0,0.15);
+padding-bottom:.6rem;
+text-align:center;
+}
+
+.content-container h3{
+font-size:1.3rem;
+margin:2rem 0 1rem;
+text-align:center;
+}
+
+.content-container p{
+margin-bottom:1.25rem;
+}
+
+.lore-toggle{
+margin-top:2rem;
+border:1px solid var(--toggle-border);
+border-radius:10px;
+background:var(--toggle-bg);
+overflow:hidden;
+box-shadow:0 10px 24px rgba(0,0,0,0.12);
+}
+
+.lore-toggle summary{
+list-style:none;
+cursor:pointer;
+padding:1rem 1.25rem;
+font-family:'Cinzel Decorative',serif;
+font-size:1.05rem;
+color:#6b1f1f;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:.75rem;
+text-align:center;
+transition:background .25s ease, color .25s ease;
+}
+
+.lore-toggle summary::-webkit-details-marker{
+display:none;
+}
+
+.lore-toggle summary::before{
+content:"\f078";
+font-family:"Font Awesome 6 Free";
+font-weight:900;
+font-size:.9rem;
+transition:transform .25s ease;
+}
+
+.lore-toggle[open] summary::before{
+transform:rotate(180deg);
+}
+
+.lore-toggle summary:hover{
+background:var(--toggle-hover);
+color:#8b2323;
+}
+
+.lore-document{
+padding:1.5rem 1.5rem 1.25rem;
+background:var(--toggle-doc-bg);
+border-top:1px solid rgba(90,60,30,0.15);
+}
+
+.lore-document h3{
+margin-top:0;
+}
+
+footer{
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--footer-height);
+background:var(--footer-bg);
+color:#ccc;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:0 1rem;
+font-size:.95rem;
+border-top:1px solid #444;
+z-index:1000;
+}
+
+footer a{
+color:#d4a373;
+text-decoration:none;
+}
+
+footer a:hover{
+text-decoration:underline;
+}
+
+@media (max-width: 768px){
+
+nav{
+gap:1rem;
+padding:0 1rem;
+flex-wrap:wrap;
+}
+
+nav a{
+font-size:.9rem;
+letter-spacing:.08em;
+}
+
+.content-container{
+padding:36px 32px 150px;
+}
+
+.content-container h1{
+font-size:2.2rem;
+}
+
+.content-container h2{
+font-size:1.7rem;
+}
+
+.content-container h3{
+font-size:1.15rem;
+}
+}
+
+@media (max-width: 480px){
+
+body{
+font-size:1.05rem;
+}
+
+.content-container{
+padding:28px 20px 130px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+<header>
+<nav>
+<a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+<a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+<a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+<a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+<a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+
+<div class="content-container">
+
+<h1>Artisan</h1>
+
+<p>You are the Artisan — the one who hears the silent song locked inside raw stone, cold iron, and living wood. With patient fire and unyielding will, you coax purpose from chaos and shape things meant to endure.</p>
+
+<p>An Artisan does not merely build. They leave behind works that outlast memory, carrying skill, purpose, and quiet defiance against decay.</p>
+
+<details class="lore-toggle">
+  <summary>To read the full document, click here</summary>
+
+  <div class="lore-document">
+
+  <style>
+    .heritage-section {
+      margin-top: 0.5rem;
+    }
+
+    .heritage-intro {
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 1.05rem;
+      color: #3a2a1a;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      font-style: italic;
+    }
+
+    .heritage-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.6rem;
+      text-align: center;
+      color: #3a2a1a;
+      margin: 0 0 0.3rem;
+      letter-spacing: 0.06em;
+    }
+
+    .heritage-divider {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 0.4rem auto 1.8rem;
+      max-width: 360px;
+    }
+
+    .heritage-divider span {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(139,80,20,0.4));
+    }
+
+    .heritage-divider span:last-child {
+      background: linear-gradient(to left, transparent, rgba(139,80,20,0.4));
+    }
+
+    .heritage-divider em {
+      color: #8b5014;
+      font-size: 0.65rem;
+      font-style: normal;
+    }
+
+    .imprint-block {
+      background: rgba(200,160,80,0.08);
+      border: 1px solid rgba(139,80,20,0.18);
+      border-radius: 10px;
+      padding: 1.2rem 1.5rem 1.3rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .imprint-block p {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #3a2a1a;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1.8rem;
+    }
+
+    @media (max-width: 600px) {
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .skill-card {
+      background: rgba(255,248,235,0.6);
+      border: 1px solid rgba(139,80,20,0.20);
+      border-radius: 10px;
+      padding: 1.1rem 1.2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .skill-card:hover {
+      box-shadow: 0 6px 20px rgba(139,80,20,0.12);
+      transform: translateY(-2px);
+    }
+
+    .skill-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px;
+      height: 100%;
+      border-radius: 10px 0 0 10px;
+    }
+
+    .skill-card.knowledge::before  { background: #6b8c42; }
+    .skill-card.ability::before    { background: #8b5014; }
+    .skill-card.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .skill-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .skill-badge {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.55rem;
+      letter-spacing: 0.15em;
+      padding: 0.15rem 0.5rem;
+      border-radius: 20px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .skill-badge.k {
+      background: rgba(107,140,66,0.15);
+      color: #4a6a20;
+      border: 1px solid rgba(107,140,66,0.3);
+    }
+
+    .skill-badge.a {
+      background: rgba(139,80,20,0.12);
+      color: #8b5014;
+      border: 1px solid rgba(139,80,20,0.25);
+    }
+
+    .skill-name {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.85rem;
+      color: #3a2a1a;
+      letter-spacing: 0.05em;
+    }
+
+    .skill-desc {
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 0.95rem;
+      color: #5a4030;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .heritage-imprint-label {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #8b5014;
+      text-align: center;
+      margin: 1.8rem 0 0.6rem;
+    }
+
+    .imprint-stat-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+    }
+
+    .imprint-stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .imprint-stat-value {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 2rem;
+      color: #3a2a1a;
+      line-height: 1;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .imprint-stat-label {
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 0.8rem;
+      color: #8b5014;
+      font-style: italic;
+      letter-spacing: 0.05em;
+    }
+
+    .imprint-stat-divider {
+      width: 1px;
+      height: 40px;
+      background: rgba(139,80,20,0.2);
+    }
+
+    .imprint-note {
+      font-family: 'Crimson Text', Georgia, serif;
+      font-size: 0.9rem;
+      color: #6a5040;
+      text-align: center;
+      font-style: italic;
+      margin-top: 0.5rem;
+      line-height: 1.6;
+    }
+  </style>
+
+  <div class="heritage-section">
+
+    <h2 class="heritage-title">Heritage Imprint</h2>
+    <div class="heritage-divider"><span></span><em>◆</em><span></span></div>
+
+    <div class="imprint-block">
+      <p>The Artisan stands at the meeting point of labor and legacy, turning raw material into something worthy of memory. Whether shaping tools, weapons, or enduring works of craft, this is the vocation of patience, precision, and pride made tangible.</p>
+    </div>
+
+    <div class="imprint-block">
+      <p>To walk this path is to understand that creation is never accidental. Every mark, measure, and finished piece reflects a mind trained to bring order, usefulness, and beauty into the world.</p>
+    </div>
+
+    <p class="heritage-imprint-label">Technical Heritage — Locked Rating</p>
+    <div class="imprint-stat-row">
+      <div class="imprint-stat">
+        <span class="imprint-stat-value">4</span>
+        <span class="imprint-stat-label">Technical</span>
+      </div>
+      <div class="imprint-stat-divider"></div>
+      <div class="imprint-stat">
+        <span class="imprint-stat-value">"Practiced"</span>
+        <span class="imprint-stat-label">Mastery Level</span>
+      </div>
+    </div>
+    <p class="imprint-note">Craft was your daily life. The echo remains — you still instinctively know how things fit, break, or endure.</p>
+
+    <p class="heritage-imprint-label">Imprinted Skills</p>
+
+    <div class="skills-grid">
+
+      <div class="skill-card knowledge">
+        <div class="skill-card-header">
+          <span class="skill-badge k">Knowledge</span>
+          <span class="skill-name">Engineering</span>
+        </div>
+        <p class="skill-desc">The Artisan's language of structure — load-bearing angles, material interlock, mechanical harmony. Without it, creations collapse or waste effort; with it, you build things that stand for generations.</p>
+      </div>
+
+      <div class="skill-card ability">
+        <div class="skill-card-header">
+          <span class="skill-badge a">Ability</span>
+          <span class="skill-name">Weapon Mastery</span>
+        </div>
+        <p class="skill-desc">Many Artisans forged weapons as their highest calling — understanding balance, edge geometry, and how steel sings when swung. Wield your own creations with the same precision you used to shape them.</p>
+      </div>
+
+      <div class="skill-card knowledge">
+        <div class="skill-card-header">
+          <span class="skill-badge k">Knowledge</span>
+          <span class="skill-name">Economics &amp; Trade</span>
+        </div>
+        <p class="skill-desc">Artisans lived or died by trade — material costs, market values, guild politics, what people would pay for beauty or utility. This Knowledge kept workshops alive and ensured your work reached those who needed it.</p>
+      </div>
+
+      <div class="skill-card ability">
+        <div class="skill-card-header">
+          <span class="skill-badge a">Ability</span>
+          <span class="skill-name">Perception</span>
+        </div>
+        <p class="skill-desc">A craftsperson's eye misses nothing — the flaw in the grain, the stress fracture forming, the exact moment metal is ready to fold. This sharp attention carries into every aspect of the Artisan's world.</p>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</main>
+
+<footer>
+<div>
+Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+&nbsp;&nbsp;•&nbsp;&nbsp;
+© 2026 jpcauthor. All rights reserved.
+&nbsp;&nbsp;•&nbsp;&nbsp;
+<a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+</div>
+</footer>
+
+</div>
+
+</body>
+</html>

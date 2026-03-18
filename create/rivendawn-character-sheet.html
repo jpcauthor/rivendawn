@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rivendawn — Character Record Sheet</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════════════════════════════════
+   VARIABLES & RESET
+═══════════════════════════════════════════ */
+:root {
+  --ink:          #2e1f0e;
+  --ink-dim:      #6b4f33;
+  --accent:       #5a3a1a;
+  --gold:         #3a2a1a;
+  --amber:        #8b5014;
+  --parchment:    #fdf6e3;
+  --parchment2:   #f5e8c8;
+  --parchment3:   #ede0b8;
+  --surface:      #fff8e8;
+  --border:       #c8a87a;
+  --border-light: #ddd0b0;
+  --line:         #b8996a;
+  --red-accent:   #8b1a1a;
+  --green-accent: #1a5a1a;
+
+  /* Path colors */
+  --aeris:       #6b9abf;
+  --aqua:        #4a8fa0;
+  --ignis:       #c47a20;
+  --terra:       #8b3a14;
+  --vitae:       #3a7a6a;
+  --obtenebrate: #5a4a7a;
+
+  /* Primary colors */
+  --agility-c:   #6b9abf;
+  --strength-c:  #8b3a14;
+  --vitality-c:  #3a7a6a;
+  --intel-c:     #c47a20;
+  --wisdom-c:    #7a6abf;
+  --social-c:    #8b6a3a;
+
+  --page-w: 8.5in;
+  --margin: 0.55in;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #1a1008;
+  font-family: 'Crimson Text', 'EB Garamond', Georgia, serif;
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════
+   PRINT BUTTON
+═══════════════════════════════════════════ */
+.print-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: #1a1008;
+  border-bottom: 1px solid #5a3a1a;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.print-bar-title {
+  font-family: 'Cinzel Decorative', serif;
+  color: #d4a86a;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+}
+.print-bar-hint {
+  font-family: 'Crimson Text', serif;
+  color: #8b6a3a;
+  font-size: 0.82rem;
+  font-style: italic;
+}
+.btn-print {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #5a3a1a, #3a2a1a);
+  color: #f5e8c8;
+  border: 1px solid #8b5014;
+  padding: 8px 22px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+}
+.btn-print:hover {
+  background: linear-gradient(135deg, #7a5a2a, #5a3a1a);
+  color: #fdf6e3;
+  box-shadow: 0 0 12px rgba(200,168,122,0.3);
+}
+
+/* ═══════════════════════════════════════════
+   PAGES WRAPPER
+═══════════════════════════════════════════ */
+.pages {
+  padding: 52px 20px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+/* ═══════════════════════════════════════════
+   SINGLE PAGE
+═══════════════════════════════════════════ */
+.sheet-page {
+  width: 8.5in;
+  height: 11in;
+  background: var(--parchment);
+  position: relative;
+  overflow: visible;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.7);
+  background-image:
+    radial-gradient(ellipse at 10% 10%, rgba(200,160,80,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse at 90% 90%, rgba(180,140,60,0.10) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 50%, rgba(255,248,220,0.4) 0%, transparent 80%);
+  background-color: var(--parchment);
+}
+
+/* Inner content wrapper — this is what gets scaled */
+.page-inner {
+  width: 100%;
+  padding: 0.52in 0.55in;
+  position: relative;
+  transform-origin: top left;
+  /* JS will set zoom at runtime and on beforeprint */
+}
+
+/* Border frame */
+.sheet-page::before {
+  content: '';
+  position: absolute;
+  inset: 0.28in;
+  border: 2.2px solid var(--border);
+  pointer-events: none;
+  z-index: 10;
+}
+.sheet-page::after {
+  content: '';
+  position: absolute;
+  inset: 0.36in;
+  border: 0.6px solid var(--border-light);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Corner diamonds */
+.sheet-page .corner-tl,
+.sheet-page .corner-tr,
+.sheet-page .corner-bl,
+.sheet-page .corner-br {
+  position: absolute;
+  width: 10px; height: 10px;
+  background: var(--border);
+  transform: rotate(45deg);
+  z-index: 11;
+  pointer-events: none;
+}
+.sheet-page .corner-tl { top: calc(0.28in - 5px); left: calc(0.28in - 5px); }
+.sheet-page .corner-tr { top: calc(0.28in - 5px); right: calc(0.28in - 5px); }
+.sheet-page .corner-bl { bottom: calc(0.28in - 5px); left: calc(0.28in - 5px); }
+.sheet-page .corner-br { bottom: calc(0.28in - 5px); right: calc(0.28in - 5px); }
+
+.page-footer-num {
+  position: absolute;
+  bottom: 0.15in;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 9px;
+  color: var(--ink-dim);
+}
+
+/* ═══════════════════════════════════════════
+   PAGE TITLE
+═══════════════════════════════════════════ */
+.page-title {
+  text-align: center;
+  margin-bottom: 6px;
+}
+.page-title h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.55rem;
+  color: var(--ink);
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+}
+.page-title .subtitle {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 0.82rem;
+  color: var(--ink-dim);
+  margin-top: 2px;
+}
+.title-rule {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0 8px;
+}
+.title-rule::before,
+.title-rule::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border));
+}
+.title-rule::after {
+  background: linear-gradient(to left, transparent, var(--border));
+}
+.title-rule .diamond {
+  width: 8px; height: 8px;
+  background: var(--border);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION HEADERS
+═══════════════════════════════════════════ */
+.section-header {
+  background: var(--gold);
+  color: #fff8ee;
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  margin-bottom: 5px;
+}
+
+.section-rule {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 6px 0;
+}
+
+/* ═══════════════════════════════════════════
+   FORM INPUTS
+═══════════════════════════════════════════ */
+input[type="text"],
+textarea {
+  background: var(--surface);
+  border: 0.6px solid var(--line);
+  color: var(--ink);
+  font-family: 'Crimson Text', serif;
+  font-size: 0.85rem;
+  padding: 2px 5px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  border-radius: 0;
+  resize: none;
+}
+input[type="text"]:focus,
+textarea:focus {
+  border-color: var(--amber);
+  background: #fffdf5;
+}
+
+.field-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.52rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  display: block;
+  margin-bottom: 2px;
+}
+
+.field-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Write lines */
+.write-line {
+  border: none;
+  border-bottom: 0.5px solid var(--line);
+  background: transparent;
+  width: 100%;
+  padding: 0 2px 1px;
+  font-family: 'Crimson Text', serif;
+  font-size: 0.85rem;
+  color: var(--ink);
+  outline: none;
+  display: block;
+  margin-bottom: 7px;
+}
+.write-line:focus { border-bottom-color: var(--amber); }
+.write-line-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.48rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  text-align: center;
+  display: block;
+  margin-top: -8px;
+  margin-bottom: 6px;
+}
+
+/* Stat boxes */
+.stat-box {
+  background: var(--surface);
+  border: 0.7px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+.stat-box input {
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  background: transparent;
+  width: 100%;
+  color: var(--ink);
+  padding: 0;
+}
+.stat-box input:focus { outline: none; }
+.stat-box .stat-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.48rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  text-align: center;
+  margin-top: 2px;
+  line-height: 1.2;
+}
+
+/* ═══════════════════════════════════════════
+   PIP CIRCLES
+═══════════════════════════════════════════ */
+.pip-row {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.pip {
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--parchment2);
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease, transform 0.1s ease;
+  flex-shrink: 0;
+}
+.pip:hover { transform: scale(1.15); border-color: var(--amber); }
+.pip.filled {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.pip-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.48rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-top: 3px;
+}
+
+/* ═══════════════════════════════════════════
+   CHECKBOXES
+═══════════════════════════════════════════ */
+.check-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+.check-box {
+  width: 11px; height: 11px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  flex-shrink: 0;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.12s;
+}
+.check-box.checked {
+  background: var(--ink);
+}
+.check-box.checked::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: var(--parchment);
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+.check-label {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.82rem;
+  color: var(--ink);
+}
+
+/* ═══════════════════════════════════════════
+   GRIDS & LAYOUT HELPERS
+═══════════════════════════════════════════ */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 5px; }
+.grid-5 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 5px; }
+.gap-sm { gap: 4px; }
+
+.mb-4  { margin-bottom: 3px; }
+.mb-6  { margin-bottom: 5px; }
+.mb-8  { margin-bottom: 7px; }
+.mb-10 { margin-bottom: 8px; }
+
+/* ═══════════════════════════════════════════
+   PRIMARY RATING CARDS
+═══════════════════════════════════════════ */
+.primary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-bottom: 5px;
+}
+.primary-card {
+  background: var(--surface);
+  border: 0.6px solid var(--border-light);
+  padding: 5px 8px 5px 12px;
+  position: relative;
+  overflow: hidden;
+}
+.primary-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+}
+.primary-card.agility::before    { background: var(--agility-c); }
+.primary-card.strength::before   { background: var(--strength-c); }
+.primary-card.vitality::before   { background: var(--vitality-c); }
+.primary-card.intelligence::before { background: var(--intel-c); }
+.primary-card.wisdom::before     { background: var(--wisdom-c); }
+.primary-card.social::before     { background: var(--social-c); }
+
+.primary-card-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+.primary-card-info { flex: 1; min-width: 0; }
+.primary-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.68rem;
+  color: var(--ink);
+  margin-bottom: 1px;
+}
+.primary-anchor {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 0.65rem;
+  color: var(--amber);
+  margin-bottom: 4px;
+}
+.primary-rating-box {
+  background: var(--parchment2);
+  border: 0.7px solid var(--border);
+  width: 32px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.primary-rating-box input {
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  background: transparent;
+  width: 100%;
+  color: var(--ink);
+  padding: 4px 0;
+}
+.primary-rating-box input:focus { outline: none; }
+
+/* ═══════════════════════════════════════════
+   PATH CARDS
+═══════════════════════════════════════════ */
+.path-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 8px;
+}
+.path-card {
+  background: var(--surface);
+  border: 0.6px solid var(--border-light);
+  overflow: hidden;
+}
+.path-card-header {
+  padding: 4px 8px;
+  color: #fff8ee;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.path-card-header.aeris        { background: var(--aeris); }
+.path-card-header.aqua         { background: var(--aqua); }
+.path-card-header.ignis        { background: var(--ignis); }
+.path-card-header.terra        { background: var(--terra); }
+.path-card-header.vitae        { background: var(--vitae); }
+.path-card-header.obtenebrate  { background: var(--obtenebrate); }
+
+.path-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+.path-card-body {
+  padding: 5px 8px 7px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.path-card-meta { flex: 1; min-width: 0; }
+.path-expr {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 0.72rem;
+  color: var(--ink-dim);
+  margin-bottom: 1px;
+}
+.path-attr {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.68rem;
+  color: var(--ink-dim);
+  margin-bottom: 4px;
+}
+.path-rating-box {
+  background: var(--parchment2);
+  border: 0.7px solid var(--border);
+  width: 28px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+}
+.path-rating-box input {
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: none;
+  background: transparent;
+  width: 100%;
+  color: var(--ink);
+  padding: 2px 0;
+}
+.path-rating-box input:focus { outline: none; }
+
+/* ═══════════════════════════════════════════
+   ABILITIES TABLE
+═══════════════════════════════════════════ */
+.abilities-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 8px;
+}
+.domain-block { margin-bottom: 2px; }
+.domain-header {
+  background: #d4b88a;
+  font-family: 'Cinzel', serif;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 2px 6px;
+  margin-bottom: 1px;
+}
+.ability-row {
+  display: flex;
+  align-items: center;
+  padding: 0px 4px;
+  min-height: 15px;
+}
+.ability-row:nth-child(odd)  { background: #fdf4e0; }
+.ability-row:nth-child(even) { background: #f8edce; }
+.ability-name {
+  flex: 1;
+  font-family: 'Crimson Text', serif;
+  font-size: 0.74rem;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ability-name.knowledge {
+  font-style: italic;
+  color: var(--ink-dim);
+}
+.ability-name.knowledge::before { content: '◆ '; }
+.ability-pips {
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.ability-pips .pip {
+  width: 9px; height: 9px;
+}
+
+/* ═══════════════════════════════════════════
+   LIABILITIES & BOONS
+═══════════════════════════════════════════ */
+.liab-boon-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.liab-col-header {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.liab-col-header.liab { color: var(--red-accent); }
+.liab-col-header.boon { color: var(--green-accent); }
+
+.liab-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--surface);
+  border: 0.5px solid var(--border-light);
+  padding: 2px 5px;
+  margin-bottom: 3px;
+}
+.sev-label {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.72rem;
+  color: var(--ink-dim);
+  white-space: nowrap;
+}
+.sev-box {
+  width: 28px;
+  background: var(--parchment3);
+  border: 0.6px solid var(--border);
+  flex-shrink: 0;
+}
+.sev-box input {
+  width: 100%;
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  padding: 1px 0;
+}
+.sev-box input:focus { outline: none; }
+.liab-name-line {
+  flex: 1;
+  border: none;
+  border-bottom: 0.5px solid var(--line);
+  background: transparent;
+  font-family: 'Crimson Text', serif;
+  font-size: 0.82rem;
+  color: var(--ink);
+  padding: 0 2px;
+  outline: none;
+}
+.liab-name-line:focus { border-bottom-color: var(--amber); }
+
+/* tracker pips row */
+.tracker-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+.tracker-label {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.75rem;
+  color: var(--ink-dim);
+  white-space: nowrap;
+}
+.tracker-pips .pip { width: 14px; height: 14px; }
+
+/* ═══════════════════════════════════════════
+   FREEBIE POINTS TABLE
+═══════════════════════════════════════════ */
+.fp-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+.fp-table td { padding: 3px 6px; border-bottom: 0.5px solid var(--border-light); }
+.fp-table tr:last-child td { border-bottom: none; }
+.fp-table tr:nth-child(odd)  td { background: #fdf4e0; }
+.fp-table tr:nth-child(even) td { background: #f8edce; }
+.fp-cost { font-family: 'Cinzel', serif; font-size: 0.68rem; color: var(--accent); text-align: right; font-weight: 700; }
+
+/* ═══════════════════════════════════════════
+   FORMULA BLOCK
+═══════════════════════════════════════════ */
+.formula-block {
+  background: #f5edd8;
+  border-left: 3px solid var(--gold);
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  font-size: 0.82rem;
+}
+.formula-block .f-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.52rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin-bottom: 3px;
+}
+.formula-block .f-main {
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  color: var(--ink);
+  font-weight: 600;
+}
+.formula-block .f-note {
+  font-style: italic;
+  color: var(--ink-dim);
+  font-size: 0.75rem;
+  margin-top: 2px;
+}
+
+/* Page 3 — default spacing (same as rest of sheet); JS scaling fills the page */
+
+/* ═══════════════════════════════════════════
+   PRINT STYLES
+═══════════════════════════════════════════ */
+@media print {
+  @page {
+    size: 8.5in 11in;
+    margin: 0;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .print-bar { display: none !important; }
+
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+  }
+
+  .pages {
+    padding: 0 !important;
+    gap: 0 !important;
+    display: block !important;
+  }
+
+  .sheet-page {
+    width: 8.5in !important;
+    height: 11in !important;
+    min-height: unset !important;
+    max-height: 11in !important;
+    overflow: hidden !important;    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    page-break-after: always !important;
+    break-after: page !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .sheet-page:last-child {
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  .page-inner {
+    transform-origin: top left !important;
+  }
+
+  input[type="text"] {
+    border: none !important;
+    border-bottom: 0.5px solid #aaa !important;
+    background: transparent !important;
+    -webkit-appearance: none;
+  }
+
+  .stat-box input[type="text"] { border: none !important; }
+
+  /* ── Page 3: upscaling handled by JS scalePages() via beforeprint ── */
+
+  .pip.filled { background: #2e1f0e !important; border-color: #2e1f0e !important; }
+  .section-header { background: #3a2a1a !important; color: #fff8ee !important; }
+  .domain-header { background: #d4b88a !important; }
+  .path-card-header.aeris        { background: #6b9abf !important; }
+  .path-card-header.aqua         { background: #4a8fa0 !important; }
+  .path-card-header.ignis        { background: #c47a20 !important; }
+  .path-card-header.terra        { background: #8b3a14 !important; }
+  .path-card-header.vitae        { background: #3a7a6a !important; }
+  .path-card-header.obtenebrate  { background: #5a4a7a !important; }
+  .primary-card.agility::before    { background: #6b9abf !important; }
+  .primary-card.strength::before   { background: #8b3a14 !important; }
+  .primary-card.vitality::before   { background: #3a7a6a !important; }
+  .primary-card.intelligence::before { background: #c47a20 !important; }
+  .primary-card.wisdom::before     { background: #7a6abf !important; }
+  .primary-card.social::before     { background: #8b6a3a !important; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══ PRINT BAR ═══ -->
+<div class="print-bar">
+  <span class="print-bar-title">Rivendawn — Character Record Sheet</span>
+  <span class="print-bar-hint">In Chrome print dialog: set <strong style="color:#d4a86a;">Margins → None</strong> and uncheck <strong style="color:#d4a86a;">Headers and footers</strong></span>
+  <button class="btn-print" onclick="window.print()">⬡ &nbsp; Print / Save as PDF</button>
+</div>
+
+<div class="pages">
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE I — Identity & Primary Ratings
+══════════════════════════════════════════════════════════════ -->
+<div class="sheet-page" id="page1">
+  <span class="corner-tl"></span><span class="corner-tr"></span>
+  <span class="corner-bl"></span><span class="corner-br"></span>
+  <div class="page-footer-num">— 1 —</div>
+
+  <div class="page-inner">
+
+  <div class="page-title" style="margin-bottom:2px;">
+    <h1>Rivendawn</h1>
+    <div class="subtitle">Character Record Sheet &nbsp;·&nbsp; Page I of III</div>
+  </div>
+  <div class="title-rule"><span class="diamond"></span></div>
+
+  <!-- IDENTITY -->
+  <div class="section-header">Character Identity</div>
+
+  <div class="field-wrap" style="margin-bottom:5px;">
+    <label class="field-label">Character Name</label>
+    <input type="text" placeholder="Enter character name...">
+  </div>
+
+  <div class="grid-3" style="margin-bottom:5px;">
+    <div class="field-wrap"><label class="field-label">Lineage</label><input type="text"></div>
+    <div class="field-wrap"><label class="field-label">Vocation</label><input type="text"></div>
+    <div class="field-wrap"><label class="field-label">Calling</label><input type="text"></div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:5px;">
+    <div class="field-wrap"><label class="field-label">Harmonics / Discipline</label><input type="text"></div>
+    <div class="field-wrap"><label class="field-label">Primary Heritage Imprint</label><input type="text"></div>
+  </div>
+
+  <div class="grid-3" style="margin-bottom:6px;">
+    <div class="field-wrap"><label class="field-label">Player Name</label><input type="text"></div>
+    <div class="field-wrap"><label class="field-label">Campaign / Chronicle</label><input type="text"></div>
+    <div class="field-wrap"><label class="field-label">Session #</label><input type="text"></div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- PRIMARY RATINGS -->
+  <div class="section-header">Primary Ratings &nbsp;·&nbsp; Creation Cap: 4 &nbsp;·&nbsp; Roll 2d8 → Take Highest → ÷2 Round Down</div>
+
+  <div class="primary-grid" style="margin-bottom:4px;">
+    <div class="primary-card agility">
+      <div class="primary-card-inner">
+        <div class="primary-card-info">
+          <div class="primary-name">Agility</div>
+          <div class="primary-anchor">Anchor: Aeris &amp; Obtenebrate</div>
+          <div class="pip-row" data-max="6" data-group="primary-agi"></div>
+          <div class="pip-label">Rating</div>
+        </div>
+        <div class="primary-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+      </div>
+    </div>
+    <div class="primary-card strength">
+      <div class="primary-card-inner">
+        <div class="primary-card-info">
+          <div class="primary-name">Strength</div>
+          <div class="primary-anchor">Anchor: Terra</div>
+          <div class="pip-row" data-max="6" data-group="primary-str"></div>
+          <div class="pip-label">Rating</div>
+        </div>
+        <div class="primary-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+      </div>
+    </div>
+    <div class="primary-card vitality">
+      <div class="primary-card-inner">
+        <div class="primary-card-info">
+          <div class="primary-name">Vitality</div>
+          <div class="primary-anchor">Anchor: Aqua</div>
+          <div class="pip-row" data-max="6" data-group="primary-vit"></div>
+          <div class="pip-label">Rating</div>
+        </div>
+        <div class="primary-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+      </div>
+    </div>
+    <div class="primary-card intelligence">
+      <div class="primary-card-inner">
+        <div class="primary-card-info">
+          <div class="primary-name">Intelligence</div>
+          <div class="primary-anchor">Anchor: Ignis</div>
+          <div class="pip-row" data-max="6" data-group="primary-int"></div>
+          <div class="pip-label">Rating</div>
+        </div>
+        <div class="primary-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+      </div>
+    </div>
+    <div class="primary-card wisdom">
+      <div class="primary-card-inner">
+        <div class="primary-card-info">
+          <div class="primary-name">Wisdom</div>
+          <div class="primary-anchor">Anchor: Vitae</div>
+          <div class="pip-row" data-max="6" data-group="primary-wis"></div>
+          <div class="pip-label">Rating</div>
+        </div>
+        <div class="primary-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+      </div>
+    </div>
+    <div class="primary-card social">
+      <div class="primary-card-inner">
+        <div class="primary-card-info">
+          <div class="primary-name">Social</div>
+          <div class="primary-anchor">No Resonant Anchor</div>
+          <div class="pip-row" data-max="6" data-group="primary-soc"></div>
+          <div class="pip-label">Rating</div>
+        </div>
+        <div class="primary-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:2px; margin-bottom:6px;">
+    <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.65rem; color:var(--ink-dim);">1 · Minimal</div>
+    <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.65rem; color:var(--ink-dim);">2 · Basic</div>
+    <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.65rem; color:var(--ink-dim);">3 · Solid</div>
+    <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.65rem; color:var(--ink-dim);">4 · Practiced ✦</div>
+    <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.65rem; color:var(--ink-dim);">5 · Exceptional</div>
+    <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.65rem; color:var(--ink-dim);">6 · Mastery</div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- DEFENSIVE PROFILE -->
+  <div class="section-header">Defensive Profile</div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:5px; margin-bottom:5px;">
+    <div style="grid-column:1/-1; background:#f5edd8; border-left:3px solid #3a2a1a; padding:4px 8px; font-family:'Crimson Text',serif; font-size:0.8rem; color:var(--ink);">
+      <strong>HP:</strong> 24 + (Health Die Roll × 3) &nbsp;&nbsp;
+      <strong>AP:</strong> Max HP × (Tier × 0.5) rounded up &nbsp;&nbsp;
+      <em style="color:var(--ink-dim);">While AP &gt; 0: damage split 50/50</em>
+    </div>
+    <div class="stat-box" style="height:40px;"><input type="text" placeholder="—"><div class="stat-label">Max HP</div></div>
+    <div class="stat-box" style="height:40px;"><input type="text" placeholder="—"><div class="stat-label">Current HP</div></div>
+    <div class="stat-box" style="height:40px;"><input type="text" placeholder="—"><div class="stat-label">Max AP</div></div>
+    <div class="stat-box" style="height:40px;"><input type="text" placeholder="—"><div class="stat-label">Current AP</div></div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- INITIATIVE -->
+  <div class="section-header">Initiative</div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-bottom:6px; font-family:'Crimson Text',serif; font-size:0.82rem; color:var(--ink);">
+    <div><strong>Forged / Hybrid:</strong> Combat Primary Rating + d20</div>
+    <div><strong>Pure Resonant:</strong> Highest Path Rating + d20</div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- BARGAINING CHIP -->
+  <div class="section-header">Bargaining Chip Description</div>
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+
+  </div><!-- /page-inner -->
+</div><!-- /page1 -->
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE II — Abilities, Knowledges & Combat
+══════════════════════════════════════════════════════════════ -->
+<div class="sheet-page" id="page2">
+  <span class="corner-tl"></span><span class="corner-tr"></span>
+  <span class="corner-bl"></span><span class="corner-br"></span>
+  <div class="page-footer-num">— 2 —</div>
+
+  <div class="page-inner">
+
+  <div class="page-title" style="margin-bottom:2px;">
+    <h1 style="font-size:1.1rem;">Abilities, Knowledges &amp; Combat</h1>
+    <div class="subtitle">Page II of III</div>
+  </div>
+  <div class="title-rule"><span class="diamond"></span></div>
+
+  <!-- COMBAT CONFIG -->
+  <div class="section-header">Combat Configuration</div>
+
+  <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px; flex-wrap:wrap;">
+    <span style="font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-dim); white-space:nowrap;">Offensive Category:</span>
+    <label class="check-option"><div class="check-box" onclick="toggleCheck(this)"></div><span class="check-label">Forged Combatant (6 CP)</span></label>
+    <label class="check-option"><div class="check-box" onclick="toggleCheck(this)"></div><span class="check-label">Martial Hybrid (5 CP)</span></label>
+    <label class="check-option"><div class="check-box" onclick="toggleCheck(this)"></div><span class="check-label">Pure Resonant (4 CP)</span></label>
+  </div>
+
+  <div class="grid-5 mb-4">
+    <div class="stat-box" style="height:38px;">
+      <input type="text" placeholder="—">
+      <div class="stat-label">Offensive<br>Rating (OR)</div>
+    </div>
+    <div class="stat-box" style="height:44px;">
+      <input type="text" placeholder="—">
+      <div class="stat-label">Base Defensive<br>Rating (BDR)</div>
+    </div>
+    <div class="stat-box" style="height:44px;">
+      <input type="text" placeholder="—">
+      <div class="stat-label">Total Defensive<br>Rating (TDR)</div>
+    </div>
+    <div class="stat-box" style="height:44px;">
+      <input type="text" placeholder="—">
+      <div class="stat-label">Defensive<br>Posture</div>
+    </div>
+    <div class="stat-box" style="height:44px;">
+      <input type="text" placeholder="—">
+      <div class="stat-label">Combat<br>Points</div>
+    </div>
+  </div>
+
+  <div style="display:flex; align-items:center; gap:6px; margin-bottom:8px; flex-wrap:wrap;">
+    <span style="font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-dim); white-space:nowrap;">Defensive Posture:</span>
+    <label class="check-option"><div class="check-box" onclick="toggleCheck(this)"></div><span class="check-label">Dodge</span></label>
+    <label class="check-option"><div class="check-box" onclick="toggleCheck(this)"></div><span class="check-label">Parry</span></label>
+    <label class="check-option"><div class="check-box" onclick="toggleCheck(this)"></div><span class="check-label">Riposte</span></label>
+    <label class="check-option"><div class="check-box" onclick="toggleCheck(this)"></div><span class="check-label">Absorption Shield</span></label>
+    <label class="check-option"><div class="check-box" onclick="toggleCheck(this)"></div><span class="check-label">Damage Shield</span></label>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- ABILITIES & KNOWLEDGES -->
+  <div class="section-header">Abilities &amp; Knowledges &nbsp;·&nbsp; Pool: 22 pts &nbsp;·&nbsp; Forged: 25 pts &nbsp;·&nbsp; Cap: 4</div>
+  <div style="font-family:'Crimson Text',serif; font-style:italic; font-size:0.75rem; color:var(--ink-dim); margin-bottom:6px;">
+    All begin at 1. Spend pool, then apply Vocation (+1) and Lineage (+2) bonuses. &nbsp;◆ = Knowledge
+  </div>
+
+  <div class="abilities-grid">
+
+    <!-- LEFT COLUMN -->
+    <div>
+      <div class="domain-block">
+        <div class="domain-header">Physicality &amp; Environment</div>
+        <div class="ability-row"><span class="ability-name">Acrobatics</span><div class="ability-pips pip-row" data-max="6" data-group="ab-acrobatics"></div></div>
+        <div class="ability-row"><span class="ability-name">Athletics</span><div class="ability-pips pip-row" data-max="6" data-group="ab-athletics"></div></div>
+        <div class="ability-row"><span class="ability-name">Climb</span><div class="ability-pips pip-row" data-max="6" data-group="ab-climb"></div></div>
+        <div class="ability-row"><span class="ability-name">Endurance</span><div class="ability-pips pip-row" data-max="6" data-group="ab-endurance"></div></div>
+        <div class="ability-row"><span class="ability-name">Swim</span><div class="ability-pips pip-row" data-max="6" data-group="ab-swim"></div></div>
+        <div class="ability-row"><span class="ability-name">Survival</span><div class="ability-pips pip-row" data-max="6" data-group="ab-survival"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Nature</span><div class="ability-pips pip-row" data-max="6" data-group="ab-nature"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Environmental Science</span><div class="ability-pips pip-row" data-max="6" data-group="ab-enviro"></div></div>
+      </div>
+
+      <div class="domain-block">
+        <div class="domain-header">Social &amp; Perceptual</div>
+        <div class="ability-row"><span class="ability-name">Deception</span><div class="ability-pips pip-row" data-max="6" data-group="ab-deception"></div></div>
+        <div class="ability-row"><span class="ability-name">Diplomacy</span><div class="ability-pips pip-row" data-max="6" data-group="ab-diplomacy"></div></div>
+        <div class="ability-row"><span class="ability-name">Intimidation</span><div class="ability-pips pip-row" data-max="6" data-group="ab-intimidation"></div></div>
+        <div class="ability-row"><span class="ability-name">Performance</span><div class="ability-pips pip-row" data-max="6" data-group="ab-performance"></div></div>
+        <div class="ability-row"><span class="ability-name">Persuasion</span><div class="ability-pips pip-row" data-max="6" data-group="ab-persuasion"></div></div>
+        <div class="ability-row"><span class="ability-name">Perception</span><div class="ability-pips pip-row" data-max="6" data-group="ab-perception"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Insight</span><div class="ability-pips pip-row" data-max="6" data-group="ab-insight"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Psychology</span><div class="ability-pips pip-row" data-max="6" data-group="ab-psychology"></div></div>
+      </div>
+
+      <div class="domain-block">
+        <div class="domain-header">Tactical &amp; Martial</div>
+        <div class="ability-row"><span class="ability-name">Combat Focus</span><div class="ability-pips pip-row" data-max="6" data-group="ab-combatfocus"></div></div>
+        <div class="ability-row"><span class="ability-name">Reaction Timing</span><div class="ability-pips pip-row" data-max="6" data-group="ab-reaction"></div></div>
+        <div class="ability-row"><span class="ability-name">Tactics</span><div class="ability-pips pip-row" data-max="6" data-group="ab-tactics"></div></div>
+        <div class="ability-row"><span class="ability-name">Weapon Mastery</span><div class="ability-pips pip-row" data-max="6" data-group="ab-weapon"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Navigation</span><div class="ability-pips pip-row" data-max="6" data-group="ab-navigation"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Military History</span><div class="ability-pips pip-row" data-max="6" data-group="ab-milhistory"></div></div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div>
+      <div class="domain-block">
+        <div class="domain-header">Technical</div>
+        <div class="ability-row"><span class="ability-name">Combat Medicine</span><div class="ability-pips pip-row" data-max="6" data-group="ab-combatmed"></div></div>
+        <div class="ability-row"><span class="ability-name">Disable Device</span><div class="ability-pips pip-row" data-max="6" data-group="ab-disable"></div></div>
+        <div class="ability-row"><span class="ability-name">Sleight of Hand</span><div class="ability-pips pip-row" data-max="6" data-group="ab-sleight"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Engineering</span><div class="ability-pips pip-row" data-max="6" data-group="ab-engineering"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Medicine</span><div class="ability-pips pip-row" data-max="6" data-group="ab-medicine"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Investigation</span><div class="ability-pips pip-row" data-max="6" data-group="ab-investigation"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Blacksmithing</span><div class="ability-pips pip-row" data-max="6" data-group="ab-blacksmith"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Alchemy</span><div class="ability-pips pip-row" data-max="6" data-group="ab-alchemy"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Leatherworking</span><div class="ability-pips pip-row" data-max="6" data-group="ab-leather"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Tailoring</span><div class="ability-pips pip-row" data-max="6" data-group="ab-tailoring"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Inscribing</span><div class="ability-pips pip-row" data-max="6" data-group="ab-inscribing"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Provisioning</span><div class="ability-pips pip-row" data-max="6" data-group="ab-provisioning"></div></div>
+      </div>
+
+      <div class="domain-block">
+        <div class="domain-header">Metaphysical &amp; Scholarly</div>
+        <div class="ability-row"><span class="ability-name">Resonant Infusion</span><div class="ability-pips pip-row" data-max="6" data-group="ab-resinfusion"></div></div>
+        <div class="ability-row"><span class="ability-name">Soothsaying</span><div class="ability-pips pip-row" data-max="6" data-group="ab-soothsaying"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Resonance Theory</span><div class="ability-pips pip-row" data-max="6" data-group="ab-restheory"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Paths (Resonant)</span><div class="ability-pips pip-row" data-max="6" data-group="ab-paths"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Rivendawn Lore</span><div class="ability-pips pip-row" data-max="6" data-group="ab-rdlore"></div></div>
+      </div>
+    </div>
+
+  </div><!-- /abilities-grid -->
+
+  <hr class="section-rule">
+
+  <!-- HERITAGE IMPRINTS -->
+  <div class="section-header">Heritage Imprints &nbsp;·&nbsp; Set by Vocation</div>
+  <div class="grid-5" style="margin-bottom:4px;">
+    <div class="field-wrap">
+      <label class="field-label">Primary (4)</label>
+      <input type="text" style="height:26px;">
+    </div>
+    <div class="field-wrap">
+      <label class="field-label">Secondary (3)</label>
+      <input type="text" style="height:26px;">
+    </div>
+    <div class="field-wrap">
+      <label class="field-label">Third (2)</label>
+      <input type="text" style="height:26px;">
+    </div>
+    <div class="field-wrap">
+      <label class="field-label">Fourth (1)</label>
+      <input type="text" style="height:26px;">
+    </div>
+    <div class="field-wrap">
+      <label class="field-label">Fifth (1)</label>
+      <input type="text" style="height:26px;">
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <div style="font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:4px;">Ability / Knowledge Notes</div>
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+
+  </div><!-- /page-inner -->
+</div><!-- /page2 -->
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE III — Resonance, Liabilities & Resources
+══════════════════════════════════════════════════════════════ -->
+<div class="sheet-page" id="page3">
+  <span class="corner-tl"></span><span class="corner-tr"></span>
+  <span class="corner-bl"></span><span class="corner-br"></span>
+  <div class="page-footer-num">— 3 —</div>
+
+  <div class="page-inner">
+
+  <div class="page-title">
+    <h1 style="font-size:1.2rem;">Resonance, Liabilities &amp; Resources</h1>
+    <div class="subtitle">Page III of III</div>
+  </div>
+  <div class="title-rule"><span class="diamond"></span></div>
+
+  <!-- RESONANCE -->
+  <div class="section-header">Resonance — Path Rating &amp; Wellspring</div>
+
+  <div style="display:grid; grid-template-columns: 1fr auto; gap:8px; margin-bottom:8px; align-items:start;">
+    <div>
+      <div class="formula-block">
+        <div class="f-label">Wellspring Formula</div>
+        <div class="f-main">12 + (1d[Wellspring Die] × 2)</div>
+        <div class="f-note">d8 → 14–28 &nbsp;·&nbsp; d10 → 14–32 &nbsp;·&nbsp; d12 → 14–36</div>
+      </div>
+      <div style="font-family:'Crimson Text',serif; font-size:0.78rem; color:var(--ink-dim); font-style:italic;">
+        Path Points: &nbsp;True Resonant Caster: 6 pts (cap 4/path) &nbsp;·&nbsp; Hybrid: 3 pts (cap 3/path)
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(3,1fr); gap:5px;">
+      <div class="stat-box" style="height:52px; width:72px;">
+        <input type="text" placeholder="—">
+        <div class="stat-label">Wellspring Die</div>
+      </div>
+      <div class="stat-box" style="height:52px; width:72px;">
+        <input type="text" placeholder="—">
+        <div class="stat-label">Base Wellspring</div>
+      </div>
+      <div class="stat-box" style="height:52px; width:72px;">
+        <input type="text" placeholder="—">
+        <div class="stat-label">Current Wellspring</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PATH CARDS -->
+  <div class="path-grid">
+
+    <div class="path-card">
+      <div class="path-card-header aeris">
+        <span class="path-name">Aeris</span>
+        <span style="font-family:'Crimson Text',serif; font-size:0.68rem; font-style:italic;">Displacement</span>
+      </div>
+      <div class="path-card-body">
+        <div class="path-card-meta">
+          <div class="path-attr">Gov. Attr: Agility</div>
+          <div class="pip-row" data-max="6" data-group="path-aeris"></div>
+          <div class="pip-label">Path Rating</div>
+        </div>
+        <div class="path-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+      </div>
+    </div>
+
+    <div class="path-card">
+      <div class="path-card-header aqua">
+        <span class="path-name">Aqua</span>
+        <span style="font-family:'Crimson Text',serif; font-size:0.68rem; font-style:italic;">Pressure &amp; Absorption</span>
+      </div>
+      <div class="path-card-body">
+        <div class="path-card-meta">
+          <div class="path-attr">Gov. Attr: Vitality</div>
+          <div class="pip-row" data-max="6" data-group="path-aqua"></div>
+          <div class="pip-label">Path Rating</div>
+        </div>
+        <div class="path-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+      </div>
+    </div>
+
+    <div class="path-card">
+      <div class="path-card-header ignis">
+        <span class="path-name">Ignis</span>
+        <span style="font-family:'Crimson Text',serif; font-size:0.68rem; font-style:italic;">Combustive Transformation</span>
+      </div>
+      <div class="path-card-body">
+        <div class="path-card-meta">
+          <div class="path-attr">Gov. Attr: Intelligence</div>
+          <div class="pip-row" data-max="6" data-group="path-ignis"></div>
+          <div class="pip-label">Path Rating</div>
+        </div>
+        <div class="path-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+      </div>
+    </div>
+
+    <div class="path-card">
+      <div class="path-card-header terra">
+        <span class="path-name">Terra</span>
+        <span style="font-family:'Crimson Text',serif; font-size:0.68rem; font-style:italic;">Stability &amp; Mass</span>
+      </div>
+      <div class="path-card-body">
+        <div class="path-card-meta">
+          <div class="path-attr">Gov. Attr: Strength</div>
+          <div class="pip-row" data-max="6" data-group="path-terra"></div>
+          <div class="pip-label">Path Rating</div>
+        </div>
+        <div class="path-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+      </div>
+    </div>
+
+    <div class="path-card">
+      <div class="path-card-header vitae">
+        <span class="path-name">Vitae</span>
+        <span style="font-family:'Crimson Text',serif; font-size:0.68rem; font-style:italic;">Adaptive Life</span>
+      </div>
+      <div class="path-card-body">
+        <div class="path-card-meta">
+          <div class="path-attr">Gov. Attr: Wisdom</div>
+          <div class="pip-row" data-max="6" data-group="path-vitae"></div>
+          <div class="pip-label">Path Rating</div>
+        </div>
+        <div class="path-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+      </div>
+    </div>
+
+    <div class="path-card">
+      <div class="path-card-header obtenebrate">
+        <span class="path-name">Obtenebrate</span>
+        <span style="font-family:'Crimson Text',serif; font-size:0.68rem; font-style:italic;">Perceptual Distortion</span>
+      </div>
+      <div class="path-card-body">
+        <div class="path-card-meta">
+          <div class="path-attr">Gov. Attr: Agility</div>
+          <div class="pip-row" data-max="6" data-group="path-obtene"></div>
+          <div class="pip-label">Path Rating</div>
+        </div>
+        <div class="path-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+      </div>
+    </div>
+
+  </div><!-- /path-grid -->
+
+  <hr class="section-rule">
+
+  <!-- LIABILITIES & BOONS -->
+  <div class="section-header">Liabilities &amp; Boons &nbsp;·&nbsp; Up to 6 Severity Points &nbsp;·&nbsp; 1:1 Conversion</div>
+  <div style="font-family:'Crimson Text',serif; font-style:italic; font-size:0.75rem; color:var(--ink-dim); margin-bottom:6px;">
+    Liabilities are permanent and cannot be bought off. Severity Points convert 1:1 to Boon Points.
+  </div>
+
+  <div class="liab-boon-grid">
+    <div>
+      <div class="liab-col-header liab">Liabilities</div>
+      <div class="liab-row"><span class="sev-label">Severity:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Liability name..."></div>
+      <div class="liab-row"><span class="sev-label">Severity:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Liability name..."></div>
+      <div class="liab-row"><span class="sev-label">Severity:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Liability name..."></div>
+      <div class="liab-row"><span class="sev-label">Severity:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Liability name..."></div>
+      <div class="liab-row"><span class="sev-label">Severity:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Liability name..."></div>
+      <div class="liab-row"><span class="sev-label">Severity:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Liability name..."></div>
+      <div class="tracker-row">
+        <span class="tracker-label">Total Severity:</span>
+        <div class="pip-row tracker-pips" data-max="6" data-group="sev-tracker"></div>
+      </div>
+    </div>
+    <div>
+      <div class="liab-col-header boon">Boons</div>
+      <div class="liab-row"><span class="sev-label">Cost:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Boon name..."></div>
+      <div class="liab-row"><span class="sev-label">Cost:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Boon name..."></div>
+      <div class="liab-row"><span class="sev-label">Cost:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Boon name..."></div>
+      <div class="liab-row"><span class="sev-label">Cost:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Boon name..."></div>
+      <div class="liab-row"><span class="sev-label">Cost:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Boon name..."></div>
+      <div class="liab-row"><span class="sev-label">Cost:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Boon name..."></div>
+      <div class="tracker-row">
+        <span class="tracker-label">Total Boons:</span>
+        <div class="pip-row tracker-pips" data-max="6" data-group="boon-tracker"></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- FREEBIE POINTS + RESOURCES -->
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:8px;">
+
+    <div>
+      <div class="section-header">Freebie Points &nbsp;·&nbsp; 10 pts &nbsp;·&nbsp; Forged: 15 pts</div>
+      <table class="fp-table">
+        <tr><td>Primary Rating</td><td class="fp-cost">8 FP</td></tr>
+        <tr><td>Ability / Knowledge</td><td class="fp-cost">2 FP</td></tr>
+        <tr><td>Path Point</td><td class="fp-cost">10 FP</td></tr>
+        <tr><td>Resources / Finances</td><td class="fp-cost">2 FP</td></tr>
+      </table>
+      <div style="display:flex; align-items:center; gap:6px; margin-top:6px;">
+        <span style="font-family:'Crimson Text',serif; font-size:0.78rem; color:var(--ink-dim);">FP Remaining:</span>
+        <div class="stat-box" style="width:44px; height:28px;"><input type="text" placeholder="—" style="font-size:0.85rem;"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-header">Resources &amp; Finances</div>
+      <div style="font-family:'Crimson Text',serif; font-style:italic; font-size:0.72rem; color:var(--ink-dim); margin-bottom:5px;">Purchased with FP only. Cap: Rank 3 at creation.</div>
+      <div class="grid-3 mb-6">
+        <div class="stat-box" style="height:38px;"><input type="text" placeholder="Rank 1 = 100 MK" style="font-size:0.65rem;"><div class="stat-label">Rank 1 · 100 MK</div></div>
+        <div class="stat-box" style="height:38px;"><input type="text" placeholder="Rank 2 = 500 MK" style="font-size:0.65rem;"><div class="stat-label">Rank 2 · 500 MK</div></div>
+        <div class="stat-box" style="height:38px;"><input type="text" placeholder="Rank 3 = 2,500 MK" style="font-size:0.65rem;"><div class="stat-label">Rank 3 · 2,500 MK</div></div>
+      </div>
+      <div style="font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:3px;">Social Resources</div>
+      <input class="write-line" type="text">
+      <input class="write-line" type="text">
+      <input class="write-line" type="text">
+    </div>
+
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- BACKGROUND & PERSONALITY -->
+  <div class="section-header">Background, Personality &amp; Notes</div>
+
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin-bottom:6px;">
+    <div>
+      <input class="write-line" type="text" placeholder="Motivation / Drive">
+      <input class="write-line" type="text" placeholder="Greatest Fear">
+      <input class="write-line" type="text" placeholder="Bond or Obligation">
+    </div>
+    <div>
+      <input class="write-line" type="text" placeholder="Personality Trait">
+      <input class="write-line" type="text" placeholder="Dissonance Trigger">
+      <input class="write-line" type="text" placeholder="Backstory Note">
+    </div>
+  </div>
+
+  <div style="font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:3px;">Equipment &amp; Inventory</div>
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+
+  <hr class="section-rule" style="margin:12px 0;">
+
+  <div style="font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:3px;">Session Notes</div>
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+
+  </div><!-- /page-inner -->
+</div><!-- /page3 -->
+
+</div><!-- /pages -->
+
+<script>
+/* ═══ PIP INITIALIZATION ═══ */
+document.querySelectorAll('.pip-row[data-max]').forEach(row => {
+  const max = parseInt(row.dataset.max);
+  const group = row.dataset.group;
+  for (let i = 1; i <= max; i++) {
+    const pip = document.createElement('span');
+    pip.className = 'pip';
+    pip.dataset.val = i;
+    pip.dataset.group = group;
+    pip.addEventListener('click', () => handlePipClick(group, i));
+    row.appendChild(pip);
+  }
+});
+
+/* ═══ PIP CLICK — fill up to clicked, unfill all if clicking filled last ═══ */
+const pipState = {};
+
+function handlePipClick(group, val) {
+  const current = pipState[group] || 0;
+  // If clicking the already-active last pip, clear all; otherwise fill up to val
+  pipState[group] = (current === val) ? 0 : val;
+  syncPips(group);
+
+  // Also sync the number input in primary/path cards
+  const card = document.querySelector(`[data-group="${group}"]`)?.closest('.primary-card, .path-card');
+  if (card) {
+    const input = card.querySelector('input[type="text"][maxlength="1"]');
+    if (input) input.value = pipState[group] || '';
+  }
+}
+
+function syncPips(group) {
+  const val = pipState[group] || 0;
+  document.querySelectorAll(`.pip[data-group="${group}"]`).forEach(pip => {
+    pip.classList.toggle('filled', parseInt(pip.dataset.val) <= val);
+  });
+}
+
+/* ═══ Typing in the rating box syncs pips ═══ */
+document.querySelectorAll('.primary-rating-box input, .path-rating-box input').forEach(input => {
+  input.addEventListener('input', () => {
+    const card = input.closest('.primary-card, .path-card');
+    if (!card) return;
+    const pipRow = card.querySelector('.pip-row[data-group]');
+    if (!pipRow) return;
+    const group = pipRow.dataset.group;
+    const val = parseInt(input.value) || 0;
+    pipState[group] = Math.min(val, 6);
+    syncPips(group);
+  });
+});
+
+/* ═══ CHECKBOX TOGGLE ═══ */
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+}
+
+/* ═══ KEYBOARD NAV — Tab between write-lines naturally ═══ */
+// Already works via native tab order
+
+/* ═══ SCALE-TO-FIT — scales .page-inner to fit within .sheet-page ═══ */
+const PAGE_H_PX = 11 * 96;  // 1056px at 96dpi
+
+function scalePages() {
+  const inners = [...document.querySelectorAll('.page-inner')];
+  // Pass 1: reset
+  inners.forEach(inner => {
+    inner.style.transform = '';
+    inner.style.transformOrigin = '';
+    inner.style.width = '';
+  });
+  // Pass 2: measure height only (width is 100% so always fits)
+  inners.forEach(inner => {
+    const h = inner.scrollHeight;
+    const scale = PAGE_H_PX / h;
+    if (Math.abs(scale - 1) > 0.005) {
+      // Scale vertically; compensate width so content still spans full page
+      inner.style.transformOrigin = 'top left';
+      inner.style.transform = `scaleY(${scale}) scaleX(${scale})`;
+      inner.style.width = (100 / scale) + '%';
+    }
+  });
+}
+
+function resetPages() {
+  document.querySelectorAll('.page-inner').forEach(inner => {
+    inner.style.transform = '';
+    inner.style.transformOrigin = '';
+    inner.style.width = '';
+  });
+}
+
+// Scale on load and on window resize
+window.addEventListener('load', scalePages);
+window.addEventListener('resize', scalePages);
+window.addEventListener('beforeprint', scalePages);
+window.addEventListener('afterprint',  resetPages);
+</script>
+</body>
+</html>

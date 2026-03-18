@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Resources &amp; Finances — Rivendawn</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root {
+  --header-height: 72px;
+  --footer-height: 72px;
+  --content-max-width: 960px;
+  --page-max-width: 1400px;
+  --ink-color: #3a2a1a;
+  --accent: #fff1d6;
+  --nav-color: #f2e3c6;
+  --nav-shadow: rgba(0,0,0,0.85);
+  --footer-bg: rgba(0,0,0,0.88);
+  --ink:        #2a1c0e;
+  --ink-mid:    #4a2e06;
+  --ink-dim:    #7a5a30;
+  --ink-faint:  #a08050;
+  --gold:       #c8922a;
+  --gold-light: #d4a84a;
+  --gold-pale:  #e8c87a;
+  --border:     rgba(74,46,6,0.20);
+  --border-strong: rgba(74,46,6,0.40);
+  --surface:    rgba(255,248,230,0.80);
+  --fp-color:   #2a4a6a;
+  --fp-bg:      rgba(42,74,106,0.08);
+  --r1:         rgba(107,140,66,0.15);
+  --r1-border:  rgba(107,140,66,0.35);
+  --r1-color:   #4a6a20;
+  --r2:         rgba(200,146,42,0.12);
+  --r2-border:  rgba(200,146,42,0.40);
+  --r2-color:   #7a5010;
+  --r3:         rgba(139,42,42,0.10);
+  --r3-border:  rgba(139,42,42,0.35);
+  --r3-color:   #6a1818;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--ink);
+  min-height: 100dvh;
+  background: #000;
+  line-height: 1.75;
+  font-size: 1.08rem;
+}
+
+.page-wrapper {
+  min-height: 100dvh;
+  display: flex; flex-direction: column;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  background-color: #000;
+  background-image: url('../images/bg.jpg');
+  background-size: contain;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  box-shadow: 0 0 80px rgba(0,0,0,0.85);
+}
+
+header {
+  position: fixed; top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--page-max-width));
+  height: var(--header-height);
+  background-image: url('../images/header.png');
+  background-size: contain; background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1000;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+}
+
+nav {
+  max-width: var(--content-max-width);
+  width: 100%; height: 100%;
+  margin: 0 auto;
+  display: flex; align-items: center; justify-content: center;
+  gap: 2rem; padding: 0 1.5rem;
+}
+
+nav a {
+  color: var(--nav-color); text-decoration: none;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 1.25rem; letter-spacing: 0.14em; text-transform: uppercase;
+  transition: all .25s ease;
+  text-shadow: 0 1px 2px var(--nav-shadow);
+}
+nav a:hover { color: var(--accent); }
+
+main {
+  flex: 1;
+  margin-top: var(--header-height);
+  padding: 3.25rem 1rem calc(var(--footer-height) + 3rem);
+  display: flex; justify-content: center;
+}
+
+.content-container {
+  max-width: var(--content-max-width);
+  width: 100%; padding: 40px 60px 120px;
+  margin: 0 auto; border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  background-image: url('../images/content-scroll-bg.png');
+  background-repeat: repeat-y;
+  background-position: top center;
+  background-size: 100% auto;
+}
+
+.page-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+  color: var(--ink-mid); text-align: center;
+  letter-spacing: .08em; margin-bottom: 8px;
+}
+
+.title-rule {
+  display: flex; align-items: center;
+  gap: 16px; justify-content: center;
+  margin-bottom: 0.75rem;
+}
+.title-rule::before, .title-rule::after {
+  content: ''; flex: 1; max-width: 200px; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(74,46,6,0.35));
+}
+.title-rule::after { background: linear-gradient(to left, transparent, rgba(74,46,6,0.35)); }
+.title-rule span {
+  color: #f2e3c6; font-size: .75rem;
+  letter-spacing: .28em; text-transform: uppercase;
+  font-family: 'Cinzel', serif;
+  background: rgba(42,22,8,0.78);
+  padding: 0.25rem 0.85rem;
+  border-radius: 4px;
+}
+
+.intro-block {
+  background: rgba(200,146,42,0.06);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+  font-style: italic;
+  font-size: 1.02rem;
+  color: var(--ink-dim);
+  line-height: 1.75;
+}
+.intro-block strong { font-style: normal; color: var(--ink-mid); }
+
+.section-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4px;
+  margin: 2rem 0 1rem;
+}
+
+/* ── Golden Rule ── */
+.golden-rule {
+  background: rgba(200,146,42,0.08);
+  border: 1px solid rgba(200,146,42,0.35);
+  border-radius: 8px;
+  padding: 1.1rem 1.4rem;
+  margin-bottom: 1.75rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.golden-rule-icon {
+  font-size: 1.3rem;
+  color: var(--gold);
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.golden-rule-body {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.95rem;
+  color: var(--ink-dim);
+  line-height: 1.65;
+}
+
+.golden-rule-body strong {
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #f2e3c6;
+  background: rgba(42,22,8,0.78);
+  padding: 0.2rem 0.65rem;
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 0.4rem;
+  margin-bottom: 0.35rem;
+}
+
+/* ── Currency cards ── */
+.currency-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.currency-card {
+  background: rgba(255,248,230,0.65);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.currency-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-pale));
+}
+
+.coin-symbol {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.4rem;
+  color: var(--gold);
+  margin-bottom: 0.3rem;
+}
+
+.coin-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.82rem;
+  color: var(--ink-mid);
+  letter-spacing: 0.04em;
+  margin-bottom: 0.15rem;
+}
+
+.coin-abbrev {
+  font-family: 'Cinzel', serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.coin-desc {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.9rem;
+  color: var(--ink-dim);
+  line-height: 1.55;
+}
+
+.coin-rate {
+  display: inline-block;
+  margin-top: 0.4rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--fp-color);
+  background: var(--fp-bg);
+  border: 1px solid rgba(42,74,106,0.2);
+  border-radius: 3px;
+  padding: 0.15rem 0.45rem;
+}
+
+/* Mint stamps */
+.mint-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.65rem;
+  margin-bottom: 1.75rem;
+}
+
+.mint-card {
+  background: rgba(255,248,230,0.55);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.75rem 0.9rem;
+  text-align: center;
+}
+
+.mint-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.72rem;
+  color: var(--ink-mid);
+  margin-bottom: 0.25rem;
+}
+
+.mint-seal {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 0.88rem;
+  color: var(--ink-faint);
+}
+
+/* ── Wealth ranks ── */
+.wealth-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.wealth-card {
+  background: rgba(255,248,230,0.65);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  position: relative;
+  text-align: center;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.wealth-card:hover {
+  box-shadow: 0 4px 14px rgba(42,28,14,0.10);
+  transform: translateY(-2px);
+}
+
+.wealth-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 4px;
+  border-radius: 8px 8px 0 0;
+}
+
+.wealth-card.rank-0::before { background: rgba(74,46,6,0.20); }
+.wealth-card.rank-1::before { background: var(--r1-color); }
+.wealth-card.rank-2::before { background: var(--gold); }
+.wealth-card.rank-3::before { background: linear-gradient(90deg, var(--gold), var(--gold-pale), var(--gold)); }
+
+.wealth-rank {
+  font-family: 'Cinzel', serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.2rem;
+}
+
+.wealth-num {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.5rem;
+  color: var(--ink-mid);
+  line-height: 1;
+  margin-bottom: 0.2rem;
+}
+
+.wealth-cost {
+  font-family: 'Cinzel', serif;
+  font-size: 0.52rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--fp-color);
+  background: var(--fp-bg);
+  border: 1px solid rgba(42,74,106,0.2);
+  border-radius: 3px;
+  padding: 0.12rem 0.4rem;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+.wealth-marks {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.88rem;
+  color: var(--gold);
+  margin-bottom: 0.3rem;
+}
+
+.wealth-lifestyle {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.82rem;
+  color: var(--ink-dim);
+  font-style: italic;
+  line-height: 1.45;
+}
+
+/* ── Resources table ── */
+.resource-block {
+  margin-bottom: 0.75rem;
+  background: rgba(255,248,230,0.65);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.resource-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.1rem;
+  background: rgba(200,146,42,0.06);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+}
+
+.resource-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.82rem;
+  color: var(--ink-mid);
+  letter-spacing: 0.04em;
+  flex: 1;
+}
+
+.resource-chevron {
+  font-size: 0.6rem;
+  color: var(--ink-faint);
+  transition: transform 0.22s ease;
+}
+
+.resource-block.open .resource-chevron { transform: rotate(180deg); }
+
+.resource-ranks {
+  display: none;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+}
+
+.resource-block.open .resource-ranks { display: grid; }
+
+.rank-cell {
+  padding: 0.9rem 1.1rem;
+  border-right: 1px solid var(--border);
+  border-top: 1px solid rgba(74,46,6,0.06);
+}
+
+.rank-cell:last-child { border-right: none; }
+
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.rank-badge.r1 { color: var(--r1-color); }
+.rank-badge.r2 { color: var(--r2-color); }
+.rank-badge.r3 { color: var(--r3-color); }
+
+.rank-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.rank-dot.r1 { background: var(--r1-color); }
+.rank-dot.r2 { background: var(--gold); }
+.rank-dot.r3 { background: var(--r3-color); }
+
+.rank-cost {
+  font-family: 'Cinzel', serif;
+  font-size: 0.48rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fp-color);
+  background: var(--fp-bg);
+  border: 1px solid rgba(42,74,106,0.18);
+  border-radius: 3px;
+  padding: 0.1rem 0.35rem;
+  margin-left: 0.25rem;
+}
+
+.rank-desc {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.92rem;
+  color: var(--ink-dim);
+  line-height: 1.6;
+}
+
+/* ── Authenticity block ── */
+.auth-block {
+  background: rgba(255,248,230,0.65);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 1.1rem 1.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.auth-block p {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.95rem;
+  color: var(--ink-dim);
+  line-height: 1.65;
+  margin-bottom: 0.5rem;
+}
+
+.auth-block p:last-child { margin-bottom: 0; }
+
+.formula-inline {
+  display: inline-block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  background: rgba(74,46,6,0.06);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 0.2rem 0.55rem;
+  margin: 0.25rem 0;
+}
+
+.callout {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--ink-mid);
+  padding: 0.85rem 1.1rem;
+  margin: 1.25rem 0;
+  background: rgba(74,46,6,0.04);
+  font-size: 0.92rem;
+  border-radius: 0 4px 4px 0;
+  color: var(--ink-dim);
+  line-height: 1.65;
+}
+.callout strong { color: var(--ink-mid); }
+
+footer {
+  position: fixed; bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--page-max-width));
+  height: var(--footer-height);
+  background: var(--footer-bg);
+  color: #ccc;
+  display: flex; align-items: center;
+  justify-content: center; text-align: center;
+  padding: 0 1rem; font-size: .95rem;
+  border-top: 1px solid #444; z-index: 1000;
+  font-family: 'Crimson Text', serif;
+}
+footer a { color: #d4a373; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+@media (max-width: 680px) {
+  .content-container { padding: 28px 20px 100px; }
+  .currency-row { grid-template-columns: 1fr; }
+  .mint-grid { grid-template-columns: 1fr; }
+  .wealth-grid { grid-template-columns: 1fr 1fr; }
+  .resource-ranks { grid-template-columns: 1fr; }
+  .rank-cell { border-right: none; }
+}
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+
+<header>
+  <nav>
+    <a href="geography.html">GEOGRAPHY</a>
+    <a href="lore.html">LORE</a>
+    <a href="rules.html">RULES</a>
+    <a href="create.html">CREATE</a>
+    <a href="tables.html">TABLES</a>
+  </nav>
+</header>
+
+<main>
+<div class="content-container">
+
+  <h1 class="page-title">Resources &amp; Finances</h1>
+  <div class="title-rule"><span>Material Foundation</span></div>
+
+  <div class="intro-block">
+    Courage, knowledge, and Resonance define what a character can accomplish. But <strong>practical realities</strong> shape how they move through the world. Equipment must be purchased. Doors sometimes open only to those with the right connections. Survival often depends as much on preparation as it does on skill.
+  </div>
+
+  <!-- ── Golden Rule ── -->
+  <div class="golden-rule">
+    <div class="golden-rule-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+    <div class="golden-rule-body">
+      <strong>The Golden Rule of Acquisition</strong>
+      Resources and Financial Standing are purchased exclusively during Character Creation using <strong>Freebie Points (FP)</strong>. They cannot be subsidized by Liabilities, traded for Skill Points, or generated by any other means. They represent the character's permanent starting foundation — the material and social baseline from which they enter the world.
+    </div>
+  </div>
+
+  <!-- ── Currency ── -->
+  <p class="section-label">The Currency — Echo-Vane</p>
+  <p style="font-family:'Crimson Text',serif; font-size:0.95rem; color:#7a5a30; font-style:italic; margin-bottom:1rem;">The economy of Rivendawn is anchored by physical, refined Echo-Vane currency — valued not only for its stability but for the faint resonance it carries within the world's deeper structure.</p>
+
+  <div class="currency-row">
+    <div class="currency-card">
+      <div class="coin-symbol">◈</div>
+      <div class="coin-name">Tarnished Bit</div>
+      <div class="coin-abbrev">TB — Base Unit</div>
+      <div class="coin-desc">Raw, low-purity shavings used for micro-transactions. The currency of the desperate and the destitute.</div>
+      <span class="coin-rate">100 TB = 1 Mark</span>
+    </div>
+    <div class="currency-card">
+      <div class="coin-symbol">⬡</div>
+      <div class="coin-name">The Mark</div>
+      <div class="coin-abbrev">MK — Standard Trade Unit</div>
+      <div class="coin-desc">High-purity hexagonal coin. The standard of commerce across all three regions and both Citadels. Bears the seal of its originating mint on the reverse.</div>
+      <span class="coin-rate">Standard Unit</span>
+    </div>
+  </div>
+
+  <p class="section-label">Regional Mint Seals</p>
+  <p style="font-family:'Crimson Text',serif; font-size:0.92rem; color:#7a5a30; font-style:italic; margin-bottom:0.85rem;">All Marks bear the seal of their originating authority on the reverse side, indicating mint origin and economic legitimacy.</p>
+
+  <div class="mint-grid">
+    <div class="mint-card">
+      <div class="mint-name">The Forge</div>
+      <div class="mint-seal">Anvil Insignia</div>
+    </div>
+    <div class="mint-card">
+      <div class="mint-name">The Cradle</div>
+      <div class="mint-seal">Woven Vine Insignia</div>
+    </div>
+    <div class="mint-card">
+      <div class="mint-name">Limestone</div>
+      <div class="mint-seal">Balanced Scale Insignia</div>
+    </div>
+  </div>
+
+  <!-- ── Authenticity ── -->
+  <div class="auth-block">
+    <p><strong>Echo-Vane Authenticity:</strong> Marks possess a distinctive physical resonance — a faint warmth and a subtle static hum. Characters may attempt to detect counterfeit currency through tactile inspection.</p>
+    <p><span class="formula-inline">Primary Attribute + Ability</span> — Target Number set by the Watcher.</p>
+    <p style="font-size:0.88rem; font-style:italic;">Abilities such as Scrapper's Intuition or Resonant Affinity may assist with identification.</p>
+  </div>
+
+  <!-- ── Starting Wealth ── -->
+  <p class="section-label">Starting Wealth — Finances</p>
+  <p style="font-family:'Crimson Text',serif; font-size:0.95rem; color:#7a5a30; font-style:italic; margin-bottom:1rem;">Financial Rank represents a character's starting purchasing power and economic stability. Creation cap: <strong>Rank 3</strong>.</p>
+
+  <div class="wealth-grid">
+    <div class="wealth-card rank-0">
+      <div class="wealth-rank">Rank</div>
+      <div class="wealth-num">0</div>
+      <div class="wealth-cost">0 FP</div>
+      <div class="wealth-marks">0 Marks</div>
+      <div class="wealth-lifestyle">Destitute — rags, debt, and survival living.</div>
+    </div>
+    <div class="wealth-card rank-1">
+      <div class="wealth-rank">Rank</div>
+      <div class="wealth-num">1</div>
+      <div class="wealth-cost">1 FP</div>
+      <div class="wealth-marks">100 Marks</div>
+      <div class="wealth-lifestyle">Scrapper — hand-to-mouth living with just enough to get by.</div>
+    </div>
+    <div class="wealth-card rank-2">
+      <div class="wealth-rank">Rank</div>
+      <div class="wealth-num">2</div>
+      <div class="wealth-cost">2 FP</div>
+      <div class="wealth-marks">500 Marks</div>
+      <div class="wealth-lifestyle">Settled — reliable equipment and stable housing.</div>
+    </div>
+    <div class="wealth-card rank-3">
+      <div class="wealth-rank">Rank</div>
+      <div class="wealth-num">3</div>
+      <div class="wealth-cost">5 FP</div>
+      <div class="wealth-marks">2,500 Marks</div>
+      <div class="wealth-lifestyle">Middle-Class — high-quality gear and social influence.</div>
+    </div>
+  </div>
+
+  <!-- ── Social & Material Resources ── -->
+  <p class="section-label">Social &amp; Material Resources</p>
+  <p style="font-family:'Crimson Text',serif; font-size:0.95rem; color:#7a5a30; font-style:italic; margin-bottom:1rem;">Non-monetary advantages possessed at the start of play. Creation cap: <strong>Rank 3</strong>. Click any category to expand its rank descriptions.</p>
+
+  <!-- Informant Network -->
+  <div class="resource-block" id="res-informant">
+    <div class="resource-header" onclick="toggleResource('res-informant')">
+      <span class="resource-name">Informant Network</span>
+      <span class="resource-chevron">▼</span>
+    </div>
+    <div class="resource-ranks">
+      <div class="rank-cell">
+        <div class="rank-badge r1"><span class="rank-dot r1"></span>Rank 1 <span class="rank-cost">1 FP</span></div>
+        <div class="rank-desc">A few street-level lookouts or a single reliable clerk. Useful for local rumors and basic surveillance.</div>
+      </div>
+      <div class="rank-cell">
+        <div class="rank-badge r2"><span class="rank-dot r2"></span>Rank 2 <span class="rank-cost">2 FP</span></div>
+        <div class="rank-desc">A dedicated cell of spies with reliable communication channels and access to mid-level information.</div>
+      </div>
+      <div class="rank-cell">
+        <div class="rank-badge r3"><span class="rank-dot r3"></span>Rank 3 <span class="rank-cost">5 FP</span></div>
+        <div class="rank-desc">A "Spider's Web" within the city's inner sanctums. May generate one significant lead per session within that city. Additional use requires Watcher escalation.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Benefactor -->
+  <div class="resource-block" id="res-benefactor">
+    <div class="resource-header" onclick="toggleResource('res-benefactor')">
+      <span class="resource-name">Benefactor</span>
+      <span class="resource-chevron">▼</span>
+    </div>
+    <div class="resource-ranks">
+      <div class="rank-cell">
+        <div class="rank-badge r1"><span class="rank-dot r1"></span>Rank 1 <span class="rank-cost">1 FP</span></div>
+        <div class="rank-desc">A low-level official, veteran, or minor merchant with limited but genuine influence in their sphere.</div>
+      </div>
+      <div class="rank-cell">
+        <div class="rank-badge r2"><span class="rank-dot r2"></span>Rank 2 <span class="rank-cost">2 FP</span></div>
+        <div class="rank-desc">A merchant prince or guild leader with regional reach and resources to deploy on your behalf.</div>
+      </div>
+      <div class="rank-cell">
+        <div class="rank-badge r3"><span class="rank-dot r3"></span>Rank 3 <span class="rank-cost">5 FP</span></div>
+        <div class="rank-desc">A High-Watcher or Noble patron with the power to intervene at significant political or military levels.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Underworld Contacts -->
+  <div class="resource-block" id="res-underworld">
+    <div class="resource-header" onclick="toggleResource('res-underworld')">
+      <span class="resource-name">Underworld Contacts</span>
+      <span class="resource-chevron">▼</span>
+    </div>
+    <div class="resource-ranks">
+      <div class="rank-cell">
+        <div class="rank-badge r1"><span class="rank-dot r1"></span>Rank 1 <span class="rank-cost">1 FP</span></div>
+        <div class="rank-desc">A reliable fence for illicit Echo-Vane transactions and basic criminal services.</div>
+      </div>
+      <div class="rank-cell">
+        <div class="rank-badge r2"><span class="rank-dot r2"></span>Rank 2 <span class="rank-cost">2 FP</span></div>
+        <div class="rank-desc">Access to black-market stimulants, restricted gear, and a network of mid-level criminal operators.</div>
+      </div>
+      <div class="rank-cell">
+        <div class="rank-badge r3"><span class="rank-dot r3"></span>Rank 3 <span class="rank-cost">5 FP</span></div>
+        <div class="rank-desc">Membership within a high-ranking syndicate with organizational backing, protection, and serious illicit resources.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Emergency Cache -->
+  <div class="resource-block" id="res-cache">
+    <div class="resource-header" onclick="toggleResource('res-cache')">
+      <span class="resource-name">Emergency Cache</span>
+      <span class="resource-chevron">▼</span>
+    </div>
+    <div class="resource-ranks">
+      <div class="rank-cell">
+        <div class="rank-badge r1"><span class="rank-dot r1"></span>Rank 1 <span class="rank-cost">1 FP</span></div>
+        <div class="rank-desc">A hidden locker with basic supplies and 10 Marks. Enough to get out of a tight spot.</div>
+      </div>
+      <div class="rank-cell">
+        <div class="rank-badge r2"><span class="rank-dot r2"></span>Rank 2 <span class="rank-cost">2 FP</span></div>
+        <div class="rank-desc">A safehouse containing medical kits, tools, and a modest reserve of equipment.</div>
+      </div>
+      <div class="rank-cell">
+        <div class="rank-badge r3"><span class="rank-dot r3"></span>Rank 3 <span class="rank-cost">5 FP</span></div>
+        <div class="rank-desc">Three fortified safehouses distributed across the region, each stocked and maintained.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Legal Immunity -->
+  <div class="resource-block" id="res-legal">
+    <div class="resource-header" onclick="toggleResource('res-legal')">
+      <span class="resource-name">Legal Immunity</span>
+      <span class="resource-chevron">▼</span>
+    </div>
+    <div class="resource-ranks">
+      <div class="rank-cell">
+        <div class="rank-badge r1"><span class="rank-dot r1"></span>Rank 1 <span class="rank-cost">1 FP</span></div>
+        <div class="rank-desc">Immunity for minor infractions within a defined jurisdiction.</div>
+      </div>
+      <div class="rank-cell">
+        <div class="rank-badge r2"><span class="rank-dot r2"></span>Rank 2 <span class="rank-cost">2 FP</span></div>
+        <div class="rank-desc">Guards must succeed on a contested Authority or Command check to conduct a search under standard conditions.</div>
+      </div>
+      <div class="rank-cell">
+        <div class="rank-badge r3"><span class="rank-dot r3"></span>Rank 3 <span class="rank-cost">5 FP</span></div>
+        <div class="rank-desc">A High-Watcher's Seal preventing arrest for minor and standard infractions within the issuing region. Does not override capital crimes, military jurisdiction, or direct Watcher intervention.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Region Renown -->
+  <div class="resource-block" id="res-renown">
+    <div class="resource-header" onclick="toggleResource('res-renown')">
+      <span class="resource-name">Region Renown</span>
+      <span class="resource-chevron">▼</span>
+    </div>
+    <div class="resource-ranks">
+      <div class="rank-cell">
+        <div class="rank-badge r1"><span class="rank-dot r1"></span>Rank 1 <span class="rank-cost">1 FP</span></div>
+        <div class="rank-desc">People have heard of you. Your name carries minor weight in local conversations.</div>
+      </div>
+      <div class="rank-cell">
+        <div class="rank-badge r2"><span class="rank-dot r2"></span>Rank 2 <span class="rank-cost">2 FP</span></div>
+        <div class="rank-desc">Citizens across the region recognize your name and reputation on sight.</div>
+      </div>
+      <div class="rank-cell">
+        <div class="rank-badge r3"><span class="rank-dot r3"></span>Rank 3 <span class="rank-cost">5 FP</span></div>
+        <div class="rank-desc">"No one dares mess with you." Hostile NPCs must succeed on a Social or Command-based check (TN set by the Watcher) to initiate aggression within your home region.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:1.75rem;">
+    <strong>Creation Cap:</strong> No Resource category may exceed Rank 3 at character creation. Resources reflect your <em>starting</em> position — not your potential. What you build from here is the story.
+  </div>
+
+  <div class="callout">
+    <strong>Back to Character Creation:</strong>
+    <a href="create.html" style="color:var(--ink-mid); font-style:italic;">← Return to the Character Creation Guide</a>
+    &nbsp;&nbsp;·&nbsp;&nbsp;
+    <a href="freebie-points.html" style="color:var(--ink-mid); font-style:italic;">← Freebie Points</a>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <div>
+    Email: <a href="/cdn-cgi/l/email-protection#670d17040612130f081527150e110209030610094904080a"><span class="__cf_email__" data-cfemail="3852485b594d4c50574a784a514e5d565c594f56165b5755">[email&#160;protected]</span></a>
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    © 2026 jpcauthor. All rights reserved.
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    <a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+  </div>
+</footer>
+
+</div>
+<script>
+function toggleResource(id) {
+  const block = document.getElementById(id);
+  if (!block) return;
+  const ranks = block.querySelector('.resource-ranks');
+  const chevron = block.querySelector('.resource-chevron');
+  if (!ranks) return;
+  const isOpen = block.classList.contains('open');
+  if (isOpen) {
+    ranks.style.maxHeight = ranks.scrollHeight + 'px';
+    requestAnimationFrame(() => {
+      ranks.style.maxHeight = '0';
+      ranks.style.opacity = '0';
+    });
+    block.classList.remove('open');
+    if (chevron) chevron.style.transform = 'rotate(0deg)';
+  } else {
+    ranks.style.maxHeight = '0';
+    ranks.style.opacity = '0';
+    block.classList.add('open');
+    requestAnimationFrame(() => {
+      ranks.style.maxHeight = ranks.scrollHeight + 'px';
+      ranks.style.opacity = '1';
+    });
+    if (chevron) chevron.style.transform = 'rotate(180deg)';
+  }
+}
+
+// Ensure resource-ranks start collapsed with transition
+document.querySelectorAll('.resource-ranks').forEach(el => {
+  el.style.maxHeight = '0';
+  el.style.opacity = '0';
+  el.style.overflow = 'hidden';
+  el.style.transition = 'max-height 0.3s ease, opacity 0.3s ease';
+});
+</script>
+
+</body>
+</html>

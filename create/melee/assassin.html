@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assassin — The Surgical Removal</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+:root {
+  --header-height: 72px;
+  --footer-height: 72px;
+  --content-max-width: 960px;
+  --page-max-width: 1400px;
+  --ink-color: #3a2a1a;
+  --accent: #fff1d6;
+  --nav-color: #f2e3c6;
+  --nav-shadow: rgba(0,0,0,0.85);
+  --footer-bg: rgba(0,0,0,0.88);
+  --calling-primary: #4a2e06;
+  --calling-dark: #5a3a08;
+  --calling-light: #d4a84a;
+  --calling-muted: #a07828;
+  --calling-bg-tint: rgba(200,150,40,0.07);
+  --calling-border: rgba(139,105,20,0.22);
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+
+body{
+  font-family:'Crimson Text',Georgia,serif;
+  color:var(--ink-color);
+  min-height:100dvh;
+  background:#000;
+  line-height:1.75;
+  font-size:1.18rem;
+}
+
+.page-wrapper{
+  min-height:100dvh;
+  display:flex; flex-direction:column;
+  max-width:var(--page-max-width);
+  margin:0 auto;
+  background-color:#000;
+  background-image:url('../../images/bg.jpg');
+  background-size:contain;
+  background-position:center top;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  box-shadow:0 0 80px rgba(0,0,0,0.85);
+  position:relative;
+}
+
+header{
+  position:fixed; top:0; left:50%;
+  transform:translateX(-50%);
+  width:min(100%,var(--page-max-width));
+  height:var(--header-height);
+  background-image:url('../../images/header.png');
+  background-size:contain; background-position:center;
+  background-repeat:no-repeat;
+  z-index:1000;
+  box-shadow:0 6px 16px rgba(0,0,0,0.5);
+}
+
+header::after{
+  content:""; position:absolute;
+  left:0; right:0; bottom:-14px; height:18px;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0));
+  pointer-events:none;
+}
+
+nav{
+  max-width:var(--content-max-width);
+  width:100%; height:100%;
+  margin:0 auto;
+  display:flex; align-items:center; justify-content:center;
+  gap:2rem; padding:0 1.5rem;
+}
+
+nav a{
+  color:var(--nav-color); text-decoration:none;
+  font-family:Consolas,"Courier New",monospace;
+  font-size:1.25rem; letter-spacing:0.14em; text-transform:uppercase;
+  transition:all .25s ease; position:relative;
+  display:inline-flex; align-items:center;
+  gap:.5rem; padding:.2rem .1rem;
+  text-shadow:0 1px 2px var(--nav-shadow),0 0 6px rgba(0,0,0,0.45);
+}
+nav a i{ color:inherit; font-size:1.1rem; margin-right:4px; position:relative; top:-1px; }
+nav a::after{ content:""; position:absolute; left:0; bottom:-4px; width:0; height:2px; background:var(--accent); transition:width .28s ease; }
+nav a:hover{ color:var(--accent); transform:translateY(-1px); }
+nav a:hover::after{ width:100%; }
+
+main{
+  flex:1;
+  margin-top:var(--header-height);
+  padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+  display:flex; justify-content:center;
+}
+
+.content-container{
+  max-width:var(--content-max-width);
+  width:100%; padding:40px 80px 180px;
+  color:var(--ink-color); margin:0 auto;
+  border-radius:8px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.55);
+  background-image:url('../../images/content-scroll-bg.png');
+  background-repeat:repeat-y;
+  background-position:top center;
+  background-size:100% auto;
+}
+
+.content-container h1{
+  font-family:'Cinzel Decorative',serif;
+  font-size:3rem; text-align:center;
+  margin:0 0 .4rem; letter-spacing:.06em;
+}
+.content-container p{ margin-bottom:1.25rem; }
+
+.calling-subtitle{
+  font-family:'Crimson Text',serif;
+  font-size:1.1rem; font-style:italic;
+  color:#4a2e06;
+  text-align:center; letter-spacing:0.08em;
+  margin:0 0 0.5rem;
+}
+
+.calling-divider{
+  display:flex; align-items:center; gap:0.75rem;
+  margin:0.5rem auto 2rem; max-width:420px;
+}
+.calling-divider span{ flex:1; height:1px; background:linear-gradient(to right,transparent,rgba(139,105,20,0.45)); }
+.calling-divider span:last-child{ background:linear-gradient(to left,transparent,rgba(139,105,20,0.45)); }
+.calling-divider em{ color:var(--calling-primary); font-size:0.65rem; font-style:normal; }
+
+.soul-block{
+  background:var(--calling-bg-tint);
+  border:1px solid var(--calling-border);
+  border-left:4px solid var(--calling-light);
+  border-radius:0 10px 10px 0;
+  padding:1.3rem 1.6rem; margin-bottom:2rem;
+  font-style:italic; font-size:1.05rem;
+  color:#4a3010; line-height:1.75;
+}
+
+.section-label{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.6rem; letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--calling-primary);
+  text-align:center;
+  margin:2rem 0 0.8rem;
+}
+
+.resonance-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem; }
+
+.resonance-card{
+  background:rgba(255,248,235,0.6);
+  border:1px solid var(--calling-border);
+  border-radius:10px; padding:1.1rem 1.3rem 1rem;
+  position:relative; overflow:hidden;
+  transition:box-shadow 0.2s ease,transform 0.2s ease;
+}
+.resonance-card:hover{ box-shadow:0 6px 20px rgba(139,105,20,0.12); transform:translateY(-2px); }
+.resonance-card::before{ content:""; position:absolute; top:0; left:0; width:4px; height:100%; border-radius:10px 0 0 10px; }
+.resonance-card.hybrid::before{ background:#6b8c42; }
+.resonance-card.forged::before{ background:#8b5014; }
+
+.resonance-badge{
+  display:inline-block;
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.48rem; letter-spacing:0.15em;
+  padding:0.12rem 0.45rem; border-radius:20px;
+  text-transform:uppercase; margin-bottom:0.5rem;
+}
+.resonance-badge.hybrid{ background:rgba(107,140,66,0.15); color:#4a6a20; border:1px solid rgba(107,140,66,0.3); }
+.resonance-badge.forged{ background:rgba(139,80,20,0.12); color:#8b5014; border:1px solid rgba(139,80,20,0.25); }
+
+.resonance-card-title{ font-family:'Cinzel Decorative',serif; font-size:0.78rem; color:var(--ink-color); letter-spacing:0.05em; margin-bottom:0.6rem; }
+.resonance-row{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.25rem; font-family:'Crimson Text',serif; font-size:0.92rem; color:#5a4030; }
+.resonance-val{ font-family:'Cinzel Decorative',serif; font-size:0.85rem; color:var(--ink-color); font-weight:700; }
+
+.stat-block{
+  background:var(--calling-bg-tint);
+  border:1px solid var(--calling-border);
+  border-radius:10px; padding:1.2rem 1.5rem;
+  margin-bottom:1.5rem;
+  display:flex; align-items:center; justify-content:center;
+  flex-wrap:wrap; gap:1.2rem;
+}
+
+.stat-item{ display:flex; flex-direction:column; align-items:center; gap:0.15rem; min-width:70px; }
+.stat-value{ font-family:'Cinzel Decorative',serif; font-size:1.7rem; color:var(--ink-color); line-height:1; text-shadow:0 1px 3px rgba(0,0,0,0.08); }
+.stat-label{ font-family:'Crimson Text',serif; font-size:0.72rem; color:#4a2e06; font-style:italic; letter-spacing:0.04em; text-align:center; }
+.stat-divider{ width:1px; height:40px; background:rgba(139,105,20,0.5); }
+.stat-note{ font-family:'Crimson Text',serif; font-size:0.88rem; color:#4a2e06; text-align:center; font-style:italic; margin-top:0.5rem; line-height:1.6; width:100%; }
+
+.skills-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem; }
+
+.skill-card{
+  background:rgba(255,248,235,0.6);
+  border:1px solid rgba(139,80,20,0.20);
+  border-radius:10px; padding:1.1rem 1.2rem 1rem;
+  display:flex; flex-direction:column; gap:0.4rem;
+  position:relative; overflow:hidden;
+  transition:box-shadow 0.2s ease,transform 0.2s ease;
+}
+.skill-card:hover{ box-shadow:0 6px 20px rgba(139,80,20,0.12); transform:translateY(-2px); }
+.skill-card::before{ content:""; position:absolute; top:0; left:0; width:4px; height:100%; border-radius:10px 0 0 10px; }
+.skill-card.knowledge::before{ background:#6b8c42; }
+.skill-card.ability::before{ background:#8b5014; }
+.skill-card.full-width{ grid-column:1 / -1; }
+
+.skill-card-header{ display:flex; align-items:center; gap:0.6rem; }
+.skill-badge{ font-family:'Cinzel Decorative',serif; font-size:0.55rem; letter-spacing:0.15em; padding:0.15rem 0.5rem; border-radius:20px; text-transform:uppercase; font-weight:700; }
+.skill-badge.k{ background:rgba(107,140,66,0.15); color:#4a6a20; border:1px solid rgba(107,140,66,0.3); }
+.skill-badge.a{ background:rgba(139,80,20,0.12); color:#8b5014; border:1px solid rgba(139,80,20,0.25); }
+.skill-name{ font-family:'Cinzel Decorative',serif; font-size:0.85rem; color:var(--ink-color); letter-spacing:0.05em; }
+.skill-desc{ font-family:'Crimson Text',serif; font-size:0.95rem; color:#5a4030; line-height:1.6; margin:0; }
+
+.posture-grid{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.85rem; margin-bottom:1.2rem; }
+.posture-card{
+  background:rgba(255,248,235,0.55);
+  border:1px solid var(--calling-border);
+  border-radius:10px; padding:1rem 1.1rem 0.9rem;
+  text-align:center;
+  transition:box-shadow 0.2s ease,transform 0.2s ease;
+}
+.posture-card:hover{ box-shadow:0 5px 16px rgba(139,105,20,0.12); transform:translateY(-2px); }
+.posture-name{ font-family:'Cinzel Decorative',serif; font-size:0.75rem; color:var(--ink-color); letter-spacing:0.06em; margin-bottom:0.5rem; }
+.posture-desc{ font-family:'Crimson Text',serif; font-size:0.88rem; color:#5a4030; line-height:1.55; }
+
+.posture-label{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.52rem; letter-spacing:0.18em;
+  text-transform:uppercase; color:#4a2e06;
+  text-align:center; margin:1.2rem 0 0.5rem;
+}
+
+.ambage-row{ display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin-bottom:1.5rem; }
+.ambage-pill{ font-family:'Cinzel Decorative',serif; font-size:0.62rem; letter-spacing:0.12em; padding:0.4rem 1.2rem; border-radius:30px; transition:transform 0.18s ease; }
+.ambage-pill:hover{ transform:translateY(-2px); }
+.ambage-pill.resonant{ background:rgba(107,140,66,0.12); border:1px solid rgba(107,140,66,0.3); color:#4a6a20; }
+.ambage-pill.forged{ background:rgba(139,80,20,0.10); border:1px solid rgba(139,80,20,0.25); color:#8b5014; }
+
+.gift-card{
+  background:var(--calling-bg-tint);
+  border:1px solid var(--calling-border);
+  border-radius:10px; padding:1.3rem 1.5rem 1.2rem;
+  margin-bottom:1.1rem; position:relative; overflow:hidden;
+}
+.gift-card::before{ content:""; position:absolute; top:0; left:0; width:100%; height:3px; border-radius:10px 10px 0 0; }
+.gift-card.defensive::before{ background:linear-gradient(to right,#6b8c42,transparent); }
+.gift-card.offensive::before{ background:linear-gradient(to right,#8b5014,transparent); }
+.gift-card.surge-off::before{ background:linear-gradient(to right,#c47820,transparent); }
+.gift-card.surge-def::before{ background:linear-gradient(to right,#4a6a20,transparent); }
+
+.gift-type{ font-family:'Cinzel Decorative',serif; font-size:1rem; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:0.3rem; }
+.gift-type.defensive{ color:#4a6a20; }
+.gift-type.offensive{ color:#8b5014; }
+.gift-type.surge-off{ color:#c47820; }
+.gift-type.surge-def{ color:#4a6a20; }
+
+.gift-name{ font-family:'Cinzel Decorative',serif; font-size:0.95rem; color:var(--ink-color); letter-spacing:0.05em; margin-bottom:0.8rem; }
+.gift-body{ font-family:'Crimson Text',serif; font-size:0.97rem; color:#4a3010; line-height:1.7; }
+.gift-body p{ margin-bottom:0.6rem; }
+.gift-body p:last-child{ margin-bottom:0; }
+.gift-trigger{ font-family:'Cinzel Decorative',serif; font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase; color: #4a2e06 ; margin:0.7rem 0 0.25rem; }
+.gift-effect-list{ margin:0.4rem 0 0.6rem 0.8rem; foTrigger — When targeted by an attack
+.gift-narrative{ font-style:italic; font-size:0.9rem; color:#4a2e06; border-top:1px solid rgba(139,105,20,0.15); padding-top:0.7rem; margin-top:0.7rem; }
+
+.weapon-row{ display:flex; justify-content:center; gap:0.8rem; flex-wrap:wrap; margin-bottom:1.5rem; }
+.weapon-pill{ font-family:'Cinzel Decorative',serif; font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.35rem 1.1rem; border-radius:30px; background:rgba(200,150,40,0.10); border:1px solid rgba(139,105,20,0.28); color:var(--calling-dark); }
+
+.playstyle-hook{ background:var(--calling-bg-tint); border:1px solid var(--calling-border); border-radius:10px; padding:1.3rem 1.6rem; text-align:center; font-style:italic; font-size:1.05rem; color:#4a3010; line-height:1.75; margin-top:0.5rem; }
+
+footer{
+  position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+  width:min(100%,var(--page-max-width));
+  height:var(--footer-height);
+  background:var(--footer-bg);
+  color:#ccc; display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:0 1rem; font-size:.95rem;
+  border-top:1px solid #444; z-index:1000;
+}
+footer a{ color:#d4a373; text-decoration:none; }
+footer a:hover{ text-decoration:underline; }
+
+@media(max-width:768px){
+  nav{ gap:1rem; padding:0 1rem; flex-wrap:wrap; }
+  nav a{ font-size:.9rem; }
+  .content-container{ padding:36px 32px 150px; }
+  .content-container h1{ font-size:2.2rem; }
+  .resonance-grid{ grid-template-columns:1fr; }
+  .skills-grid{ grid-template-columns:1fr; }
+  .posture-grid{ grid-template-columns:1fr; }
+}
+@media(max-width:480px){
+  body{ font-size:1.05rem; }
+  .content-container{ padding:28px 20px 130px; }
+}
+
+</style>
+</head>
+
+<body>
+<div class="page-wrapper">
+
+<header>
+<nav>
+  <a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+  <a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+  <a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+  <a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+  <a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+<div class="content-container">
+
+  <h1>Assassin</h1>
+  <p class="calling-subtitle">The Surgical Removal</p>
+  <div class="calling-divider"><span></span><em>✦</em><span></span></div>
+
+  <p>The Assassin exists in the space between heartbeats. They are not butchers, nor berserkers, nor soldiers seeking glory. They are correction delivered without spectacle — the bridge between one breath and the next is an open door, and the Assassin walks through it without sound, without hesitation, and without witness.</p>
+
+  <p>Where others fight, the Assassin concludes. Where others threaten, the Assassin deletes consequence.</p>
+
+  <!-- Soul -->
+  <p class="section-label">Soul of the Calling</p>
+  <div class="soul-block">The Assassin exists in the space between heartbeats. They are not butchers, nor berserkers, nor soldiers seeking glory. They are correction delivered without spectacle. Where others threaten, the Assassin concludes. Where others fight, the Assassin deletes consequence. The bridge between one breath and the next is an open door, and the Assassin walks through it without sound, without hesitation, and without witness.</div>
+
+  <!-- Identity -->
+  <p class="section-label">Identity — Precision Without Witness</p>
+  <p style="margin-bottom:2rem;">The Assassin studies sight lines, escape vectors, reaction windows, breath cycles, and structural vulnerabilities. They do not attack randomly — they attack when resistance is weakest and outcome is irreversible. The difference between murder and execution is preparation. The Assassin prepares. Their Resonance is not theatrical. It reinforces timing, edge control, and inevitability. Their power is not visible. It is terminal.</p>
+
+  <!-- Resonance -->
+  <p class="section-label">Resonance Profile</p>
+  <div class="resonance-grid">
+    <div class="resonance-card hybrid">
+      <div><span class="resonance-badge hybrid">Hybrid Calling</span></div>
+      <p class="resonance-card-title">Resonant Path</p>
+      <div class="resonance-row"><span>Wellspring Die</span><span class="resonance-val">d8</span></div>
+      <div class="resonance-row"><span>Free RP at Creation</span><span class="resonance-val">3</span></div>
+      <div class="resonance-row"><span>Lineage Path Nudge</span><span class="resonance-val">Stacks normally</span></div>
+    </div>
+    <div class="resonance-card forged">
+      <div><span class="resonance-badge forged">Forged Combatant</span></div>
+      <p class="resonance-card-title">Martial Path</p>
+      <div class="resonance-row"><span>Wellspring Die</span><span class="resonance-val">None</span></div>
+      <div class="resonance-row"><span>Freebie Points</span><span class="resonance-val">+5</span></div>
+      <div class="resonance-row"><span>Extra Primary Attribute</span><span class="resonance-val">+1 (max 4)</span></div>
+      <div class="resonance-row"><span>Abilities &amp; Knowledges</span><span class="resonance-val">25 pts</span></div>
+      <div class="resonance-row"><span>Combat Creation</span><span class="resonance-val">6 pts</span></div>
+    </div>
+  </div>
+
+  <!-- Health -->
+  <p class="section-label">Health &amp; Armor</p>
+  <div class="stat-block">
+    <div class="stat-item"><span class="stat-value">d10</span><span class="stat-label">Health Die</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><span class="stat-value">27</span><span class="stat-label">Min HP</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><span class="stat-value">54</span><span class="stat-label">Max HP</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><span class="stat-value">6</span><span class="stat-label">Starting Armor Tier</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><span class="stat-value">6</span><span class="stat-label">Max Armor Tier</span></div>
+    <p class="stat-note">Armor is permitted, but stealth is prioritized. Protection is useful only if it does not compromise position, mobility, or silence.</p>
+  </div>
+
+  <!-- Skills -->
+  <p class="section-label">Skill Matrix</p>
+  <p style="font-family:'Crimson Text',serif; font-size:0.85rem; color:#4a2e06; text-align:center; font-style:italic; margin:0 0 0.8rem;">Choose two from the four below</p>
+  <div class="skills-grid">
+    <div class="skill-card ability">
+      <div class="skill-card-header"><span class="skill-badge a">Ability</span><span class="skill-name">Stealth</span></div>
+      <p class="skill-desc">Control over visibility — movement discipline, environmental awareness, and silence under stress. An Assassin who is seen too early has already failed.</p>
+    </div>
+    <div class="skill-card ability">
+      <div class="skill-card-header"><span class="skill-badge a">Ability</span><span class="skill-name">Weapon Mastery</span></div>
+      <p class="skill-desc">Every weapon is an extension of precision — angles, grip transitions, draw timing, and release control. Whether blade, bow, or crossbow, minimal motion yields maximal effect.</p>
+    </div>
+    <div class="skill-card ability">
+      <div class="skill-card-header"><span class="skill-badge a">Ability</span><span class="skill-name">Reaction Timing</span></div>
+      <p class="skill-desc">Assassins operate inside fractions of a second — exploiting flinches, delayed guards, and overextensions to strike first or disengage cleanly.</p>
+    </div>
+    <div class="skill-card knowledge">
+      <div class="skill-card-header"><span class="skill-badge k">Knowledge</span><span class="skill-name">Anatomy</span></div>
+      <p class="skill-desc">An Assassin does not guess where to strike. They understand arteries, joint failure points, nerve clusters, and shock thresholds. When they hit, systems fail.</p>
+    </div>
+  </div>
+
+  <!-- Ambage -->
+  <p class="section-label">Combat Ambage</p>
+  <div class="ambage-row">
+    <span class="ambage-pill resonant">Resonant Combat Master</span>
+    <span class="ambage-pill forged">Forged Combat Master</span>
+  </div>
+  <p style="font-family:'Crimson Text',serif; font-size:0.85rem; color:#4a2e06; text-align:center; font-style:italic; margin-bottom:2rem;">The Assassin does not seek prolonged engagement. They seek decisive engagement.</p>
+
+  <!-- Defensive Postures -->
+  <p class="section-label">Defensive Postures</p>
+  <p class="posture-label">Melee Builds — Unlocked at Creation</p>
+  <div class="posture-grid">
+    <div class="posture-card">
+      <p class="posture-name">Dodge</p>
+      <p class="posture-desc">Gain <strong>+2</strong> to Base Defensive Rating.</p>
+    </div>
+    <div class="posture-card">
+      <p class="posture-name">Parry</p>
+      <p class="posture-desc">If opponent misses, reduce your TN by <strong>2</strong> on your next attack against them.</p>
+    </div>
+    <div class="posture-card">
+      <p class="posture-name">Riposte</p>
+      <p class="posture-desc">Attacker reduces their TN by <strong>1</strong>; if they miss, gain a full attack of opportunity.</p>
+    </div>
+  </div>
+
+  <p class="posture-label">Ranged / Sniper Builds — Unlocked at Creation</p>
+  <div class="posture-grid">
+    <div class="posture-card">
+      <p class="posture-name">Evade / Cover</p>
+      <p class="posture-desc">Attacker suffers <strong>+2 TN</strong> when target benefits from cover against a ranged attack.</p>
+    </div>
+    <div class="posture-card">
+      <p class="posture-name">Braced</p>
+      <p class="posture-desc">No defensive bonus; if attacker misses, return fire gains <strong>+1 success</strong>.</p>
+    </div>
+    <div class="posture-card">
+      <p class="posture-name">Steady Aim</p>
+      <p class="posture-desc">No defensive bonus; if attacker misses, return fire gains <strong>+3 success</strong>. Must remain stationary.</p>
+    </div>
+  </div>
+
+  <!-- Gifts -->
+  <p class="section-label">Bestowed Gifts of the Calling</p>
+
+  <div class="gift-card defensive">
+    <p class="gift-type defensive">Defensive Gift</p>
+    <p class="gift-name">Elusive Predator</p>
+    <div class="gift-body">
+      <p>The Assassin is <strong>immune to normal Attacks of Opportunity</strong>. An Attack of Opportunity may only occur if the Assassin is slowed, restrained, or otherwise impaired.</p>
+      <p>This reflects superior positioning, escape discipline, and situational awareness. Defensive survival is achieved through training, posture, and positioning — not Resonant shields or absorption.</p>
+    </div>
+  </div>
+
+  <div class="gift-card offensive">
+    <p class="gift-type offensive">Offensive Gift</p>
+    <p class="gift-name">Surgical Breach</p>
+    <div class="gift-body">
+      <p>On an Ultimate Success, the Assassin's damage <strong>bypasses Armor Points</strong>. If the target has no remaining Armor Points, roll an additional <strong>1d4 damage</strong> and add it to the total.</p>
+      <p>This represents striking through seams, under plates, between ribs, or at the precise moment armor fails to matter. The Assassin does not overpower defense — they circumvent it.</p>
+    </div>
+  </div>
+
+  <!-- Surges -->
+  <p class="section-label">Combat Surges</p>
+
+  <div class="gift-card surge-off">
+    <p class="gift-type surge-off">Offensive Surge</p>
+    <p class="gift-name">Killing Window</p>
+    <div class="gift-body">
+      <p>The Assassin exploits the fleeting instant where defense collapses and outcome becomes inevitable.</p>
+      <p class="gift-trigger">Trigger — Declare before making an attack</p>
+      <ul class="gift-effect-list">
+        <li>Gain <strong>+4 Offensive Rating</strong> for the attack.</li>
+        <li>If the attack hits, it deals <strong>+50% damage</strong>.</li>
+      </ul>
+      <p class="gift-narrative">The Assassin moves in the instant between guard and recovery. The strike lands before resistance can reform.</p>
+    </div>
+  </div>
+
+  <div class="gift-card surge-def">
+    <p class="gift-type surge-def">Defensive Surge</p>
+    <p class="gift-name">Predator's Escape</p>
+    <div class="gift-body">
+      <p>The Assassin abandons the engagement before retaliation stabilizes. May be declared after being targeted — but <strong>cannot be used while stunned, disoriented, unconscious, or surprised</strong>.</p>
+      <p class="gift-trigger">Trigger — When targeted by an attack</p>
+      <p>Immediately move up to <strong>5 meters</strong>. If the attacker cannot reach your new position, the attack <strong>automatically misses</strong>.</p>
+      <p class="gift-narrative">The Assassin slips beyond the attack line in a heartbeat, leaving the strike to cut through empty air.</p>
+    </div>
+  </div>
+
+  <!-- Weapons -->
+  <p class="section-label">Weapon Affinity</p>
+  <div class="weapon-row">
+    <span class="weapon-pill">Sword</span>
+    <span class="weapon-pill">Dagger</span>
+    <span class="weapon-pill">Bow</span>
+    <span class="weapon-pill">Crossbow</span>
+  </div>
+  <p style="font-family:'Crimson Text',serif; font-size:0.88rem; color:#4a2e06; text-align:center; font-style:italic; margin-bottom:2rem;">These weapons favor precision, concealment, and lethality over spectacle.</p>
+
+  <!-- Playstyle -->
+  <p class="section-label">Playstyle Hook</p>
+  <div class="playstyle-hook">You eliminate threats before they become battles. You position with intent, strike with finality, and withdraw before reprisal stabilizes. Your strength lies not in endurance but in inevitability. When you act, resistance collapses.</div>
+
+</div>
+</main>
+
+<footer>
+<div>
+  Email: <a href="/cdn-cgi/l/email-protection#472428293326243307352e312229232630296924282a"><span class="__cf_email__" data-cfemail="ef8c80819b8e8c9baf9d86998a818b8e9881c18c8082">[email&#160;protected]</span></a>
+  &nbsp;&nbsp;•&nbsp;&nbsp;
+  © 2026 jpcauthor. All rights reserved.
+  &nbsp;

@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shield Warden — The Immovable Object</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+:root {
+  --header-height: 72px;
+  --footer-height: 72px;
+  --content-max-width: 960px;
+  --page-max-width: 1400px;
+  --ink-color: #3a2a1a;
+  --accent: #fff1d6;
+  --nav-color: #f2e3c6;
+  --nav-shadow: rgba(0,0,0,0.85);
+  --footer-bg: rgba(0,0,0,0.88);
+  --calling-primary: #4a2e06;
+  --calling-dark: #5a3a08;
+  --calling-light: #d4a84a;
+  --calling-muted: #a07828;
+  --calling-bg-tint: rgba(200,150,40,0.07);
+  --calling-border: rgba(139,105,20,0.22);
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+
+body{
+  font-family:'Crimson Text',Georgia,serif;
+  color:var(--ink-color);
+  min-height:100dvh;
+  background:#000;
+  line-height:1.75;
+  font-size:1.18rem;
+}
+
+.page-wrapper{
+  min-height:100dvh;
+  display:flex; flex-direction:column;
+  max-width:var(--page-max-width);
+  margin:0 auto;
+  background-color:#000;
+  background-image:url('../../images/bg.jpg');
+  background-size:contain;
+  background-position:center top;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  box-shadow:0 0 80px rgba(0,0,0,0.85);
+  position:relative;
+}
+
+header{
+  position:fixed; top:0; left:50%;
+  transform:translateX(-50%);
+  width:min(100%,var(--page-max-width));
+  height:var(--header-height);
+  background-image:url('../../images/header.png');
+  background-size:contain; background-position:center;
+  background-repeat:no-repeat;
+  z-index:1000;
+  box-shadow:0 6px 16px rgba(0,0,0,0.5);
+}
+
+header::after{
+  content:""; position:absolute;
+  left:0; right:0; bottom:-14px; height:18px;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0));
+  pointer-events:none;
+}
+
+nav{
+  max-width:var(--content-max-width);
+  width:100%; height:100%;
+  margin:0 auto;
+  display:flex; align-items:center; justify-content:center;
+  gap:2rem; padding:0 1.5rem;
+}
+
+nav a{
+  color:var(--nav-color); text-decoration:none;
+  font-family:Consolas,"Courier New",monospace;
+  font-size:1.25rem; letter-spacing:0.14em; text-transform:uppercase;
+  transition:all .25s ease; position:relative;
+  display:inline-flex; align-items:center;
+  gap:.5rem; padding:.2rem .1rem;
+  text-shadow:0 1px 2px var(--nav-shadow),0 0 6px rgba(0,0,0,0.45);
+}
+nav a i{ color:inherit; font-size:1.1rem; margin-right:4px; position:relative; top:-1px; }
+nav a::after{ content:""; position:absolute; left:0; bottom:-4px; width:0; height:2px; background:var(--accent); transition:width .28s ease; }
+nav a:hover{ color:var(--accent); transform:translateY(-1px); }
+nav a:hover::after{ width:100%; }
+
+main{
+  flex:1;
+  margin-top:var(--header-height);
+  padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+  display:flex; justify-content:center;
+}
+
+.content-container{
+  max-width:var(--content-max-width);
+  width:100%; padding:40px 80px 180px;
+  color:var(--ink-color); margin:0 auto;
+  border-radius:8px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.55);
+  background-image:url('../../images/content-scroll-bg.png');
+  background-repeat:repeat-y;
+  background-position:top center;
+  background-size:100% auto;
+}
+
+.content-container h1{
+  font-family:'Cinzel Decorative',serif;
+  font-size:3rem; text-align:center;
+  margin:0 0 .4rem; letter-spacing:.06em;
+}
+.content-container p{ margin-bottom:1.25rem; }
+
+.calling-subtitle{
+  font-family:'Crimson Text',serif;
+  font-size:1.1rem; font-style:italic;
+  color:var(--calling-muted);
+  text-align:center; letter-spacing:0.08em;
+  margin:0 0 0.5rem;
+}
+
+.calling-divider{
+  display:flex; align-items:center; gap:0.75rem;
+  margin:0.5rem auto 2rem; max-width:420px;
+}
+.calling-divider span{ flex:1; height:1px; background:linear-gradient(to right,transparent,rgba(139,105,20,0.45)); }
+.calling-divider span:last-child{ background:linear-gradient(to left,transparent,rgba(139,105,20,0.45)); }
+.calling-divider em{ color:var(--calling-primary); font-size:0.65rem; font-style:normal; }
+
+.soul-block{
+  background:var(--calling-bg-tint);
+  border:1px solid var(--calling-border);
+  border-left:4px solid var(--calling-light);
+  border-radius:0 10px 10px 0;
+  padding:1.3rem 1.6rem; margin-bottom:2rem;
+  font-style:italic; font-size:1.05rem;
+  color:#4a3010; line-height:1.75;
+}
+
+.section-label{
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.6rem; letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--calling-primary);
+  text-align:center;
+  margin:2rem 0 0.8rem;
+}
+
+/* Unique resonance card — full width, steel blue */
+.resonance-card-standalone{
+  background:rgba(255,248,235,0.6);
+  border:1px solid var(--calling-border);
+  border-radius:10px; padding:1.3rem 1.5rem 1.2rem;
+  position:relative; overflow:hidden;
+  margin-bottom:1.5rem;
+  transition:box-shadow 0.2s ease;
+}
+.resonance-card-standalone::before{
+  content:""; position:absolute; top:0; left:0;
+  width:4px; height:100%; border-radius:10px 0 0 10px;
+  background:#4a7090;
+}
+
+.resonance-badge{
+  display:inline-block;
+  font-family:'Cinzel Decorative',serif;
+  font-size:0.48rem; letter-spacing:0.15em;
+  padding:0.12rem 0.45rem; border-radius:20px;
+  text-transform:uppercase; margin-bottom:0.6rem;
+}
+.resonance-badge.unique{ background:rgba(60,100,130,0.12); color:#2a5070; border:1px solid rgba(60,100,130,0.28); }
+
+.resonance-card-title{ font-family:'Cinzel Decorative',serif; font-size:0.82rem; color:var(--ink-color); letter-spacing:0.05em; margin-bottom:0.8rem; }
+.resonance-row{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.3rem; font-family:'Crimson Text',serif; font-size:0.92rem; color:#5a4030; }
+.resonance-val{ font-family:'Cinzel Decorative',serif; font-size:0.85rem; color:var(--ink-color); font-weight:700; }
+.resonance-note{ font-family:'Crimson Text',serif; font-size:0.88rem; color:#6a5040; font-style:italic; line-height:1.6; margin-top:0.8rem; padding-top:0.8rem; border-top:1px solid rgba(139,105,20,0.15); }
+
+.stat-block{
+  background:var(--calling-bg-tint);
+  border:1px solid var(--calling-border);
+  border-radius:10px; padding:1.2rem 1.5rem;
+  margin-bottom:1.5rem;
+  display:flex; align-items:center; justify-content:center;
+  flex-wrap:wrap; gap:1.2rem;
+}
+.stat-item{ display:flex; flex-direction:column; align-items:center; gap:0.15rem; min-width:70px; }
+.stat-value{ font-family:'Cinzel Decorative',serif; font-size:1.7rem; color:var(--ink-color); line-height:1; text-shadow:0 1px 3px rgba(0,0,0,0.08); }
+.stat-label{ font-family:'Crimson Text',serif; font-size:0.72rem; color:var(--calling-muted); font-style:italic; letter-spacing:0.04em; text-align:center; }
+.stat-divider{ width:1px; height:40px; background:rgba(139,105,20,0.2); }
+.stat-note{ font-family:'Crimson Text',serif; font-size:0.88rem; color:#6a5040; text-align:center; font-style:italic; margin-top:0.5rem; line-height:1.6; width:100%; }
+
+.skills-grid{ display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1.5rem; }
+
+.skill-card{
+  background:rgba(255,248,235,0.6);
+  border:1px solid rgba(139,80,20,0.20);
+  border-radius:10px; padding:1.1rem 1.2rem 1rem;
+  display:flex; flex-direction:column; gap:0.4rem;
+  position:relative; overflow:hidden;
+  transition:box-shadow 0.2s ease,transform 0.2s ease;
+}
+.skill-card:hover{ box-shadow:0 6px 20px rgba(139,80,20,0.12); transform:translateY(-2px); }
+.skill-card::before{ content:""; position:absolute; top:0; left:0; width:4px; height:100%; border-radius:10px 0 0 10px; }
+.skill-card.knowledge::before{ background:#6b8c42; }
+.skill-card.ability::before{ background:#8b5014; }
+.skill-card.shield::before{ background:#4a7090; }
+.skill-card.full-width{ grid-column:1 / -1; }
+
+.skill-card-header{ display:flex; align-items:center; gap:0.6rem; }
+.skill-badge{ font-family:'Cinzel Decorative',serif; font-size:0.55rem; letter-spacing:0.15em; padding:0.15rem 0.5rem; border-radius:20px; text-transform:uppercase; font-weight:700; }
+.skill-badge.k{ background:rgba(107,140,66,0.15); color:#4a6a20; border:1px solid rgba(107,140,66,0.3); }
+.skill-badge.a{ background:rgba(139,80,20,0.12); color:#8b5014; border:1px solid rgba(139,80,20,0.25); }
+.skill-badge.s{ background:rgba(60,100,130,0.12); color:#2a5070; border:1px solid rgba(60,100,130,0.28); }
+.skill-name{ font-family:'Cinzel Decorative',serif; font-size:0.85rem; color:var(--ink-color); letter-spacing:0.05em; }
+.skill-desc{ font-family:'Crimson Text',serif; font-size:0.95rem; color:#5a4030; line-height:1.6; margin:0; }
+
+/* Special core specialty block */
+.specialty-block{
+  background:rgba(60,100,130,0.06);
+  border:1px solid rgba(60,100,130,0.20);
+  border-radius:10px; padding:1.2rem 1.5rem;
+  margin-bottom:1.5rem;
+}
+.specialty-block p{ font-family:'Crimson Text',serif; font-size:0.97rem; color:#3a2a1a; line-height:1.7; margin-bottom:0.5rem; }
+.specialty-block p:last-child{ margin-bottom:0; }
+.specialty-row{
+  display:flex; justify-content:space-between; align-items:baseline;
+  margin-bottom:0.3rem;
+  font-family:'Crimson Text',serif; font-size:0.95rem; color:#5a4030;
+  padding:0.25rem 0;
+  border-bottom:1px solid rgba(139,105,20,0.10);
+}
+.specialty-row:last-child{ border-bottom:none; margin-bottom:0; }
+.specialty-val{ font-family:'Cinzel Decorative',serif; font-size:0.85rem; color:var(--ink-color); font-weight:700; }
+
+.gift-card{
+  background:var(--calling-bg-tint);
+  border:1px solid var(--calling-border);
+  border-radius:10px; padding:1.3rem 1.5rem 1.2rem;
+  margin-bottom:1.1rem; position:relative; overflow:hidden;
+}
+.gift-card::before{ content:""; position:absolute; top:0; left:0; width:100%; height:3px; border-radius:10px 10px 0 0; }
+.gift-card.defensive::before{ background:linear-gradient(to right,#6b8c42,transparent); }
+.gift-card.offensive::before{ background:linear-gradient(to right,#8b5014,transparent); }
+.gift-card.surge-off::before{ background:linear-gradient(to right,#c47820,transparent); }
+.gift-card.surge-def::before{ background:linear-gradient(to right,#4a6a20,transparent); }
+
+.gift-type{ font-family:'Cinzel Decorative',serif; font-size:0.5rem; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:0.3rem; }
+.gift-type.defensive{ color:#4a6a20; }
+.gift-type.offensive{ color:#8b5014; }
+.gift-type.surge-off{ color:#c47820; }
+.gift-type.surge-def{ color:#4a6a20; }
+
+.gift-name{ font-family:'Cinzel Decorative',serif; font-size:0.95rem; color:var(--ink-color); letter-spacing:0.05em; margin-bottom:0.8rem; }
+.gift-body{ font-family:'Crimson Text',serif; font-size:0.97rem; color:#4a3010; line-height:1.7; }
+.gift-body p{ margin-bottom:0.6rem; }
+.gift-body p:last-child{ margin-bottom:0; }
+.gift-trigger{ font-family:'Cinzel Decorative',serif; font-size:0.5rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--calling-muted); margin:0.7rem 0 0.25rem; }
+.gift-effect-list{ margin:0.4rem 0 0.6rem 0.8rem; font-family:'Crimson Text',serif; font-size:0.97rem; color:#4a3010; line-height:1.65; }
+.gift-narrative{ font-style:italic; font-size:0.9rem; color:#4a2e06; border-top:1px solid rgba(139,105,20,0.15); padding-top:0.7rem; margin-top:0.7rem; }
+
+.weapon-row{ display:flex; justify-content:center; gap:0.8rem; flex-wrap:wrap; margin-bottom:1.5rem; }
+.weapon-pill{ font-family:'Cinzel Decorative',serif; font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; padding:0.35rem 1.1rem; border-radius:30px; background:rgba(200,150,40,0.10); border:1px solid rgba(139,105,20,0.28); color:var(--calling-dark); }
+
+.playstyle-hook{ background:var(--calling-bg-tint); border:1px solid var(--calling-border); border-radius:10px; padding:1.3rem 1.6rem; text-align:center; font-style:italic; font-size:1.05rem; color:#4a3010; line-height:1.75; margin-top:0.5rem; }
+
+footer{
+  position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+  width:min(100%,var(--page-max-width));
+  height:var(--footer-height);
+  background:var(--footer-bg);
+  color:#ccc; display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:0 1rem; font-size:.95rem;
+  border-top:1px solid #444; z-index:1000;
+}
+footer a{ color:#d4a373; text-decoration:none; }
+footer a:hover{ text-decoration:underline; }
+
+@media(max-width:768px){
+  nav{ gap:1rem; padding:0 1rem; flex-wrap:wrap; }
+  nav a{ font-size:.9rem; }
+  .content-container{ padding:36px 32px 150px; }
+  .content-container h1{ font-size:2.2rem; }
+  .skills-grid{ grid-template-columns:1fr; }
+}
+@media(max-width:480px){
+  body{ font-size:1.05rem; }
+  .content-container{ padding:28px 20px 130px; }
+}
+
+</style>
+</head>
+
+<body>
+<div class="page-wrapper">
+
+<header>
+<nav>
+  <a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+  <a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+  <a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+  <a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+  <a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+<div class="content-container">
+
+  <h1>Shield Warden</h1>
+  <p class="calling-subtitle">The Immovable Object</p>
+  <div class="calling-divider"><span></span><em>✦</em><span></span></div>
+
+  <p>The Shield Warden is the unbreakable bulwark, the line that does not yield, the wall that refuses collapse. Where others maneuver, the Warden anchors. Where others chase momentum, the Warden steals it.</p>
+
+  <p>They do not evade force — they absorb it, redirect it, and return it with disciplined brutality. Sieges break against them. Charges die in front of them. The Shield Warden is endurance made doctrine.</p>
+
+  <!-- Soul -->
+  <p class="section-label">Soul of the Calling</p>
+  <div class="soul-block">The Shield Warden is the unbreakable bulwark, the line that does not yield, the wall that refuses collapse. Where others maneuver, the Warden anchors. Where others chase momentum, the Warden steals it. They do not evade force — they absorb it, redirect it, and return it with disciplined brutality. Sieges break against them. Charges die in front of them. The Shield Warden is endurance made doctrine.</div>
+
+  <!-- Identity -->
+  <p class="section-label">Identity — Momentum Denial</p>
+  <p style="margin-bottom:2rem;">The Shield Warden studies formation stability, impact angles, line integrity, and pressure transfer. They understand that momentum is a resource — every charge carries force that can be stolen, every strike exposes leverage. The Warden does not simply withstand an attack; they convert it into positional advantage. They are not reactive defenders. They are territorial sovereigns.</p>
+
+  <!-- Resonance — unique standalone card -->
+  <p class="section-label">Resonance Profile</p>
+  <div class="resonance-card-standalone">
+    <div><span class="resonance-badge unique">Stands Alone</span></div>
+    <p class="resonance-card-title">A Classification Apart — Neither Resonant Nor Forged</p>
+    <div class="resonance-row"><span>Wellspring</span><span class="resonance-val">None</span></div>
+    <div class="resonance-row"><span>Racial Path</span><span class="resonance-val">Does not apply</span></div>
+    <div class="resonance-row"><span>Resonance Path Point converted to</span><span class="resonance-val">5 Freebie Points</span></div>
+    <p class="resonance-note">The Shield Warden cannot live without the Song, but the Song does not answer to them. Their power is structural — resonant frequencies triggered by the physical impact of combat. Their techniques are not considered Resonant casting and <strong>cannot be suppressed by anti-Resonance abilities</strong>. While the Warden cannot channel the Song, their steel is forged to vibrate in sympathy with it.</p>
+  </div>
+
+  <!-- Health -->
+  <p class="section-label">Health &amp; Armor</p>
+  <div class="stat-block">
+    <div class="stat-item"><span class="stat-value">d12</span><span class="stat-label">Health Die</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><span class="stat-value">27</span><span class="stat-label">Min HP</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><span class="stat-value">60</span><span class="stat-label">Max HP</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><span class="stat-value">9</span><span class="stat-label">Starting Armor Tier</span></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><span class="stat-value">10</span><span class="stat-label">Max Armor Tier</span></div>
+    <p class="stat-note">Armor is not optional. It is doctrine. The Shield Warden is designed to occupy space and endure punishment. Mobility is sacrificed for dominance.</p>
+  </div>
+
+  <!-- Skills -->
+  <p class="section-label">Skill Matrix</p>
+  <p style="font-family:'Crimson Text',serif; font-size:0.85rem; color:#9a7840; text-align:center; font-style:italic; margin:0 0 0.8rem;">Choose two from the four below</p>
+  <div class="skills-grid">
+    <div class="skill-card ability">
+      <div class="skill-card-header"><span class="skill-badge a">Ability</span><span class="skill-name">Endurance</span></div>
+      <p class="skill-desc">The Warden's role demands stamina under relentless pressure — holding position when others falter and remaining effective deep into prolonged engagements.</p>
+    </div>
+    <div class="skill-card ability">
+      <div class="skill-card-header"><span class="skill-badge a">Ability</span><span class="skill-name">Combat Focus</span></div>
+      <p class="skill-desc">Tunnel vision kills defenders. The Warden trains to maintain awareness of multiple threats, shifting angles, and ally positioning while remaining anchored.</p>
+    </div>
+    <div class="skill-card ability">
+      <div class="skill-card-header"><span class="skill-badge a">Ability</span><span class="skill-name">Tactics</span></div>
+      <p class="skill-desc">A Shield Warden does not stand randomly. They choose ground, identify choke points, and dictate engagement geometry. Position is power.</p>
+    </div>
+    <div class="skill-card knowledge">
+      <div class="skill-card-header"><span class="skill-badge k">Knowledge</span><span class="skill-name">Military History</span></div>
+      <p class="skill-desc">Formations collapse in predictable ways. Lines break under known stresses. A Warden who knows history knows how not to repeat them.</p>
+    </div>
+  </div>
+
+  <!-- Core Specialty -->
+  <p class="section-label">Core Specialty</p>
+  <div class="specialty-block">
+    <div class="specialty-row"><span><strong>Shield Bearer</strong> (Required)</span><span class="specialty-val">Precludes offensive combat specialties</span></div>
+    <div class="specialty-row"><span>Defense Rating</span><span class="specialty-val">4 / 6</span></div>
+    <div class="specialty-row"><span>Offensive Rating</span><span class="specialty-val">2 / 4</span></div>
+    <p style="margin-top:0.8rem; font-style:italic; color:#7a5040; font-size:0.92rem;">The Shield Warden <strong>cannot select Defensive Postures</strong> (Dodge, Parry, Riposte). They are not evasive combatants. They are structural anchors.</p>
+  </div>
+
+  <!-- Shield Techniques -->
+  <p class="section-label">Shield Techniques</p>
+  <div class="skills-grid">
+    <div class="skill-card shield">
+      <div class="skill-card-header"><span class="skill-badge s">Action</span><span class="skill-name">Shield Bash</span></div>
+      <p class="skill-desc">Incorporate a shield strike into a successful melee attack. Standard Attack Roll. <strong>Damage: 1d8.</strong></p>
+    </div>
+    <div class="skill-card shield">
+      <div class="skill-card-header"><span class="skill-badge s">Action</span><span class="skill-name">Resonant Shield Mimic</span></div>
+      <p class="skill-desc">Must declare prior to attack. When the shield strikes, force arcs to two additional targets within 20 feet. <strong>Bounce 1: 1d6 / Bounce 2: 1d4.</strong> Usable <strong>twice per round</strong>.</p>
+    </div>
+    <div class="skill-card shield full-width">
+      <div class="skill-card-header"><span class="skill-badge s">Mark</span><span class="skill-name">Resonant Challenge</span></div>
+      <p class="skill-desc">Enemies struck by the shield or Mimic <strong>increase their TN by 3</strong> to attack anyone but the Shield Warden until the end of their next turn. Usable <strong>twice per round</strong>.</p>
+    </div>
+  </div>
+
+  <!-- Gifts -->
+  <p class="section-label">Bestowed Gifts of the Calling</p>
+
+  <div class="gift-card defensive">
+    <p class="gift-type defensive">Defensive Gift</p>
+    <p class="gift-name">Retributive Anchor</p>
+    <div class="gift-body">
+      <p>When an attacker rolls an <strong>Ultimate Failure (natural 1)</strong> against the Shield Warden, the Warden gains a <strong>free Attack of Opportunity</strong> using Shield Bash.</p>
+      <p>Failure against the wall is not free. It is an invitation.</p>
+    </div>
+  </div>
+
+  <div class="gift-card offensive">
+    <p class="gift-type offensive">Offensive Gift</p>
+    <p class="gift-name">Entrenched Momentum</p>
+    <div class="gift-body">
+      <p>When the Shield Warden rolls an Ultimate Success, their <strong>Defensive Rating increases by 3 for three rounds</strong>.</p>
+      <p>Victory does not relax the Warden. It entrenches them.</p>
+    </div>
+  </div>
+
+  <!-- Surges -->
+  <p class="section-label">Combat Surges</p>
+
+  <div class="gift-card surge-off">
+    <p class="gift-type surge-off">Offensive Surge</p>
+    <p class="gift-name">Crushing Reversal</p>
+    <div class="gift-body">
+      <p>The Shield Warden steals an attacker's momentum and turns it into immediate punishment.</p>
+      <p class="gift-trigger">Trigger — After an enemy misses the Shield Warden with a melee attack</p>
+      <p>Immediately perform a <strong>Shield Bash attack</strong>. If the attack hits, choose one:</p>
+      <ul class="gift-effect-list">
+        <li>The target is <strong>knocked Prone</strong>, OR</li>
+        <li>The Shield Bash deals <strong>+50% damage</strong>.</li>
+      </ul>
+      <p class="gift-narrative">The attacker's force collapses against the Warden's shield. In the same motion, the Warden drives forward with crushing retaliation.</p>
+    </div>
+  </div>
+
+  <div class="gift-card surge-def">
+    <p class="gift-type surge-def">Defensive Surge</p>
+    <p class="gift-name">Bulwark of the Line</p>
+    <div class="gift-body">
+      <p>The Shield Warden extends their defensive dominance to protect those behind the line. May be declared after an ally within 3 meters has been targeted — but <strong>cannot be used while stunned, disoriented, unconscious, or surprised</strong>.</p>
+      <p class="gift-trigger">Trigger — When an ally within 3 meters is targeted by an attack</p>
+      <p>Interpose yourself, becoming the new target of the attack. Reduce the incoming damage by <strong>60%</strong>.</p>
+      <p class="gift-narrative">The Warden steps forward, shield interposed. The attack crashes against a wall of steel instead of the intended target.</p>
+    </div>
+  </div>
+
+  <!-- Weapons -->
+  <p class="section-label">Weapon Affinity</p>
+  <div class="weapon-row">
+    <span class="weapon-pill">One-Handed Sword + Shield</span>
+    <span class="weapon-pill">Mace + Shield</span>
+    <span class="weapon-pill">Hammer</span>
+    <span class="weapon-pill">Polearm</span>
+  </div>
+  <p style="font-family:'Crimson Text',serif; font-size:0.88rem; color:#9a7840; text-align:center; font-style:italic; margin-bottom:2rem;">These weapons complement control, spacing, and territorial dominance rather than speed or finesse.</p>
+
+  <!-- Playstyle -->
+  <p class="section-label">Playstyle Hook</p>
+  <div class="playstyle-hook">You are the point where advance collapses. You occupy space, deny passage, and punish overextension. Enemies cannot bypass you without cost. Allies stabilize behind you. You do not chase the battle. You force the battle to break against you.</div>
+
+</div>
+</main>
+
+<footer>
+<div>
+  Email: <a href="/cdn-cgi/l/email-protection#3f5c50514b5e5c4b7f4d56495a515b5e4851115c5052"><span class="__cf_email__" data-cfemail="64070b0a1005071024160d12010a0005130a4a070b09">[email&#160;protected]</span></a>
+  &nbsp;&nbsp;•&nbsp;&nbsp;
+  © 2026 jpcauthor. All rights reserved.
+  &nbsp;

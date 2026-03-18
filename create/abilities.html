@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Rivendawn — Abilities & Knowledges</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+background:#0f1418;
+color:#f0e6d2;
+font-family:"Crimson Text",serif;
+margin:40px;
+}
+
+h1{
+font-family:"Cinzel Decorative",serif;
+margin-bottom:20px;
+}
+
+.section{
+margin-bottom:40px;
+}
+
+a{
+color:#d6b06b;
+text-decoration:none;
+font-weight:bold;
+}
+
+a:hover{
+text-decoration:underline;
+}
+
+/* MODAL */
+
+.modal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.7);
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+opacity:0;
+pointer-events:none;
+
+transition:opacity .25s ease;
+}
+
+.modal:target{
+opacity:1;
+pointer-events:auto;
+}
+
+.modal-box{
+background:#1b1b1b;
+padding:30px;
+max-width:520px;
+
+border:1px solid #8c6a3b;
+border-radius:6px;
+
+box-shadow:0 0 20px rgba(0,0,0,.7);
+
+transform:translateY(20px);
+transition:transform .25s ease;
+}
+
+.modal:target .modal-box{
+transform:translateY(0);
+}
+
+.archive-tag{
+font-size:12px;
+letter-spacing:2px;
+opacity:.6;
+margin-bottom:10px;
+}
+
+.close{
+display:inline-block;
+margin-top:20px;
+padding:8px 12px;
+
+background:#333;
+color:white;
+
+text-decoration:none;
+border-radius:4px;
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Abilities & Knowledges</h1>
+
+<div class="section">
+
+<h2>Physicality & Environment</h2>
+
+<p>
+<a href="#acrobatics">Acrobatics</a> |
+<a href="#athletics">Athletics</a> |
+<a href="#climb">Climb</a> |
+<a href="#endurance">Endurance</a> |
+<a href="#swim">Swim</a>
+</p>
+
+</div>
+
+
+<div class="section">
+
+<h2>Social & Perceptual</h2>
+
+<p>
+<a href="#insight">Insight</a> |
+<a href="#perception">Perception</a> |
+<a href="#persuasion">Persuasion</a>
+</p>
+
+</div>
+
+
+
+<!-- ACROBATICS -->
+
+<div id="acrobatics" class="modal">
+<div class="modal-box">
+
+<div class="archive-tag">CITADEL ARCHIVE</div>
+
+<h2>Acrobatics</h2>
+
+<p>
+Balance, tumbling, controlled falling, and navigating unstable terrain.
+</p>
+
+<p><strong>Mastery Ladder</strong></p>
+
+<p>
+Clumsy → Unsteady → Capable → Athletic → Graceful → Gravity-Defiant
+</p>
+
+<a href="#" class="close">Return to Archive</a>
+
+</div>
+</div>
+
+
+
+<!-- ATHLETICS -->
+
+<div id="athletics" class="modal">
+<div class="modal-box">
+
+<div class="archive-tag">CITADEL ARCHIVE</div>
+
+<h2>Athletics</h2>
+
+<p>
+Physical feats of strength such as lifting, grappling, pushing, and breaking obstacles.
+</p>
+
+<p><strong>Mastery Ladder</strong></p>
+
+<p>
+Weak → Struggling → Capable → Strong → Mighty → Legendary
+</p>
+
+<a href="#" class="close">Return to Archive</a>
+
+</div>
+</div>
+
+
+
+<!-- CLIMB -->
+
+<div id="climb" class="modal">
+<div class="modal-box">
+
+<div class="archive-tag">CITADEL ARCHIVE</div>
+
+<h2>Climb</h2>
+
+<p>
+Scaling vertical surfaces such as cliffs, walls, or rough terrain.
+</p>
+
+<p><strong>Mastery Ladder</strong></p>
+
+<p>
+Slip-Prone → Cautious → Capable → Skilled → Spider-like → Impossible
+</p>
+
+<a href="#" class="close">Return to Archive</a>
+
+</div>
+</div>
+
+
+
+<!-- ENDURANCE -->
+
+<div id="endurance" class="modal">
+<div class="modal-box">
+
+<div class="archive-tag">CITADEL ARCHIVE</div>
+
+<h2>Endurance</h2>
+
+<p>
+Resistance to fatigue, environmental hardship, and prolonged exertion.
+</p>
+
+<p><strong>Mastery Ladder</strong></p>
+
+<p>
+Fraile → Winded → Steady → Hardy → Tireless → Unbreakable
+</p>
+
+<a href="#" class="close">Return to Archive</a>
+
+</div>
+</div>
+
+
+
+<!-- SWIM -->
+
+<div id="swim" class="modal">
+<div class="modal-box">
+
+<div class="archive-tag">CITADEL ARCHIVE</div>
+
+<h2>Swim</h2>
+
+<p>
+Movement and survival in water environments.
+</p>
+
+<p><strong>Mastery Ladder</strong></p>
+
+<p>
+Flailing → Floating → Capable → Confident → Swift → Aquatic
+</p>
+
+<a href="#" class="close">Return to Archive</a>
+
+</div>
+</div>
+
+
+
+<!-- INSIGHT -->
+
+<div id="insight" class="modal">
+<div class="modal-box">
+
+<div class="archive-tag">CITADEL ARCHIVE</div>
+
+<h2>Insight</h2>
+
+<p>
+Understanding motives, emotions, and hidden intentions.
+</p>
+
+<p><strong>Mastery Ladder</strong></p>
+
+<p>
+Oblivious → Suspicious → Aware → Perceptive → Intuitive → Soul-Reader
+</p>
+
+<a href="#" class="close">Return to Archive</a>
+
+</div>
+</div>
+
+
+
+<!-- PERCEPTION -->
+
+<div id="perception" class="modal">
+<div class="modal-box">
+
+<div class="archive-tag">CITADEL ARCHIVE</div>
+
+<h2>Perception</h2>
+
+<p>
+Detecting subtle details in the environment using the senses.
+</p>
+
+<p><strong>Mastery Ladder</strong></p>
+
+<p>
+Blind → Distracted → Aware → Observant → Sharp-Eyed → Eagle-Sight
+</p>
+
+<a href="#" class="close">Return to Archive</a>
+
+</div>
+</div>
+
+
+
+<!-- PERSUASION -->
+
+<div id="persuasion" class="modal">
+<div class="modal-box">
+
+<div class="archive-tag">CITADEL ARCHIVE</div>
+
+<h2>Persuasion</h2>
+
+<p>
+Influencing others through diplomacy, charm, and negotiation.
+</p>
+
+<p><strong>Mastery Ladder</strong></p>
+
+<p>
+Awkward → Convincing → Diplomatic → Influential → Charismatic → Legendary
+</p>
+
+<a href="#" class="close">Return to Archive</a>
+
+</div>
+</div>
+
+
+
+</body>
+</html>

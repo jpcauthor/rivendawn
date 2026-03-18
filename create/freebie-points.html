@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Freebie Points — Rivendawn</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root {
+  --header-height: 72px;
+  --footer-height: 72px;
+  --content-max-width: 960px;
+  --page-max-width: 1400px;
+  --ink-color: #3a2a1a;
+  --accent: #fff1d6;
+  --nav-color: #f2e3c6;
+  --nav-shadow: rgba(0,0,0,0.85);
+  --footer-bg: rgba(0,0,0,0.88);
+  --ink:        #2a1c0e;
+  --ink-mid:    #4a2e06;
+  --ink-dim:    #7a5a30;
+  --ink-faint:  #a08050;
+  --gold:       #c8922a;
+  --gold-light: #d4a84a;
+  --gold-pale:  #e8c87a;
+  --border:     rgba(74,46,6,0.20);
+  --border-strong: rgba(74,46,6,0.40);
+  --surface:    rgba(255,248,230,0.80);
+  --fp-color:   #2a4a6a;
+  --fp-bg:      rgba(42,74,106,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--ink);
+  min-height: 100dvh;
+  background: #000;
+  line-height: 1.75;
+  font-size: 1.08rem;
+}
+
+.page-wrapper {
+  min-height: 100dvh;
+  display: flex; flex-direction: column;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  background-color: #000;
+  background-image: url('../images/bg.jpg');
+  background-size: contain;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  box-shadow: 0 0 80px rgba(0,0,0,0.85);
+}
+
+/* ── Header ── */
+header {
+  position: fixed; top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--page-max-width));
+  height: var(--header-height);
+  background-image: url('../images/header.png');
+  background-size: contain; background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1000;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+}
+
+nav {
+  max-width: var(--content-max-width);
+  width: 100%; height: 100%;
+  margin: 0 auto;
+  display: flex; align-items: center; justify-content: center;
+  gap: 2rem; padding: 0 1.5rem;
+}
+
+nav a {
+  color: var(--nav-color); text-decoration: none;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 1.25rem; letter-spacing: 0.14em; text-transform: uppercase;
+  transition: all .25s ease;
+  text-shadow: 0 1px 2px var(--nav-shadow);
+}
+nav a:hover { color: var(--accent); }
+
+/* ── Main ── */
+main {
+  flex: 1;
+  margin-top: var(--header-height);
+  padding: 3.25rem 1rem calc(var(--footer-height) + 3rem);
+  display: flex; justify-content: center;
+}
+
+.content-container {
+  max-width: var(--content-max-width);
+  width: 100%; padding: 40px 60px 120px;
+  margin: 0 auto; border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  background-image: url('../images/content-scroll-bg.png');
+  background-repeat: repeat-y;
+  background-position: top center;
+  background-size: 100% auto;
+}
+
+/* ── Page Title ── */
+.page-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: var(--ink-mid); text-align: center;
+  letter-spacing: .08em; margin-bottom: 8px;
+}
+
+.title-rule {
+  display: flex; align-items: center;
+  gap: 16px; justify-content: center;
+  margin-bottom: 0.75rem;
+}
+.title-rule::before, .title-rule::after {
+  content: ''; flex: 1; max-width: 200px; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(74,46,6,0.35));
+}
+.title-rule::after {
+  background: linear-gradient(to left, transparent, rgba(74,46,6,0.35));
+}
+.title-rule span {
+  color: var(--ink-faint); font-size: .75rem;
+  letter-spacing: .28em; text-transform: uppercase;
+  font-family: 'Cinzel', serif;
+}
+
+/* ── Intro block ── */
+.intro-block {
+  background: rgba(200,146,42,0.06);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--gold);
+  border-radius: 0 8px 8px 0;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 2rem;
+  font-style: italic;
+  font-size: 1.02rem;
+  color: var(--ink-dim);
+  line-height: 1.75;
+}
+.intro-block strong { font-style: normal; color: var(--ink-mid); }
+
+/* ── Section Label ── */
+.section-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4px;
+  margin: 2rem 0 1rem;
+}
+
+/* ── Tracker ── */
+.tracker {
+  position: sticky;
+  top: calc(var(--header-height) + 0.5rem);
+  z-index: 200;
+  background: linear-gradient(180deg, #f8eed8, #f2e4c4);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 0.85rem 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  box-shadow: 0 4px 16px rgba(42,28,14,0.18);
+  flex-wrap: wrap;
+}
+
+.tracker-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 72px;
+}
+
+.tracker-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.52rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.2rem;
+}
+
+.tracker-val {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.8rem;
+  color: var(--fp-color);
+  line-height: 1;
+}
+
+.tracker-val.spent { color: var(--ink-mid); }
+
+.tracker-divider {
+  width: 1px; height: 40px;
+  background: var(--border-strong);
+}
+
+.tracker-bar-wrap { flex: 1; min-width: 200px; }
+
+.tracker-bar-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.3rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tracker-bar-track {
+  height: 8px;
+  background: rgba(74,46,6,0.10);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.tracker-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--fp-color);
+  transition: width 0.3s ease;
+  width: 100%;
+}
+
+/* ── FP pip buttons ── */
+.pip-row {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.fp-pip {
+  width: 28px; height: 28px;
+  border-radius: 4px;
+  border: 2px solid var(--fp-color);
+  background: rgba(42,74,106,0.12);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.6rem;
+  color: var(--fp-color);
+}
+
+.fp-pip:hover { background: rgba(42,74,106,0.22); }
+
+.fp-pip.used {
+  background: var(--fp-color);
+  color: #fff;
+  border-color: var(--fp-color);
+}
+
+.tracker-reset {
+  appearance: none; border: none;
+  background: transparent;
+  font-family: 'Cinzel', serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+  transition: all 0.18s ease;
+  align-self: center;
+}
+.tracker-reset:hover {
+  color: var(--ink-mid);
+  border-color: var(--border-strong);
+  background: rgba(74,46,6,0.05);
+}
+
+.tracker-note {
+  width: 100%;
+  font-family: 'Crimson Text', serif;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--ink-faint);
+  text-align: center;
+}
+
+/* ── Quick stats row ── */
+.quick-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.stat-card {
+  background: rgba(255,248,230,0.65);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--gold);
+  border-radius: 0 0 8px 8px;
+  padding: 1rem 1.1rem;
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.8rem;
+  color: var(--ink-mid);
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.52rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.stat-note {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--ink-dim);
+  margin-top: 0.3rem;
+}
+
+/* ── Spend table ── */
+.spend-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.75rem;
+  font-size: 0.95rem;
+}
+
+.spend-table thead tr {
+  border-bottom: 2px solid var(--border-strong);
+}
+
+.spend-table th {
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  padding: 0.6rem 0.85rem;
+  text-align: left;
+}
+
+.spend-table td {
+  padding: 0.85rem 0.85rem;
+  border-bottom: 1px solid rgba(74,46,6,0.08);
+  color: var(--ink-dim);
+  vertical-align: top;
+  line-height: 1.55;
+}
+
+.spend-table tr:last-child td { border-bottom: none; }
+.spend-table tr:hover td { background: rgba(200,146,42,0.04); }
+
+.spend-table td:first-child {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.82rem;
+  color: var(--ink-mid);
+  white-space: nowrap;
+}
+
+.cost-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1rem;
+  color: var(--fp-color);
+  background: var(--fp-bg);
+  border: 1px solid rgba(42,74,106,0.25);
+  border-radius: 4px;
+  padding: 0.2rem 0.6rem;
+  white-space: nowrap;
+  min-width: 52px;
+}
+
+.cap-note {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--ink-faint);
+  display: block;
+  margin-top: 0.2rem;
+}
+
+/* ── Callout ── */
+.callout {
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--ink-mid);
+  padding: 0.85rem 1.1rem;
+  margin: 1.25rem 0;
+  background: rgba(74,46,6,0.04);
+  font-size: 0.92rem;
+  border-radius: 0 4px 4px 0;
+  color: var(--ink-dim);
+  line-height: 1.65;
+}
+.callout strong { color: var(--ink-mid); }
+
+.callout-warning {
+  border: 1px solid rgba(139,42,42,0.25);
+  border-left: 3px solid #8b2a2a;
+  padding: 0.85rem 1.1rem;
+  margin: 1.25rem 0;
+  background: rgba(139,42,42,0.05);
+  font-size: 0.92rem;
+  border-radius: 0 4px 4px 0;
+  color: var(--ink-dim);
+  line-height: 1.65;
+}
+.callout-warning strong { color: #8b2a2a; }
+
+/* ── Example block ── */
+.example-block {
+  background: rgba(255,248,230,0.65);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.1rem 1.4rem;
+  margin: 1.25rem 0;
+}
+
+.example-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.52rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.example-block p {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.95rem;
+  color: var(--ink-dim);
+  line-height: 1.65;
+  margin-bottom: 0.4rem;
+}
+
+.example-block p:last-child { margin-bottom: 0; }
+
+.fp-tag {
+  display: inline-block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fp-color);
+  background: var(--fp-bg);
+  border: 1px solid rgba(42,74,106,0.2);
+  border-radius: 3px;
+  padding: 0.1rem 0.4rem;
+  margin: 0 0.15rem;
+  vertical-align: middle;
+}
+
+/* ── Order of operations ── */
+.order-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 1.75rem;
+}
+
+.order-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid rgba(74,46,6,0.07);
+  font-family: 'Crimson Text', serif;
+  font-size: 0.98rem;
+  color: var(--ink-dim);
+  line-height: 1.55;
+}
+
+.order-list li:last-child { border-bottom: none; }
+
+.order-num {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.9rem;
+  color: var(--gold);
+  flex-shrink: 0;
+  min-width: 1.5rem;
+  padding-top: 0.05rem;
+}
+
+.order-list li strong { color: var(--ink-mid); }
+
+/* ── Footer ── */
+footer {
+  position: fixed; bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--page-max-width));
+  height: var(--footer-height);
+  background: var(--footer-bg);
+  color: #ccc;
+  display: flex; align-items: center;
+  justify-content: center; text-align: center;
+  padding: 0 1rem; font-size: .95rem;
+  border-top: 1px solid #444; z-index: 1000;
+  font-family: 'Crimson Text', serif;
+}
+footer a { color: #d4a373; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* ── Responsive ── */
+@media (max-width: 680px) {
+  .content-container { padding: 28px 20px 100px; }
+  .quick-stats { grid-template-columns: 1fr 1fr; }
+  .spend-table td:nth-child(3) { display: none; }
+  .tracker { top: calc(var(--header-height) + 0.25rem); }
+}
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+
+<header>
+  <nav>
+    <a href="geography.html">GEOGRAPHY</a>
+    <a href="lore.html">LORE</a>
+    <a href="rules.html">RULES</a>
+    <a href="create.html">CREATE</a>
+    <a href="tables.html">TABLES</a>
+  </nav>
+</header>
+
+<main>
+<div class="content-container">
+
+  <h1 class="page-title">Freebie Points</h1>
+  <div class="title-rule"><span>Final Refinement</span></div>
+
+  <div class="intro-block">
+    After the broad strokes of your history have been painted — once your Vocation has been named and your Heritage Imprints have found their rhythm — there remains a final moment of sharpening. <strong>Freebie Points</strong> are not a new identity. They are the extra miles you walked, the private hours of practice others overlooked. The final polish on the blade. The deepening of a well-worn path.
+  </div>
+
+  <!-- ── TRACKER ── -->
+  <div class="tracker" id="tracker">
+    <div class="tracker-group">
+      <div class="tracker-label">Remaining</div>
+      <div class="tracker-val" id="fpRemaining">10</div>
+    </div>
+    <div class="tracker-divider"></div>
+    <div class="tracker-bar-wrap">
+      <div class="tracker-bar-label">
+        <span>Freebie Points</span>
+        <span id="fpBarLabel">10 / 10</span>
+      </div>
+      <div class="tracker-bar-track">
+        <div class="tracker-bar-fill" id="fpBar" style="width:100%"></div>
+      </div>
+      <div class="pip-row" id="pipRow">
+        <!-- pips rendered by JS -->
+      </div>
+    </div>
+    <div class="tracker-divider"></div>
+    <div class="tracker-group">
+      <div class="tracker-label">Spent</div>
+      <div class="tracker-val spent" id="fpSpent">0</div>
+    </div>
+    <div class="tracker-note" id="trackerNote">Click a pip to mark points spent. Click again to unmark.</div>
+    <button class="tracker-reset" onclick="resetFP()">Reset</button>
+  </div>
+
+  <!-- ── QUICK STATS ── -->
+  <p class="section-label">At a Glance</p>
+  <div class="quick-stats">
+    <div class="stat-card">
+      <div class="stat-num">10</div>
+      <div class="stat-label">Base Pool</div>
+      <div class="stat-note">All characters start here</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">15</div>
+      <div class="stat-label">Forged Combatant Pool</div>
+      <div class="stat-note">+5 bonus points at creation</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">4</div>
+      <div class="stat-label">Creation Cap</div>
+      <div class="stat-note">Max rating for any attribute or ability</div>
+    </div>
+  </div>
+
+  <!-- ── SEPARATION CALLOUT ── -->
+  <div class="callout-warning">
+    <strong>Economic Separation:</strong> Freebie Points and the Liabilities &amp; Boons system are completely separate. Liabilities may not generate or convert into Freebie Points. Freebie Points may not be used to purchase Boons. These systems do not interact.
+  </div>
+
+  <!-- ── SPEND TABLE ── -->
+  <p class="section-label">Permitted Expenditures</p>
+  <p style="font-family:'Crimson Text',serif; font-size:0.95rem; color:#7a5a30; font-style:italic; margin-bottom:1rem;">Freebie Points may only be spent in the following categories. All increases must respect established creation caps.</p>
+
+  <table class="spend-table">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Cost</th>
+        <th>Notes &amp; Caps</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Primary Rating</td>
+        <td><span class="cost-badge">8 FP</span></td>
+        <td>
+          Raise one Primary Rating by 1.
+          <span class="cap-note">Creation cap: 4. Cannot exceed hard cap under any circumstance.</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Ability or Knowledge</td>
+        <td><span class="cost-badge">2 FP</span></td>
+        <td>
+          Raise one Ability or Knowledge by 1.
+          <span class="cap-note">Creation cap: 4 after all bonuses applied.</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Finances Rank</td>
+        <td><span class="cost-badge">2 FP</span></td>
+        <td>
+          Purchase one rank of Finances.
+          <span class="cap-note">Maximum Rank 3 at creation. See Resources &amp; Finances.</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Social &amp; Material Resources</td>
+        <td><span class="cost-badge">2 FP</span></td>
+        <td>
+          Purchase one rank of Social or Material Resources.
+          <span class="cap-note">Maximum Rank 3 at creation. Freebie Points are the only currency for this.</span>
+        </td>
+      </tr>
+      <tr>
+        <td>Resonance Path Point</td>
+        <td><span class="cost-badge">10 FP</span></td>
+        <td>
+          Purchase one additional Path Point for Resonance allocation.
+          <span class="cap-note">Must respect Path Rating caps. Hybrids may not exceed 3 per Path via any method.</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ── EXAMPLE ── -->
+  <p class="section-label">Example Spend</p>
+  <div class="example-block">
+    <p class="example-label">A Hybrid Ranger — 10 Freebie Points</p>
+    <p>
+      Raises <strong>Agility</strong> by 1
+      <span class="fp-tag">8 FP</span>
+      — 2 points remaining.
+    </p>
+    <p>
+      Raises <strong>Stealth</strong> (Ability) by 1
+      <span class="fp-tag">2 FP</span>
+      — 0 points remaining.
+    </p>
+    <p style="margin-top:0.6rem; color:#a08050;">All points spent. Character sheet locked.</p>
+  </div>
+
+  <div class="example-block">
+    <p class="example-label">A Forged Combatant — 15 Freebie Points</p>
+    <p>
+      Raises <strong>Strength</strong> by 1
+      <span class="fp-tag">8 FP</span>
+      — 7 points remaining.
+    </p>
+    <p>
+      Raises <strong>Weapon Mastery</strong> (Ability) by 1
+      <span class="fp-tag">2 FP</span>
+      — 5 points remaining.
+    </p>
+    <p>
+      Purchases <strong>Finances Rank 1</strong>
+      <span class="fp-tag">2 FP</span>
+      — 3 points remaining.
+    </p>
+    <p>
+      Raises <strong>Athletics</strong> (Ability) by 1
+      <span class="fp-tag">2 FP</span>
+      — 1 point remaining.
+    </p>
+    <p style="margin-top:0.6rem; color:#a08050;">1 point unspent — lost at end of creation.</p>
+  </div>
+
+  <!-- ── ORDER OF OPERATIONS ── -->
+  <p class="section-label">Order of Application</p>
+  <ul class="order-list">
+    <li>
+      <span class="order-num">1</span>
+      <span>Complete all earlier creation steps — Lineage, Vocation, Calling, Primary Ratings, Abilities &amp; Knowledges, Path Allocation, Wellspring.</span>
+    </li>
+    <li>
+      <span class="order-num">2</span>
+      <span>Finalize your <strong>Liabilities &amp; Boons</strong> selections completely. These are locked before Freebie Points are spent.</span>
+    </li>
+    <li>
+      <span class="order-num">3</span>
+      <span>Spend your <strong>Freebie Points</strong>. Apply all increases. Verify nothing exceeds the creation cap of 4.</span>
+    </li>
+    <li>
+      <span class="order-num">4</span>
+      <span><strong>Unspent points are lost.</strong> They do not carry forward into play. Spend them or forfeit them.</span>
+    </li>
+    <li>
+      <span class="order-num">5</span>
+      <span>Character sheet is <strong>locked</strong>. Freebie Points cannot be refunded or reallocated without Watcher approval.</span>
+    </li>
+  </ul>
+
+  <!-- ── FINAL NOTE ── -->
+  <div class="callout">
+    <strong>The Golden Rule:</strong> Freebie Points are the only currency available to purchase ranks of Resources and Finances. They cannot be subsidized by Liabilities, earned through Boons, or generated by any other means. Plan accordingly.
+  </div>
+
+  <div class="callout" style="margin-top:1rem;">
+    <strong>Back to Character Creation:</strong> <a href="create.html" style="color:var(--ink-mid); font-style:italic;">← Return to the Character Creation Guide</a>
+    &nbsp;&nbsp;·&nbsp;&nbsp;
+    <a href="liabilities-boons.html" style="color:var(--ink-mid); font-style:italic;">← Liabilities &amp; Boons</a>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <div>
+    Email: <a href="mailto:jpcauthor@rivendawn.com">jpcauthor@rivendawn.com</a>
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    © 2026 jpcauthor. All rights reserved.
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    <a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+  </div>
+</footer>
+
+</div>
+
+<script>
+const TOTAL_FP = 10;
+let spent = 0;
+
+function buildPips() {
+  const row = document.getElementById('pipRow');
+  row.innerHTML = '';
+  for (let i = 1; i <= TOTAL_FP; i++) {
+    const pip = document.createElement('button');
+    pip.className = 'fp-pip';
+    pip.textContent = i;
+    pip.dataset.val = i;
+    pip.addEventListener('click', () => togglePip(i));
+    row.appendChild(pip);
+  }
+}
+
+function togglePip(val) {
+  // Mark all pips up to val as used, or unmark if already at val
+  const pips = document.querySelectorAll('.fp-pip');
+  const currentSpent = document.querySelectorAll('.fp-pip.used').length;
+
+  if (currentSpent === val) {
+    // Clicking the last used pip — unmark it
+    pips[val - 1].classList.remove('used');
+    spent = val - 1;
+  } else {
+    // Mark all up to val
+    pips.forEach((pip, idx) => {
+      pip.classList.toggle('used', idx < val);
+    });
+    spent = val;
+  }
+  updateTracker();
+}
+
+function updateTracker() {
+  const remaining = TOTAL_FP - spent;
+  document.getElementById('fpRemaining').textContent = remaining;
+  document.getElementById('fpSpent').textContent = spent;
+  document.getElementById('fpBarLabel').textContent = `${remaining} / ${TOTAL_FP}`;
+
+  const pct = (remaining / TOTAL_FP) * 100;
+  document.getElementById('fpBar').style.width = pct + '%';
+
+  const note = document.getElementById('trackerNote');
+  if (spent === 0) {
+    note.textContent = 'Click a pip to mark points spent. Click again to unmark.';
+  } else if (remaining > 0) {
+    note.textContent = `${remaining} point${remaining !== 1 ? 's' : ''} remaining to spend. Unspent points are lost at end of creation.`;
+  } else {
+    note.textContent = 'All points spent. Ready to lock your character sheet.';
+  }
+}
+
+function resetFP() {
+  spent = 0;
+  document.querySelectorAll('.fp-pip').forEach(p => p.classList.remove('used'));
+  updateTracker();
+}
+
+buildPips();
+updateTracker();
+</script>
+</body>
+</html>

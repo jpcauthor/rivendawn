@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Calendar's History</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- Styles -->
+<style>
+
+:root {
+--header-height: 72px;
+--footer-height: 72px;
+--content-max-width: 960px;
+--page-max-width: 1400px;
+--ink-color: #3a2a1a;
+--accent: #fff1d6;
+--nav-color: #f2e3c6;
+--nav-shadow: rgba(0,0,0,0.85);
+--footer-bg: rgba(0,0,0,0.88);
+--toggle-bg: rgba(255,248,235,0.55);
+--toggle-border: rgba(90,60,30,0.24);
+--toggle-hover: rgba(255,241,214,0.78);
+--toggle-doc-bg: rgba(255,248,235,0.48);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Crimson Text',Georgia,serif;
+color:var(--ink-color);
+min-height:100dvh;
+background:#000;
+line-height:1.75;
+font-size:1.18rem;
+}
+
+.page-wrapper{
+min-height:100dvh;
+display:flex;
+flex-direction:column;
+max-width:var(--page-max-width);
+margin:0 auto;
+background-color:#000;
+background-image:url('../../images/bg.jpg');
+background-size:contain;
+background-position:center top;
+background-repeat:no-repeat;
+background-attachment:fixed;
+box-shadow:0 0 80px rgba(0,0,0,0.85);
+position:relative;
+}
+
+header{
+position:fixed;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--header-height);
+background-image:url('../../images/header.png');
+background-size:contain;
+background-position:center;
+background-repeat:no-repeat;
+z-index:1000;
+box-shadow:0 6px 16px rgba(0,0,0,0.5);
+}
+
+header::after{
+content:"";
+position:absolute;
+left:0;
+right:0;
+bottom:-14px;
+height:18px;
+background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0));
+pointer-events:none;
+}
+
+nav{
+max-width:var(--content-max-width);
+width:100%;
+height:100%;
+margin:0 auto;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:2rem;
+padding:0 1.5rem;
+}
+
+nav a{
+color:var(--nav-color);
+text-decoration:none;
+font-family:Consolas,"Courier New",monospace;
+font-size:1.25rem;
+letter-spacing:0.14em;
+text-transform:uppercase;
+transition:all .25s ease;
+position:relative;
+display:inline-flex;
+align-items:center;
+gap:.5rem;
+padding:.2rem .1rem;
+text-shadow:
+0 1px 2px var(--nav-shadow),
+0 0 6px rgba(0,0,0,0.45);
+}
+
+nav a i{
+color:inherit;
+font-size:1.1rem;
+margin-right:4px;
+position:relative;
+top:-1px;
+}
+
+nav a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-4px;
+width:0;
+height:2px;
+background:var(--accent);
+transition:width .28s ease;
+}
+
+nav a:hover{
+color:var(--accent);
+transform:translateY(-1px);
+}
+
+nav a:hover::after{
+width:100%;
+}
+
+main{
+flex:1;
+margin-top:var(--header-height);
+padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+display:flex;
+justify-content:center;
+}
+
+.content-container{
+max-width:var(--content-max-width);
+width:100%;
+padding:40px 80px 180px;
+color:var(--ink-color);
+margin:0 auto;
+border-radius:8px;
+box-shadow:0 20px 60px rgba(0,0,0,0.55);
+background-image:url('../../images/content-scroll-bg.png');
+background-repeat:repeat-y;
+background-position:top center;
+background-size:100% auto;
+}
+
+.content-container h1,
+.content-container h2,
+.content-container h3{
+font-family:'Cinzel Decorative',serif;
+letter-spacing:.06em;
+}
+
+.content-container h1{
+font-size:3rem;
+text-align:center;
+margin:0 0 .75rem;
+}
+
+.content-container h2{
+font-size:2.15rem;
+margin:2.8rem 0 1.4rem;
+border-bottom:1px solid rgba(139,0,0,0.15);
+padding-bottom:.6rem;
+text-align:center;
+}
+
+.content-container h3{
+font-size:1.3rem;
+margin:2rem 0 1rem;
+text-align:center;
+}
+
+.content-container p{
+margin-bottom:1.25rem;
+}
+
+.lore-toggle{
+margin-top:2rem;
+border:1px solid var(--toggle-border);
+border-radius:10px;
+background:var(--toggle-bg);
+overflow:hidden;
+box-shadow:0 10px 24px rgba(0,0,0,0.12);
+}
+
+.lore-toggle summary{
+list-style:none;
+cursor:pointer;
+padding:1rem 1.25rem;
+font-family:'Cinzel Decorative',serif;
+font-size:1.05rem;
+color:#6b1f1f;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:.75rem;
+text-align:center;
+transition:background .25s ease, color .25s ease;
+}
+
+.lore-toggle summary::-webkit-details-marker{
+display:none;
+}
+
+.lore-toggle summary::before{
+content:"\f078";
+font-family:"Font Awesome 6 Free";
+font-weight:900;
+font-size:.9rem;
+transition:transform .25s ease;
+}
+
+.lore-toggle[open] summary::before{
+transform:rotate(180deg);
+}
+
+.lore-toggle summary:hover{
+background:var(--toggle-hover);
+color:#8b2323;
+}
+
+.lore-document{
+padding:1.5rem 1.5rem 1.25rem;
+background:var(--toggle-doc-bg);
+border-top:1px solid rgba(90,60,30,0.15);
+}
+
+.lore-document h3{
+margin-top:0;
+}
+
+footer{
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--footer-height);
+background:var(--footer-bg);
+color:#ccc;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:0 1rem;
+font-size:.95rem;
+border-top:1px solid #444;
+z-index:1000;
+}
+
+footer a{
+color:#d4a373;
+text-decoration:none;
+}
+
+footer a:hover{
+text-decoration:underline;
+}
+
+@media (max-width: 768px){
+
+nav{
+gap:1rem;
+padding:0 1rem;
+flex-wrap:wrap;
+}
+
+nav a{
+font-size:.9rem;
+letter-spacing:.08em;
+}
+
+.content-container{
+padding:36px 32px 150px;
+}
+
+.content-container h1{
+font-size:2.2rem;
+}
+
+.content-container h2{
+font-size:1.7rem;
+}
+
+.content-container h3{
+font-size:1.15rem;
+}
+}
+
+@media (max-width: 480px){
+
+body{
+font-size:1.05rem;
+}
+
+.content-container{
+padding:28px 20px 130px;
+}
+.lore-teaser {
+  margin-bottom: 20px;
+}
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+<header>
+<nav>
+<a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+<a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+<a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+<a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+<a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+
+<div class="content-container">
+
+<h1>The History of the Calendar</h1>
+
+
+
+The Resonant Calendar
+All recorded history within the Citadel is measured using the Resonant Calendar (RC). This system of dating was established alongside the founding of the First Red Citadel and remains the standard method by which scholars, archivists, and historians record the passage of time.
+Prior to the Citadel’s establishment, the peoples of Rivendawn possessed no unified system for measuring years. Tribal communities, wandering bands, and isolated settlements maintained their own seasonal traditions, but few possessed written records capable of preserving consistent chronology. As a result, events that occurred before the founding of the Citadel are difficult to place with precision, and most accounts from that distant era survive only in fragmentary oral traditions.
+The creation of the Resonant Calendar marked the restoration of systematic record keeping. With the reintroduction of writing and the establishment of a scholarly institution devoted to preserving knowledge, it became possible for historians to organize events into a coherent timeline. From this point forward, the passing of years could be measured, compared, and recorded with consistency.
+The year in which the First Red Citadel was founded is therefore designated Year 0 RC. All subsequent years are counted forward from this moment. This convention allows scholars across Rivendawn to reference events using a shared chronological framework.
+Under this system, the present day is recognized as Year 877 RC.
+Although the Resonant Calendar provides a stable foundation for historical study, it should not be assumed that every event within the timeline is known with equal clarity. Early records remain incomplete, and the Citadel continues to discover new fragments of historical information through ongoing archival work and exploration.
+Students are therefore encouraged to approach the study of history with both discipline and humility. The Resonant Calendar provides the structure through which events may be organized, but the interpretation of those events remains an evolving scholarly pursuit.
+With the establishment of the Resonant Calendar understood, we may now turn to the event that made such record keeping possible: the founding of the First Red Citadel, and the beginning of recorded history in Rivendawn.
+
+
+
+<details class="lore-toggle">
+  <summary>To read the full document, click here</summary>
+
+  <div class="lore-document">
+    
+    <p>The Resonant Calendar</p>
+
+<p>All recorded history within the Citadel is measured using the Resonant Calendar (RC). This system of dating was established alongside the founding of the First Red Citadel and remains the standard method by which scholars, archivists, and historians record the passage of time.</p>
+
+<p>Prior to the Citadel’s establishment, the peoples of Rivendawn possessed no unified system for measuring years. Tribal communities, wandering bands, and isolated settlements maintained their own seasonal traditions, but few possessed written records capable of preserving consistent chronology. As a result, events that occurred before the founding of the Citadel are difficult to place with precision, and most accounts from that distant era survive only in fragmentary oral traditions.</p>
+
+<p>The creation of the Resonant Calendar marked the restoration of systematic record keeping. With the reintroduction of writing and the establishment of a scholarly institution devoted to preserving knowledge, it became possible for historians to organize events into a coherent timeline. From this point forward, the passing of years could be measured, compared, and recorded with consistency.</p>
+
+<p>The year in which the First Red Citadel was founded is therefore designated Year 0 RC. All subsequent years are counted forward from this moment. This convention allows scholars across Rivendawn to reference events using a shared chronological framework.</p>
+
+<p>Under this system, the present day is recognized as Year 877 RC.</p>
+
+<p>Although the Resonant Calendar provides a stable foundation for historical study, it should not be assumed that every event within the timeline is known with equal clarity. Early records remain incomplete, and the Citadel continues to discover new fragments of historical information through ongoing archival work and exploration.</p>
+
+<p>Students are therefore encouraged to approach the study of history with both discipline and humility. The Resonant Calendar provides the structure through which events may be organized, but the interpretation of those events remains an evolving scholarly pursuit.</p>
+
+<p>With the establishment of the Resonant Calendar understood, we may now turn to the event that made such record keeping possible: the founding of the First Red Citadel, and the beginning of recorded history in Rivendawn.</p>
+  </div>
+</details>
+
+<p style="margin-top:20px; text-align:center;">
+<p>The Resonant Calendar organizes Rivendawn’s year into thirteen balanced months, reflecting the harmony scholars believe lies within the Song itself. Created by early Crimson Citadel librarians, it provides a unified way to mark time—guiding everything from daily speech to the study of history across the world.</p>
+</p>
+
+<details class="lore-toggle">
+  <summary>To read the full document, click here</summary>
+
+  <div class="lore-document">
+    <h3>The History and How it Works</h3>
+   <p>The Resonant Calendar divides the year into thirteen equal months of twenty-eight days, creating a clean rhythm that mirrors the measured patterns scholars believe lie beneath the Song itself. Rather than grouping similar forces together, the months intentionally alternate between elemental Paths and broader cultural concepts so that no single influence dominates the flow of the year. This arrangement reflects the belief that the world endures through balance: wind yields to water, flame follows growth, stone answers shadow, and the cycle continues.</p>
+
+<p>The system is widely believed to have been formalized by the second or third Head Librarian of the Crimson Citadel, though the records are frustratingly unclear. Early Citadel archives reference the calendar appearing during the Citadel’s formative centuries, but the exact author was either never recorded or lost among later revisions. As a result, scholars generally credit the early Librarians collectively rather than any single architect.</p>
+
+<p>In everyday speech, dates are simple and consistent—one might say, “the 21st of Ignis” or “the 4th of Terra”—and because every month holds exactly four weeks, the calendar is easy for farmers, travelers, and archivists alike to follow.</p>
+
+<p>Time within a day is traditionally spoken in four quarters, marked by the turning of the sun: High Sun (12:00), Sun’s Decline (3:00), Evening Bell (6:00), and Deep Night (9:00). Rather than precise minutes, people often say “an hour past High Sun,” “two hours before Evening Bell,” or “near Deep Night,” reflecting a culture that values the rhythm of the day more than exact measurement.</p>
+  </div>
+
+<p style="text-align:center;">
+<a href="calendar.html"
+onclick="window.open(this.href,'calendar','width=460,height=520'); return false;">
+View the Resonant Calendar
+</a>
+</p>
+
+
+</details>
+</div>
+
+</main>
+
+<footer>
+<div>
+Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+&nbsp;&nbsp;•&nbsp;&nbsp;
+© 2026 jpcauthor. All rights reserved.
+&nbsp;&nbsp;•&nbsp;&nbsp;
+<a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+</div>
+</footer>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resonant Calendar – Rivendawn</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+  margin:0;
+  padding:10px;
+  background:#d8c3a5;
+  font-family:"Crimson Text", serif;
+}
+
+.calendar-container{
+  width:420px;
+  margin:auto;
+  background:rgba(255,255,255,0.9);
+  padding:12px;
+  border-radius:10px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.35);
+}
+
+h1{
+  font-family:"Cinzel Decorative", serif;
+  text-align:center;
+  margin-bottom:10px;
+  font-size:16px;
+}
+
+.lore-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:11px;
+}
+
+.lore-table th{
+  background:#5c1e1e;
+  color:#fff;
+  padding:4px;
+  text-align:left;
+  font-family:"Cinzel Decorative", serif;
+}
+
+.lore-table td{
+  padding:4px;
+  border-bottom:1px solid rgba(0,0,0,0.2);
+  vertical-align:top;
+}
+
+.lore-table tr:nth-child(even){
+  background:rgba(255,255,255,0.35);
+}
+
+/* tighten column widths */
+
+.lore-table th:nth-child(1),
+.lore-table td:nth-child(1){
+  width:120px;
+}
+
+.lore-table th:nth-child(2),
+.lore-table td:nth-child(2){
+  width:120px;
+}
+
+.lore-table th:nth-child(3),
+.lore-table td:nth-child(3){
+  width:40px;
+  text-align:center;
+}
+
+.lore-table th:nth-child(4),
+.lore-table td:nth-child(4){
+  width:160px;
+}
+
+.close-button{
+  display:block;
+  margin:10px auto 0;
+  padding:6px 14px;
+  background:#5c1e1e;
+  color:white;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  font-family:"Cinzel Decorative", serif;
+}
+
+.close-button:hover{
+  background:#7b2a2a;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="calendar-container">
+
+<h1>Resonant Calendar</h1>
+
+<table class="lore-table">
+
+<tr>
+<th>Season</th>
+<th>Months</th>
+<th>Days</th>
+<th>Notes</th>
+</tr>
+
+<tr>
+<td><strong>Season of Renewal</strong></td>
+<td>INDOMITABLE, AERIS, WELLSPRING</td>
+<td>84</td>
+<td>Beginning of the yearly cycle; renewal and new beginnings</td>
+</tr>
+
+<tr>
+<td><strong>Season of Flow</strong></td>
+<td>AQUA, RESONANCE, IGNIS</td>
+<td>84</td>
+<td>Movement, growth, and rising activity</td>
+</tr>
+
+<tr>
+<td><strong>Season of Vitality</strong></td>
+<td>VITAE, CONCORD, TERRA</td>
+<td>84</td>
+<td>Height of life, strength, and productivity</td>
+</tr>
+
+<tr>
+<td><strong>Season of Echoes</strong></td>
+<td>ECHO, OBTENEBRATE, HARMONY</td>
+<td>84</td>
+<td>Reflection, balance, and preparation for the year's close</td>
+</tr>
+
+<tr>
+<td><strong>Season of Vigil</strong></td>
+<td>VIGIL</td>
+<td>28</td>
+<td>Final month marking the closing watch of the yearly cycle</td>
+</tr>
+
+<tr>
+<td><strong>Year Day</strong></td>
+<td>—</td>
+<td>1</td>
+<td>A universal festival day occurring after Vigil 28. This day exists outside the calendar and week structure and marks the completion of the yearly cycle.</td>
+</tr>
+
+<tr>
+<td><strong>Leap Year — Day of Reconciliation</strong></td>
+<td>—</td>
+<td>1</td>
+<td>Occurs every 4 years after Year Day. A solemn observance dedicated to forgiveness, settling grievances, renewing treaties, and restoring harmony before the new year begins.</td>
+</tr>
+
+</table>
+
+<button class="close-button" onclick="window.close()">Close</button>
+
+</div>
+
+</body>
+</html>
