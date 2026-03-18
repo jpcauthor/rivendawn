@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rivendawn — Tables Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+:root {
+  --header-height: 72px;
+  --footer-height: 72px;
+  --content-max-width: 960px;
+  --page-max-width: 1400px;
+  --ink-color: #3a2a1a;
+  --accent: #fff1d6;
+  --nav-color: #f2e3c6;
+  --nav-shadow: rgba(0,0,0,0.85);
+  --footer-bg: rgba(0,0,0,0.88);
+  --border-warm: rgba(94,62,33,0.25);
+  --gold: #c8922a;
+  --ink-mid: #4a2d18;
+  --ink-faint: rgba(58,42,26,0.45);
+  --label-bg: rgba(42,22,8,0.78);
+  --label-text: #f2e3c6;
+  --blade-bg: rgba(244,230,204,0.88);
+  --blade-border: rgba(94,62,33,0.35);
+  --blade-shadow: rgba(0,0,0,0.25);
+  --blade-hover-shadow: rgba(0,0,0,0.35);
+  --blade-title: #4a2d18;
+  --blade-desc: #5f4631;
+  --blade-glow: rgba(214,170,92,0.22);
+  --blade-accent: #7a4b25;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Crimson Text', Georgia, serif; color: var(--ink-color); min-height: 100dvh; background: #000; line-height: 1.75; font-size: 1.18rem; }
+.page-wrapper { min-height: 100dvh; display: flex; flex-direction: column; max-width: var(--page-max-width); margin: 0 auto; background-color: #000; background-image: url('images/bg.jpg'); background-size: contain; background-position: center top; background-repeat: no-repeat; background-attachment: fixed; box-shadow: 0 0 80px rgba(0,0,0,0.85); }
+header { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: min(100%, var(--page-max-width)); height: var(--header-height); background-image: url('images/header.png'); background-size: contain; background-position: center; background-repeat: no-repeat; z-index: 1000; box-shadow: 0 6px 16px rgba(0,0,0,0.5); }
+header::after { content: ""; position: absolute; left: 0; right: 0; bottom: -14px; height: 18px; background: linear-gradient(to bottom, rgba(0,0,0,0.28), rgba(0,0,0,0)); pointer-events: none; }
+nav { max-width: var(--content-max-width); width: 100%; height: 100%; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 2rem; padding: 0 1.5rem; }
+nav a { color: var(--nav-color); text-decoration: none; font-family: Consolas, "Courier New", monospace; font-size: 1.25rem; letter-spacing: 0.14em; text-transform: uppercase; transition: all .25s ease; position: relative; display: inline-flex; align-items: center; gap: .5rem; padding: .2rem .1rem; text-shadow: 0 1px 2px var(--nav-shadow), 0 0 6px rgba(0,0,0,0.45); }
+nav a i { color: inherit; font-size: 1.1rem; margin-right: 4px; position: relative; top: -1px; }
+nav a::after { content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px; background: var(--accent); transition: width .28s ease; }
+nav a:hover { color: var(--accent); transform: translateY(-1px); }
+nav a:hover::after { width: 100%; }
+main { flex: 1; margin-top: var(--header-height); padding: 3.25rem 1rem calc(var(--footer-height) + 3rem); display: flex; justify-content: center; }
+.content-container { max-width: var(--content-max-width); width: 100%; padding: 40px 80px 180px; margin: 0 auto; border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,0.55); background-image: url('images/content-scroll-bg.png'); background-repeat: repeat-y; background-position: top center; background-size: 100% auto; }
+h1 { font-family: 'Cinzel Decorative', serif; font-size: 3rem; text-align: center; margin-bottom: 0.5rem; color: var(--ink-mid); letter-spacing: .06em; }
+.page-subtitle { text-align: center; font-style: italic; color: var(--label-text); background: var(--label-bg); display: inline-block; padding: 0.25rem 1rem; border-radius: 4px; font-size: 1.05rem; margin-bottom: 2rem; width: 100%; }
+.intro-text { text-align: center; margin-bottom: 2.5rem; color: #5c3d20; font-size: 1.05rem; line-height: 1.8; }
+.archive-grid { display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0 3rem; }
+.archive-blade { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; padding: 1rem 1.5rem; text-decoration: none; color: inherit; background: linear-gradient(90deg, rgba(250,240,220,0.92) 0%, var(--blade-bg) 58%, rgba(214,189,148,0.86) 100%); border: 1px solid var(--blade-border); box-shadow: 0 12px 24px var(--blade-shadow); clip-path: polygon(0 0, 95% 0, 100% 50%, 95% 100%, 0 100%, 1.5% 50%); transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease, filter .24s ease; overflow: hidden; }
+.archive-blade::before { content: ""; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 0%, rgba(255,245,220,0.12) 35%, rgba(255,255,255,0.18) 50%, transparent 68%); transform: translateX(-120%); transition: transform .45s ease; pointer-events: none; }
+.archive-blade::after { content: ""; position: absolute; top: 0; bottom: 0; right: 0; width: 90px; background: radial-gradient(circle at center, var(--blade-glow) 0%, rgba(0,0,0,0) 70%); opacity: 0; transition: opacity .24s ease; pointer-events: none; }
+.archive-blade:hover { transform: translateX(8px) scale(1.01); box-shadow: 0 18px 34px var(--blade-hover-shadow); border-color: rgba(130,85,42,0.55); filter: saturate(1.04); }
+.archive-blade:hover::before { transform: translateX(120%); }
+.archive-blade:hover::after { opacity: 1; }
+.archive-blade-content { display: flex; flex-direction: column; min-width: 0; }
+.archive-kicker { font-size: .78rem; letter-spacing: .18em; text-transform: uppercase; font-family: Consolas, "Courier New", monospace; color: #8a6847; margin-bottom: .2rem; }
+.archive-title { font-family: 'Cinzel Decorative', serif; font-size: 1.2rem; line-height: 1.3; color: var(--blade-title); margin-bottom: .2rem; transition: color .24s ease, letter-spacing .24s ease; }
+.archive-desc { font-size: 1rem; line-height: 1.5; color: var(--blade-desc); max-width: 700px; }
+.archive-arrow { flex-shrink: 0; font-size: 1.35rem; color: var(--blade-accent); display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 50%; background: rgba(122,75,37,0.08); border: 1px solid rgba(122,75,37,0.18); transition: transform .24s ease, background .24s ease, color .24s ease, border-color .24s ease; }
+.archive-blade:hover .archive-title { color: #6b1f1f; letter-spacing: .03em; }
+.archive-blade:hover .archive-arrow { transform: translateX(4px); background: rgba(122,75,37,0.14); color: #5a2b12; border-color: rgba(122,75,37,0.3); }
+footer { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: min(100%, var(--page-max-width)); height: var(--footer-height); background: var(--footer-bg); color: #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 1rem; font-size: .95rem; border-top: 1px solid #444; z-index: 1000; }
+footer a { color: #d4a373; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+@media (max-width: 768px) { nav { gap: 1rem; padding: 0 1rem; flex-wrap: wrap; } nav a { font-size: .9rem; letter-spacing: .08em; } .content-container { padding: 36px 32px 150px; } h1 { font-size: 2.2rem; } }
+@media (max-width: 480px) { body { font-size: 1.05rem; } .content-container { padding: 28px 20px 130px; } }
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+
+<header>
+<nav>
+  <a href="../geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+  <a href="../lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+  <a href="../rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+  <a href="../create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+  <a href="main_tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+<div class="content-container">
+
+  <h1>Tables Reference</h1>
+  <p class="page-subtitle">Quick mechanical reference for Watchers and players alike.</p>
+
+  <p class="intro-text">
+    Numbers do not lie. The tables gathered here represent the mechanical foundation of Rivendawn —
+    the structured truths beneath the Song that govern what is possible, what is probable, and what
+    comes at cost. Select a section and consult the Archive.
+  </p>
+
+  <section class="archive-grid">
+
+    <a href="tables/character-creation.html" class="archive-blade">
+      <div class="archive-blade-content">
+        <span class="archive-kicker">Section I</span>
+        <span class="archive-title">Character Creation</span>
+        <span class="archive-desc">Level baselines, ability allocation, lineage bonuses, vocations, and calling durability.</span>
+      </div>
+      <span class="archive-arrow"><i class="fa-solid fa-angle-right"></i></span>
+    </a>
+
+    <a href="tables/resonance.html" class="archive-blade">
+      <div class="archive-blade-content">
+        <span class="archive-kicker">Section II</span>
+        <span class="archive-title">Resonance</span>
+        <span class="archive-desc">Wellspring pools, path allocation, resonant dice, RED scaling, band structure, and all path effect tables.</span>
+      </div>
+      <span class="archive-arrow"><i class="fa-solid fa-angle-right"></i></span>
+    </a>
+
+    <a href="tables/combat.html" class="archive-blade">
+      <div class="archive-blade-content">
+        <span class="archive-kicker">Section III</span>
+        <span class="archive-title">Combat</span>
+        <span class="archive-desc">Combat identity profiles, armor tier rules, ultimate outcomes, hybrid lanes, effect resolution flow, and defensive postures.</span>
+      </div>
+      <span class="archive-arrow"><i class="fa-solid fa-angle-right"></i></span>
+    </a>
+
+    <a href="tables/resolution-healing.html" class="archive-blade">
+      <div class="archive-blade-content">
+        <span class="archive-kicker">Section IV</span>
+        <span class="archive-title">Resolution &amp; Healing</span>
+        <span class="archive-desc">Progress thresholds, magnitude tiers, healing comparison, and death thresholds.</span>
+      </div>
+      <span class="archive-arrow"><i class="fa-solid fa-angle-right"></i></span>
+    </a>
+
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div>
+    Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    © 2026 jpcauthor. All rights reserved.
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    <a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>
