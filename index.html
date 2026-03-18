@@ -5,12 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Rivendawn Chronicles</title>
 
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
-  <!-- Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
@@ -19,30 +16,37 @@
     --footer-height: 72px;
     --content-max-width: 960px;
     --page-max-width: 1400px;
-    --ink-color: #3a2a1a;
-    --accent: #fff1d6;
+    --ink: #3a2a1a;
+    --parchment: #f5e9cf;
+    --crimson: #7a1a1a;
+    --gold: #c8973a;
+    --gold-light: #e0b965;
     --nav-color: #f2e3c6;
-    --nav-shadow: rgba(0, 0, 0, 0.85);
-    --footer-bg: rgba(0, 0, 0, 0.88);
+    --nav-shadow: rgba(0,0,0,0.85);
+    --footer-bg: rgba(0,0,0,0.92);
+    --p-parchment:     #f5ead6;
+    --p-ink:           #2a1c0e;
+    --p-ink-mid:       #4a2e06;
+    --p-ink-dim:       #3d2a0e;
+    --p-ink-faint:     #6b4a1a;
+    --p-gold:          #c8922a;
+    --p-gold-light:    #d4a84a;
+    --p-gold-pale:     #e8c87a;
+    --p-border:        rgba(74,46,6,0.20);
+    --p-border-strong: rgba(74,46,6,0.40);
   }
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
 
   body {
     font-family: 'Crimson Text', Georgia, serif;
-    color: var(--ink-color);
+    color: var(--ink);
     min-height: 100dvh;
-    background: #000;
+    background: #0a0604;
     line-height: 1.75;
     font-size: 1.18rem;
+    overflow-x: hidden;
   }
 
   .page-wrapper {
@@ -51,20 +55,20 @@
     flex-direction: column;
     max-width: var(--page-max-width);
     margin: 0 auto;
-    background-color: #000;
+    background-color: #0a0604;
     background-image: url('images/bg.jpg');
     background-size: contain;
     background-position: center top;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    box-shadow: 0 0 80px rgba(0, 0, 0, 0.85);
+    box-shadow: 0 0 120px rgba(0,0,0,0.95);
     position: relative;
   }
 
+  /* NAV */
   header {
     position: fixed;
-    top: 0;
-    left: 50%;
+    top: 0; left: 50%;
     transform: translateX(-50%);
     width: min(100%, var(--page-max-width));
     height: var(--header-height);
@@ -73,306 +77,800 @@
     background-position: center;
     background-repeat: no-repeat;
     z-index: 1000;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.7);
   }
 
   header::after {
     content: "";
     position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -14px;
-    height: 18px;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0));
+    left: 0; right: 0; bottom: -16px; height: 20px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.3), transparent);
     pointer-events: none;
   }
 
   nav {
     max-width: var(--content-max-width);
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    padding: 0 1.5rem;
+    display: flex; align-items: center; justify-content: center;
+    gap: 2rem; padding: 0 1.5rem;
   }
 
   nav a {
     color: var(--nav-color);
     text-decoration: none;
-    font-family: Consolas, "Courier New", monospace;
-    font-size: 1.25rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase;
     transition: all 0.25s ease;
     position: relative;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+    display: inline-flex; align-items: center; gap: 0.5rem;
     padding: 0.2rem 0.1rem;
-    text-shadow:
-      0 1px 2px var(--nav-shadow),
-      0 0 6px rgba(0, 0, 0, 0.45);
-  }
-
-  nav a i {
-    color: inherit;
-    font-size: 1.1rem;
-    margin-right: 4px;
-    position: relative;
-    top: -1px;
-    transition: transform 0.25s ease, text-shadow 0.25s ease;
+    text-shadow: 0 1px 3px var(--nav-shadow), 0 0 8px rgba(0,0,0,0.6);
   }
 
   nav a::after {
     content: "";
-    position: absolute;
-    left: 0;
-    bottom: -4px;
-    width: 0;
-    height: 2px;
-    background: var(--accent);
+    position: absolute; left: 0; bottom: -4px;
+    width: 0; height: 1px;
+    background: var(--gold-light);
     transition: width 0.28s ease;
   }
 
-  nav a:hover,
-  nav a:focus {
-    color: var(--accent);
-    text-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.92),
-      0 0 8px rgba(255, 220, 160, 0.45);
-    transform: translateY(-1px);
-  }
+  nav a:hover { color: var(--gold-light); transform: translateY(-1px); }
+  nav a:hover::after { width: 100%; }
 
-  nav a:hover::after,
-  nav a:focus::after {
-    width: 100%;
-  }
-
-  nav a:hover i,
-  nav a:focus i {
-    transform: scale(1.08);
-    text-shadow:
-      0 1px 2px rgba(0, 0, 0, 0.92),
-      0 0 8px rgba(255, 220, 160, 0.45);
-  }
-
+  /* MAIN */
   main {
     flex: 1;
     margin-top: var(--header-height);
-    padding: 3.25rem 1rem calc(var(--footer-height) + 3rem);
-    display: flex;
-    justify-content: center;
+    padding: 0 1rem calc(var(--footer-height) + 3rem);
+    display: flex; flex-direction: column; align-items: center;
   }
 
-  .content-container {
-    max-width: var(--content-max-width);
-    width: 100%;
-    padding: 40px 80px 180px;
-    color: var(--ink-color);
-    margin: 0 auto;
-    border-radius: 8px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
-    background-image: url('images/content-scroll-bg.png');
-    background-repeat: repeat-y;
-    background-position: top center;
-    background-size: 100% auto;
-  }
-
-  .content-container h1,
-  .content-container h2 {
-    font-family: 'Cinzel Decorative', serif;
-    color: var(--ink-color);
-    letter-spacing: 0.06em;
-    scroll-margin-top: calc(var(--header-height) + 24px);
-  }
-
-  .content-container h1 {
-    font-size: 3rem;
+  /* HERO */
+  .hero {
+    width: 100%; max-width: var(--content-max-width);
     text-align: center;
-    margin: 0 0 2.5rem;
+    padding: 5rem 2rem 3rem;
   }
 
-  .content-container h2 {
-    font-size: 2.15rem;
-    margin: 2.8rem 0 1.4rem;
-    border-bottom: 1px solid rgba(139, 0, 0, 0.15);
-    padding-bottom: 0.6rem;
-  }
-
-  .content-container p {
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0; animation: fadeUp 0.9s ease 0.2s forwards;
     margin-bottom: 1.25rem;
   }
 
-  footer {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(100%, var(--page-max-width));
-    height: var(--footer-height);
-    background: var(--footer-bg);
-    color: #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 0 1rem;
-    font-size: 0.95rem;
-    border-top: 1px solid #444;
-    z-index: 1000;
-    backdrop-filter: blur(2px);
+  .hero h1 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    color: var(--parchment); letter-spacing: 0.06em; line-height: 1.2;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.8), 0 0 40px rgba(120,60,20,0.4);
+    opacity: 0; animation: fadeUp 1s ease 0.45s forwards;
+    margin-bottom: 1.5rem;
   }
 
-  footer a {
-    color: #d4a373;
+  .hero-rule {
+    display: flex; align-items: center; justify-content: center;
+    gap: 1.25rem; margin: 0 auto 2rem; max-width: 400px;
+    opacity: 0; animation: fadeUp 0.8s ease 0.7s forwards;
+  }
+
+  .hero-rule::before, .hero-rule::after {
+    content: ""; flex: 1; height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+  }
+
+  .hero-rule i { color: var(--gold); font-size: 0.85rem; }
+
+  .hero-intro {
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.2vw, 1.35rem);
+    color: var(--parchment);
+    max-width: 700px; margin: 0 auto 2.5rem; line-height: 1.8;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+    opacity: 0; animation: fadeUp 0.9s ease 0.9s forwards;
+  }
+
+  /* HERO CTA — dark solid background so text always pops */
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--gold-light);
     text-decoration: none;
+    background: rgba(4, 2, 1, 0.82);
+    border: 1px solid rgba(200,151,58,0.6);
+    padding: 0.9rem 2.2rem;
+    border-radius: 3px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,220,120,0.07);
+    transition: all 0.3s ease;
+    opacity: 0; animation: fadeUp 0.8s ease 1.1s forwards;
+    position: relative; overflow: hidden;
   }
 
-  footer a:hover,
-  footer a:focus {
-    text-decoration: underline;
+  .hero-cta::before {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(200,151,58,0.13), transparent);
+    opacity: 0; transition: opacity 0.3s ease;
   }
 
-  @media (max-width: 900px) {
-    nav {
-      gap: 1.25rem;
-    }
+  .hero-cta:hover::before { opacity: 1; }
+  .hero-cta:hover {
+    border-color: rgba(200,151,58,0.9);
+    color: #f5d978;
+    box-shadow: 0 6px 30px rgba(0,0,0,0.75), 0 0 14px rgba(200,151,58,0.18);
+    transform: translateY(-2px);
+  }
 
-    nav a {
-      font-size: 0.92rem;
-      letter-spacing: 0.14em;
-    }
+  /* DIVIDER */
+  .section-divider {
+    display: flex; align-items: center; gap: 1.5rem;
+    max-width: var(--content-max-width); width: 100%;
+    margin: 0.5rem 0 2.5rem; padding: 0 2rem;
+  }
+
+  .section-divider::before, .section-divider::after {
+    content: ""; flex: 1; height: 1px;
+    background: linear-gradient(to right, transparent, rgba(200,151,58,0.35), transparent);
+  }
+
+  .section-divider span {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: rgba(200,151,58,0.6); white-space: nowrap;
+  }
+
+  /* LORE BLOCK */
+  .lore-block {
+    max-width: var(--content-max-width); width: 100%;
+    padding: 40px 80px 60px;
+    color: var(--ink); margin: 0 auto 2rem;
+    border-radius: 6px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(90,60,20,0.15);
+    background-image: url('images/content-scroll-bg.png');
+    background-repeat: repeat-y; background-position: top center; background-size: 100% auto;
+    opacity: 0; animation: fadeUp 1s ease 0.3s forwards;
+  }
+
+  .lore-block h2 {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    color: var(--ink); text-align: center; letter-spacing: 0.06em; margin-bottom: 0.5rem;
+  }
+
+  .lore-block .sub-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--crimson); text-align: center; display: block; margin-bottom: 2rem; opacity: 0.8;
+  }
+
+  .lore-block p { margin-bottom: 1.2rem; font-size: 1.18rem; }
+  .lore-block p:last-child { margin-bottom: 0; }
+
+  .pull-quote {
+    border-left: 3px solid var(--crimson);
+    padding: 0.75rem 1.5rem; margin: 2rem 0;
+    background: rgba(122,26,26,0.05); border-radius: 0 4px 4px 0;
+  }
+
+  .pull-quote p { font-style: italic; font-size: 1.25rem; color: var(--crimson); margin: 0; }
+
+  /* ══════════════════════════════════
+     WATCHER'S PRIMER
+  ══════════════════════════════════ */
+  .primer-wrapper {
+    max-width: var(--content-max-width); width: 100%;
+    margin: 0 auto 3rem;
+    opacity: 0; animation: fadeUp 1s ease 0.5s forwards;
+  }
+
+  .primer {
+    position: relative;
+    background: linear-gradient(180deg, #f8eed8 0%, #f2e4c4 40%, #ede0be 100%);
+    border-radius: 4px;
+    box-shadow:
+      0 0 0 1px var(--p-border),
+      0 0 0 4px rgba(200,146,42,0.07),
+      0 8px 32px rgba(42,28,14,0.22),
+      0 32px 80px rgba(42,28,14,0.30);
+    overflow: hidden;
+  }
+
+  .primer::before {
+    content: ''; display: block; height: 5px;
+    background: linear-gradient(90deg, transparent, var(--p-gold) 15%, var(--p-gold-pale) 50%, var(--p-gold) 85%, transparent);
+  }
+
+  .primer::after {
+    content: ''; display: block; height: 4px;
+    background: linear-gradient(90deg, transparent, var(--p-gold) 15%, var(--p-gold-pale) 50%, var(--p-gold) 85%, transparent);
+  }
+
+  .primer-header {
+    padding: 1.5rem 3rem 1.25rem;
+    text-align: center;
+    border-bottom: 1px solid var(--p-border);
+    position: relative;
+  }
+
+  .primer-header::after {
+    content: '✦';
+    position: absolute; bottom: -0.65rem; left: 50%;
+    transform: translateX(-50%);
+    background: #f3e7cb; padding: 0 0.7rem;
+    color: var(--p-gold); font-size: 0.7rem;
+  }
+
+  .primer-kicker {
+    font-family: 'Cinzel', serif;
+    font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase;
+    color: var(--p-ink-faint); margin-bottom: 0.6rem;
+  }
+
+  .primer-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.2rem, 2.8vw, 2rem);
+    color: var(--p-ink-mid); letter-spacing: 0.04em; line-height: 1.1; margin-bottom: 0.6rem;
+  }
+
+  .primer-watcher {
+    font-family: 'Crimson Text', serif;
+    font-style: italic; font-size: 0.92rem;
+    color: var(--p-ink-dim); max-width: 520px; margin: 0 auto; line-height: 1.6;
+  }
+
+  .primer-watcher cite {
+    display: block; margin-top: 0.3rem;
+    font-size: 0.7rem; font-style: normal;
+    font-family: 'Cinzel', serif; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--p-ink-faint);
+  }
+
+  .tab-bar {
+    display: flex; border-bottom: 1px solid var(--p-border);
+    background: rgba(200,146,42,0.06);
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+
+  .tab-btn {
+    flex: 1; min-width: 120px;
+    padding: 0.9rem 0.5rem 0.75rem;
+    border: none; background: transparent; cursor: pointer;
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--p-ink-faint);
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease; white-space: nowrap;
+  }
+
+  .tab-btn:hover { color: var(--p-ink-mid); background: rgba(200,146,42,0.05); }
+  .tab-btn.active { color: var(--p-ink-mid); border-bottom-color: var(--p-gold); background: rgba(200,146,42,0.06); }
+
+  .tab-num {
+    display: block; font-family: 'Cinzel Decorative', serif;
+    font-size: 0.9rem; color: var(--p-gold); margin-bottom: 0.2rem;
+  }
+
+  .tab-panel { display: none; padding: 2rem 2.5rem 2.5rem; animation: panelIn 0.25s ease both; }
+  .tab-panel.active { display: block; }
+
+  @keyframes panelIn {
+    from { opacity:0; transform:translateY(8px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .watcher-intro {
+    font-family: 'Crimson Text', serif;
+    font-style: italic; font-size: 1.05rem; color: var(--p-ink-dim); line-height: 1.7;
+    border-left: 3px solid var(--p-gold);
+    padding: 0.75rem 1.25rem; margin-bottom: 1.75rem;
+    background: rgba(200,146,42,0.05); border-radius: 0 4px 4px 0;
+  }
+
+  .watcher-intro strong { font-style: normal; color: var(--p-ink-mid); }
+
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 0.85rem; }
+  .card-grid.two-col   { grid-template-columns: 1fr 1fr; }
+  .card-grid.three-col { grid-template-columns: 1fr 1fr 1fr; }
+
+  .info-card {
+    background: rgba(255,248,230,0.65);
+    border: 1px solid var(--p-border);
+    border-radius: 6px; overflow: hidden;
+    transition: box-shadow 0.2s ease; position: relative;
+  }
+
+  .info-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 4px; height: 100%; border-radius: 6px 0 0 6px;
+    background: var(--p-gold); opacity: 0.5; transition: opacity 0.2s ease;
+  }
+
+  .info-card.open::before { opacity: 1; }
+  .info-card:hover { box-shadow: 0 4px 16px rgba(42,28,14,0.12); }
+
+  .info-card.limestone::before { background: #6a8a3a; }
+  .info-card.forge::before     { background: #8b3a14; }
+  .info-card.cradle::before    { background: #3a5a8a; }
+  .info-card.crimson::before   { background: #8a1a1a; }
+  .info-card.azure::before     { background: #1a5a8a; }
+  .info-card.resonance::before { background: #6a3a8a; }
+  .info-card.shadow::before    { background: #1a1a1a; }
+  .info-card.warning::before   { background: #8a4a14; }
+
+  .card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 1.1rem 0.9rem; cursor: pointer; user-select: none; gap: 0.75rem;
+  }
+
+  .card-header-left { flex: 1; }
+
+  .card-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.82rem; color: var(--p-ink-mid); letter-spacing: 0.04em; margin-bottom: 0.2rem;
+  }
+
+  .card-subtitle { font-family: 'Crimson Text', serif; font-style: italic; font-size: 0.85rem; color: var(--p-ink-faint); }
+
+  .card-chevron { font-size: 0.65rem; color: var(--p-ink-faint); transition: transform 0.22s ease; flex-shrink: 0; }
+  .info-card.open .card-chevron { transform: rotate(180deg); }
+
+  .card-body {
+    display: none; padding: 0 1.1rem 1rem;
+    border-top: 1px solid rgba(74,46,6,0.08);
+    animation: cardBodyIn 0.2s ease both;
+  }
+
+  .info-card.open .card-body { display: block; }
+
+  @keyframes cardBodyIn {
+    from { opacity:0; transform:translateY(-4px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .card-body p { font-family: 'Crimson Text', serif; font-size: 0.98rem; color: var(--p-ink-dim); line-height: 1.7; margin-top: 0.75rem; }
+  .card-body p + p { margin-top: 0.6rem; }
+
+  .card-body .watcher-quip {
+    font-style: italic; color: var(--p-ink-faint);
+    border-left: 2px solid rgba(200,146,42,0.35);
+    padding-left: 0.75rem; margin-top: 0.85rem; font-size: 0.92rem;
+  }
+
+  .card-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.75rem; }
+
+  .tag {
+    font-family: 'Cinzel', serif; font-size: 0.48rem; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 0.18rem 0.55rem; border-radius: 3px;
+    border: 1px solid var(--p-border); background: rgba(200,146,42,0.07); color: var(--p-ink-dim);
+  }
+
+  .info-card.full { grid-column: 1 / -1; }
+
+  .tab-progress {
+    display: flex; justify-content: center;
+    gap: 0.5rem; padding: 1.25rem 0 0.5rem;
+    border-top: 1px solid var(--p-border);
+  }
+
+  .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--p-border-strong); cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .dot.active { background: var(--p-gold); transform: scale(1.3); }
+
+  .tab-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.75rem 2.5rem 1.5rem;
+  }
+
+  .nav-btn {
+    appearance: none; border: none; background: transparent;
+    font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--p-ink-faint); cursor: pointer;
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.4rem 0.75rem; border-radius: 3px; border: 1px solid transparent;
+    transition: all 0.18s ease;
+  }
+
+  .nav-btn:hover:not(:disabled) { color: var(--p-ink-mid); border-color: var(--p-border); background: rgba(200,146,42,0.06); }
+  .nav-btn:disabled { opacity: 0.25; cursor: not-allowed; }
+
+  .tab-counter { font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.2em; color: var(--p-ink-faint); }
+
+  /* FOOTER */
+  footer {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: min(100%, var(--page-max-width)); height: var(--footer-height);
+    background: var(--footer-bg); color: #aaa;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 0 1rem; font-size: 0.9rem;
+    border-top: 1px solid rgba(200,151,58,0.15); z-index: 1000; backdrop-filter: blur(4px);
+  }
+
+  footer a { color: var(--gold); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   @media (max-width: 768px) {
-    :root {
-      --header-height: 92px;
-      --footer-height: 88px;
-    }
-
-    .page-wrapper {
-      background-attachment: scroll;
-    }
-
-    header,
-    footer {
-      width: 100%;
-    }
-
-    nav {
-      gap: 1rem;
-      padding: 0 1rem;
-      flex-wrap: wrap;
-    }
-
-    nav a {
-      font-size: 0.9rem;
-      letter-spacing: 0.08em;
-      gap: 0.4rem;
-    }
-
-    main {
-      padding: 2.5rem 0.75rem calc(var(--footer-height) + 2rem);
-    }
-
-    .content-container {
-      padding: 100px 40px 140px;
-    }
-
-    .content-container h1 {
-      font-size: 2.2rem;
-    }
-
-    .content-container h2 {
-      font-size: 1.7rem;
-    }
-
-    footer {
-      font-size: 0.84rem;
-      line-height: 1.4;
-    }
+    :root { --header-height: 92px; --footer-height: 88px; }
+    .page-wrapper { background-attachment: scroll; }
+    header, footer { width: 100%; }
+    nav { gap: 1rem; padding: 0 1rem; flex-wrap: wrap; }
+    nav a { font-size: 0.72rem; letter-spacing: 0.14em; }
+    .hero { padding: 3.5rem 1.5rem 2rem; }
+    .lore-block { padding: 36px 32px 50px; }
+    .primer-header { padding: 1.75rem 1.25rem 1.5rem; }
+    .tab-panel { padding: 1.5rem 1.25rem 2rem; }
+    .tab-nav { padding: 0.75rem 1.25rem 1.25rem; }
+    .card-grid.two-col, .card-grid.three-col { grid-template-columns: 1fr; }
+    footer { font-size: 0.82rem; line-height: 1.4; }
   }
 
   @media (max-width: 480px) {
-    nav {
-      gap: 0.75rem;
-    }
-
-    nav a {
-      font-size: 0.8rem;
-      letter-spacing: 0.04em;
-    }
-
-    nav a i {
-      font-size: 0.8rem;
-    }
-
-    .content-container {
-      padding: 80px 24px 110px;
-    }
-
-    .content-container h1 {
-      font-size: 1.85rem;
-    }
-
-    .content-container h2 {
-      font-size: 1.45rem;
-    }
-
-    body {
-      font-size: 1.05rem;
-    }
+    nav a { font-size: 0.66rem; letter-spacing: 0.08em; }
+    .lore-block { padding: 28px 20px 40px; }
+    body { font-size: 1.05rem; }
   }
 </style>
 </head>
 <body>
 
-  <div class="page-wrapper">
+<div class="page-wrapper">
 
-    <header>
-      <nav>
-		<a href="#geography"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
-        <a href="./lore/lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
-        <a href="./rules/rules.html"><i class="fa-solid fa-book"></i>RULES</a>
-        <a href="#create"><i class="fa-solid fa-user-pen"></i>CREATE</a>
-        <a href="#tables"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
-      </nav>
-    </header>
+  <header>
+    <nav>
+      <a href="./lore/lore.html"><i class="fa-solid fa-compass"></i>Geography</a>
+      <a href="./lore/lore.html"><i class="fa-solid fa-scroll"></i>Lore</a>
+      <a href="./rules/rules.html"><i class="fa-solid fa-book"></i>Rules</a>
+      <a href="./rules/character-creation.html"><i class="fa-solid fa-user-pen"></i>Create</a>
+      <a href="./rules/main_tables.html"><i class="fa-solid fa-dice-d20"></i>Tables</a>
+    </nav>
+  </header>
 
-    <main>
-      <div class="content-container">
-        <h1>Welcome to Rivendawn</h1>
+  <main>
 
-        <p>This is where your lore, rules, character creation, and tables will live. Scroll away — the parchment is yours.</p>
+    <!-- HERO -->
+    <section class="hero">
+      <p class="hero-eyebrow">A Tabletop Roleplaying Game</p>
+      <h1>Rivendawn Chronicles</h1>
+      <div class="hero-rule"><i class="fa-solid fa-sun"></i></div>
+      <p class="hero-intro">
+        In an age where shadows threaten to swallow the deeds of the past, civilization stands at a precipice — where centuries of rebuilding now face a reckoning older than memory.
+      </p>
+      <a href="#players-primer" class="hero-cta">
+        <i class="fa-solid fa-book-open"></i> Begin Your Study
+      </a>
+    </section>
 
-        <h2 id="lore">Lore</h2>
-        <p>Your history and world background goes here...</p>
+    <div class="section-divider"><span>The Present Age</span></div>
 
-        <h2 id="rules">Rules</h2>
-        <p>Mechanics and gameplay systems...</p>
+    <!-- LORE BLOCK -->
+    <div class="lore-block">
+      <h2>A World at the Precipice</h2>
+      <span class="sub-label">From the Citadel Archives — Department of Historical Studies</span>
 
-        <h2 id="create">Create</h2>
-        <p>Character creation tools and options...</p>
+      <p>The world of Rivendawn now stands in a time historians increasingly refer to as the Present Age. Unlike the earlier centuries following the founding of the Citadel — when civilization struggled simply to survive and rebuild — this era is defined by growing complexity, rising political tension, and a widening uncertainty about the future.</p>
 
-        <h2 id="tables">Tables</h2>
-        <p>Reference tables, charts, dice outcomes, random generators...</p>
+      <p>For nearly eight centuries after the establishment of the first Citadel, the world experienced gradual recovery. Writing returned. Trade routes expanded. Settlements grew into organized regions capable of sustaining stable populations. Institutions dedicated to the study of Resonance brought new understanding to forces that had once been feared as mysterious or uncontrollable.</p>
+
+      <div class="pull-quote"><p>Yet stability has never meant permanence.</p></div>
+
+      <p>The conflict now commonly referred to as the Citadel Schism has altered the balance of power across Rivendawn. The Crimson Citadel, once the primary guardian of history and scholarship, has grown increasingly authoritarian under the Dominus Scientiae, Grevon. Opposing this is the newly established Azure Citadel — formed by those who rejected the growing corruption, still young, still fragile, still defining itself.</p>
+
+      <p>Beyond the Citadels, the regions of Rivendawn have matured into powerful societies in their own right. The disciplined industrial strength of the Forge. The structured governance and scholarship of the Cradle. The resilient communal traditions of Limestone. Each represents a distinct answer to the question every civilization must eventually face.</p>
+
+      <p>Complicating this landscape are reports of increasingly unstable Resonant phenomena, the lingering threat of Shadowmancy, and the political consequences of the Citadel's internal fracture.</p>
+
+      <div class="pull-quote"><p>And that decision remains far from settled.</p></div>
+    </div>
+
+    <div class="section-divider"><span>Player's Primer</span></div>
+
+    <!-- WATCHER'S PRIMER -->
+<!-- WATCHER'S PRIMER -->
+<div class="primer-wrapper" id="players-primer">
+<div class="primer">
+  <div class="primer-header">
+
+        <p class="primer-kicker">Rivendawn — Player's Primer</p>
+        <h2 class="primer-title">So You Wish to Be a Hero</h2>
+        <p class="primer-watcher">
+          "You are either truly brave — or profoundly imbecilic. I have not yet decided which. That will be for you to prove."
+          <cite>— The Watcher</cite>
+        </p>
       </div>
-    </main>
 
-    <footer>
-      <div>
-        Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
-        &nbsp;&nbsp;•&nbsp;&nbsp;
-        © 2026 jpcauthor. All rights reserved.
-        &nbsp;&nbsp;•&nbsp;&nbsp;
-        <a href="https://amazon.com/rivendawn" target="_blank" rel="noopener noreferrer">Read the Novel</a>
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="0"><span class="tab-num">I</span>The World</button>
+        <button class="tab-btn" data-tab="1"><span class="tab-num">II</span>The Factions</button>
+        <button class="tab-btn" data-tab="2"><span class="tab-num">III</span>The Citadels</button>
+        <button class="tab-btn" data-tab="3"><span class="tab-num">IV</span>The Song</button>
+        <button class="tab-btn" data-tab="4"><span class="tab-num">V</span>The Warning</button>
       </div>
-    </footer>
 
-  </div>
+      <!-- TAB I -->
+      <div class="tab-panel active" id="tab-0">
+        <div class="watcher-intro">"Rivendawn is not a peaceful place. It never was. But it is a place worth understanding — before it kills you for not bothering."</div>
+        <div class="card-grid two-col">
+
+          <div class="info-card" data-card>
+            <div class="card-header"><div class="card-header-left"><p class="card-title">What Is Rivendawn?</p><p class="card-subtitle">The world you've inherited</p></div><span class="card-chevron">▼</span></div>
+            <div class="card-body">
+              <p>Rivendawn is what endured after the Great Malleability — a cataclysm so complete that the world had to rebuild itself from memory and mud. The name itself is a declaration: a new dawn, born from a world that was riven open and left to remember the wound.</p>
+              <p>Three regional powers now claim the land. Two Citadels stand apart from them. And beneath everything, the Song hums — indifferent to all of it.</p>
+              <p class="watcher-quip">"The world did not ask for heroes. It simply ran out of alternatives."</p>
+            </div>
+          </div>
+
+          <div class="info-card" data-card>
+            <div class="card-header"><div class="card-header-left"><p class="card-title">The Rivens</p><p class="card-subtitle">Wounds that never healed</p></div><span class="card-chevron">▼</span></div>
+            <div class="card-body">
+              <p>Rivens are tears in the fabric of the world — toxic, expanding, and utterly hostile to life. They melt flesh, poison water, and leave generations twisted by proximity. The land around them withers. Animals near them go hollow-eyed and frenzied.</p>
+              <p>Rivendawn takes its name from them. Every scar on the map has a Riven at its source.</p>
+              <div class="card-tags"><span class="tag">Expanding</span><span class="tag">Toxic</span><span class="tag">Linked to Shadowmancy</span></div>
+              <p class="watcher-quip">"If the air smells ancient and diseased — turn back. Nothing that enters a Riven comes back unchanged."</p>
+            </div>
+          </div>
+
+          <div class="info-card" data-card>
+            <div class="card-header"><div class="card-header-left"><p class="card-title">The Song</p><p class="card-subtitle">What powers the world</p></div><span class="card-chevron">▼</span></div>
+            <div class="card-body">
+              <p>The Song is the underlying harmonic lattice of reality. It moves through stone, water, flesh, and memory. It was present before the first Citadel was built. It will persist after the last one falls.</p>
+              <p>Those who learn to align with it — Resonant practitioners — can instruct the Song to act. They don't cast spells. They issue structured will, and the Song obeys. Within law.</p>
+              <div class="card-tags"><span class="tag">Not Magic</span><span class="tag">Not Divine</span><span class="tag">Simply What Remains</span></div>
+            </div>
+          </div>
+
+          <div class="info-card" data-card>
+            <div class="card-header"><div class="card-header-left"><p class="card-title">The Year is 877 RC</p><p class="card-subtitle">Where you are in history</p></div><span class="card-chevron">▼</span></div>
+            <div class="card-body">
+              <p>RC marks the founding of the Crimson Citadel — humanity's first organized attempt to remember itself. Everything before that is pre-history, fragments, and guesswork.</p>
+              <p>In 877 RC, the three regions are in uneasy balance. The Crimson Citadel has fallen to corruption. The Azure Citadel is young and hidden. And something is moving in the dark that none of the factions are prepared for.</p>
+              <p class="watcher-quip">"A number that pretends at order while measuring a history anything but."</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB II -->
+      <div class="tab-panel" id="tab-1">
+        <div class="watcher-intro">"Three regions. Each convinced the world would collapse without them. It has not — which is, frankly, to the world's credit rather than theirs."</div>
+        <div class="card-grid three-col">
+
+          <div class="info-card limestone" data-card>
+            <div class="card-header"><div class="card-header-left"><p class="card-title">Limestone</p><p class="card-subtitle">The Southern Bedrock</p></div><span class="card-chevron">▼</span></div>
+            <div class="card-body">
+              <p>Limestone doesn't seek power. It endures. Born from survival pacts and shared burden, its people are stoic, earthy, and fiercely loyal. They govern through a Council of Stewards chosen by reputation — no crowns, no thrones.</p>
+              <p>Their justice system erases wrongdoers from public memory entirely. In Limestone, oblivion is worse than death.</p>
+              <div class="card-tags"><span class="tag">Agricultural Power</span><span class="tag">Decentralized</span><span class="tag">Quiet Ally of the Cradle</span></div>
+              <p class="watcher-quip">"The foundation stone everyone forgets — until it cracks."</p>
+            </div>
+          </div>
+
+          <div class="info-card forge" data-card>
+            <div class="card-header"><div class="card-header-left"><p class="card-title">The Forge</p><p class="card-subtitle">The Grey Fortress</p></div><span class="card-chevron">▼</span></div>
+            <div class="card-body">
+              <p>The Forge is a machine built for war, ruled absolutely by the Iron Widow — a woman who chose her own title because tragedy wasn't fast enough. Love is weakness. Obedience is survival. Pain proves worth.</p>
+              <p>Children are subjected to brutal mountain trials. Adults are sorted by utility. Worth is determined by usefulness, not birth.</p>
+              <div class="card-tags"><span class="tag">Military-Industrial</span><span class="tag">Caste Hierarchy</span><span class="tag">Most Dangerous</span></div>
+              <p class="watcher-quip">"There is no cruelty. There is only process."</p>
+            </div>
+          </div>
+
+          <div class="info-card cradle" data-card>
+            <div class="card-header"><div class="card-header-left"><p class="card-title">The Cradle</p><p class="card-subtitle">The First City</p></div><span class="card-chevron">▼</span></div>
+            <div class="card-body">
+              <p>The Cradle leads without kings and governs without rulers. Born from observation and iteration rather than conquest, its people are highly literate, strategically minded, and merciless toward tyrants.</p>
+              <p>Its military is intentionally small and frighteningly effective. Its greatest weapon is not its army — it's its ability to shape a future fewer people must fear.</p>
+              <div class="card-tags"><span class="tag">Intellectual Heart</span><span class="tag">Council Governance</span><span class="tag">We Do Not Conquer. We End.</span></div>
+              <p class="watcher-quip">"They are insufferable. And effective."</p>
+            </div>
+          </div>
+
+          <div class="info-card full" data-card>
+            <div class="card-header"><div class="card-header-left"><p class="card-title">How They Relate</p><p class="card-subtitle">The balance that shouldn't work but does</p></div><span class="card-chevron">▼</span></div>
+            <div class="card-body">
+              <p>The Forge attacked Limestone once. Limestone bled but refused to fall. The Cradle intervened with twelve squads, six days, and no armies — dismantling the entire invasion through misinformation and sabotage. The Forge named it <em>The Shame of the Iron Widow</em> and did not forget.</p>
+              <p>The Forge's campaign against the Cradle ended when Grey left a note on the Iron Widow's pillow, written in her top lieutenant's blood: <em>"I suggest you withdraw from Limestone. — Greighton."</em> She did.</p>
+              <p class="watcher-quip">"Three parasites living within Rivendawn, each convinced that what they take makes them virtuous. They are all the same."</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB III -->
+      <div class="tab-panel" id="tab-2">
+        <div class="watcher-intro">"One has endured for centuries. The other is barely a decade old. Both matter more than either would admit."</div>
+        <div class="card-grid two-col">
+
+          <div class="info-card crimson" data-card>
+            <div class="card-header"><div class="card-header-left"><p class="card-title">The Crimson Citadel</p><p class="card-subtitle">Founded 0 RC — Corrupted by 860 RC</p></div><span class="card-chevron">▼</span></div>
+            <div class="card-body">
+              <p>The first institution to emerge after the Great Malleability. Its purpose was to preserve truth, restore literacy, and serve as the neutral anchor of civilization. For centuries, it did exactly that.</p>
+              <p>Then Grevon — the Dominus — rose through manipulation rather than merit, allowed Shadowmancy to root itself in the Citadel, and hollowed it from the inside. It is now outwardly powerful and inwardly rotten.</p>
+              <div class="card-tags"><span class="tag">Corrupted</span><span class="tag">Dangerous to Visit</span><span class="tag">Grevon Rules</span></div>
+              <p class="watcher-quip">"A library pretending still to be a sanctuary. A powder keg waiting for a spark."</p>
+            </div>
+          </div>
+
+          <div class="info-card azure" data-card>
+            <div class="card-header"><div class="card-header-left"><p class="card-title">The Azure Citadel</p><p class="card-subtitle">Founded 867 RC — Emerging 877 RC</p></div><span class="card-chevron">▼</span></div>
+            <div class="card-body">
+              <p>Born from betrayal. When Grevon purged the Vanguard after Greighton killed the corrupt Lorn Zyreth, thirty-five survivors fled under Adella Vael'Astra and founded something new — a sanctuary for truth, uncorrupted by shadow.</p>
+              <p>Led by Librarian Veysha, it seeks not dominion but restoration: free the imprisoned, expose the corruption, rebuild what the Crimson once claimed to be.</p>
+              <div class="card-tags"><span class="tag">Hidden Bastion</span><span class="tag">Azure Vanguard</span><span class="tag">Not Rebels — Remainder</span></div>
+              <p class="watcher-quip">"They are not rebels. They are what remains of the Citadel's soul, relocated and reborn."</p>
+            </div>
+          </div>
+
+          <div class="info-card full" data-card>
+            <div class="card-header"><div class="card-header-left"><p class="card-title">Thabius Azadriel</p><p class="card-subtitle">The First Librarian — The Reason Any of This Exists</p></div><span class="card-chevron">▼</span></div>
+            <div class="card-body">
+              <p>Perhaps the most powerful mind of his age. Certainly the most self-congratulatory. He founded the Crimson Citadel, refused worship with equal parts arrogance and accuracy, and five centuries ago obliterated an army of Shadowcasters in what history calls Folly's War.</p>
+              <p>He left one alive as a warning. That survivor was Grevon's ancestor. That mercy became the Citadel's doom.</p>
+              <p class="watcher-quip">"History calls him decisive. The dead might have chosen harsher language."</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB IV -->
+      <div class="tab-panel" id="tab-3">
+        <div class="watcher-intro">"The Song is not magic. It is not a gift. It is not a curse. It is <strong>what remains</strong>. And it will never go away."</div>
+        <div class="card-grid two-col">
+
+          <div class="info-card resonance" data-card>
+            <div class="card-header"><div class="card-header-left"><p class="card-title">How Resonance Works</p><p class="card-subtitle">You don't cast. You instruct.</p></div><span class="card-chevron">▼</span></div>
+            <div class="card-body">
+              <p>Resonance is the structured instruction of the Song. You align your will with a Path — a governing harmonic — and issue a precise instruction. The Song obeys. Within law.</p>
+              <p>Every practitioner carries a Wellspring — a finite reservoir. Spend it carelessly and it empties. When it empties, the connection collapses. This is not punishment. It is preservation.</p>
+              <div class="card-tags"><span class="tag">Not Limitless</span><span class="tag">Law-Bound</span><span class="tag">Clarity Required</span></div>
+            </div>
+          </div>
+
+          <div class="info-card resonance" data-card>
+            <div class="card-header"><div class="card-header-left"><p class="card-title">The Six Lawful Paths</p><p class="card-subtitle">Choose your harmonic</p></div><span class="card-chevron">▼</span></div>
+            <div class="card-body">
+              <p><strong>Aeris</strong> — Motion and displacement.<br><strong>Aqua</strong> — Absorption and flow.<br><strong>Ignis</strong> — Combustion and transformation.<br><strong>Obtenebrate</strong> — Perception and misdirection.<br><strong>Terra</strong> — Refusal and solidity.<br><strong>Vitae</strong> — Growth and adaptive correction.</p>
+              <p class="watcher-quip">"Each Path shapes behavior as much as it shapes action. Choose carefully."</p>
+            </div>
+          </div>
+
+          <div class="info-card shadow" data-card>
+            <div class="card-header"><div class="card-header-left"><p class="card-title">Shadowmancy</p><p class="card-subtitle">The unlawful path — do not.</p></div><span class="card-chevron">▼</span></div>
+            <div class="card-body">
+              <p>Shadowmancy is not a Path. It is a failure state. It does not harmonize with the Song — it negates it. It extracts without renewal. It destabilizes what it touches.</p>
+              <p>Those drawn to it often believe themselves exceptional. History records them as missing.</p>
+              <div class="card-tags"><span class="tag">Forbidden</span><span class="tag">Unlawful</span><span class="tag">Unavailable at Creation</span></div>
+            </div>
+          </div>
+
+          <div class="info-card resonance" data-card>
+            <div class="card-header"><div class="card-header-left"><p class="card-title">What Resonance Cannot Do</p><p class="card-subtitle">The laws are not suggestions</p></div><span class="card-chevron">▼</span></div>
+            <div class="card-body">
+              <p>Vitae cannot kill. Aeris cannot anchor. Terra cannot flow. Ignis cannot preserve. Aqua cannot erase what it absorbs. Obtenebrate cannot dominate through open force.</p>
+              <p>Resonance accelerates what is already possible. It does not create impossibility.</p>
+              <p class="watcher-quip">"Attempt to bend a First Law and the Song resists you — not because it judges, but because it was never designed to do what you are asking."</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- TAB V -->
+      <div class="tab-panel" id="tab-4">
+        <div class="watcher-intro">"You have been paying attention. I can tell because you are still here. That either speaks well of you — or poorly of your survival instincts."</div>
+        <div class="card-grid two-col">
+
+          <div class="info-card warning" data-card>
+            <div class="card-header"><div class="card-header-left"><p class="card-title">Names to Remember</p><p class="card-subtitle">History was shaped by these hands</p></div><span class="card-chevron">▼</span></div>
+            <div class="card-body">
+              <p><strong>Greighton (Grey)</strong> — Former Captain of the Vanguard's Redoubt. Shadow Hunter. The most dangerous man in the realm and the one most likely to be standing between you and something worse.</p>
+              <p><strong>Ranessa Barkroot</strong> — Arch Druid's daughter. Warrior. The woman who has routinely stymied the Forge's campaigns through sheer refusal to be stopped.</p>
+              <p><strong>Grevon — the Dominus</strong> — The despot of the Crimson Citadel. The man who took mercy as an invitation.</p>
+              <p><strong>Sune</strong> — A young woman who woke barefoot in an abandoned farm and does not yet know what she is. The world's balance currently depends on her.</p>
+            </div>
+          </div>
+
+          <div class="info-card warning" data-card>
+            <div class="card-header"><div class="card-header-left"><p class="card-title">What No One Will Tell You</p><p class="card-subtitle">Read this carefully</p></div><span class="card-chevron">▼</span></div>
+            <div class="card-body">
+              <p>The three regions are not your friends. They are your context. They will use you, reward you, and abandon you in roughly that order.</p>
+              <p>The Song does not reward virtue. It does not punish corruption. It reveals. When you reach for it in rage, your instability magnifies. When you reach for it in clarity, it answers cleanly.</p>
+              <p class="watcher-quip">"It is not foolish to wish to be a hero. It is, however, catastrophically foolish to fail at being one."</p>
+            </div>
+          </div>
+
+          <div class="info-card full" data-card>
+            <div class="card-header"><div class="card-header-left"><p class="card-title">The Watcher's Farewell</p><p class="card-subtitle">Go on, then.</p></div><span class="card-chevron">▼</span></div>
+            <div class="card-body">
+              <p>I have told you what you need. The rest — the details, the dangers, the names you will add to the annals — those are yours to discover. Or to become.</p>
+              <p>I will be watching. I always am. Whether I record your victories or your failures in the annals of Rivendawn depends entirely on what you do next.</p>
+              <p>May the Indomitable guide you in the manner it alone understands.</p>
+              <p class="watcher-quip">"And perhaps — only perhaps — this will not be our final conversation."</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="tab-progress">
+        <div class="dot active" data-dot="0"></div>
+        <div class="dot" data-dot="1"></div>
+        <div class="dot" data-dot="2"></div>
+        <div class="dot" data-dot="3"></div>
+        <div class="dot" data-dot="4"></div>
+      </div>
+
+      <div class="tab-nav">
+        <button class="nav-btn" id="prevBtn" disabled>← Previous</button>
+        <span class="tab-counter" id="tabCounter">Section I of V</span>
+        <button class="nav-btn" id="nextBtn">Next →</button>
+      </div>
+
+    </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div>
+      <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+      &nbsp;&nbsp;•&nbsp;&nbsp;
+      © 2026 jpcauthor. All rights reserved.
+      &nbsp;&nbsp;•&nbsp;&nbsp;
+      <a href="https://amazon.com/rivendawn" target="_blank" rel="noopener noreferrer">Read the Novel</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+const tabs    = document.querySelectorAll('.tab-btn');
+const panels  = document.querySelectorAll('.tab-panel');
+const dots    = document.querySelectorAll('.dot');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const counter = document.getElementById('tabCounter');
+const romans  = ['I','II','III','IV','V'];
+let current   = 0;
+
+function goTo(n) {
+  tabs[current].classList.remove('active');
+  panels[current].classList.remove('active');
+  dots[current].classList.remove('active');
+  current = n;
+  tabs[current].classList.add('active');
+  panels[current].classList.add('active');
+  dots[current].classList.add('active');
+  prevBtn.disabled = current === 0;
+  nextBtn.disabled = current === tabs.length - 1;
+  counter.textContent = `Section ${romans[current]} of V`;
+}
+
+tabs.forEach(btn => btn.addEventListener('click', () => goTo(parseInt(btn.dataset.tab))));
+dots.forEach(dot => dot.addEventListener('click', () => goTo(parseInt(dot.dataset.dot))));
+prevBtn.addEventListener('click', () => { if (current > 0) goTo(current - 1); });
+nextBtn.addEventListener('click', () => { if (current < tabs.length - 1) goTo(current + 1); });
+
+document.querySelectorAll('[data-card]').forEach(card => {
+  card.querySelector('.card-header').addEventListener('click', () => card.classList.toggle('open'));
+});
+</script>
 
 </body>
 </html>
