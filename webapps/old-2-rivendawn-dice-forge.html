@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rivendawn Dice Forge</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --parchment:      #f5ead6;
+  --parchment-deep: #ede0c4;
+  --parchment-dark: #e0cfa8;
+  --ink:            #2a1c0e;
+  --ink-mid:        #4a2e06;
+  --ink-dim:        #7a5a30;
+  --ink-faint:      #a08050;
+  --gold:           #c8922a;
+  --gold-light:     #d4a84a;
+  --gold-pale:      #e8c87a;
+  --gold-glow:      rgba(200,146,42,0.35);
+  --border:         rgba(74,46,6,0.22);
+  --border-strong:  rgba(74,46,6,0.42);
+  --shadow-warm:    rgba(42,28,14,0.18);
+  --danger:         #8b2a2a;
+  --danger-bg:      rgba(139,42,42,0.10);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { min-height: 100vh; }
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(200,146,42,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 100%, rgba(160,120,60,0.10) 0%, transparent 50%),
+    linear-gradient(160deg, #1a1006 0%, #0e0804 100%);
+  min-height: 100vh;
+  padding: 2rem 1rem 4rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+/* ── Forge shell ── */
+.forge {
+  position: relative;
+  z-index: 1;
+  width: min(960px, 100%);
+  background: linear-gradient(180deg, #f8eed8 0%, #f2e4c4 40%, #ede0be 100%);
+  border-radius: 4px;
+  box-shadow:
+    0 0 0 1px var(--border),
+    0 0 0 4px rgba(200,146,42,0.08),
+    0 2px 8px rgba(42,28,14,0.12),
+    0 8px 32px rgba(42,28,14,0.22),
+    0 32px 80px rgba(42,28,14,0.28);
+  overflow: hidden;
+  animation: pageReveal 0.6s ease both;
+}
+
+@keyframes pageReveal {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.forge::before {
+  content: '';
+  display: block;
+  height: 5px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold) 15%, var(--gold-pale) 50%, var(--gold) 85%, transparent 100%);
+}
+
+/* ── Header ── */
+.forge-header {
+  padding: 2.5rem 3.5rem 2rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.forge-header::after {
+  content: '✦';
+  position: absolute;
+  bottom: -0.7rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #f3e7cb;
+  padding: 0 0.75rem;
+  color: var(--gold);
+  font-size: 0.75rem;
+}
+
+.forge-kicker {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.75rem;
+}
+
+.forge-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  color: var(--ink-mid);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+
+.forge-watcher {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-dim);
+  max-width: 540px;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+
+.forge-watcher cite {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  font-style: normal;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ── Body ── */
+.forge-body {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+}
+
+/* ── Controls ── */
+.forge-controls {
+  padding: 2rem 1.75rem;
+  border-right: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(200,146,42,0.04), transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.field-label {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.35rem;
+  margin-bottom: 0.85rem;
+}
+
+/* ── Die type selector ── */
+.die-type-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.45rem;
+}
+
+.die-opt { position: relative; }
+.die-opt input { position: absolute; opacity: 0; pointer-events: none; }
+
+.die-opt label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.25rem;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: rgba(255,248,230,0.5);
+  cursor: pointer;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.62rem;
+  color: var(--ink-dim);
+  transition: all 0.18s ease;
+  user-select: none;
+  text-align: center;
+}
+
+.die-opt label:hover {
+  background: rgba(200,146,42,0.08);
+  border-color: rgba(200,146,42,0.4);
+  color: var(--ink-mid);
+}
+
+.die-opt input:checked + label {
+  background: linear-gradient(180deg, rgba(200,146,42,0.18), rgba(200,146,42,0.08));
+  border-color: var(--gold);
+  color: var(--ink-mid);
+  box-shadow: inset 0 1px 0 rgba(255,240,180,0.4);
+}
+
+/* d100 spanning full width */
+.die-opt.full { grid-column: 1 / -1; }
+
+/* ── Pool size ── */
+.pool-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.4rem;
+}
+
+.pool-opt { position: relative; }
+.pool-opt input { position: absolute; opacity: 0; pointer-events: none; }
+
+.pool-opt label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: rgba(255,248,230,0.5);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  color: var(--ink-dim);
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.pool-opt label:hover {
+  background: rgba(200,146,42,0.08);
+  border-color: rgba(200,146,42,0.4);
+  color: var(--ink-mid);
+}
+
+.pool-opt input:checked + label {
+  background: linear-gradient(180deg, rgba(200,146,42,0.18), rgba(200,146,42,0.08));
+  border-color: var(--gold);
+  color: var(--ink-mid);
+}
+
+.pool-opt.disabled label {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Buttons ── */
+.btn {
+  appearance: none;
+  border: none;
+  border-radius: 4px;
+  padding: 0.8rem 1rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  width: 100%;
+}
+.btn:hover:not(:disabled) { transform: translateY(-1px); }
+.btn:active:not(:disabled) { transform: translateY(0); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-primary {
+  background: linear-gradient(180deg, #c8922a, #a87018);
+  color: #fff8e8;
+  box-shadow: 0 2px 8px rgba(200,146,42,0.3), inset 0 1px 0 rgba(255,240,180,0.2);
+  margin-bottom: 0.45rem;
+}
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(180deg, #d4a030, #b87c20);
+  box-shadow: 0 4px 14px rgba(200,146,42,0.4);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--ink-dim);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(74,46,6,0.05);
+  color: var(--ink-mid);
+  border-color: var(--border-strong);
+}
+
+/* Rule card */
+.rule-card {
+  background: rgba(200,146,42,0.06);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 4px 4px 0;
+  padding: 0.85rem 1rem;
+  font-family: 'Crimson Text', serif;
+  font-size: 0.88rem;
+  color: var(--ink-dim);
+  line-height: 1.65;
+}
+
+.rule-card strong { color: var(--ink-mid); }
+
+/* ── Results panel ── */
+.forge-results {
+  padding: 2rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Dice stage ── */
+.dice-stage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  align-items: flex-end;
+  min-height: 120px;
+}
+
+/* ── Individual die ── */
+.die-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  transition: opacity 0.2s ease;
+}
+
+.die {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  border: 2px solid var(--border-strong);
+  background: linear-gradient(160deg, #fff8ee, #f0e2c0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.6),
+    0 3px 8px rgba(42,28,14,0.15);
+  transition: all 0.25s ease;
+}
+
+.die-face {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.9rem;
+  color: var(--ink-mid);
+  line-height: 1;
+  transition: color 0.2s ease;
+  user-select: none;
+}
+
+.die-rank {
+  font-family: 'Cinzel', serif;
+  font-size: 0.5rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* Winner state */
+.die-wrap.winner .die {
+  border-color: var(--gold);
+  background: linear-gradient(160deg, #fff8e8, #fcebc0);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.7),
+    0 0 0 1px rgba(200,146,42,0.3),
+    0 0 18px rgba(200,146,42,0.3),
+    0 4px 12px rgba(42,28,14,0.15);
+  transform: translateY(-4px);
+}
+
+.die-wrap.winner .die-face {
+  color: var(--gold);
+}
+
+.die-wrap.winner .die-rank {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* Loser state */
+.die-wrap.loser .die {
+  opacity: 0.55;
+}
+.die-wrap.loser .die-face {
+  color: var(--ink-faint);
+}
+
+/* Rolling animation */
+.die-wrap.rolling .die {
+  animation: dieShake 0.15s linear infinite;
+  border-color: rgba(200,146,42,0.5);
+}
+
+@keyframes dieShake {
+  0%   { transform: translate(0,0) rotate(0deg); }
+  20%  { transform: translate(-2px,1px) rotate(-2deg); }
+  40%  { transform: translate(2px,-1px) rotate(2deg); }
+  60%  { transform: translate(-1px,2px) rotate(-1deg); }
+  80%  { transform: translate(2px,1px) rotate(1deg); }
+  100% { transform: translate(0,0) rotate(0deg); }
+}
+
+/* d100 special — two wide dice side by side */
+.die.d100-tens,
+.die.d100-units {
+  width: 90px;
+}
+
+.d100-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.45rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 0.15rem;
+}
+
+/* ── Result block ── */
+.result-block {
+  border-top: 1px solid var(--border);
+  padding-top: 1.25rem;
+}
+
+.result-eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.5rem;
+}
+
+.result-main {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: var(--ink-mid);
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+  animation: resultIn 0.3s ease both;
+}
+
+@keyframes resultIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.result-detail {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink-dim);
+  line-height: 1.6;
+  min-height: 1.5rem;
+}
+
+.snake-badge {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 3px;
+  border: 1px solid rgba(139,42,42,0.35);
+  background: var(--danger-bg);
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--danger);
+}
+
+/* ── History ── */
+.history-block {
+  border-top: 1px solid var(--border);
+  padding-top: 1.25rem;
+}
+
+.history-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.75rem;
+}
+
+.history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.history-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(74,46,6,0.07);
+  font-family: 'Crimson Text', serif;
+  font-size: 0.95rem;
+  color: var(--ink-dim);
+  animation: historyIn 0.2s ease both;
+}
+
+.history-list li:last-child { border-bottom: none; }
+.history-list li::before {
+  content: '·';
+  color: var(--gold);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+@keyframes historyIn {
+  from { opacity: 0; transform: translateX(-4px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Footer ── */
+.forge-footer {
+  padding: 1rem 3.5rem 1.5rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  background: rgba(200,146,42,0.03);
+}
+
+.forge::after {
+  content: '';
+  display: block;
+  height: 4px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold) 15%, var(--gold-pale) 50%, var(--gold) 85%, transparent 100%);
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .forge-body { grid-template-columns: 1fr; }
+  .forge-controls { border-right: none; border-bottom: 1px solid var(--border); }
+  .forge-header { padding: 2rem 1.5rem 1.75rem; }
+  .forge-controls, .forge-results { padding: 1.75rem 1.5rem; }
+  .forge-footer { padding: 1rem 1.5rem; }
+}
+
+@media (max-width: 420px) {
+  .die { width: 68px; height: 68px; }
+  .die-face { font-size: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="forge">
+
+  <header class="forge-header">
+    <p class="forge-kicker">Rivendawn Utility — Dice Registry</p>
+    <h1 class="forge-title">The Dice Forge</h1>
+    <p class="forge-watcher">
+      "Fate is not random. It is merely indifferent to your preferences."
+      <cite>— The Watcher, Entry 211</cite>
+    </p>
+  </header>
+
+  <div class="forge-body">
+
+    <!-- ── Controls ── -->
+    <aside class="forge-controls">
+
+      <div>
+        <span class="field-label">Die Type</span>
+        <div class="die-type-grid">
+          <div class="die-opt">
+            <input type="radio" id="dt-d4"   name="dietype" value="4" />
+            <label for="dt-d4">d4</label>
+          </div>
+          <div class="die-opt">
+            <input type="radio" id="dt-d6"   name="dietype" value="6" />
+            <label for="dt-d6">d6</label>
+          </div>
+          <div class="die-opt">
+            <input type="radio" id="dt-d8"   name="dietype" value="8" checked />
+            <label for="dt-d8">d8</label>
+          </div>
+          <div class="die-opt">
+            <input type="radio" id="dt-d10"  name="dietype" value="10" />
+            <label for="dt-d10">d10</label>
+          </div>
+          <div class="die-opt">
+            <input type="radio" id="dt-d12"  name="dietype" value="12" />
+            <label for="dt-d12">d12</label>
+          </div>
+          <div class="die-opt">
+            <input type="radio" id="dt-d20"  name="dietype" value="20" />
+            <label for="dt-d20">d20</label>
+          </div>
+          <div class="die-opt full">
+            <input type="radio" id="dt-d100" name="dietype" value="100" />
+            <label for="dt-d100">d100 — Percentile</label>
+          </div>
+        </div>
+      </div>
+
+      <div id="poolSection">
+        <span class="field-label">Dice in Pool</span>
+        <div class="pool-row">
+          <div class="pool-opt">
+            <input type="radio" id="pool-1" name="poolsize" value="1" />
+            <label for="pool-1">1</label>
+          </div>
+          <div class="pool-opt">
+            <input type="radio" id="pool-2" name="poolsize" value="2" checked />
+            <label for="pool-2">2</label>
+          </div>
+          <div class="pool-opt">
+            <input type="radio" id="pool-3" name="poolsize" value="3" />
+            <label for="pool-3">3</label>
+          </div>
+          <div class="pool-opt">
+            <input type="radio" id="pool-4" name="poolsize" value="4" />
+            <label for="pool-4">4</label>
+          </div>
+          <div class="pool-opt">
+            <input type="radio" id="pool-5" name="poolsize" value="5" />
+            <label for="pool-5">5</label>
+          </div>
+          <div class="pool-opt">
+            <input type="radio" id="pool-6" name="poolsize" value="6" />
+            <label for="pool-6">6</label>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button class="btn btn-primary"    id="rollBtn">Cast the Dice</button>
+        <button class="btn btn-secondary"  id="copyBtn">Copy Result</button>
+      </div>
+
+      <div class="rule-card" id="ruleCard">
+        <strong>Standard Roll:</strong> Roll the pool, take the highest die, divide by 2, round down. That is your Rating.
+      </div>
+
+    </aside>
+
+    <!-- ── Results ── -->
+    <section class="forge-results">
+
+      <div class="dice-stage" id="diceStage">
+        <!-- Dice rendered here by JS -->
+      </div>
+
+      <div class="result-block">
+        <p class="result-eyebrow" id="resultEyebrow">Result</p>
+        <p class="result-main"   id="resultMain">—</p>
+        <p class="result-detail" id="resultDetail">Select your die type and pool, then cast.</p>
+        <div id="snakeBadge" class="snake-badge" style="display:none;">Snake Eyes</div>
+      </div>
+
+      <div class="history-block">
+        <p class="history-label">Recent Rolls</p>
+        <ul class="history-list" id="historyList">
+          <li>Waiting for first roll…</li>
+        </ul>
+      </div>
+
+    </section>
+  </div>
+
+  <footer class="forge-footer">
+    Rivendawn Dice Forge &nbsp;·&nbsp; Single-file utility &nbsp;·&nbsp; No dependencies
+  </footer>
+
+</div>
+
+<script>
+const rollBtn      = document.getElementById("rollBtn");
+const copyBtn      = document.getElementById("copyBtn");
+const diceStage    = document.getElementById("diceStage");
+const resultEyebrow = document.getElementById("resultEyebrow");
+const resultMain   = document.getElementById("resultMain");
+const resultDetail = document.getElementById("resultDetail");
+const snakeBadge   = document.getElementById("snakeBadge");
+const historyList  = document.getElementById("historyList");
+const poolSection  = document.getElementById("poolSection");
+const ruleCard     = document.getElementById("ruleCard");
+
+let isRolling = false;
+let history   = [];
+let lastResult = null;
+
+const romanNumerals = ["I","II","III","IV","V","VI","VII","VIII","IX","X"];
+
+function getDieType()  { return parseInt(document.querySelector('input[name="dietype"]:checked').value); }
+function getPoolSize() { return parseInt(document.querySelector('input[name="poolsize"]:checked').value); }
+
+function rollDie(sides) { return Math.floor(Math.random() * sides) + 1; }
+
+function calcRating(highest) { return Math.max(1, Math.floor(highest / 2)); }
+
+/* ── Build the dice stage ── */
+function buildStage(count, isPercentile) {
+  diceStage.innerHTML = "";
+
+  if (isPercentile) {
+    // Two dice: tens + units
+    ["tens","units"].forEach(part => {
+      const wrap = document.createElement("div");
+      wrap.className = "die-wrap";
+      wrap.id = `wrap-${part}`;
+
+      const die = document.createElement("div");
+      die.className = "die";
+      die.id = `die-${part}`;
+
+      const face = document.createElement("div");
+      face.className = "die-face";
+      face.id = `face-${part}`;
+      face.textContent = part === "tens" ? "00" : "0";
+
+      const label = document.createElement("div");
+      label.className = "d100-label";
+      label.textContent = part === "tens" ? "Tens" : "Units";
+
+      die.appendChild(face);
+      wrap.appendChild(die);
+      wrap.appendChild(label);
+      diceStage.appendChild(wrap);
+    });
+    return;
+  }
+
+  for (let i = 0; i < count; i++) {
+    const wrap = document.createElement("div");
+    wrap.className = "die-wrap";
+    wrap.id = `wrap-${i}`;
+
+    const die = document.createElement("div");
+    die.className = "die";
+    die.id = `die-${i}`;
+
+    const face = document.createElement("div");
+    face.className = "die-face";
+    face.id = `face-${i}`;
+    face.textContent = "—";
+
+    const rank = document.createElement("div");
+    rank.className = "die-rank";
+    rank.id = `rank-${i}`;
+
+    die.appendChild(face);
+    wrap.appendChild(die);
+    wrap.appendChild(rank);
+    diceStage.appendChild(wrap);
+  }
+}
+
+/* ── Animate and resolve ── */
+async function animateRoll() {
+  if (isRolling) return;
+  isRolling = true;
+  rollBtn.disabled = true;
+  copyBtn.disabled = true;
+  snakeBadge.style.display = "none";
+
+  const sides      = getDieType();
+  const isPercentile = sides === 100;
+  const poolSize   = isPercentile ? 2 : getPoolSize();
+
+  buildStage(poolSize, isPercentile);
+
+  // Clear winner/loser states
+  diceStage.querySelectorAll(".die-wrap").forEach(w => {
+    w.classList.remove("winner","loser");
+    w.classList.add("rolling");
+  });
+
+  // Rumble ticks
+  const ticks = 10 + Math.floor(Math.random() * 5);
+  await new Promise(resolve => {
+    let t = 0;
+    const interval = setInterval(() => {
+      if (isPercentile) {
+        document.getElementById("face-tens").textContent  = (Math.floor(Math.random() * 10) * 10).toString().padStart(2,"0");
+        document.getElementById("face-units").textContent = Math.floor(Math.random() * 10).toString();
+      } else {
+        for (let i = 0; i < poolSize; i++) {
+          document.getElementById(`face-${i}`).textContent = rollDie(sides);
+        }
+      }
+      t++;
+      if (t >= ticks) { clearInterval(interval); resolve(); }
+    }, 85);
+  });
+
+  // Final values
+  diceStage.querySelectorAll(".die-wrap").forEach(w => w.classList.remove("rolling"));
+
+  if (isPercentile) {
+    resolvePercentile();
+  } else {
+    resolveStandard(sides, poolSize);
+  }
+
+  isRolling = false;
+  rollBtn.disabled = false;
+  copyBtn.disabled = false;
+}
+
+function resolvePercentile() {
+  const tensVal  = Math.floor(Math.random() * 10) * 10;
+  const unitsVal = Math.floor(Math.random() * 10);
+  const total    = tensVal === 0 && unitsVal === 0 ? 100 : tensVal + unitsVal;
+
+  document.getElementById("face-tens").textContent  = tensVal.toString().padStart(2, "0");
+  document.getElementById("face-units").textContent = unitsVal.toString();
+
+  // Both dice are "equal" on percentile — highlight both
+  document.getElementById("wrap-tens").classList.add("winner");
+  document.getElementById("wrap-units").classList.add("winner");
+
+  resultEyebrow.textContent = "Percentile Result";
+
+  // Reset animation
+  resultMain.style.animation = "none";
+  resultMain.offsetHeight;
+  resultMain.style.animation = "";
+  resultMain.textContent = total.toString();
+
+  resultDetail.textContent = `Tens: ${tensVal.toString().padStart(2,"0")} + Units: ${unitsVal} = ${total}. Read it and weep — or rejoice. That's your result.`;
+
+  const entry = `d100 → ${total}`;
+  lastResult = entry;
+  addHistory(entry);
+}
+
+function resolveStandard(sides, poolSize) {
+  const rolls = [];
+  for (let i = 0; i < poolSize; i++) rolls.push(rollDie(sides));
+
+  const indexed = rolls.map((v, i) => ({ v, i }));
+  const sorted  = [...indexed].sort((a, b) => b.v - a.v);
+  const highest = sorted[0].v;
+  const rollStr = sorted.map(item => item.v).join(", ");
+
+  sorted.forEach((item, rankIdx) => {
+    document.getElementById(`face-${item.i}`).textContent = item.v;
+    document.getElementById(`rank-${item.i}`).textContent = poolSize > 1 ? romanNumerals[rankIdx] : "";
+  });
+
+  indexed.forEach(item => {
+    const wrap = document.getElementById(`wrap-${item.i}`);
+    if (poolSize === 1 || item.v === highest) wrap.classList.add("winner");
+    else wrap.classList.add("loser");
+  });
+
+  const winnerWraps = sorted.filter(item => item.v === highest).map(item => document.getElementById(`wrap-${item.i}`));
+  const loserWraps  = sorted.filter(item => item.v !== highest).map(item => document.getElementById(`wrap-${item.i}`));
+  [...winnerWraps, ...loserWraps].forEach(w => diceStage.appendChild(w));
+
+  const is2d8       = (sides === 8 && poolSize === 2);
+  const isSnakeEyes = rolls.every(r => r === 1);
+
+  resultMain.style.animation = "none";
+  resultMain.offsetHeight;
+  resultMain.style.animation = "";
+
+  if (is2d8) {
+    // Rating result — 2d8 only
+    const rating = isSnakeEyes ? 1 : calcRating(highest);
+    snakeBadge.style.display   = isSnakeEyes ? "inline-block" : "none";
+    resultEyebrow.textContent  = "Highest Die — Rating";
+    resultMain.textContent     = `Rating ${rating}`;
+    resultDetail.textContent   = isSnakeEyes
+      ? `Snake Eyes — both dice landed on 1. Rating locked at 1. The Song is not impressed.`
+      : `Rolled ${rollStr} — highest is ${highest}. ${highest} / 2 rounded down = Rating ${rating}.`;
+    const entry = `2d8 — [${rollStr}] — Highest: ${highest} — Rating ${rating}`;
+    lastResult  = `Rating ${rating} — ${resultDetail.textContent}`;
+    addHistory(entry);
+  } else {
+    // Raw result — all other configurations
+    snakeBadge.style.display  = "none";
+    resultEyebrow.textContent = poolSize > 1 ? "Highest Die" : "Result";
+    resultMain.textContent    = highest.toString();
+    resultDetail.textContent  = poolSize === 1
+      ? `Rolled ${rolls[0]} on a d${sides}.`
+      : `Rolled ${rollStr} — highest is ${highest}.`;
+    const entry = `${poolSize}d${sides} — [${rollStr}] — Highest: ${highest}`;
+    lastResult  = `${poolSize}d${sides}: [${rollStr}] — Highest: ${highest}`;
+    addHistory(entry);
+  }
+}
+
+function addHistory(entry) {
+  history.unshift(entry);
+  history = history.slice(0, 8);
+  historyList.innerHTML = "";
+  history.forEach((item, idx) => {
+    const li = document.createElement("li");
+    li.style.animationDelay = `${idx * 0.03}s`;
+    li.textContent = item;
+    historyList.appendChild(li);
+  });
+}
+
+/* ── d100: lock pool selector, update rule card ── */
+function handleDieTypeChange() {
+  const sides = getDieType();
+  const isPercentile = sides === 100;
+
+  poolSection.style.opacity = isPercentile ? "0.4" : "1";
+  poolSection.style.pointerEvents = isPercentile ? "none" : "auto";
+
+  if (isPercentile) {
+    ruleCard.innerHTML = `<strong>Percentile Roll:</strong> Two d10s — tens die (00, 10, 20… 90) plus units die (0–9). Read them together. 00 + 0 = 100. No shortcuts. Do the math.`;
+  } else {
+    const pool = getPoolSize();
+    const is2d8 = (sides === 8 && pool === 2);
+    if (is2d8) {
+      ruleCard.innerHTML = `<strong>Primary Rating Roll:</strong> Roll 2d8, take the highest die, divide by 2, round down. That is your Rating.`;
+    } else if (pool === 1) {
+      ruleCard.innerHTML = `<strong>Single Die:</strong> Roll 1d${sides}. Highest shown in gold.`;
+    } else {
+      ruleCard.innerHTML = `<strong>Pool Roll:</strong> Roll ${pool}d${sides}, highest die shown in gold. Results sorted high to low.`;
+    }
+  }
+
+  buildStage(isPercentile ? 2 : getPoolSize(), isPercentile);
+}
+
+function handlePoolChange() {
+  const sides = getDieType();
+  const pool  = getPoolSize();
+  const is2d8 = (sides === 8 && pool === 2);
+  if (is2d8) {
+    ruleCard.innerHTML = `<strong>Primary Rating Roll:</strong> Roll 2d8, take the highest die, divide by 2, round down. That is your Rating.`;
+  } else {
+    ruleCard.innerHTML = `<strong>Pool Roll:</strong> Roll ${pool}d${sides}, highest die shown in gold. Results sorted high to low.`;
+  }
+  buildStage(pool, false);
+}
+
+document.querySelectorAll('input[name="dietype"]').forEach(el => el.addEventListener("change", handleDieTypeChange));
+document.querySelectorAll('input[name="poolsize"]').forEach(el => el.addEventListener("change", handlePoolChange));
+
+rollBtn.addEventListener("click", animateRoll);
+
+copyBtn.addEventListener("click", async () => {
+  if (!lastResult) return;
+  try {
+    await navigator.clipboard.writeText(lastResult);
+    resultDetail.textContent = `Copied to scroll. ${resultDetail.textContent}`;
+  } catch {
+    resultDetail.textContent = "Clipboard unavailable — your result remains above.";
+  }
+});
+
+// Init
+handleDieTypeChange();
+</script>
+</body>
+</html>

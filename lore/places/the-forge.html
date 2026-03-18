@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Forge</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- Styles -->
+<style>
+
+:root {
+--header-height: 72px;
+--footer-height: 72px;
+--content-max-width: 960px;
+--page-max-width: 1400px;
+--ink-color: #3a2a1a;
+--accent: #fff1d6;
+--nav-color: #f2e3c6;
+--nav-shadow: rgba(0,0,0,0.85);
+--footer-bg: rgba(0,0,0,0.88);
+--toggle-bg: rgba(255,248,235,0.55);
+--toggle-border: rgba(90,60,30,0.24);
+--toggle-hover: rgba(255,241,214,0.78);
+--toggle-doc-bg: rgba(255,248,235,0.48);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Crimson Text',Georgia,serif;
+color:var(--ink-color);
+min-height:100dvh;
+background:#000;
+line-height:1.75;
+font-size:1.18rem;
+}
+
+.page-wrapper{
+min-height:100dvh;
+display:flex;
+flex-direction:column;
+max-width:var(--page-max-width);
+margin:0 auto;
+background-color:#000;
+background-image:url('../../images/bg.jpg');
+background-size:contain;
+background-position:center top;
+background-repeat:no-repeat;
+background-attachment:fixed;
+box-shadow:0 0 80px rgba(0,0,0,0.85);
+position:relative;
+}
+
+header{
+position:fixed;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--header-height);
+background-image:url('../../images/header.png');
+background-size:contain;
+background-position:center;
+background-repeat:no-repeat;
+z-index:1000;
+box-shadow:0 6px 16px rgba(0,0,0,0.5);
+}
+
+header::after{
+content:"";
+position:absolute;
+left:0;
+right:0;
+bottom:-14px;
+height:18px;
+background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0));
+pointer-events:none;
+}
+
+nav{
+max-width:var(--content-max-width);
+width:100%;
+height:100%;
+margin:0 auto;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:2rem;
+padding:0 1.5rem;
+}
+
+nav a{
+color:var(--nav-color);
+text-decoration:none;
+font-family:Consolas,"Courier New",monospace;
+font-size:1.25rem;
+letter-spacing:0.14em;
+text-transform:uppercase;
+transition:all .25s ease;
+position:relative;
+display:inline-flex;
+align-items:center;
+gap:.5rem;
+padding:.2rem .1rem;
+text-shadow:
+0 1px 2px var(--nav-shadow),
+0 0 6px rgba(0,0,0,0.45);
+}
+
+nav a i{
+color:inherit;
+font-size:1.1rem;
+margin-right:4px;
+position:relative;
+top:-1px;
+}
+
+nav a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-4px;
+width:0;
+height:2px;
+background:var(--accent);
+transition:width .28s ease;
+}
+
+nav a:hover{
+color:var(--accent);
+transform:translateY(-1px);
+}
+
+nav a:hover::after{
+width:100%;
+}
+
+main{
+flex:1;
+margin-top:var(--header-height);
+padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+display:flex;
+justify-content:center;
+}
+
+.content-container{
+max-width:var(--content-max-width);
+width:100%;
+padding:40px 80px 180px;
+color:var(--ink-color);
+margin:0 auto;
+border-radius:8px;
+box-shadow:0 20px 60px rgba(0,0,0,0.55);
+background-image:url('../../images/content-scroll-bg.png');
+background-repeat:repeat-y;
+background-position:top center;
+background-size:100% auto;
+}
+
+.content-container h1,
+.content-container h2,
+.content-container h3{
+font-family:'Cinzel Decorative',serif;
+letter-spacing:.06em;
+}
+
+.content-container h1{
+font-size:3rem;
+text-align:center;
+margin:0 0 .75rem;
+}
+
+.content-container h2{
+font-size:2.15rem;
+margin:2.8rem 0 1.4rem;
+border-bottom:1px solid rgba(139,0,0,0.15);
+padding-bottom:.6rem;
+text-align:center;
+}
+
+.content-container h3{
+font-size:1.3rem;
+margin:2rem 0 1rem;
+text-align:center;
+}
+
+.content-container p{
+margin-bottom:1.25rem;
+}
+
+.lore-toggle{
+margin-top:2rem;
+border:1px solid var(--toggle-border);
+border-radius:10px;
+background:var(--toggle-bg);
+overflow:hidden;
+box-shadow:0 10px 24px rgba(0,0,0,0.12);
+}
+
+.lore-toggle summary{
+list-style:none;
+cursor:pointer;
+padding:1rem 1.25rem;
+font-family:'Cinzel Decorative',serif;
+font-size:1.05rem;
+color:#6b1f1f;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:.75rem;
+text-align:center;
+transition:background .25s ease, color .25s ease;
+}
+
+.lore-toggle summary::-webkit-details-marker{
+display:none;
+}
+
+.lore-toggle summary::before{
+content:"\f078";
+font-family:"Font Awesome 6 Free";
+font-weight:900;
+font-size:.9rem;
+transition:transform .25s ease;
+}
+
+.lore-toggle[open] summary::before{
+transform:rotate(180deg);
+}
+
+.lore-toggle summary:hover{
+background:var(--toggle-hover);
+color:#8b2323;
+}
+
+.lore-document{
+padding:1.5rem 1.5rem 1.25rem;
+background:var(--toggle-doc-bg);
+border-top:1px solid rgba(90,60,30,0.15);
+}
+
+.lore-document h3{
+margin-top:0;
+}
+
+footer{
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--footer-height);
+background:var(--footer-bg);
+color:#ccc;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:0 1rem;
+font-size:.95rem;
+border-top:1px solid #444;
+z-index:1000;
+}
+
+footer a{
+color:#d4a373;
+text-decoration:none;
+}
+
+footer a:hover{
+text-decoration:underline;
+}
+
+@media (max-width: 768px){
+
+nav{
+gap:1rem;
+padding:0 1rem;
+flex-wrap:wrap;
+}
+
+nav a{
+font-size:.9rem;
+letter-spacing:.08em;
+}
+
+.content-container{
+padding:36px 32px 150px;
+}
+
+.content-container h1{
+font-size:2.2rem;
+}
+
+.content-container h2{
+font-size:1.7rem;
+}
+
+.content-container h3{
+font-size:1.15rem;
+}
+}
+
+@media (max-width: 480px){
+
+body{
+font-size:1.05rem;
+}
+
+.content-container{
+padding:28px 20px 130px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+<header>
+<nav>
+<a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+<a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+<a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+<a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+<a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+
+<div class="content-container">
+
+<h1>The Forge</h1>
+
+<p>Forged in the crucible of the western mountains, a society of iron and stone thrives where the air is thin and the winters are merciless. Here, the Iron Widow rules with a resolve as cold and unwavering as the peaks themselves, overseeing a realm where discipline and practical mastery are the only currencies that matter.</p>
+
+<p>In the depths of foundries and workshops, the people of the Forge transform the bones of the earth into works of peerless engineering, believing that only that which is strong and efficient deserves to endure. It is a land of uncompromising philosophy, where survival is bought with sweat and the readiness to defend one's territory against any threat.</p>
+
+<p>Venture into the high strongholds to witness the uncompromising strength of a mountain people.</p>
+
+<details class="lore-toggle">
+  <summary>To read the full document, click here</summary>
+
+  <div class="lore-document">
+    
+<p>Among the regions of Rivendawn, none is more strongly associated with discipline, industry, and martial strength than The Forge. Situated within the mountainous territories of the western lands, the Forge developed in an environment defined by steep terrain, harsh weather, and limited arable land. These conditions shaped a society that values endurance, structure, and practical skill above all else.</p>
+
+<p>The earliest communities of the region formed within mountain basins and cavern systems where mineral resources were abundant. Over time, these settlements became known for their expertise in metalworking, stonecraft, and engineering, producing tools, armor, and weapons that are traded throughout Rivendawn. The Forge’s reputation for craftsmanship is widely respected, and its artisans are considered among the most skilled in the known world.</p>
+
+<p>Unlike regions whose prosperity relies primarily upon agriculture, the Forge’s economy centers on extraction and production. Mines, foundries, and workshops form the backbone of its industry, supported by a culture that prizes labor, discipline, and technical mastery. The difficult conditions of the mountains have historically required cooperation and efficiency, leading to a social structure that emphasizes order and collective responsibility.</p>
+
+<p>Leadership within the Forge reflects these values. The region is ruled by the Iron Widow, a title held by the matriarch who governs the Forge and oversees its military and industrial strength. Authority within the Forge is not symbolic but absolute in matters of strategy, defense, and long-term planning.</p>
+
+<p>The current Iron Widow is widely regarded as a ruler of exceptional discipline and strategic clarity. Historical accounts consistently describe her leadership as deliberate and unsentimental. Decisions within the Forge are expected to serve a clear purpose, and actions that do not strengthen the region are rarely tolerated. Within this philosophy, efficiency and strength are considered the highest civic virtues.</p>
+
+<p>One story frequently cited by historians and travelers alike illustrates the severity of this cultural ideal. When the Iron Widow gave birth to her son Greighton Lastlight, a Forge Physicker reportedly declared the infant weak and unlikely to survive. In keeping with long-standing traditions that prioritize the strength of the community above individual sentiment, the child was cast into a chasm rather than raised within the ruling household.</p>
+
+<p>Such accounts are often interpreted by scholars as an extreme example of the Forge’s uncompromising cultural philosophy. Within this worldview, leadership cannot be seen as weak, and resources—whether material or human—must serve the long-term strength of the region. If something is judged incapable of contributing to that strength, it is discarded without hesitation.</p>
+
+<p>Under the authority of the Iron Widow, the Forge maintains a highly organized system of governance built upon discipline, loyalty, and strategic foresight. Military training is common among its citizens, and the region fields some of the most formidable defensive forces in Rivendawn. While the Forge does not seek constant conflict, its leaders believe strongly in the necessity of readiness and the protection of their territory.</p>
+
+<p>This emphasis on strength and organization has occasionally brought the Forge into conflict with its neighbors. Historical records note periods of tension between the Forge and other regions, particularly when questions of territory, resources, or political influence arise. Despite these conflicts, the Forge also participates in trade networks that connect it to the wider world, exchanging its manufactured goods for resources that cannot easily be produced within its mountainous homeland.</p>
+
+<p>The culture of the Forge reflects the demands of its environment. Its people are often described as direct, disciplined, and pragmatic. Personal reputation is closely tied to demonstrated ability, whether in craft, labor, or martial skill. While outsiders sometimes interpret this culture as severe, those who live within the Forge view it as a necessary foundation for survival in a demanding landscape.</p>
+
+<p>In the present age, the Forge stands as one of the three major regional powers of Rivendawn. Its industries support trade throughout the realm, its military strength commands respect, and its society continues to embody the values of resilience and disciplined effort that shaped its origins.</p>
+
+<p>For students of Rivendawn, the Forge provides a clear example of how geography, culture, and necessity combine to shape the character of a region and the people who call it home.</p>
+
+  </div>
+</details>
+
+</div>
+
+</main>
+
+<footer>
+<div>
+Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+&nbsp;&nbsp;•&nbsp;&nbsp;
+© 2026 jpcauthor. All rights reserved.
+&nbsp;&nbsp;•&nbsp;&nbsp;
+<a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+</div>
+</footer>
+
+</div>
+
+</body>
+</html>

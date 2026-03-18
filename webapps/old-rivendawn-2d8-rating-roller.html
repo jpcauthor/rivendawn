@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rivendawn 2d8 Rating Roller</title>
+<style>
+:root{
+  --bg:#0d141a;
+  --panel:#17222c;
+  --panel-2:#223241;
+  --ink:#f7f1e6;
+  --muted:#cbbd9d;
+  --gold:#d6b06b;
+  --steel:#9eb7c6;
+  --line:rgba(214,176,107,0.22);
+  --shadow:0 20px 48px rgba(0,0,0,0.38);
+  --success:rgba(214,176,107,0.35);
+  --danger:rgba(176,78,78,0.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  min-height:100vh;
+  padding:24px;
+  font-family:Georgia, "Times New Roman", serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at top, rgba(158,183,198,0.14), transparent 30%),
+    linear-gradient(180deg, #0a1015 0%, #0f1820 100%);
+}
+.app{
+  width:min(980px,100%);
+  margin:0 auto;
+  background:linear-gradient(180deg, rgba(23,34,44,0.97), rgba(18,27,35,0.97));
+  border:1px solid var(--line);
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.header{
+  padding:28px 28px 16px;
+  border-bottom:1px solid rgba(214,176,107,0.14);
+}
+.kicker{
+  margin:0 0 8px;
+  color:var(--muted);
+  font-size:.9rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+h1{
+  margin:0;
+  font-size:clamp(2rem,4vw,3rem);
+  line-height:1.05;
+  color:#fbf7ef;
+}
+.sub{
+  margin:12px 0 0;
+  color:#ddd2bc;
+  line-height:1.55;
+  max-width:780px;
+}
+.content{
+  padding:28px;
+}
+.stage{
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  gap:20px;
+  align-items:center;
+  margin-bottom:22px;
+}
+.die-wrap{
+  display:flex;
+  justify-content:center;
+}
+.die{
+  width:min(240px, 100%);
+  aspect-ratio:1/1;
+  position:relative;
+  clip-path:polygon(50% 0%, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+  background:
+    linear-gradient(180deg, rgba(214,176,107,0.18), rgba(255,255,255,0.04)),
+    linear-gradient(180deg, rgba(34,50,65,0.92), rgba(22,33,43,0.92));
+  border:2px solid rgba(214,176,107,0.25);
+  display:grid;
+  place-items:center;
+  box-shadow:inset 0 0 30px rgba(255,255,255,0.03), 0 10px 24px rgba(0,0,0,0.35);
+  transition:transform .22s ease, border-color .22s ease, box-shadow .22s ease, filter .22s ease;
+}
+.die::before{
+  content:"";
+  position:absolute;
+  inset:10%;
+  clip-path:polygon(50% 0%, 94% 25%, 94% 75%, 50% 100%, 6% 75%, 6% 25%);
+  border:1px solid rgba(158,183,198,0.15);
+  pointer-events:none;
+}
+.die-value{
+  font-size:clamp(3rem, 10vw, 6rem);
+  line-height:1;
+  color:#fbf7ef;
+  text-shadow:0 0 12px rgba(214,176,107,0.18);
+}
+.die-label{
+  position:absolute;
+  bottom:10%;
+  left:50%;
+  transform:translateX(-50%);
+  color:var(--muted);
+  font-size:.92rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.vs{
+  color:var(--muted);
+  font-size:1.15rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+.die.rolling{
+  animation:shake .18s linear infinite;
+  filter:brightness(1.06);
+}
+.die.winner{
+  border-color:rgba(214,176,107,0.6);
+  box-shadow:0 0 0 1px rgba(214,176,107,0.25), 0 0 26px rgba(214,176,107,0.25), inset 0 0 28px rgba(214,176,107,0.08);
+  transform:translateY(-3px);
+}
+.die.loser{
+  opacity:.82;
+}
+.panel-grid{
+  display:grid;
+  grid-template-columns:1.2fr .8fr;
+  gap:18px;
+}
+.card{
+  background:linear-gradient(180deg, rgba(34,50,65,0.82), rgba(22,33,43,0.82));
+  border:1px solid rgba(158,183,198,0.18);
+  border-radius:18px;
+  padding:22px;
+}
+.result-label{
+  margin:0 0 10px;
+  color:var(--muted);
+  font-size:.9rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.rating{
+  margin:0;
+  font-size:clamp(2.5rem, 6vw, 4rem);
+  line-height:1;
+  color:#fbf7ef;
+}
+.meta{
+  margin:14px 0 0;
+  color:#d8ccaf;
+  line-height:1.55;
+}
+.actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:18px;
+}
+button{
+  appearance:none;
+  border:none;
+  border-radius:12px;
+  padding:13px 18px;
+  font-size:1rem;
+  font-family:inherit;
+  cursor:pointer;
+  transition:transform .15s ease, opacity .15s ease;
+}
+button:hover{transform:translateY(-1px)}
+button:active{transform:translateY(0)}
+.primary{
+  background:linear-gradient(180deg, var(--gold), #b98b43);
+  color:#1b1510;
+  font-weight:700;
+}
+.secondary{
+  background:rgba(158,183,198,0.14);
+  color:#eef5f7;
+  border:1px solid rgba(158,183,198,0.25);
+}
+.formula{
+  margin:0 0 10px;
+  color:#efe6d5;
+  line-height:1.55;
+}
+.small{
+  margin:0;
+  color:#ae9f82;
+  font-size:.95rem;
+  line-height:1.55;
+}
+.history{
+  margin:14px 0 0;
+  padding-left:1.25rem;
+  color:#efe6d5;
+}
+.history li{
+  margin:0 0 8px;
+  line-height:1.45;
+}
+.badge{
+  display:inline-block;
+  margin-top:12px;
+  padding:7px 10px;
+  border-radius:999px;
+  border:1px solid rgba(214,176,107,0.2);
+  color:#f0e7d7;
+  background:rgba(255,255,255,0.04);
+  font-size:.92rem;
+}
+.badge.snake{
+  border-color:rgba(176,78,78,0.35);
+  background:rgba(176,78,78,0.12);
+}
+.footer{
+  padding:0 28px 24px;
+  color:#aa9f88;
+  font-size:.95rem;
+}
+@keyframes shake{
+  0%{transform:translate(0,0) rotate(0deg)}
+  20%{transform:translate(-2px,1px) rotate(-2deg)}
+  40%{transform:translate(2px,-1px) rotate(2deg)}
+  60%{transform:translate(-1px,2px) rotate(-1deg)}
+  80%{transform:translate(2px,1px) rotate(1deg)}
+  100%{transform:translate(0,0) rotate(0deg)}
+}
+@media (max-width:860px){
+  .stage{grid-template-columns:1fr; gap:14px}
+  .vs{display:none}
+  .panel-grid{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  body{padding:14px}
+  .header,.content,.footer{padding-left:18px;padding-right:18px}
+  .actions{flex-direction:column}
+  .actions button{width:100%}
+}
+</style>
+</head>
+<body>
+  <main class="app">
+    <section class="header">
+      <p class="kicker">Rivendawn Utility</p>
+      <h1>2d8 Rating Roller</h1>
+      <p class="sub">Click Generate to animate two d8s, keep the highest die, divide by 2, and round down. The only basement result is double 1s, which scores Rating 1.</p>
+    </section>
+
+    <section class="content">
+      <div class="stage">
+        <div class="die-wrap">
+          <div class="die" id="die1">
+            <div class="die-value" id="die1Value">1</div>
+            <div class="die-label">Die One</div>
+          </div>
+        </div>
+
+        <div class="vs">vs</div>
+
+        <div class="die-wrap">
+          <div class="die" id="die2">
+            <div class="die-value" id="die2Value">1</div>
+            <div class="die-label">Die Two</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-grid">
+        <div class="card">
+          <p class="result-label">Result</p>
+          <h2 class="rating" id="ratingValue">Rating 1</h2>
+          <p class="meta" id="resultText">Roll two d8s, keep the highest, divide by 2, and round down.</p>
+          <div id="specialBadge" class="badge" style="display:none;">Snake Eyes</div>
+
+          <div class="actions">
+            <button class="primary" id="generateBtn">Generate</button>
+            <button class="secondary" id="copyBtn" type="button">Copy Result</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <p class="result-label">Rule</p>
+          <p class="formula"><strong>Logic:</strong> Roll 2d8 → Take Highest → Divide by 2 → Round Down</p>
+          <p class="small">Special edge case: if both dice land on 1, the final Rating is 1.</p>
+          <p class="small" style="margin-top:10px;">Bands: 1,1 = 1 | 2–3 = 1 | 4–5 = 2 | 6–7 = 3 | 8 = 4</p>
+
+          <p class="result-label" style="margin-top:20px;">Recent Rolls</p>
+          <ol class="history" id="historyList">
+            <li>Waiting for first roll...</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="footer">
+      Single-file HTML. No server, no database, no dependencies.
+    </section>
+  </main>
+
+<script>
+const die1 = document.getElementById("die1");
+const die2 = document.getElementById("die2");
+const die1Value = document.getElementById("die1Value");
+const die2Value = document.getElementById("die2Value");
+const ratingValue = document.getElementById("ratingValue");
+const resultText = document.getElementById("resultText");
+const historyList = document.getElementById("historyList");
+const generateBtn = document.getElementById("generateBtn");
+const copyBtn = document.getElementById("copyBtn");
+const specialBadge = document.getElementById("specialBadge");
+
+let isRolling = false;
+let recentRolls = [];
+
+function rollDie(sides = 8){
+  return Math.floor(Math.random() * sides) + 1;
+}
+
+function calculateRating(d1, d2){
+  const highest = Math.max(d1, d2);
+  let rating = Math.floor(highest / 2);
+
+  if (d1 === 1 && d2 === 1){
+    rating = 1;
+  }
+
+  return { highest, rating };
+}
+
+function clearWinnerState(){
+  [die1, die2].forEach(die => {
+    die.classList.remove("winner", "loser");
+  });
+  specialBadge.style.display = "none";
+  specialBadge.classList.remove("snake");
+}
+
+function applyWinnerState(d1, d2){
+  const highest = Math.max(d1, d2);
+
+  if (d1 === d2){
+    die1.classList.add("winner");
+    die2.classList.add("winner");
+    return;
+  }
+
+  if (d1 === highest){
+    die1.classList.add("winner");
+    die2.classList.add("loser");
+  } else {
+    die2.classList.add("winner");
+    die1.classList.add("loser");
+  }
+}
+
+function updateHistory(d1, d2, highest, rating){
+  const entry = `Rolled ${d1} and ${d2} | Highest: ${highest} | Rating: ${rating}`;
+  recentRolls.unshift(entry);
+  recentRolls = recentRolls.slice(0, 8);
+
+  historyList.innerHTML = "";
+  recentRolls.forEach(item => {
+    const li = document.createElement("li");
+    li.textContent = item;
+    historyList.appendChild(li);
+  });
+}
+
+function setResult(d1, d2, highest, rating){
+  ratingValue.textContent = `Rating ${rating}`;
+
+  if (d1 === 1 && d2 === 1){
+    resultText.textContent = `Snake Eyes. You rolled ${d1} and ${d2}. Highest die is ${highest}, but the double-1 edge case sets the final result to Rating ${rating}.`;
+    specialBadge.textContent = "Snake Eyes";
+    specialBadge.classList.add("snake");
+    specialBadge.style.display = "inline-block";
+  } else {
+    resultText.textContent = `You rolled ${d1} and ${d2}. Highest die is ${highest}. ${highest} ÷ 2 rounded down gives Rating ${rating}.`;
+  }
+}
+
+async function animateRoll(){
+  if (isRolling) return;
+  isRolling = true;
+  generateBtn.disabled = true;
+  copyBtn.disabled = true;
+  clearWinnerState();
+
+  die1.classList.add("rolling");
+  die2.classList.add("rolling");
+
+  const ticks = 11 + Math.floor(Math.random() * 4);
+  let currentTick = 0;
+
+  const interval = setInterval(() => {
+    die1Value.textContent = rollDie(8);
+    die2Value.textContent = rollDie(8);
+    currentTick++;
+
+    if (currentTick >= ticks){
+      clearInterval(interval);
+
+      const d1 = rollDie(8);
+      const d2 = rollDie(8);
+      const { highest, rating } = calculateRating(d1, d2);
+
+      die1Value.textContent = d1;
+      die2Value.textContent = d2;
+
+      die1.classList.remove("rolling");
+      die2.classList.remove("rolling");
+
+      applyWinnerState(d1, d2);
+      setResult(d1, d2, highest, rating);
+      updateHistory(d1, d2, highest, rating);
+
+      isRolling = false;
+      generateBtn.disabled = false;
+      copyBtn.disabled = false;
+    }
+  }, 90);
+}
+
+generateBtn.addEventListener("click", animateRoll);
+
+copyBtn.addEventListener("click", async () => {
+  const text = `${ratingValue.textContent} | ${resultText.textContent}`;
+  try{
+    await navigator.clipboard.writeText(text);
+    resultText.textContent = `${resultText.textContent} Copied result to clipboard.`;
+  }catch(err){
+    resultText.textContent = `${resultText.textContent} Clipboard copy failed in this browser.`;
+  }
+});
+
+function initialRoll(){
+  const d1 = 1;
+  const d2 = 1;
+  const { highest, rating } = calculateRating(d1, d2);
+  die1Value.textContent = d1;
+  die2Value.textContent = d2;
+  applyWinnerState(d1, d2);
+  setResult(d1, d2, highest, rating);
+}
+initialRoll();
+</script>
+</body>
+</html>

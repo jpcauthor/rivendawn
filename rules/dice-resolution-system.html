@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dice Resolution System</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- Styles -->
+<style>
+
+:root {
+--header-height: 72px;
+--footer-height: 72px;
+--content-max-width: 960px;
+--page-max-width: 1400px;
+--ink-color: #3a2a1a;
+--accent: #fff1d6;
+--nav-color: #f2e3c6;
+--nav-shadow: rgba(0,0,0,0.85);
+--footer-bg: rgba(0,0,0,0.88);
+--toggle-bg: rgba(255,248,235,0.55);
+--toggle-border: rgba(90,60,30,0.24);
+--toggle-hover: rgba(255,241,214,0.78);
+--toggle-doc-bg: rgba(255,248,235,0.48);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Crimson Text',Georgia,serif;
+color:var(--ink-color);
+min-height:100dvh;
+background:#000;
+line-height:1.75;
+font-size:1.18rem;
+}
+
+.page-wrapper{
+min-height:100dvh;
+display:flex;
+flex-direction:column;
+max-width:var(--page-max-width);
+margin:0 auto;
+background-color:#000;
+background-image:url('../images/bg.jpg');
+background-size:contain;
+background-position:center top;
+background-repeat:no-repeat;
+background-attachment:fixed;
+box-shadow:0 0 80px rgba(0,0,0,0.85);
+position:relative;
+}
+
+header{
+position:fixed;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--header-height);
+background-image:url('../images/header.png');
+background-size:contain;
+background-position:center;
+background-repeat:no-repeat;
+z-index:1000;
+box-shadow:0 6px 16px rgba(0,0,0,0.5);
+}
+
+header::after{
+content:"";
+position:absolute;
+left:0;
+right:0;
+bottom:-14px;
+height:18px;
+background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0));
+pointer-events:none;
+}
+
+nav{
+max-width:var(--content-max-width);
+width:100%;
+height:100%;
+margin:0 auto;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:2rem;
+padding:0 1.5rem;
+}
+
+nav a{
+color:var(--nav-color);
+text-decoration:none;
+font-family:Consolas,"Courier New",monospace;
+font-size:1.25rem;
+letter-spacing:0.14em;
+text-transform:uppercase;
+transition:all .25s ease;
+position:relative;
+display:inline-flex;
+align-items:center;
+gap:.5rem;
+padding:.2rem .1rem;
+text-shadow:
+0 1px 2px var(--nav-shadow),
+0 0 6px rgba(0,0,0,0.45);
+}
+
+nav a i{
+color:inherit;
+font-size:1.1rem;
+margin-right:4px;
+position:relative;
+top:-1px;
+}
+
+nav a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-4px;
+width:0;
+height:2px;
+background:var(--accent);
+transition:width .28s ease;
+}
+
+nav a:hover{
+color:var(--accent);
+transform:translateY(-1px);
+}
+
+nav a:hover::after{
+width:100%;
+}
+
+main{
+flex:1;
+margin-top:var(--header-height);
+padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+display:flex;
+justify-content:center;
+}
+
+.content-container{
+max-width:var(--content-max-width);
+width:100%;
+padding:40px 80px 180px;
+color:var(--ink-color);
+margin:0 auto;
+border-radius:8px;
+box-shadow:0 20px 60px rgba(0,0,0,0.55);
+background-image:url('../images/content-scroll-bg.png');
+background-repeat:repeat-y;
+background-position:top center;
+background-size:100% auto;
+}
+
+.content-container h1,
+.content-container h2,
+.content-container h3{
+font-family:'Cinzel Decorative',serif;
+letter-spacing:.06em;
+}
+
+.content-container h1{
+font-size:3rem;
+text-align:center;
+margin:0 0 .75rem;
+}
+
+.content-container h2{
+font-size:2.15rem;
+margin:2.8rem 0 1.4rem;
+border-bottom:1px solid rgba(139,0,0,0.15);
+padding-bottom:.6rem;
+text-align:center;
+}
+
+.content-container h3{
+font-size:1.3rem;
+margin:2rem 0 1rem;
+text-align:center;
+}
+
+.content-container p{
+margin-bottom:0.35rem;
+}
+
+.content-container ul {
+  padding-left: 2rem;
+}
+
+.lore-toggle{
+margin-top:2rem;
+border:1px solid var(--toggle-border);
+border-radius:10px;
+background:var(--toggle-bg);
+overflow:hidden;
+box-shadow:0 10px 24px rgba(0,0,0,0.12);
+}
+
+.lore-toggle summary{
+list-style:none;
+cursor:pointer;
+padding:1rem 1.25rem;
+font-family:'Cinzel Decorative',serif;
+font-size:1.05rem;
+color:#6b1f1f;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:.75rem;
+text-align:center;
+transition:background .25s ease, color .25s ease;
+}
+
+.lore-toggle summary::-webkit-details-marker{
+display:none;
+}
+
+.lore-toggle summary::before{
+content:"\f078";
+font-family:"Font Awesome 6 Free";
+font-weight:900;
+font-size:.9rem;
+transition:transform .25s ease;
+}
+
+.lore-toggle[open] summary::before{
+transform:rotate(180deg);
+}
+
+.lore-toggle summary:hover{
+background:var(--toggle-hover);
+color:#8b2323;
+}
+
+.lore-document{
+padding:1.5rem 1.5rem 1.25rem;
+background:var(--toggle-doc-bg);
+border-top:1px solid rgba(90,60,30,0.15);
+}
+
+.lore-document h3{
+margin-top:0;
+}
+
+footer{
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--footer-height);
+background:var(--footer-bg);
+color:#ccc;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:0 1rem;
+font-size:.95rem;
+border-top:1px solid #444;
+z-index:1000;
+}
+
+footer a{
+color:#d4a373;
+text-decoration:none;
+}
+
+footer a:hover{
+text-decoration:underline;
+}
+
+@media (max-width: 768px){
+
+nav{
+gap:1rem;
+padding:0 1rem;
+flex-wrap:wrap;
+}
+
+nav a{
+font-size:.9rem;
+letter-spacing:.08em;
+}
+
+.content-container{
+padding:36px 32px 150px;
+}
+
+.content-container h1{
+font-size:2.2rem;
+}
+
+.content-container h2{
+font-size:1.7rem;
+}
+
+.content-container h3{
+font-size:1.15rem;
+}
+}
+
+@media (max-width: 480px){
+
+body{
+font-size:1.05rem;
+}
+
+.content-container{
+padding:28px 20px 130px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+<header>
+<nav>
+<a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+<a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+<a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+<a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+<a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+
+<div class="content-container">
+
+<h1>Dice Resolution System</h1>
+
+<p>Every uncertain action in Rivendawn is answered by a single question: does your will overcome the resistance of the world? The Dice Resolution System provides a fast, unified method for determining the outcome of every attempt, from quiet skill checks to decisive moments of combat and Resonance. One roll of the die decides success or failure, while ultimate outcomes and the deeper laws of the Song ensure that even the simplest roll can reshape the story.</p>
+
+<details class="lore-toggle">
+  <summary>To read the full document, click here</summary>
+
+  <div class="lore-document">
+
+<h2>Dice Resolution System</h2>
+<p><strong>Heroes Resonance Core Doctrine</strong></p>
+
+<h3>I. Universal Resolution Rule</h3>
+
+<p>All actions in Heroes Resonance use a unified subtractive capability model.</p>
+
+<p><strong>Target Number (TN) = Level Baseline – Capability</strong></p>
+
+<p>Roll 1d20.</p>
+
+<ul>
+<li>If the roll is equal to or greater than the TN, the action succeeds.</li>
+<li>If the roll is less than the TN, the action fails.</li>
+</ul>
+
+<p>There are no partial successes. Binary resolution is intentional: clarity over granularity.</p>
+
+<ul>
+<li>A natural 20 is an <strong>Ultimate Success</strong>.</li>
+<li>A natural 1 is an <strong>Ultimate Failure</strong>, regardless of TN.</li>
+</ul>
+
+<p>This structure produces predictable probability curves while reserving dramatic variance for the extremes.</p>
+
+<h3>II. Capability</h3>
+
+<p>Capability represents a character’s ability to successfully perform a specific action.</p>
+
+<p><strong>Capability = Attribute + Ability/Knowledge + Heritage Imprint</strong></p>
+
+<p>The Context Rating depends on the system being used.</p>
+
+<p>Examples include:</p>
+
+<ul>
+<li>Offensive Rating (martial combat)</li>
+<li>Path Rating (Resonant instruction)</li>
+<li>Heritage Imprint (vocational or experiential knowledge)</li>
+</ul>
+
+<p>Each subsystem defines the specific rating that applies.</p>
+
+<h3>III. Level Baseline Table</h3>
+
+<p>Level represents maturation, adaptation, and a deepening relationship with the Song.</p>
+
+<p>As heroes grow stronger, the world resists them less.</p>
+
+<table>
+<tr>
+<th>Level</th>
+<th>Baseline</th>
+</tr>
+
+<tr>
+<td>1–2</td>
+<td>19</td>
+</tr>
+
+<tr>
+<td>3–4</td>
+<td>18</td>
+</tr>
+
+<tr>
+<td>5–6</td>
+<td>17</td>
+</tr>
+
+<tr>
+<td>7–8</td>
+<td>16</td>
+</tr>
+
+<tr>
+<td>9–10</td>
+<td>15</td>
+</tr>
+</table>
+
+<p>The baseline decreases every two levels.</p>
+
+<p>As heroes advance, tension shifts from:</p>
+
+<p><em>“Can I succeed?”</em></p>
+<p><em>to</em></p>
+<p><em>“What will success cost?”</em></p>
+
+<h3>IV. Binary Success Doctrine</h3>
+
+<p>Resolution in Heroes Resonance is binary.</p>
+
+<p>Actions either succeed or fail.</p>
+
+<p>Magnitude, intensity, duration, and collateral effects are determined by other systems, including:</p>
+
+<ul>
+<li>Resonant magnitude tiers</li>
+<li>Damage dice</li>
+<li>Wellspring expenditure</li>
+<li>Ability/Knowledge relevance</li>
+<li>Narrative consequences</li>
+<li>Calling-specific Gifts</li>
+</ul>
+
+<p>Success means the intended action occurs.</p>
+
+<p>Failure means it does not.</p>
+
+<h3>V. Ultimate Outcomes</h3>
+
+<p>Ultimate outcomes represent moments where the Song responds in extreme harmony or dissonance.</p>
+
+<p>These outcomes override the normal binary model.</p>
+
+<p><strong>Ultimate Success (Natural 20)</strong></p>
+
+<p>The action succeeds with exceptional resonance.</p>
+
+<p>Specific effects are defined by abilities, Callings, and advanced system rules.</p>
+
+<p><strong>Ultimate Failure (Natural 1)</strong></p>
+
+<p>Failure occurs regardless of TN.</p>
+
+<p>Additional consequences depend on the nature of the action.</p>
+
+<p>Examples include:</p>
+
+<p><strong>Mundane Combat</strong></p>
+
+<ul>
+<li>Weapon fumble for one round</li>
+<li>A full turn is required to regain control</li>
+</ul>
+
+<p><strong>Resonant Hybrid Action</strong></p>
+
+<ul>
+<li>Double Wellspring cost is lost</li>
+<li>Resonant backlash applies the intended effect to the Hybrid for one round</li>
+</ul>
+
+<p><strong>Resonant Casting</strong></p>
+
+<ul>
+<li>Double Wellspring cost is lost</li>
+<li>The caster cannot instruct from that Path on the following round</li>
+</ul>
+
+<p>Ultimate failures preserve the importance of rhythm, focus, and disciplined instruction.</p>
+
+<h3>VI. Watcher Resolution</h3>
+
+<p>The Watcher resolves NPC and hostile actions using the same universal system.</p>
+
+<p><strong>TN = Baseline – Capability</strong></p>
+
+<p>Threat Tiers determine the baseline equivalent used by non-player forces.</p>
+
+<p>This ensures:</p>
+
+<ul>
+<li>Mechanical symmetry between heroes and adversaries</li>
+<li>Predictable probability structures</li>
+<li>No hidden advantages or disadvantages between player and Watcher resolution</li>
+</ul>
+
+<h3>VII. Design Philosophy</h3>
+
+<p>Heroes Resonance is a mythic campaign system.</p>
+
+<p>Accuracy is not the primary axis of tension.</p>
+
+<p>Heroes are expected to succeed often and decisively.</p>
+
+<p>Meaningful tension arises from:</p>
+
+<ul>
+<li>Wellspring attrition</li>
+<li>Harmonic dissonance</li>
+<li>Battlefield tempo</li>
+<li>Tactical positioning</li>
+<li>Risk versus reward</li>
+<li>Ultimate outcomes</li>
+<li>Narrative consequence</li>
+<li>Resonant magnitude escalation</li>
+</ul>
+
+<p><strong>Victory is not landing a blow.</strong></p>
+
+<p><strong>Victory is enduring the cost of acting.</strong></p>
+
+  </div>
+</details>
+
+</div>
+
+</main>
+
+<footer>
+<div>
+Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+&nbsp;&nbsp;•&nbsp;&nbsp;
+© 2026 jpcauthor. All rights reserved.
+&nbsp;&nbsp;•&nbsp;&nbsp;
+<a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+</div>
+</footer>
+
+</div>
+
+</body>
+</html>

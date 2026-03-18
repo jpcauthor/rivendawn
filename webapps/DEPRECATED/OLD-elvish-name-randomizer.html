@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Elvish Name Randomizer</title>
+<style>
+:root{
+  --bg:#0f1720;
+  --panel:#182430;
+  --panel-2:#213142;
+  --text:#f3efe4;
+  --muted:#cdbf9f;
+  --accent:#d9b46b;
+  --accent-2:#8fb8c9;
+  --border:rgba(217,180,107,0.25);
+  --shadow:0 18px 40px rgba(0,0,0,0.35);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding:24px;
+  font-family:Georgia, "Times New Roman", serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top, rgba(143,184,201,0.14), transparent 35%),
+    linear-gradient(180deg, #0a1118 0%, #101a24 100%);
+}
+.app{
+  width:min(680px, 100%);
+  background:linear-gradient(180deg, rgba(24,36,48,0.96), rgba(19,29,38,0.96));
+  border:1px solid var(--border);
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.header{
+  padding:28px 28px 14px;
+  border-bottom:1px solid rgba(217,180,107,0.12);
+}
+.kicker{
+  margin:0 0 8px;
+  color:var(--muted);
+  font-size:0.9rem;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+}
+h1{
+  margin:0;
+  font-size:clamp(1.8rem, 3vw, 2.5rem);
+  line-height:1.1;
+  color:#f8f3e8;
+}
+.sub{
+  margin:12px 0 0;
+  color:#d9d1c0;
+  line-height:1.55;
+}
+.content{
+  padding:24px 28px 28px;
+}
+.fieldset{
+  border:none;
+  margin:0 0 18px;
+  padding:0;
+}
+.legend{
+  display:block;
+  margin-bottom:12px;
+  color:var(--muted);
+  font-size:0.95rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+}
+.options{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+}
+.option{
+  position:relative;
+}
+.option input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+.option label{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:130px;
+  padding:12px 16px;
+  border:1px solid rgba(217,180,107,0.18);
+  border-radius:12px;
+  background:rgba(255,255,255,0.03);
+  color:#efe7d7;
+  cursor:pointer;
+  transition:0.2s ease;
+  user-select:none;
+}
+.option label:hover{
+  background:rgba(255,255,255,0.06);
+  border-color:rgba(217,180,107,0.35);
+}
+.option input:checked + label{
+  background:linear-gradient(180deg, rgba(217,180,107,0.18), rgba(217,180,107,0.08));
+  border-color:rgba(217,180,107,0.5);
+  color:#fff7e8;
+}
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:10px;
+}
+button{
+  appearance:none;
+  border:none;
+  border-radius:12px;
+  padding:13px 18px;
+  font-size:1rem;
+  font-family:inherit;
+  cursor:pointer;
+  transition:transform 0.15s ease, opacity 0.15s ease, background 0.15s ease;
+}
+button:hover{transform:translateY(-1px)}
+button:active{transform:translateY(0)}
+.primary{
+  background:linear-gradient(180deg, var(--accent), #b88b42);
+  color:#1a1510;
+  font-weight:700;
+}
+.secondary{
+  background:rgba(143,184,201,0.15);
+  color:#eef6f8;
+  border:1px solid rgba(143,184,201,0.25);
+}
+.output{
+  margin-top:22px;
+  padding:22px;
+  border-radius:16px;
+  background:linear-gradient(180deg, rgba(33,49,66,0.8), rgba(22,33,43,0.8));
+  border:1px solid rgba(143,184,201,0.18);
+}
+.output-label{
+  margin:0 0 10px;
+  color:var(--muted);
+  font-size:0.9rem;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+}
+.name{
+  margin:0;
+  font-size:clamp(2rem, 5vw, 3.4rem);
+  line-height:1.05;
+  color:#f8f3e8;
+  word-break:break-word;
+}
+.note{
+  margin:14px 0 0;
+  color:#d7cdb8;
+  line-height:1.5;
+}
+.footer{
+  padding:0 28px 24px;
+  color:#aa9f88;
+  font-size:0.95rem;
+}
+@media (max-width:560px){
+  .header, .content, .footer{padding-left:18px; padding-right:18px;}
+  .option label{min-width:unset; width:100%;}
+  .options{display:grid; grid-template-columns:1fr;}
+  .actions button{width:100%;}
+}
+</style>
+</head>
+<body>
+  <main class="app">
+    <section class="header">
+      <p class="kicker">Rivendawn Utility</p>
+      <h1>Elvish Name Randomizer</h1>
+      <p class="sub">Pick Male or Female, then generate a lore-flavored Elvish name built from curated syllables rather than a flat name list.</p>
+    </section>
+
+    <section class="content">
+      <fieldset class="fieldset">
+        <span class="legend">Choose a Name Style</span>
+        <div class="options">
+          <div class="option">
+            <input type="radio" id="male" name="gender" value="male" checked />
+            <label for="male">Male</label>
+          </div>
+          <div class="option">
+            <input type="radio" id="female" name="gender" value="female" />
+            <label for="female">Female</label>
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="actions">
+        <button class="primary" id="randomizeBtn">Randomize Name</button>
+        <button class="secondary" id="copyBtn" type="button">Copy Name</button>
+      </div>
+
+      <div class="output">
+        <p class="output-label">Generated Name</p>
+        <h2 class="name" id="nameOutput">Aelirion</h2>
+        <p class="note" id="nameNote">Built from an Elvish-style prefix, vowel bridge, and suffix for a more consistent fantasy sound.</p>
+      </div>
+    </section>
+
+    <section class="footer">
+      This version is fully self-contained. No server, no database, just one HTML file.
+    </section>
+  </main>
+
+<script>
+const maleData = {
+  prefix: ["Ael","Cael","Ery","Fae","Ith","Lae","Mae","Nae","Ori","Rhy","Syl","Thae","Vael","Xan","Zae"],
+  bridge: ["a","e","i","ae","ia","ei","io","o"],
+  suffix: ["dor","dris","faren","ion","ir","ithar","lor","mir","nor","rion","thas","var","wyn","thir"]
+};
+
+const femaleData = {
+  prefix: ["Ael","Eli","Fae","Ily","Lae","Lyth","Mae","Nae","Rhi","Sae","Syl","Thae","Vae","Yse","Zyra"],
+  bridge: ["a","e","i","ae","ia","ea","ei","y"],
+  suffix: ["lith","ra","rielle","sira","thae","vanna","wen","wyn","lora","mira","nys","thea","riel","shae"]
+};
+
+function pick(arr){
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function titleCase(name){
+  return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+}
+
+function smoothName(name){
+  return name
+    .replace(/aaa|aae|aai|eee|iii|yyy/gi, (m) => m.slice(0, 2))
+    .replace(/([aeiouy])\1\1/gi, "$1$1")
+    .replace(/iia/gi, "ia")
+    .replace(/aae/gi, "ae")
+    .replace(/eei/gi, "ei");
+}
+
+function buildName(type){
+  const data = type === "female" ? femaleData : maleData;
+
+  const useBridge = Math.random() > 0.15;
+  const useSecondSuffix = Math.random() > 0.72;
+
+  let name = pick(data.prefix);
+
+  if (useBridge) {
+    name += pick(data.bridge);
+  }
+
+  name += pick(data.suffix);
+
+  if (useSecondSuffix) {
+    const endings = type === "female"
+      ? ["a","el","ia","is","wen"]
+      : ["an","el","is","or","yn"];
+    name += pick(endings);
+  }
+
+  name = smoothName(name);
+  return titleCase(name);
+}
+
+function getSelectedGender(){
+  return document.querySelector('input[name="gender"]:checked').value;
+}
+
+function updateName(){
+  const gender = getSelectedGender();
+  const generated = buildName(gender);
+  document.getElementById("nameOutput").textContent = generated;
+  document.getElementById("nameNote").textContent =
+    gender === "female"
+      ? "Generated using a softer Elvish syllable set for female names."
+      : "Generated using a stronger Elvish syllable set for male names.";
+}
+
+document.getElementById("randomizeBtn").addEventListener("click", updateName);
+
+document.getElementById("copyBtn").addEventListener("click", async () => {
+  const name = document.getElementById("nameOutput").textContent;
+  try {
+    await navigator.clipboard.writeText(name);
+    document.getElementById("nameNote").textContent = `Copied "${name}" to clipboard.`;
+  } catch (err) {
+    document.getElementById("nameNote").textContent = "Clipboard copy failed in this browser, but the name is still shown above.";
+  }
+});
+
+document.querySelectorAll('input[name="gender"]').forEach(input => {
+  input.addEventListener("change", updateName);
+});
+
+updateName();
+</script>
+</body>
+</html>

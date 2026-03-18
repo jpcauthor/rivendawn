@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rivendawn — Resolution &amp; Healing Tables</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+:root {
+  --header-height: 72px;
+  --footer-height: 72px;
+  --content-max-width: 960px;
+  --page-max-width: 1400px;
+  --ink-color: #3a2a1a;
+  --accent: #fff1d6;
+  --nav-color: #f2e3c6;
+  --nav-shadow: rgba(0,0,0,0.85);
+  --footer-bg: rgba(0,0,0,0.88);
+  --border-warm: rgba(94,62,33,0.25);
+  --gold: #c8922a;
+  --ink-mid: #4a2d18;
+  --ink-faint: rgba(58,42,26,0.45);
+  --label-bg: rgba(42,22,8,0.78);
+  --label-text: #f2e3c6;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Crimson Text', Georgia, serif; color: var(--ink-color); min-height: 100dvh; background: #000; line-height: 1.75; font-size: 1.18rem; }
+.page-wrapper { min-height: 100dvh; display: flex; flex-direction: column; max-width: var(--page-max-width); margin: 0 auto; background-color: #000; background-image: url('../images/bg.jpg'); background-size: contain; background-position: center top; background-repeat: no-repeat; background-attachment: fixed; box-shadow: 0 0 80px rgba(0,0,0,0.85); }
+header { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: min(100%, var(--page-max-width)); height: var(--header-height); background-image: url('../images/header.png'); background-size: contain; background-position: center; background-repeat: no-repeat; z-index: 1000; box-shadow: 0 6px 16px rgba(0,0,0,0.5); }
+header::after { content: ""; position: absolute; left: 0; right: 0; bottom: -14px; height: 18px; background: linear-gradient(to bottom, rgba(0,0,0,0.28), rgba(0,0,0,0)); pointer-events: none; }
+nav { max-width: var(--content-max-width); width: 100%; height: 100%; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 2rem; padding: 0 1.5rem; }
+nav a { color: var(--nav-color); text-decoration: none; font-family: Consolas, "Courier New", monospace; font-size: 1.25rem; letter-spacing: 0.14em; text-transform: uppercase; transition: all .25s ease; position: relative; display: inline-flex; align-items: center; gap: .5rem; padding: .2rem .1rem; text-shadow: 0 1px 2px var(--nav-shadow), 0 0 6px rgba(0,0,0,0.45); }
+nav a i { color: inherit; font-size: 1.1rem; margin-right: 4px; position: relative; top: -1px; }
+nav a::after { content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px; background: var(--accent); transition: width .28s ease; }
+nav a:hover { color: var(--accent); transform: translateY(-1px); }
+nav a:hover::after { width: 100%; }
+main { flex: 1; margin-top: var(--header-height); padding: 3.25rem 1rem calc(var(--footer-height) + 3rem); display: flex; justify-content: center; }
+.content-container { max-width: var(--content-max-width); width: 100%; padding: 40px 80px 180px; margin: 0 auto; border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,0.55); background-image: url('../images/content-scroll-bg.png'); background-repeat: repeat-y; background-position: top center; background-size: 100% auto; }
+h1 { font-family: 'Cinzel Decorative', serif; font-size: 3rem; text-align: center; margin-bottom: 0.5rem; color: var(--ink-mid); letter-spacing: .06em; }
+.page-subtitle { text-align: center; font-style: italic; color: var(--label-text); background: var(--label-bg); display: inline-block; padding: 0.25rem 1rem; border-radius: 4px; font-size: 1.05rem; margin-bottom: 3rem; width: 100%; }
+.back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--label-text); background: var(--label-bg); padding: 0.3rem 0.8rem; border-radius: 4px; text-decoration: none; margin-bottom: 2rem; transition: opacity 0.2s ease; }
+.back-link:hover { opacity: 0.8; }
+.title-rule { display: flex; align-items: center; gap: 1rem; margin: 3rem 0 1.5rem; }
+.title-rule::before, .title-rule::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(74,46,6,0.35)); }
+.title-rule::after { background: linear-gradient(to left, transparent, rgba(74,46,6,0.35)); }
+.title-rule span { color: var(--label-text); font-size: .75rem; letter-spacing: .28em; text-transform: uppercase; font-family: 'Cinzel', serif; background: var(--label-bg); padding: 0.25rem 0.85rem; border-radius: 4px; white-space: nowrap; }
+.table-block { margin-bottom: 2.5rem; }
+.table-label { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--label-text); background: var(--label-bg); display: inline-block; padding: 0.2rem 0.7rem; border-radius: 4px; margin-bottom: 0.65rem; }
+.table-note { font-style: italic; font-size: 0.95rem; color: var(--label-text); background: var(--label-bg); display: inline-block; padding: 0.2rem 0.75rem; border-radius: 4px; margin-top: 0.4rem; margin-bottom: 0.65rem; }
+table { width: 100%; border-collapse: collapse; font-family: 'Crimson Text', serif; font-size: 1rem; margin-bottom: 0.5rem; }
+thead tr { background: var(--label-bg); }
+thead th { color: var(--label-text); font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid rgba(42,22,8,0.5); }
+tbody tr { background: rgba(255,248,230,0.55); transition: background 0.15s ease; }
+tbody tr:nth-child(even) { background: rgba(244,230,204,0.65); }
+tbody tr:hover { background: rgba(255,241,214,0.85); }
+tbody td { padding: 0.5rem 0.85rem; border: 1px solid var(--border-warm); color: var(--ink-color); vertical-align: top; line-height: 1.5; }
+td.center, th.center { text-align: center; }
+td.highlight { font-weight: 600; color: var(--ink-mid); }
+td.gold { color: var(--gold); font-weight: 600; }
+td.muted { color: var(--ink-faint); font-style: italic; }
+td.danger { color: #a00000; font-weight: 700; }
+footer { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: min(100%, var(--page-max-width)); height: var(--footer-height); background: var(--footer-bg); color: #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 1rem; font-size: .95rem; border-top: 1px solid #444; z-index: 1000; }
+footer a { color: #d4a373; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+@media (max-width: 768px) { nav { gap: 1rem; padding: 0 1rem; flex-wrap: wrap; } nav a { font-size: .9rem; letter-spacing: .08em; } .content-container { padding: 36px 32px 150px; } h1 { font-size: 2.2rem; } thead th, tbody td { padding: 0.4rem 0.5rem; font-size: 0.9rem; } }
+@media (max-width: 480px) { body { font-size: 1.05rem; } .content-container { padding: 28px 20px 130px; } table { font-size: 0.85rem; } }
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+<header>
+<nav>
+  <a href="../geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+  <a href="../lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+  <a href="../rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+  <a href="../create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+  <a href="main_tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+<main>
+<div class="content-container">
+
+  <a href="main_tables.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Tables</a>
+  <h1>Resolution &amp; Healing</h1>
+  <p class="page-subtitle">Section IV — Progress thresholds, magnitude tiers, healing, and death.</p>
+
+  <div class="title-rule"><span>Resolution</span></div>
+
+  <div class="table-block">
+    <div class="table-label">Common Resolution — Progress Thresholds</div>
+    <table>
+      <thead><tr><th>Task Complexity</th><th class="center">Successes Required</th></tr></thead>
+      <tbody>
+        <tr><td class="highlight">Simple Task</td><td class="center">2</td></tr>
+        <tr><td class="highlight">Moderate Task</td><td class="center">4</td></tr>
+        <tr><td class="highlight">Major Task</td><td class="center">6</td></tr>
+      </tbody>
+    </table>
+    <p class="table-note">Each successful d20 roll contributes 1 Progress toward the threshold.</p>
+  </div>
+
+  <div class="table-block">
+    <div class="table-label">Resonant Magnitude Tiers</div>
+    <table>
+      <thead><tr><th>Tier</th><th>Scope</th><th>Resistance</th><th>Cost</th></tr></thead>
+      <tbody>
+        <tr><td class="highlight">Standard</td><td>Localized, single-target, immediate and contained</td><td>Normal</td><td>Normal</td></tr>
+        <tr><td class="highlight">Expanded</td><td>Multi-target or structurally significant alteration</td><td>Greater</td><td>Greater</td></tr>
+        <tr><td class="highlight">Mass</td><td>Battlefield or environment-wide alteration</td><td>Extreme</td><td>Extreme</td></tr>
+      </tbody>
+    </table>
+    <p class="table-note">Hybrids are restricted to Standard magnitude only. Magnitude modifies TN, not Capability.</p>
+  </div>
+
+  <div class="title-rule"><span>Healing</span></div>
+
+  <div class="table-block">
+    <div class="table-label">Combat Healing vs. Mending Healing</div>
+    <table>
+      <thead><tr><th>Property</th><th>Combat Healing</th><th>Mending Healing</th></tr></thead>
+      <tbody>
+        <tr><td class="highlight">HP Type</td><td>Temporary HP only</td><td>Permanent HP restored</td></tr>
+        <tr><td class="highlight">HP Cap</td><td>Cannot exceed 50% of max HP</td><td>No cap</td></tr>
+        <tr><td class="highlight">Duration</td><td>Disappears at end of encounter</td><td>Permanent</td></tr>
+        <tr><td class="highlight">Healer Cost</td><td>Uses one Vitae Healing Pool die</td><td>For every 2 HP restored, healer loses 1 HP</td></tr>
+        <tr><td class="highlight">Healer Benefit</td><td>Pool refreshes after Short Rest</td><td>Healer gains Natural Absorption equal to HP lost</td></tr>
+        <tr><td class="highlight">Healer Minimum</td><td class="muted">—</td><td>Cannot reduce self below 1 HP</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-block">
+    <div class="table-label">Example — Mending Healing</div>
+    <table>
+      <thead><tr><th>Event</th><th>Result</th></tr></thead>
+      <tbody>
+        <tr><td>Physicker restores 8 HP to an ally</td><td>Ally gains 8 permanent HP</td></tr>
+        <tr><td>Healer cost</td><td>Physicker loses 4 HP</td></tr>
+        <tr><td>Healer protection</td><td>Physicker gains 4 Natural Absorption until next turn</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="title-rule"><span>Death &amp; Unconscious</span></div>
+
+  <div class="table-block">
+    <div class="table-label">Unconscious &amp; Death Thresholds</div>
+    <table>
+      <thead><tr><th>Threshold</th><th>Condition</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="center highlight">0 HP</td>
+          <td class="highlight">Unconscious</td>
+          <td>Cannot act. Each full round unconscious gains 1 Death Point. After 3 full rounds unconscious, regain 1 HP and wake.</td>
+        </tr>
+        <tr>
+          <td class="center danger">10 Death Points</td>
+          <td class="danger">Death</td>
+          <td>Character dies. No further recovery is possible.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</main>
+<footer>
+  <div>
+    Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    © 2026 jpcauthor. All rights reserved.
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    <a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+  </div>
+</footer>
+</div>
+</body>
+</html>

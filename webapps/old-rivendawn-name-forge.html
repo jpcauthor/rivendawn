@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rivendawn Name Forge</title>
+<style>
+:root{
+  --bg:#0e141a;
+  --panel:#17222c;
+  --panel-2:#223241;
+  --ink:#f6f0e4;
+  --muted:#cbbd9d;
+  --gold:#d6b06b;
+  --steel:#9eb7c6;
+  --line:rgba(214,176,107,0.22);
+  --shadow:0 20px 48px rgba(0,0,0,0.38);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  min-height:100vh;
+  padding:24px;
+  font-family:Georgia, "Times New Roman", serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at top, rgba(158,183,198,0.14), transparent 30%),
+    linear-gradient(180deg, #0a1015 0%, #0f1820 100%);
+}
+.app{
+  width:min(980px, 100%);
+  margin:0 auto;
+  background:linear-gradient(180deg, rgba(23,34,44,0.97), rgba(18,27,35,0.97));
+  border:1px solid var(--line);
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.header{
+  padding:28px 28px 16px;
+  border-bottom:1px solid rgba(214,176,107,0.14);
+}
+.kicker{
+  margin:0 0 8px;
+  color:var(--muted);
+  font-size:.9rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+h1{
+  margin:0;
+  font-size:clamp(2rem, 4vw, 3rem);
+  line-height:1.05;
+  color:#fbf7ef;
+}
+.sub{
+  margin:12px 0 0;
+  color:#ddd2bc;
+  line-height:1.55;
+  max-width:760px;
+}
+.content{
+  display:grid;
+  grid-template-columns: 360px 1fr;
+  gap:0;
+}
+.controls{
+  padding:24px 28px 28px;
+  border-right:1px solid rgba(214,176,107,0.12);
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+}
+.results{
+  padding:24px 28px 28px;
+}
+.field{
+  margin-bottom:20px;
+}
+.label{
+  display:block;
+  margin-bottom:10px;
+  color:var(--muted);
+  font-size:.92rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+select{
+  width:100%;
+  padding:13px 14px;
+  border-radius:12px;
+  border:1px solid rgba(214,176,107,0.2);
+  background:rgba(255,255,255,0.05);
+  color:var(--ink);
+  font-size:1rem;
+  font-family:inherit;
+  outline:none;
+}
+select:focus{
+  border-color:rgba(214,176,107,0.45);
+}
+option{
+  color:#111;
+}
+.options{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.option{
+  position:relative;
+}
+.option input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+.option label{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid rgba(214,176,107,0.18);
+  background:rgba(255,255,255,0.03);
+  cursor:pointer;
+  color:#f1e8d7;
+  transition:.18s ease;
+  user-select:none;
+}
+.option label:hover{
+  background:rgba(255,255,255,0.06);
+  border-color:rgba(214,176,107,0.34);
+}
+.option input:checked + label{
+  background:linear-gradient(180deg, rgba(214,176,107,0.18), rgba(214,176,107,0.08));
+  border-color:rgba(214,176,107,0.5);
+  color:#fff8ea;
+}
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:4px;
+}
+button{
+  appearance:none;
+  border:none;
+  border-radius:12px;
+  padding:13px 16px;
+  font-size:1rem;
+  font-family:inherit;
+  cursor:pointer;
+  transition:transform .15s ease, opacity .15s ease;
+}
+button:hover{transform:translateY(-1px)}
+button:active{transform:translateY(0)}
+.primary{
+  background:linear-gradient(180deg, var(--gold), #b98b43);
+  color:#1b1510;
+  font-weight:700;
+}
+.secondary{
+  background:rgba(158,183,198,0.14);
+  color:#eef5f7;
+  border:1px solid rgba(158,183,198,0.25);
+}
+.tertiary{
+  width:100%;
+  margin-top:12px;
+  background:rgba(255,255,255,0.04);
+  color:#f0e7d7;
+  border:1px solid rgba(214,176,107,0.18);
+}
+.card{
+  background:linear-gradient(180deg, rgba(34,50,65,0.82), rgba(22,33,43,0.82));
+  border:1px solid rgba(158,183,198,0.18);
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:18px;
+}
+.card:last-child{margin-bottom:0}
+.result-label{
+  margin:0 0 10px;
+  color:var(--muted);
+  font-size:.9rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.big-name{
+  margin:0;
+  font-size:clamp(2rem, 4.8vw, 3.25rem);
+  line-height:1.05;
+  color:#fbf7ef;
+  word-break:break-word;
+}
+.meta{
+  margin:14px 0 0;
+  color:#d8ccaf;
+  line-height:1.55;
+}
+.list-title{
+  margin:0 0 14px;
+  font-size:1.15rem;
+  color:#f8f2e5;
+}
+.name-list{
+  margin:0;
+  padding-left:1.35rem;
+  color:#efe6d5;
+}
+.name-list li{
+  margin:0 0 10px;
+  line-height:1.45;
+}
+.small{
+  color:#ae9f82;
+  font-size:.95rem;
+  line-height:1.5;
+}
+.footer{
+  padding:0 28px 24px;
+  color:#aa9f88;
+  font-size:.95rem;
+}
+@media (max-width:860px){
+  .content{grid-template-columns:1fr}
+  .controls{border-right:none;border-bottom:1px solid rgba(214,176,107,0.12)}
+}
+@media (max-width:560px){
+  body{padding:14px}
+  .header,.controls,.results,.footer{padding-left:18px;padding-right:18px}
+  .options,.actions{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+  <main class="app">
+    <section class="header">
+      <p class="kicker">Rivendawn Utility</p>
+      <h1>Rivendawn Name Forge</h1>
+      <p class="sub">Generate first names by lineage and gender, then pair them with a large shared surname pool used across the peoples of Rivendawn.</p>
+    </section>
+
+    <section class="content">
+      <aside class="controls">
+        <div class="field">
+          <label class="label" for="lineage">Lineage</label>
+          <select id="lineage">
+            <option value="aelarii">AELARII</option>
+            <option value="avenen">AVENEN</option>
+            <option value="drauven">DRAUVEN</option>
+            <option value="hearthkin">HEARTHKIN</option>
+            <option value="kardurin">KARDURIN</option>
+            <option value="thalmen">THALMEN</option>
+            <option value="chosen">THE CHOSEN</option>
+            <option value="veylen">VEYLEN</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <span class="label">Gender</span>
+          <div class="options">
+            <div class="option">
+              <input type="radio" id="male" name="gender" value="male" checked />
+              <label for="male">Male</label>
+            </div>
+            <div class="option">
+              <input type="radio" id="female" name="gender" value="female" />
+              <label for="female">Female</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="primary" id="generateOneBtn">Generate Name</button>
+          <button class="secondary" id="generateTenBtn" type="button">Generate 10</button>
+        </div>
+
+        <button class="tertiary" id="copyBtn" type="button">Copy Main Name</button>
+
+        <p class="small">
+          First names are lineage-driven. Surnames come from a shared compound pool so the world feels connected rather than segregated by bloodline.
+        </p>
+      </aside>
+
+      <section class="results">
+        <div class="card">
+          <p class="result-label">Generated Name</p>
+          <h2 class="big-name" id="mainName">Vaelirion Stormveil</h2>
+          <p class="meta" id="mainMeta">AELARII male first name paired with a shared Rivendawn surname.</p>
+        </div>
+
+        <div class="card">
+          <h3 class="list-title">Generated Set</h3>
+          <ol class="name-list" id="nameList">
+            <li>Vaelirion Stormveil</li>
+          </ol>
+        </div>
+      </section>
+    </section>
+
+    <section class="footer">
+      Single-file HTML. No server, no database, no dependencies.
+    </section>
+  </main>
+
+<script>
+const lineageData = {
+  aelarii: {
+    label: "AELARII",
+    male: {
+      mode: "syllable",
+      prefix: ["Ael","Cael","Ery","Lae","Mae","Nae","Rhae","Syl","Thae","Vael","Aer","Ith","Elae"],
+      bridge: ["a","e","i","ae","ia","ei","io","oa"],
+      suffix: ["drin","ion","ir","ithor","lor","mir","nor","rion","thalas","thir","vahr","diel"],
+      tail: ["","", "an","el","is","or","yn"]
+    },
+    female: {
+      mode: "syllable",
+      prefix: ["Ael","Eli","Lae","Lyth","Mae","Nae","Rhi","Sae","Syl","Thae","Vae","Yse","Aer","Iria"],
+      bridge: ["a","e","i","ae","ia","ea","ei","y"],
+      suffix: ["lith","mira","nys","rael","rielle","sira","thea","vanna","wyn","riel","shae","thiel"],
+      tail: ["","", "a","el","ia","is","wen"]
+    }
+  },
+  avenen: {
+    label: "AVENEN",
+    male: {
+      mode: "mixed",
+      direct: ["Caelan","Theren","Alric","Eldan","Marek","Corin","Darian","Vaelen","Lucan","Seren"],
+      prefix: ["Cae","The","Al","Eld","Mar","Cor","Dar","Vae","Lu","Se"],
+      bridge: ["a","e","i","ae","ia","o"],
+      suffix: ["lan","ren","ric","dan","rek","rin","dor","len","var","ian"],
+      tail: ["","", "","el","is","or"]
+    },
+    female: {
+      mode: "mixed",
+      direct: ["Elira","Caelyn","Maris","Ariana","Selene","Thera","Liora","Vaela","Coralie","Seris"],
+      prefix: ["Eli","Cae","Mar","Ari","Sel","The","Lio","Vae","Cora","Ser"],
+      bridge: ["a","e","i","ae","ia","o"],
+      suffix: ["ra","lyn","is","ana","ene","ira","ora","ella","iel","is"],
+      tail: ["","", "a","e","ia","yn"]
+    }
+  },
+  drauven: {
+    label: "DRAUVEN",
+    male: {
+      mode: "syllable",
+      prefix: ["Drae","Nyr","Vyr","Xil","Zae","Vel","Syr","Kae","Ryx","Ulv"],
+      bridge: ["a","e","i","y","ae","ia"],
+      suffix: ["dris","ith","kar","ryn","thar","vyr","zael","thys","nox","var"],
+      tail: ["","", "","en","ir","os"]
+    },
+    female: {
+      mode: "syllable",
+      prefix: ["Drae","Nyx","Vyra","Xila","Zae","Vela","Syra","Kae","Ryl","Ulva"],
+      bridge: ["a","e","i","y","ae","ia"],
+      suffix: ["ara","ith","ra","shae","thys","vyr","zira","neth","lira","rynn"],
+      tail: ["","", "a","e","ia","ys"]
+    }
+  },
+  hearthkin: {
+    label: "HEARTHKIN",
+    male: {
+      mode: "direct",
+      direct: ["Milo","Perrin","Tobin","Bran","Hob","Odo","Samble","Fenn","Corby","Wes"],
+    },
+    female: {
+      mode: "direct",
+      direct: ["Lila","Rosie","Cora","Mira","Poppy","Della","Nella","Bree","Tansy","Willa"],
+    }
+  },
+  kardurin: {
+    label: "KARDURIN",
+    male: {
+      mode: "syllable",
+      prefix: ["Bar","Bor","Dur","Gar","Grim","Kaz","Mor","Thra","Tor","Vorn"],
+      bridge: ["a","o","u","au","or"],
+      suffix: ["din","drum","gar","grim","mund","rik","gard","dorn","khar","brum"],
+      tail: ["","", "","ar","ek","or"]
+    },
+    female: {
+      mode: "syllable",
+      prefix: ["Bera","Dura","Gilda","Kaza","Mora","Thra","Torra","Vora","Bruna","Grima"],
+      bridge: ["a","o","u","au","or"],
+      suffix: ["da","dra","gret","hild","mora","rika","bruna","dora","grym","kara"],
+      tail: ["","", "a","hild","ra"]
+    }
+  },
+  thalmen: {
+    label: "THALMEN",
+    male: {
+      mode: "direct",
+      direct: ["Ragnar","Haldor","Sven","Torvald","Bjorn","Leif","Stig","Eirik","Brand","Ulfar"],
+    },
+    female: {
+      mode: "direct",
+      direct: ["Astrid","Brynja","Freya","Sigrid","Yrsa","Hilda","Runa","Inga","Solveig","Thyra"],
+    }
+  },
+  chosen: {
+    label: "THE CHOSEN",
+    male: {
+      mode: "direct",
+      direct: ["Cedric","Tomas","Alric","Dorian","Garrick","Julian","Marcus","Edwin","Roland","Tristan"],
+    },
+    female: {
+      mode: "direct",
+      direct: ["Elena","Maris","Lydia","Cecily","Adeline","Talia","Rowena","Daphne","Selma","Vivian"],
+    }
+  },
+  veylen: {
+    label: "VEYLEN",
+    male: {
+      mode: "syllable",
+      prefix: ["Ari","Iri","Lae","Lyth","Sae","Syl","Vaer","Thae","Eli","Fae"],
+      bridge: ["a","e","i","ae","ia","ei","y"],
+      suffix: ["lin","mir","rael","riel","thir","var","wyn","syl","dor","lian"],
+      tail: ["","", "an","el","is","or"]
+    },
+    female: {
+      mode: "syllable",
+      prefix: ["Ari","Iri","Lae","Lyth","Sae","Syl","Vae","Thae","Eli","Fae"],
+      bridge: ["a","e","i","ae","ia","ei","y"],
+      suffix: ["lira","riel","syl","thira","vara","wyn","shae","nira","mira","liel"],
+      tail: ["","", "a","el","ia","wen"]
+    }
+  }
+};
+
+const surnameParts = {
+  first: [
+    "Amber","Apple","Ash","Black","Blue","Bramble","Bright","Bronze","Cinder","Cloud",
+    "Dawn","Deep","Dusk","Ember","Even","Fallow","Frost","Glen","Gold","Grand",
+    "Gray","Green","Hallow","High","Hollow","Ice","Iron","Light","Lone","Low",
+    "Moon","Moss","Night","Oak","Raven","Red","River","Rose","Shadow","Silver",
+    "Snow","Star","Stone","Storm","Sun","Swift","Thorn","Vale","Willow","Winter"
+  ],
+  second: [
+    "bank","bloom","brook","crest","fall","field","fire","foot","forge","garde",
+    "grove","hall","heart","helm","hold","mere","moor","shade","song","spire",
+    "stone","thorn","vale","veil","ward","watch","water","weaver","whisper","wild",
+    "wind","wood","wright","wynd","barrow","bridge","cliff","dell","fen","gate",
+    "haven","keep","march","rest","ridge","run","shaw","stead","strand","wall"
+  ]
+};
+
+function pick(arr){
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function smoothName(name){
+  return name
+    .replace(/([aeiouy])\1\1/gi, "$1$1")
+    .replace(/aae/gi, "ae")
+    .replace(/iia/gi, "ia")
+    .replace(/eea/gi, "ea")
+    .replace(/yy/gi, "y");
+}
+
+function titleCase(name){
+  return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+}
+
+function formatCompound(name){
+  return name
+    .replace(/\b\w/g, c => c.toUpperCase())
+    .replace(/([a-z])([A-Z])/g, "$1$2");
+}
+
+function buildSyllableName(set){
+  let name = pick(set.prefix);
+  if (set.bridge && Math.random() > 0.14) name += pick(set.bridge);
+  name += pick(set.suffix);
+  if (set.tail) name += pick(set.tail);
+  name = smoothName(name);
+  return titleCase(name);
+}
+
+function buildDirectName(set){
+  return pick(set.direct);
+}
+
+function buildMixedName(set){
+  if (Math.random() > 0.52 && set.direct) return pick(set.direct);
+  return buildSyllableName(set);
+}
+
+function buildFirstName(lineageKey, gender){
+  const set = lineageData[lineageKey][gender];
+  if (set.mode === "direct") return buildDirectName(set);
+  if (set.mode === "mixed") return buildMixedName(set);
+  return buildSyllableName(set);
+}
+
+function buildSurname(){
+  const first = pick(surnameParts.first);
+  const second = pick(surnameParts.second);
+  let surname = first + second;
+  surname = surname.replace(/([a-z])\1([a-z])/gi, "$1$2");
+  return formatCompound(surname);
+}
+
+function getGender(){
+  return document.querySelector('input[name="gender"]:checked').value;
+}
+
+function getLineage(){
+  return document.getElementById("lineage").value;
+}
+
+function buildFullName(){
+  const lineage = getLineage();
+  const gender = getGender();
+  const first = buildFirstName(lineage, gender);
+  const surname = buildSurname();
+  return {
+    full: `${first} ${surname}`,
+    first,
+    surname,
+    lineageLabel: lineageData[lineage].label,
+    gender
+  };
+}
+
+function renderMainName(data){
+  document.getElementById("mainName").textContent = data.full;
+  document.getElementById("mainMeta").textContent =
+    `${data.lineageLabel} ${data.gender} first name paired with a shared Rivendawn surname.`;
+}
+
+function renderList(names){
+  const list = document.getElementById("nameList");
+  list.innerHTML = "";
+  names.forEach(n => {
+    const li = document.createElement("li");
+    li.textContent = n.full;
+    list.appendChild(li);
+  });
+}
+
+function generateOne(){
+  const result = buildFullName();
+  renderMainName(result);
+  renderList([result]);
+}
+
+function generateTen(){
+  const results = Array.from({length:10}, () => buildFullName());
+  renderMainName(results[0]);
+  renderList(results);
+}
+
+document.getElementById("generateOneBtn").addEventListener("click", generateOne);
+document.getElementById("generateTenBtn").addEventListener("click", generateTen);
+
+document.getElementById("copyBtn").addEventListener("click", async () => {
+  const text = document.getElementById("mainName").textContent;
+  try{
+    await navigator.clipboard.writeText(text);
+    document.getElementById("mainMeta").textContent = `Copied "${text}" to clipboard.`;
+  }catch(err){
+    document.getElementById("mainMeta").textContent = "Clipboard copy failed in this browser, but your name is still displayed above.";
+  }
+});
+
+document.getElementById("lineage").addEventListener("change", generateOne);
+document.querySelectorAll('input[name="gender"]').forEach(el => el.addEventListener("change", generateOne));
+
+generateOne();
+</script>
+</body>
+</html>

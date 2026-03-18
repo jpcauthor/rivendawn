@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rivendawn — Character Creation Tables</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+:root {
+  --header-height: 72px;
+  --footer-height: 72px;
+  --content-max-width: 960px;
+  --page-max-width: 1400px;
+  --ink-color: #3a2a1a;
+  --accent: #fff1d6;
+  --nav-color: #f2e3c6;
+  --nav-shadow: rgba(0,0,0,0.85);
+  --footer-bg: rgba(0,0,0,0.88);
+  --border-warm: rgba(94,62,33,0.25);
+  --gold: #c8922a;
+  --ink-mid: #4a2d18;
+  --ink-faint: rgba(58,42,26,0.45);
+  --label-bg: rgba(42,22,8,0.78);
+  --label-text: #f2e3c6;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Crimson Text', Georgia, serif; color: var(--ink-color); min-height: 100dvh; background: #000; line-height: 1.75; font-size: 1.18rem; }
+.page-wrapper { min-height: 100dvh; display: flex; flex-direction: column; max-width: var(--page-max-width); margin: 0 auto; background-color: #000; background-image: url('../images/bg.jpg'); background-size: contain; background-position: center top; background-repeat: no-repeat; background-attachment: fixed; box-shadow: 0 0 80px rgba(0,0,0,0.85); }
+header { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: min(100%, var(--page-max-width)); height: var(--header-height); background-image: url('../images/header.png'); background-size: contain; background-position: center; background-repeat: no-repeat; z-index: 1000; box-shadow: 0 6px 16px rgba(0,0,0,0.5); }
+header::after { content: ""; position: absolute; left: 0; right: 0; bottom: -14px; height: 18px; background: linear-gradient(to bottom, rgba(0,0,0,0.28), rgba(0,0,0,0)); pointer-events: none; }
+nav { max-width: var(--content-max-width); width: 100%; height: 100%; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 2rem; padding: 0 1.5rem; }
+nav a { color: var(--nav-color); text-decoration: none; font-family: Consolas, "Courier New", monospace; font-size: 1.25rem; letter-spacing: 0.14em; text-transform: uppercase; transition: all .25s ease; position: relative; display: inline-flex; align-items: center; gap: .5rem; padding: .2rem .1rem; text-shadow: 0 1px 2px var(--nav-shadow), 0 0 6px rgba(0,0,0,0.45); }
+nav a i { color: inherit; font-size: 1.1rem; margin-right: 4px; position: relative; top: -1px; }
+nav a::after { content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px; background: var(--accent); transition: width .28s ease; }
+nav a:hover { color: var(--accent); transform: translateY(-1px); }
+nav a:hover::after { width: 100%; }
+main { flex: 1; margin-top: var(--header-height); padding: 3.25rem 1rem calc(var(--footer-height) + 3rem); display: flex; justify-content: center; }
+.content-container { max-width: var(--content-max-width); width: 100%; padding: 40px 80px 180px; margin: 0 auto; border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,0.55); background-image: url('../images/content-scroll-bg.png'); background-repeat: repeat-y; background-position: top center; background-size: 100% auto; }
+h1 { font-family: 'Cinzel Decorative', serif; font-size: 3rem; text-align: center; margin-bottom: 0.5rem; color: var(--ink-mid); letter-spacing: .06em; }
+.page-subtitle { text-align: center; font-style: italic; color: var(--label-text); background: var(--label-bg); display: inline-block; padding: 0.25rem 1rem; border-radius: 4px; font-size: 1.05rem; margin-bottom: 3rem; width: 100%; }
+.back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--label-text); background: var(--label-bg); padding: 0.3rem 0.8rem; border-radius: 4px; text-decoration: none; margin-bottom: 2rem; transition: opacity 0.2s ease; }
+.back-link:hover { opacity: 0.8; }
+.title-rule { display: flex; align-items: center; gap: 1rem; margin: 3rem 0 1.5rem; }
+.title-rule::before, .title-rule::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(74,46,6,0.35)); }
+.title-rule::after { background: linear-gradient(to left, transparent, rgba(74,46,6,0.35)); }
+.title-rule span { color: var(--label-text); font-size: .75rem; letter-spacing: .28em; text-transform: uppercase; font-family: 'Cinzel', serif; background: var(--label-bg); padding: 0.25rem 0.85rem; border-radius: 4px; white-space: nowrap; }
+.table-block { margin-bottom: 2.5rem; }
+.table-label { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--label-text); background: var(--label-bg); display: inline-block; padding: 0.2rem 0.7rem; border-radius: 4px; margin-bottom: 0.65rem; }
+.table-note { font-style: italic; font-size: 0.95rem; color: var(--label-text); background: var(--label-bg); display: inline-block; padding: 0.2rem 0.75rem; border-radius: 4px; margin-top: 0.4rem; margin-bottom: 0.65rem; }
+table { width: 100%; border-collapse: collapse; font-family: 'Crimson Text', serif; font-size: 1rem; margin-bottom: 0.5rem; }
+thead tr { background: var(--label-bg); }
+thead th { color: var(--label-text); font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.55rem 0.85rem; text-align: left; border: 1px solid rgba(42,22,8,0.5); }
+tbody tr { background: rgba(255,248,230,0.55); transition: background 0.15s ease; }
+tbody tr:nth-child(even) { background: rgba(244,230,204,0.65); }
+tbody tr:hover { background: rgba(255,241,214,0.85); }
+tbody td { padding: 0.5rem 0.85rem; border: 1px solid var(--border-warm); color: var(--ink-color); vertical-align: top; line-height: 1.5; }
+td.center, th.center { text-align: center; }
+td.highlight { font-weight: 600; color: var(--ink-mid); }
+td.gold { color: var(--gold); font-weight: 600; }
+td.muted { color: var(--ink-faint); font-style: italic; }
+footer { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: min(100%, var(--page-max-width)); height: var(--footer-height); background: var(--footer-bg); color: #ccc; display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 1rem; font-size: .95rem; border-top: 1px solid #444; z-index: 1000; }
+footer a { color: #d4a373; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+@media (max-width: 768px) { nav { gap: 1rem; padding: 0 1rem; flex-wrap: wrap; } nav a { font-size: .9rem; letter-spacing: .08em; } .content-container { padding: 36px 32px 150px; } h1 { font-size: 2.2rem; } thead th, tbody td { padding: 0.4rem 0.5rem; font-size: 0.9rem; } }
+@media (max-width: 480px) { body { font-size: 1.05rem; } .content-container { padding: 28px 20px 130px; } table { font-size: 0.85rem; } }
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+<header>
+<nav>
+  <a href="../geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+  <a href="../lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+  <a href="../rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+  <a href="../create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+  <a href="main_tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+<main>
+<div class="content-container">
+
+  <a href="main_tables.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Tables</a>
+  <h1>Character Creation</h1>
+  <p class="page-subtitle">Section I — Baselines, allocation, lineage, vocations, and durability.</p>
+
+  <div class="table-block">
+    <div class="table-label">Level Baseline</div>
+    <table>
+      <thead><tr><th>Level</th><th class="center">Baseline</th></tr></thead>
+      <tbody>
+        <tr><td>1–2</td><td class="center highlight">19</td></tr>
+        <tr><td>3–4</td><td class="center highlight">18</td></tr>
+        <tr><td>5–6</td><td class="center highlight">17</td></tr>
+        <tr><td>7–8</td><td class="center highlight">16</td></tr>
+        <tr><td>9–10</td><td class="center highlight">15</td></tr>
+      </tbody>
+    </table>
+    <p class="table-note">TN = Level Baseline − Capability. As heroes advance, the world resists them less.</p>
+  </div>
+
+  <div class="table-block">
+    <div class="table-label">Ability &amp; Knowledge Allocation — Character Creation</div>
+    <table>
+      <thead><tr><th>Source</th><th>Mechanical Effect</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td class="highlight">Base Competence</td><td>All Abilities &amp; Knowledges begin at 1</td><td class="muted">Represents lived experience before heroism</td></tr>
+        <tr><td class="highlight">Allocation Pool</td><td>22 points to distribute</td><td class="muted">May not raise any entry above 4 at creation</td></tr>
+        <tr><td class="highlight">Vocation Bonus</td><td>Choose 2 listed options; each gains +1</td><td class="muted">Does not count against 22-point pool</td></tr>
+        <tr><td class="highlight">Lineage Bonus</td><td>+2 to two specified Abilities/Knowledges</td><td class="muted">Does not count against 22-point pool</td></tr>
+        <tr><td class="highlight">Lineage Path Affinity</td><td>+1 to specified Path</td><td class="muted">Applied to Path Rating, not Skills</td></tr>
+        <tr><td class="highlight">Creation Cap</td><td>Maximum 4 in any Ability or Knowledge</td><td class="muted">Hard cap at creation</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-block">
+    <div class="table-label">Lineage Ability &amp; Knowledge Bonuses</div>
+    <table>
+      <thead><tr><th>Lineage</th><th>Ability Bonuses</th><th>Knowledge Bonuses</th></tr></thead>
+      <tbody>
+        <tr><td class="highlight">Aelarii</td><td class="muted">—</td><td>+2 Resonance Theory, +2 Political Theory</td></tr>
+        <tr><td class="highlight">Avenen</td><td>+2 Diplomacy</td><td>+2 Psychology</td></tr>
+        <tr><td class="highlight">Drauven</td><td>+2 Stealth</td><td>+2 Occult Knowledge</td></tr>
+        <tr><td class="highlight">Hearthkin</td><td class="muted">—</td><td>+2 Provisioning, +2 Economics &amp; Trade</td></tr>
+        <tr><td class="highlight">Kardurin</td><td class="muted">—</td><td>+2 Engineering, +2 Blacksmithing</td></tr>
+        <tr><td class="highlight">Thálmen</td><td>+2 Endurance, +2 Intimidation</td><td class="muted">—</td></tr>
+        <tr><td class="highlight">The Chosen</td><td class="muted">—</td><td>+2 Rivendawn Lore, +2 Investigation</td></tr>
+        <tr><td class="highlight">Veylen</td><td class="muted">—</td><td>+2 Nature, +2 Environmental Science</td></tr>
+        <tr><td class="highlight">Auris</td><td class="muted">—</td><td class="muted">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-block">
+    <div class="table-label">Vocations Alignment</div>
+    <table>
+      <thead><tr><th>Vocation</th><th>Primary Heritage Imprint (Locked at 4)</th><th>Bonus Options (Pick Two)</th></tr></thead>
+      <tbody>
+        <tr><td class="highlight">Artisan</td><td>Technical</td><td>Engineering (K), Weapon Mastery (A), Economics &amp; Trade (K), Perception (A)</td></tr>
+        <tr><td class="highlight">Baker</td><td>Physicality &amp; Environment</td><td>Endurance (A), Survival (A), Economics &amp; Trade (K), Provisioning (K)</td></tr>
+        <tr><td class="highlight">Caretaker</td><td>Social &amp; Perceptual</td><td>Combat Medicine (A), Medicine (K), Endurance (A), Psychology (K)</td></tr>
+        <tr><td class="highlight">Courier</td><td>Physicality &amp; Environment</td><td>Athletics (A), Reaction Timing (A), Cartography (K), Perception (A)</td></tr>
+        <tr><td class="highlight">Hearthwarden</td><td>Physicality &amp; Environment</td><td>Perception (A), Environmental Science (K), Endurance (A), Insight (K)</td></tr>
+        <tr><td class="highlight">Initiate Resonant</td><td>Metaphysical &amp; Scholarly</td><td>Resonant Infusion (A), Paths (K), Resonance Theory (K), Soothsaying (A)</td></tr>
+        <tr><td class="highlight">Laborer</td><td>Physicality &amp; Environment</td><td>Athletics (A), Endurance (A), Engineering (K), Survival (A)</td></tr>
+        <tr><td class="highlight">Lorekeeper</td><td>Metaphysical &amp; Scholarly</td><td>History (K), Rivendawn Lore (K), Linguistics (K), Investigation (K)</td></tr>
+        <tr><td class="highlight">Manservant</td><td>Social &amp; Perceptual</td><td>Insight (K), Deception (A), Perception (A), Psychology (K)</td></tr>
+        <tr><td class="highlight">Mediator</td><td>Social &amp; Perceptual</td><td>Diplomacy (A), Insight (K), Persuasion (A), Political Theory (K)</td></tr>
+        <tr><td class="highlight">Nightwatchman</td><td>Social &amp; Perceptual</td><td>Perception (A), Investigation (K), Psychology (K), Insight (K)</td></tr>
+        <tr><td class="highlight">Preserver</td><td>Physicality &amp; Environment</td><td>Survival (A), Environmental Science (K), Economics &amp; Trade (K), Endurance (A)</td></tr>
+        <tr><td class="highlight">Protector</td><td>Tactical &amp; Martial</td><td>Combat Focus (A), Perception (A), Endurance (A), Reaction Timing (A)</td></tr>
+        <tr><td class="highlight">Scout</td><td>Physicality &amp; Environment</td><td>Stealth (A), Perception (A), Survival (A), Cartography (K)</td></tr>
+        <tr><td class="highlight">Steward</td><td>Tactical &amp; Martial</td><td>Economics &amp; Trade (K), Insight (K), Tactics (A), Command (A)</td></tr>
+        <tr><td class="highlight">Student</td><td>Metaphysical &amp; Scholarly</td><td>Investigation (K), Linguistics (K), Scientific Theory (K), History (K)</td></tr>
+        <tr><td class="highlight">Waykeeper</td><td>Tactical &amp; Martial</td><td>Engineering (K), Cartography (K), Survival (A), Tactics (A)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-block">
+    <div class="table-label">Calling Durability Reference</div>
+    <table>
+      <thead><tr><th>Calling</th><th class="center">Health Die</th><th class="center">HP Range</th><th class="center">Starting Armor Tier</th><th class="center">Max Armor Tier</th></tr></thead>
+      <tbody>
+        <tr><td class="highlight">Ascetic Adept</td><td class="center">d8</td><td class="center">27–48</td><td class="center">3</td><td class="center">5</td></tr>
+        <tr><td class="highlight">Peacewarden</td><td class="center">d8</td><td class="center">27–48</td><td class="center">3</td><td class="center">5</td></tr>
+        <tr><td class="highlight">Physicker</td><td class="center">d8</td><td class="center">27–48</td><td class="center">3</td><td class="center">5</td></tr>
+        <tr><td class="highlight">Resonant Architect</td><td class="center">d8</td><td class="center">27–48</td><td class="center">3</td><td class="center">5</td></tr>
+        <tr><td class="highlight">Scribe</td><td class="center">d8</td><td class="center">27–48</td><td class="center">3</td><td class="center">5</td></tr>
+        <tr><td class="highlight">Starcaller</td><td class="center">d8</td><td class="center">27–48</td><td class="center">3</td><td class="center">5</td></tr>
+        <tr><td class="highlight">Truthseeker</td><td class="center">d8</td><td class="center">27–48</td><td class="center">3</td><td class="center">5</td></tr>
+        <tr><td class="highlight">Assassin</td><td class="center">d10</td><td class="center">27–54</td><td class="center">6</td><td class="center">6</td></tr>
+        <tr><td class="highlight">Druid – Thornheart</td><td class="center">d10</td><td class="center">27–54</td><td class="center">6</td><td class="center">9</td></tr>
+        <tr><td class="highlight">Mercenary</td><td class="center">d10</td><td class="center">27–54</td><td class="center">5</td><td class="center">9</td></tr>
+        <tr><td class="highlight">Ranger</td><td class="center">d10</td><td class="center">27–54</td><td class="center">6</td><td class="center">6</td></tr>
+        <tr><td class="highlight">Shadow Jailer</td><td class="center">d10</td><td class="center">27–54</td><td class="center">5</td><td class="center">7</td></tr>
+        <tr><td class="highlight">Wayfarer Knight</td><td class="center">d10</td><td class="center">27–54</td><td class="center">6</td><td class="center">6</td></tr>
+        <tr><td class="highlight">Dawn Sentinel</td><td class="center">d12</td><td class="center">27–60</td><td class="center">8</td><td class="center">10</td></tr>
+        <tr><td class="highlight">Shield Warden</td><td class="center">d12</td><td class="center">27–60</td><td class="center">9</td><td class="center">10</td></tr>
+        <tr><td class="highlight">Soldier</td><td class="center">d12</td><td class="center">27–60</td><td class="center">8</td><td class="center">10</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</main>
+<footer>
+  <div>
+    Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    © 2026 jpcauthor. All rights reserved.
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    <a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+  </div>
+</footer>
+</div>
+</body>
+</html>

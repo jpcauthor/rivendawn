@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Base Combat System</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- Styles -->
+<style>
+
+:root {
+--header-height: 72px;
+--footer-height: 72px;
+--content-max-width: 960px;
+--page-max-width: 1400px;
+--ink-color: #3a2a1a;
+--accent: #fff1d6;
+--nav-color: #f2e3c6;
+--nav-shadow: rgba(0,0,0,0.85);
+--footer-bg: rgba(0,0,0,0.88);
+--toggle-bg: rgba(255,248,235,0.55);
+--toggle-border: rgba(90,60,30,0.24);
+--toggle-hover: rgba(255,241,214,0.78);
+--toggle-doc-bg: rgba(255,248,235,0.48);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Crimson Text',Georgia,serif;
+color:var(--ink-color);
+min-height:100dvh;
+background:#000;
+line-height:1.75;
+font-size:1.18rem;
+}
+
+.page-wrapper{
+min-height:100dvh;
+display:flex;
+flex-direction:column;
+max-width:var(--page-max-width);
+margin:0 auto;
+background-color:#000;
+background-image:url('../images/bg.jpg');
+background-size:contain;
+background-position:center top;
+background-repeat:no-repeat;
+background-attachment:fixed;
+box-shadow:0 0 80px rgba(0,0,0,0.85);
+position:relative;
+}
+
+header{
+position:fixed;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--header-height);
+background-image:url('../images/header.png');
+background-size:contain;
+background-position:center;
+background-repeat:no-repeat;
+z-index:1000;
+box-shadow:0 6px 16px rgba(0,0,0,0.5);
+}
+
+header::after{
+content:"";
+position:absolute;
+left:0;
+right:0;
+bottom:-14px;
+height:18px;
+background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0));
+pointer-events:none;
+}
+
+nav{
+max-width:var(--content-max-width);
+width:100%;
+height:100%;
+margin:0 auto;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:2rem;
+padding:0 1.5rem;
+}
+
+nav a{
+color:var(--nav-color);
+text-decoration:none;
+font-family:Consolas,"Courier New",monospace;
+font-size:1.25rem;
+letter-spacing:0.14em;
+text-transform:uppercase;
+transition:all .25s ease;
+position:relative;
+display:inline-flex;
+align-items:center;
+gap:.5rem;
+padding:.2rem .1rem;
+text-shadow:
+0 1px 2px var(--nav-shadow),
+0 0 6px rgba(0,0,0,0.45);
+}
+
+nav a i{
+color:inherit;
+font-size:1.1rem;
+margin-right:4px;
+position:relative;
+top:-1px;
+}
+
+nav a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-4px;
+width:0;
+height:2px;
+background:var(--accent);
+transition:width .28s ease;
+}
+
+nav a:hover{
+color:var(--accent);
+transform:translateY(-1px);
+}
+
+nav a:hover::after{
+width:100%;
+}
+
+main{
+flex:1;
+margin-top:var(--header-height);
+padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+display:flex;
+justify-content:center;
+}
+
+.content-container{
+max-width:var(--content-max-width);
+width:100%;
+padding:40px 80px 180px;
+color:var(--ink-color);
+margin:0 auto;
+border-radius:8px;
+box-shadow:0 20px 60px rgba(0,0,0,0.55);
+background-image:url('../images/content-scroll-bg.png');
+background-repeat:repeat-y;
+background-position:top center;
+background-size:100% auto;
+}
+
+.content-container h1,
+.content-container h2,
+.content-container h3{
+font-family:'Cinzel Decorative',serif;
+letter-spacing:.06em;
+}
+
+.content-container h1{
+font-size:3rem;
+text-align:center;
+margin:0 0 .75rem;
+}
+
+.content-container h2{
+font-size:2.15rem;
+margin:2.8rem 0 1.4rem;
+border-bottom:1px solid rgba(139,0,0,0.15);
+padding-bottom:.6rem;
+text-align:center;
+}
+
+.content-container h3{
+font-size:1.3rem;
+margin:2rem 0 1rem;
+text-align:center;
+}
+
+.content-container p{
+margin-bottom:0.35rem;
+}
+
+.content-container ul {
+  padding-left: 2rem;
+}
+
+.lore-toggle{
+margin-top:2rem;
+border:1px solid var(--toggle-border);
+border-radius:10px;
+background:var(--toggle-bg);
+overflow:hidden;
+box-shadow:0 10px 24px rgba(0,0,0,0.12);
+}
+
+.lore-toggle summary{
+list-style:none;
+cursor:pointer;
+padding:1rem 1.25rem;
+font-family:'Cinzel Decorative',serif;
+font-size:1.05rem;
+color:#6b1f1f;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:.75rem;
+text-align:center;
+transition:background .25s ease, color .25s ease;
+}
+
+.lore-toggle summary::-webkit-details-marker{
+display:none;
+}
+
+.lore-toggle summary::before{
+content:"\f078";
+font-family:"Font Awesome 6 Free";
+font-weight:900;
+font-size:.9rem;
+transition:transform .25s ease;
+}
+
+.lore-toggle[open] summary::before{
+transform:rotate(180deg);
+}
+
+.lore-toggle summary:hover{
+background:var(--toggle-hover);
+color:#8b2323;
+}
+
+.lore-document{
+padding:1.5rem 1.5rem 1.25rem;
+background:var(--toggle-doc-bg);
+border-top:1px solid rgba(90,60,30,0.15);
+}
+
+.lore-document h3{
+margin-top:0;
+}
+
+footer{
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--footer-height);
+background:var(--footer-bg);
+color:#ccc;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:0 1rem;
+font-size:.95rem;
+border-top:1px solid #444;
+z-index:1000;
+}
+
+footer a{
+color:#d4a373;
+text-decoration:none;
+}
+
+footer a:hover{
+text-decoration:underline;
+}
+
+@media (max-width: 768px){
+
+nav{
+gap:1rem;
+padding:0 1rem;
+flex-wrap:wrap;
+}
+
+nav a{
+font-size:.9rem;
+letter-spacing:.08em;
+}
+
+.content-container{
+padding:36px 32px 150px;
+}
+
+.content-container h1{
+font-size:2.2rem;
+}
+
+.content-container h2{
+font-size:1.7rem;
+}
+
+.content-container h3{
+font-size:1.15rem;
+}
+}
+
+@media (max-width: 480px){
+
+body{
+font-size:1.05rem;
+}
+
+.content-container{
+padding:28px 20px 130px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+<header>
+<nav>
+<a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+<a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+<a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+<a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+<a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+
+<div class="content-container">
+
+<h1>Base Combat System</h1>
+
+<p>Steel, will, and the Song collide in the structured battles of Rivendawn. Every strike is resolved through a unified engine where skill, discipline, and Resonance confront the resistance of the world itself. Martial warriors rely on precision and steel, while Resonant practitioners reshape the consequences of battle through the laws of the Song. Combat is fast, decisive, and lawbound—one roll to strike, one roll for damage, and the rippling effects of Resonance determining how the battlefield changes in response.</p>
+
+<details class="lore-toggle">
+  <summary>To read the full document, click here</summary>
+
+  <div class="lore-document">
+
+<section class="document">
+
+<h2>1. Core Resolution Engine</h2>
+
+<p><strong>Universal Rule:</strong> Target Number (TN) = Level Baseline – Capability</p>
+
+<ul>
+<li>Roll 1d20.</li>
+<li>Roll ≥ TN = Success.</li>
+<li>Roll &lt; TN = Failure.</li>
+<li>Natural 20 → <strong>Ultimate Success</strong></li>
+<li>Natural 1 → <strong>Ultimate Failure</strong></li>
+</ul>
+
+<h3>Capability Structure</h3>
+
+<h4>Non-Combat</h4>
+<ul>
+<li>Primary Attribute + Ability/Knowledge + Applicable Heritage</li>
+</ul>
+
+<h4>Combat — Martial</h4>
+<ul>
+<li>Primary Attribute + Ability/Knowledge + Offensive Rating</li>
+</ul>
+
+<h4>Combat — Resonant</h4>
+<ul>
+<li>Primary Attribute + Ability/Knowledge + Path Rating</li>
+</ul>
+
+
+<h2>2. Combat Resolution Model</h2>
+
+<p>All combat actions follow the unified subtractive model.</p>
+
+<ul>
+<li><strong>Capability</strong> = Primary Attribute + Ability/Knowledge + (Offensive Rating OR Path Rating)</li>
+<li>Offensive Rating and Path Rating never stack.</li>
+<li>Only one rating source may be used per strike.</li>
+<li><strong>TN</strong> = Level Baseline – Capability + Defensive Rating</li>
+<li><strong>Defensive Rating</strong> = Base Defensive Rating (BDR) + posture modifiers + buffs</li>
+<li>The Watcher may apply situational TN adjustments for narrative context.</li>
+</ul>
+
+
+<h2>3. Combat Identity Profiles</h2>
+
+<h3>Forged Combatant</h3>
+<ul>
+<li>No Wellspring</li>
+<li>No Path use</li>
+<li>6 Combat Points distributed between Offensive Rating and Base Defensive Rating</li>
+<li>Additional 3 Ability and Knowledge Points</li>
+<li>1 additional Primary Attribute point</li>
+</ul>
+
+<h3>Martial Hybrid</h3>
+<ul>
+<li>Access to weapon combat and limited Resonance</li>
+<li>5 Combat Points distributed between Offensive Rating and Base Defensive Rating</li>
+<li>Minimum 1 in each rating, maximum 4 at creation</li>
+<li>Path Rating cap: 3</li>
+</ul>
+
+<h3>True Resonant Caster</h3>
+<ul>
+<li>Path Rating may not exceed 4</li>
+<li>May NOT access Expanded and Mass magnitude</li>
+<li>High power and high resource volatility</li>
+</ul>
+
+
+<h2>4. Weapon Damage</h2>
+
+<ul>
+<li>Weapons determine base damage.</li>
+<li>Weapons do not grant additional damage dice.</li>
+<li>Resonance modifies consequence, not base damage.</li>
+</ul>
+
+
+<h2>5. Resonant Effects</h2>
+
+<p>Resonant actions resolve in three stages.</p>
+
+<ol>
+<li>Resolve attack normally.</li>
+<li>Roll weapon damage.</li>
+<li>Roll RED (Resonant Effect Die).</li>
+</ol>
+
+<p>Apply effect based on the RED band result.</p>
+
+<ul>
+<li>One attack roll</li>
+<li>One damage roll</li>
+<li>One RED roll</li>
+</ul>
+
+
+<h2>6. Defensive Systems</h2>
+
+<h3>Martial Defense</h3>
+<ul>
+<li>Defensive Rating</li>
+<li>Defensive Posture</li>
+<li>Armor Points (AP)</li>
+</ul>
+
+<h3>Resonant Defense</h3>
+<ul>
+<li>Projection Shields</li>
+<li>Damage Shields</li>
+<li>Resonant Dodge Effect</li>
+<li>Armor Points (AP)</li>
+</ul>
+
+
+<h2>7. Healing and Survival</h2>
+
+<p>Healing occurs in two forms.</p>
+
+<h3>Combat Healing</h3>
+<ul>
+<li>Temporary HP used for survival during combat.</li>
+<li>Temporary HP replenishes HP only.</li>
+<li>Temporary HP disappears at the end of combat.</li>
+</ul>
+
+<h3>Mending Healing</h3>
+<ul>
+<li>Permanent restoration of lost HP.</li>
+<li>Resonant healers perform healing through Resonant Transference.</li>
+<li>For every 2 HP restored, the healer loses 1 HP.</li>
+<li>The healer gains Natural Absorption Shield equal to lost HP for one round.</li>
+</ul>
+
+
+<h2>8. Unconscious State</h2>
+
+<p>At 0 HP:</p>
+
+<ul>
+<li>The character becomes unconscious.</li>
+<li>They cannot act, move, or heal themselves.</li>
+<li>Death Points begin tracking.</li>
+<li>Death Points accumulate at the end of each round.</li>
+<li>At 10 Death Points the character dies.</li>
+</ul>
+
+
+<h2>9. Initiative</h2>
+
+<h3>Determine Initiative</h3>
+
+<ul>
+<li><strong>Forged and Hybrid Characters:</strong> Primary combat attribute (Strength or Agility) + 1d20</li>
+<li><strong>Pure Resonant Characters:</strong> Highest Path Rating + 1d20</li>
+</ul>
+
+<p>Initiative determines the order of actions during combat.</p>
+
+
+<h2>10. Movement and Engagement</h2>
+
+<h3>Grid System</h3>
+<ul>
+<li>Combat uses 5 meter squares.</li>
+</ul>
+
+<h3>Movement</h3>
+<ul>
+<li>Armor Tier 1–6 → 15 meters (3 squares) + action</li>
+<li>Armor Tier 7 and higher → 10 meters (2 squares) + action</li>
+</ul>
+
+<h3>Double Move</h3>
+<ul>
+<li>A character may move up to 20 meters (4 squares) if they take no action.</li>
+</ul>
+
+<h3>Engagement</h3>
+<ul>
+<li>If an enemy occupies an adjacent square, the characters are engaged in melee.</li>
+</ul>
+
+<h3>Leaving Engagement</h3>
+<ul>
+<li>Attempt an escape check (Athletics, Stealth, or situational ability).</li>
+<li>If escape is not attempted or fails, the enemy gains an <strong>Attack of Opportunity</strong>.</li>
+</ul>
+
+
+<h2>11. Damage Resolution</h2>
+
+<h3>Damage Split</h3>
+
+<p>All damage splits evenly between Armor Points (AP) and Health Points (HP).</p>
+
+<p><strong>Example:</strong><br>
+14 damage → 7 AP and 7 HP</p>
+
+
+<h3>Armor Overflow</h3>
+
+<p>If remaining AP cannot absorb its portion of damage, the remaining damage transfers to HP.</p>
+
+<p><strong>Example:</strong><br>
+4 AP remaining and 10 damage received → 4 AP lost and 6 HP lost</p>
+
+
+<h3>Temporary HP Interaction</h3>
+
+<ul>
+<li>Temporary HP applies only to HP damage.</li>
+<li>Temporary HP disappears at the end of combat.</li>
+</ul>
+
+
+<h2>12. Attacking Unconscious Targets</h2>
+
+<ul>
+<li>Target Number = 3</li>
+<li>Natural 1 still results in Ultimate Failure</li>
+</ul>
+
+
+<h2>13. Combat Design Principles</h2>
+
+<ul>
+<li>Combat operates on a unified engine.</li>
+<li>Weapons determine damage.</li>
+<li>Ratings determine precision.</li>
+<li>Paths determine consequence.</li>
+<li>Magnitude determines scale.</li>
+<li>Wellspring determines sustainability.</li>
+<li>No hidden subsystems exist.</li>
+</ul>
+
+
+<h2>14. Table Authority</h2>
+
+<h3>Purpose</h3>
+<p>Ensure combat remains fast, clear, and focused on play rather than rules interpretation.</p>
+
+<h3>Rule</h3>
+
+<p>If a situation arises that is unclear, undefined, or contested by the written rules, the Watcher makes a ruling that keeps the encounter moving.</p>
+
+<p>The Watcher's ruling stands for the remainder of the encounter.</p>
+
+<p>After the session, the group may discuss the situation and determine whether the ruling should become a formal rule in future revisions.</p>
+
+</section>
+
+  </div>
+</details>
+
+</div>
+
+</main>
+
+<footer>
+<div>
+Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+&nbsp;&nbsp;•&nbsp;&nbsp;
+© 2026 jpcauthor. All rights reserved.
+&nbsp;&nbsp;•&nbsp;&nbsp;
+<a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+</div>
+</footer>
+
+</div>
+
+</body>
+</html>

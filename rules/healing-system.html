@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Healing Mechanics</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- Styles -->
+<style>
+
+:root {
+--header-height: 72px;
+--footer-height: 72px;
+--content-max-width: 960px;
+--page-max-width: 1400px;
+--ink-color: #3a2a1a;
+--accent: #fff1d6;
+--nav-color: #f2e3c6;
+--nav-shadow: rgba(0,0,0,0.85);
+--footer-bg: rgba(0,0,0,0.88);
+--toggle-bg: rgba(255,248,235,0.55);
+--toggle-border: rgba(90,60,30,0.24);
+--toggle-hover: rgba(255,241,214,0.78);
+--toggle-doc-bg: rgba(255,248,235,0.48);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Crimson Text',Georgia,serif;
+color:var(--ink-color);
+min-height:100dvh;
+background:#000;
+line-height:1.75;
+font-size:1.18rem;
+}
+
+.page-wrapper{
+min-height:100dvh;
+display:flex;
+flex-direction:column;
+max-width:var(--page-max-width);
+margin:0 auto;
+background-color:#000;
+background-image:url('../images/bg.jpg');
+background-size:contain;
+background-position:center top;
+background-repeat:no-repeat;
+background-attachment:fixed;
+box-shadow:0 0 80px rgba(0,0,0,0.85);
+position:relative;
+}
+
+header{
+position:fixed;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--header-height);
+background-image:url('../images/header.png');
+background-size:contain;
+background-position:center;
+background-repeat:no-repeat;
+z-index:1000;
+box-shadow:0 6px 16px rgba(0,0,0,0.5);
+}
+
+header::after{
+content:"";
+position:absolute;
+left:0;
+right:0;
+bottom:-14px;
+height:18px;
+background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0));
+pointer-events:none;
+}
+
+nav{
+max-width:var(--content-max-width);
+width:100%;
+height:100%;
+margin:0 auto;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:2rem;
+padding:0 1.5rem;
+}
+
+nav a{
+color:var(--nav-color);
+text-decoration:none;
+font-family:Consolas,"Courier New",monospace;
+font-size:1.25rem;
+letter-spacing:0.14em;
+text-transform:uppercase;
+transition:all .25s ease;
+position:relative;
+display:inline-flex;
+align-items:center;
+gap:.5rem;
+padding:.2rem .1rem;
+text-shadow:
+0 1px 2px var(--nav-shadow),
+0 0 6px rgba(0,0,0,0.45);
+}
+
+nav a i{
+color:inherit;
+font-size:1.1rem;
+margin-right:4px;
+position:relative;
+top:-1px;
+}
+
+nav a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-4px;
+width:0;
+height:2px;
+background:var(--accent);
+transition:width .28s ease;
+}
+
+nav a:hover{
+color:var(--accent);
+transform:translateY(-1px);
+}
+
+nav a:hover::after{
+width:100%;
+}
+
+main{
+flex:1;
+margin-top:var(--header-height);
+padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+display:flex;
+justify-content:center;
+}
+
+.content-container{
+max-width:var(--content-max-width);
+width:100%;
+padding:40px 80px 180px;
+color:var(--ink-color);
+margin:0 auto;
+border-radius:8px;
+box-shadow:0 20px 60px rgba(0,0,0,0.55);
+background-image:url('../images/content-scroll-bg.png');
+background-repeat:repeat-y;
+background-position:top center;
+background-size:100% auto;
+}
+
+.content-container h1,
+.content-container h2,
+.content-container h3{
+font-family:'Cinzel Decorative',serif;
+letter-spacing:.06em;
+}
+
+.content-container h1{
+font-size:3rem;
+text-align:center;
+margin:0 0 .75rem;
+}
+
+.content-container h2{
+font-size:2.15rem;
+margin:2.8rem 0 1.4rem;
+border-bottom:1px solid rgba(139,0,0,0.15);
+padding-bottom:.6rem;
+text-align:center;
+}
+
+.content-container h3{
+font-size:1.3rem;
+margin:2rem 0 1rem;
+text-align:center;
+}
+
+.content-container p{
+margin-bottom:0.35rem;
+}
+
+.content-container ul {
+  padding-left: 2rem;
+}
+
+.lore-toggle{
+margin-top:2rem;
+border:1px solid var(--toggle-border);
+border-radius:10px;
+background:var(--toggle-bg);
+overflow:hidden;
+box-shadow:0 10px 24px rgba(0,0,0,0.12);
+}
+
+.lore-toggle summary{
+list-style:none;
+cursor:pointer;
+padding:1rem 1.25rem;
+font-family:'Cinzel Decorative',serif;
+font-size:1.05rem;
+color:#6b1f1f;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:.75rem;
+text-align:center;
+transition:background .25s ease, color .25s ease;
+}
+
+.lore-toggle summary::-webkit-details-marker{
+display:none;
+}
+
+.lore-toggle summary::before{
+content:"\f078";
+font-family:"Font Awesome 6 Free";
+font-weight:900;
+font-size:.9rem;
+transition:transform .25s ease;
+}
+
+.lore-toggle[open] summary::before{
+transform:rotate(180deg);
+}
+
+.lore-toggle summary:hover{
+background:var(--toggle-hover);
+color:#8b2323;
+}
+
+.lore-document{
+padding:1.5rem 1.5rem 1.25rem;
+background:var(--toggle-doc-bg);
+border-top:1px solid rgba(90,60,30,0.15);
+}
+
+.lore-document h3{
+margin-top:0;
+}
+
+footer{
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--footer-height);
+background:var(--footer-bg);
+color:#ccc;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:0 1rem;
+font-size:.95rem;
+border-top:1px solid #444;
+z-index:1000;
+}
+
+footer a{
+color:#d4a373;
+text-decoration:none;
+}
+
+footer a:hover{
+text-decoration:underline;
+}
+
+@media (max-width: 768px){
+
+nav{
+gap:1rem;
+padding:0 1rem;
+flex-wrap:wrap;
+}
+
+nav a{
+font-size:.9rem;
+letter-spacing:.08em;
+}
+
+.content-container{
+padding:36px 32px 150px;
+}
+
+.content-container h1{
+font-size:2.2rem;
+}
+
+.content-container h2{
+font-size:1.7rem;
+}
+
+.content-container h3{
+font-size:1.15rem;
+}
+}
+
+@media (max-width: 480px){
+
+body{
+font-size:1.05rem;
+}
+
+.content-container{
+padding:28px 20px 130px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+<header>
+<nav>
+<a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+<a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+<a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+<a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+<a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+
+<div class="content-container">
+
+<h1>Healing Mechanics</h1>
+
+<p>In Rivendawn, healing is never free. Battlefield aid can keep a warrior standing for a few desperate moments, but true restoration demands sacrifice, discipline, and mastery of Vitae. Some healers mend wounds through skill and resonance, while others restore life by channeling their own vitality into another. In a world where survival often hangs by a thread, the choice to heal is as meaningful—and dangerous—as the choice to fight.</p>
+
+<details class="lore-toggle">
+  <summary>To read the full document, click here</summary>
+
+  <div class="lore-document">
+
+<h2>Rivendown — Healing System</h2>
+
+
+<h3>Healing Philosophy</h3>
+
+<p>Healing in Rivendown exists in two distinct forms.</p>
+
+<p>Combat Healing keeps a character alive long enough to survive the fight.</p>
+
+<p>Mending Healing restores the body and repairs real damage.</p>
+
+<p>Combat healing is temporary and tactical.</p>
+
+<p>Mending healing is permanent and costly.</p>
+
+
+<h3>I. Combat Healing</h3>
+
+<p>Combat healing represents rapid battlefield intervention intended to prevent immediate death.</p>
+
+<p>Combat healing grants Temporary HP.</p>
+
+<p>Temporary HP gained through combat healing cannot raise a character above 50% of their maximum HP.</p>
+
+<p>Temporary HP disappears at the end of the encounter.</p>
+
+
+<h3>Combat Healing Pool</h3>
+
+<p><em>(Physicker & Restoration Druid)</em></p>
+
+<p>Specialized healers possess a Vitae Healing Pool which allows rapid battlefield stabilization.</p>
+
+<table>
+<tr>
+<th>Vitae</th>
+<th>Healing Dice Pool</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>d4</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>d4, d6</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>d4, d6, d8</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>d4, d6, d8, d10</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>d4, d6, d8, d10, d12</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>d4, d6, d8, d10, d12, d20</td>
+</tr>
+</table>
+
+<p>During combat the healer chooses one die from the pool and rolls it.</p>
+
+<p>The result becomes Temporary HP granted to the target.</p>
+
+<p>Once a die is used it is expended.</p>
+
+<p>The pool refreshes after a Short Rest ("Smoke Break").</p>
+
+
+<h3>II. Mending Healing (Permanent)</h3>
+
+<p>Mending healing represents true restoration of the body.</p>
+
+<p>Mending healing restores permanent HP.</p>
+
+<p>There are two forms of Mending Healing in Rivendown.</p>
+
+<p>Physicker and Restoration Druids perform healing through Resonant Transference.</p>
+
+<p>All other Vitae-based healing follows the Standard Healing Procedure.</p>
+
+
+<h3>III. Standard Mending Healing</h3>
+
+<p><em>(Non-Physicker / Non-Restoration Druid)</em></p>
+
+<p>Characters who possess Vitae but are not Physickers or Restoration Druids may still perform restorative healing.</p>
+
+<p>To perform healing they must:</p>
+
+<ol>
+<li>Touch the target</li>
+<li>Roll their d20 capability check</li>
+<li>Succeed against the required difficulty</li>
+<li>Roll their Resonance Dice</li>
+</ol>
+
+<p>The result of the Resonance Dice determines the amount of HP restored.</p>
+
+<p>These healers:</p>
+
+<ul>
+<li>Do not possess a Combat Healing Pool</li>
+<li>Do not use Resonant Transference</li>
+</ul>
+
+
+<h3>IV. Resonant Transference</h3>
+
+<p><em>(Physicker & Restoration Druid)</em></p>
+
+<p>Certain healers restore life by channeling vitality through themselves rather than creating it from nothing.</p>
+
+<p>When performing Mending Healing, the healer transfers life force through their own body.</p>
+
+<p>For every 2 HP restored, the healer loses 1 HP.</p>
+
+<p>However, the healer immediately gains Natural Absorption equal to the HP sacrificed.</p>
+
+<p>Natural Absorption functions as a temporary shield that absorbs incoming damage.</p>
+
+<p>Natural Absorption lasts until the start of the healer’s next turn.</p>
+
+<p>Any remaining shield is lost when this duration ends.</p>
+
+<p>A healer cannot reduce themselves below 1 HP through Resonant Transference.</p>
+
+<p><strong>Example</strong></p>
+
+<p>A Physicker restores 8 HP to an ally.</p>
+
+<p>The Physicker:</p>
+
+<ul>
+<li>loses 4 HP</li>
+<li>gains 4 Natural Absorption until the start of their next turn</li>
+</ul>
+
+
+<h3>V. Unconscious State</h3>
+
+<p>When a character reaches 0 HP, they immediately enter the Unconscious state.</p>
+
+<p>An unconscious character:</p>
+
+<ul>
+<li>Falls prone</li>
+<li>Cannot act or move</li>
+<li>Cannot spend Wellspring</li>
+<li>Cannot perform healing on themselves</li>
+<li>May only be healed or stabilized by allies</li>
+</ul>
+
+
+<h3>VI. Death Points</h3>
+
+<p>While unconscious, a character begins tracking Death Points.</p>
+
+<p>If a character accumulates 10 Death Points, they die.</p>
+
+<p>Damage taken while unconscious contributes to Death Points.</p>
+
+
+<h3>VII. Natural Recovery</h3>
+
+<p>If an unconscious character remains untouched and takes no damage for 2 full rounds, they regain 1 HP.</p>
+
+<p>When this occurs the character immediately awakens and exits the Unconscious state.</p>
+
+<p>Natural recovery fails if the character:</p>
+
+<ul>
+<li>takes damage</li>
+<li>is violently moved</li>
+<li>is targeted by hostile actions</li>
+</ul>
+
+
+<h3>System Summary</h3>
+
+<p><strong>Combat Healing</strong></p>
+
+<p>Temporary survival healing using a dice pool.</p>
+
+<p>Available to Physickers and Restoration Druids.</p>
+
+<p>Refreshes after a Short Rest.</p>
+
+<p><strong>Standard Mending Healing</strong></p>
+
+<p>Permanent healing performed through a touch, success check, and Resonance Dice.</p>
+
+<p>Used by Vitae users who are not dedicated healers.</p>
+
+<p><strong>Resonant Transference</strong></p>
+
+<p>Permanent healing performed by Physickers and Restoration Druids.</p>
+
+<p>Healing transfers life force through the healer, creating temporary Natural Absorption.</p>
+
+<p><strong>Unconscious</strong></p>
+
+<p>Characters at 0 HP become unconscious and cannot act.</p>
+
+<p><strong>Death</strong></p>
+
+<p>Characters die when they accumulate 10 Death Points.</p>
+
+  </div>
+</details>
+
+</div>
+
+</main>
+
+<footer>
+<div>
+Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+&nbsp;&nbsp;•&nbsp;&nbsp;
+© 2026 jpcauthor. All rights reserved.
+&nbsp;&nbsp;•&nbsp;&nbsp;
+<a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+</div>
+</footer>
+
+</div>
+
+</body>
+</html>

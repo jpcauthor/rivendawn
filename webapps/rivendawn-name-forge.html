@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rivendawn Name Forge</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --parchment:      #f5ead6;
+  --parchment-deep: #ede0c4;
+  --parchment-dark: #e0cfa8;
+  --ink:            #2a1c0e;
+  --ink-mid:        #4a2e06;
+  --ink-dim:        #7a5a30;
+  --ink-faint:      #a08050;
+  --gold:           #c8922a;
+  --gold-light:     #d4a84a;
+  --gold-pale:      #e8c87a;
+  --border:         rgba(74,46,6,0.22);
+  --border-strong:  rgba(74,46,6,0.42);
+  --shadow-warm:    rgba(42,28,14,0.18);
+  --surface:        rgba(255,248,230,0.85);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  min-height: 100vh;
+}
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(200,146,42,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 100%, rgba(160,120,60,0.10) 0%, transparent 50%),
+    linear-gradient(160deg, #1a100600 0%, #0e0804 100%);
+  min-height: 100vh;
+  padding: 2rem 1rem 4rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* ── Grain overlay ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+.forge {
+  position: relative;
+  z-index: 1;
+  width: min(900px, 100%);
+  background:
+    linear-gradient(180deg, #f8eed8 0%, #f2e4c4 40%, #ede0be 100%);
+  border-radius: 4px;
+  box-shadow:
+    0 0 0 1px var(--border),
+    0 0 0 4px rgba(200,146,42,0.08),
+    0 2px 8px rgba(42,28,14,0.12),
+    0 8px 32px rgba(42,28,14,0.22),
+    0 32px 80px rgba(42,28,14,0.28);
+  overflow: hidden;
+  animation: pageReveal 0.6s ease both;
+}
+
+@keyframes pageReveal {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Decorative top border ── */
+.forge::before {
+  content: '';
+  display: block;
+  height: 5px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--gold) 15%,
+    var(--gold-pale) 50%,
+    var(--gold) 85%,
+    transparent 100%
+  );
+}
+
+/* ── Header ── */
+.forge-header {
+  padding: 2.5rem 3.5rem 2rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.forge-header::after {
+  content: '✦';
+  display: block;
+  position: absolute;
+  bottom: -0.7rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #f5ead6;
+  padding: 0 0.75rem;
+  color: var(--gold);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+}
+
+.forge-kicker {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.75rem;
+}
+
+.forge-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  color: var(--ink-mid);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+
+.forge-watcher {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-dim);
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+
+.forge-watcher cite {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  font-style: normal;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ── Body layout ── */
+.forge-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+/* ── Controls panel ── */
+.forge-controls {
+  padding: 2.25rem 2.5rem 2.5rem;
+  border-right: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(200,146,42,0.04), transparent);
+}
+
+/* ── Field labels ── */
+.field { margin-bottom: 1.75rem; }
+
+.field-label {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+/* ── Lineage pills ── */
+.lineage-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.lineage-opt { position: relative; }
+.lineage-opt input {
+  position: absolute; opacity: 0; pointer-events: none;
+}
+
+.lineage-opt label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: rgba(255,248,230,0.5);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  transition: all 0.18s ease;
+  user-select: none;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.lineage-opt label:hover {
+  background: rgba(200,146,42,0.08);
+  border-color: rgba(200,146,42,0.4);
+  color: var(--ink-mid);
+}
+
+.lineage-opt input:checked + label {
+  background: linear-gradient(180deg, rgba(200,146,42,0.16), rgba(200,146,42,0.08));
+  border-color: var(--gold);
+  color: var(--ink-mid);
+  box-shadow: inset 0 1px 0 rgba(255,248,200,0.4);
+}
+
+/* ── Gender toggle ── */
+.gender-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.gender-opt { position: relative; }
+.gender-opt input {
+  position: absolute; opacity: 0; pointer-events: none;
+}
+
+.gender-opt label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: rgba(255,248,230,0.5);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.gender-opt label:hover {
+  background: rgba(200,146,42,0.08);
+  border-color: rgba(200,146,42,0.4);
+  color: var(--ink-mid);
+}
+
+.gender-opt input:checked + label {
+  background: linear-gradient(180deg, rgba(200,146,42,0.16), rgba(200,146,42,0.08));
+  border-color: var(--gold);
+  color: var(--ink-mid);
+}
+
+/* ── Buttons ── */
+.btn-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.btn {
+  appearance: none;
+  border: none;
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.btn-primary {
+  background: linear-gradient(180deg, #c8922a, #a87018);
+  color: #fff8e8;
+  box-shadow: 0 2px 8px rgba(200,146,42,0.3), inset 0 1px 0 rgba(255,240,180,0.2);
+}
+.btn-primary:hover {
+  background: linear-gradient(180deg, #d4a030, #b87c20);
+  box-shadow: 0 4px 14px rgba(200,146,42,0.4);
+}
+
+.btn-secondary {
+  background: rgba(74,46,6,0.07);
+  color: var(--ink-mid);
+  border: 1px solid var(--border-strong);
+}
+.btn-secondary:hover {
+  background: rgba(74,46,6,0.12);
+}
+
+.btn-tertiary {
+  width: 100%;
+  background: transparent;
+  color: var(--ink-dim);
+  border: 1px solid var(--border);
+  font-size: 0.58rem;
+}
+.btn-tertiary:hover {
+  background: rgba(74,46,6,0.05);
+  color: var(--ink-mid);
+  border-color: var(--border-strong);
+}
+
+.forge-note {
+  margin-top: 1.25rem;
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--ink-faint);
+  line-height: 1.6;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}
+
+/* ── Results panel ── */
+.forge-results {
+  padding: 2.25rem 2.5rem 2.5rem;
+}
+
+/* ── Main name display ── */
+.main-name-block {
+  margin-bottom: 1.75rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.result-eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.75rem;
+}
+
+.main-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+  color: var(--ink-mid);
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+  word-break: break-word;
+  margin-bottom: 0.6rem;
+  animation: nameAppear 0.35s ease both;
+}
+
+@keyframes nameAppear {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.main-name-meta {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--ink-dim);
+  line-height: 1.5;
+  min-height: 1.4rem;
+}
+
+/* ── Divider ornament ── */
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.1rem;
+}
+.ornament-divider span {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border));
+}
+.ornament-divider span:last-child {
+  background: linear-gradient(to left, transparent, var(--border));
+}
+.ornament-divider em {
+  font-style: normal;
+  font-family: 'Crimson Text', serif;
+  font-size: 0.6rem;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* ── Name list ── */
+.list-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.75rem;
+}
+
+.name-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.name-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid rgba(74,46,6,0.08);
+  font-family: 'Crimson Text', serif;
+  font-size: 1.08rem;
+  color: var(--ink);
+  line-height: 1.4;
+  animation: listItemIn 0.25s ease both;
+}
+
+.name-list li:last-child { border-bottom: none; }
+
+.name-list li::before {
+  content: attr(data-num);
+  font-family: 'Cinzel', serif;
+  font-size: 0.52rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  min-width: 1.2rem;
+  flex-shrink: 0;
+}
+
+@keyframes listItemIn {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Footer ── */
+.forge-footer {
+  padding: 1rem 3.5rem 1.5rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  background: rgba(200,146,42,0.03);
+}
+
+/* ── Bottom border ── */
+.forge::after {
+  content: '';
+  display: block;
+  height: 4px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--gold) 15%,
+    var(--gold-pale) 50%,
+    var(--gold) 85%,
+    transparent 100%
+  );
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .forge-body { grid-template-columns: 1fr; }
+  .forge-controls { border-right: none; border-bottom: 1px solid var(--border); }
+  .forge-header { padding: 2rem 1.5rem 1.75rem; }
+  .forge-controls, .forge-results { padding: 1.75rem 1.5rem; }
+  .forge-footer { padding: 1rem 1.5rem 1.25rem; }
+}
+
+@media (max-width: 480px) {
+  .lineage-grid { grid-template-columns: 1fr 1fr; }
+  .btn-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="forge">
+
+  <!-- Top gold rule rendered by ::before -->
+
+  <header class="forge-header">
+    <p class="forge-kicker">Rivendawn Utility — Naming Registry</p>
+    <h1 class="forge-title">The Name Forge</h1>
+    <p class="forge-watcher">
+      "A name is not given. It accumulates — syllable by syllable — until the world has no choice but to remember it."
+      <cite>— The Watcher, Entry 44</cite>
+    </p>
+  </header>
+
+  <div class="forge-body">
+
+    <!-- ── Controls ── -->
+    <aside class="forge-controls">
+
+      <div class="field">
+        <span class="field-label">Lineage</span>
+        <div class="lineage-grid">
+          <div class="lineage-opt">
+            <input type="radio" id="lin-aelarii"  name="lineage" value="aelarii" checked />
+            <label for="lin-aelarii">Aelarii</label>
+          </div>
+          <div class="lineage-opt">
+            <input type="radio" id="lin-avenen"   name="lineage" value="avenen" />
+            <label for="lin-avenen">Avenen</label>
+          </div>
+          <div class="lineage-opt">
+            <input type="radio" id="lin-drauven"  name="lineage" value="drauven" />
+            <label for="lin-drauven">Drauven</label>
+          </div>
+          <div class="lineage-opt">
+            <input type="radio" id="lin-hearthkin" name="lineage" value="hearthkin" />
+            <label for="lin-hearthkin">Hearthkin</label>
+          </div>
+          <div class="lineage-opt">
+            <input type="radio" id="lin-kardurin"  name="lineage" value="kardurin" />
+            <label for="lin-kardurin">Kardurin</label>
+          </div>
+          <div class="lineage-opt">
+            <input type="radio" id="lin-thalmen"   name="lineage" value="thalmen" />
+            <label for="lin-thalmen">Thalmen</label>
+          </div>
+          <div class="lineage-opt">
+            <input type="radio" id="lin-chosen"    name="lineage" value="chosen" />
+            <label for="lin-chosen">The Chosen</label>
+          </div>
+          <div class="lineage-opt">
+            <input type="radio" id="lin-veylen"    name="lineage" value="veylen" />
+            <label for="lin-veylen">Veylen</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="field-label">Gender</span>
+        <div class="gender-row">
+          <div class="gender-opt">
+            <input type="radio" id="gen-male" name="gender" value="male" checked />
+            <label for="gen-male">Male</label>
+          </div>
+          <div class="gender-opt">
+            <input type="radio" id="gen-female" name="gender" value="female" />
+            <label for="gen-female">Female</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary"    id="generateOneBtn">Forge Name</button>
+        <button class="btn btn-secondary"  id="generateTenBtn">Forge Ten</button>
+      </div>
+      <button class="btn btn-tertiary" id="copyBtn">Copy to Scroll</button>
+
+      <p class="forge-note">
+        First names are lineage-driven. Surnames are drawn from a shared compound pool — the world feels connected rather than divided by blood.
+      </p>
+
+    </aside>
+
+    <!-- ── Results ── -->
+    <section class="forge-results">
+
+      <div class="main-name-block">
+        <p class="result-eyebrow">Forged Name</p>
+        <p class="main-name" id="mainName">Vaelirion Stormveil</p>
+        <p class="main-name-meta" id="mainMeta">Aelarii male name, drawn from the shared registry.</p>
+      </div>
+
+      <div class="ornament-divider">
+        <span></span>
+        <em>Registry</em>
+        <span></span>
+      </div>
+
+      <p class="list-label">Generated Set</p>
+      <ol class="name-list" id="nameList">
+        <li data-num="I">Vaelirion Stormveil</li>
+      </ol>
+
+    </section>
+  </div>
+
+  <footer class="forge-footer">
+    Rivendawn Name Forge &nbsp;·&nbsp; Single-file utility &nbsp;·&nbsp; No dependencies
+  </footer>
+
+</div>
+
+<script>
+const lineageData = {
+  aelarii: {
+    label: "Aelarii",
+    male: {
+      mode: "syllable",
+      prefix: ["Ael","Cael","Ery","Lae","Mae","Nae","Rhae","Syl","Thae","Vael","Aer","Ith","Elae"],
+      bridge: ["a","e","i","ae","ia","ei","io","oa"],
+      suffix: ["drin","ion","ir","ithor","lor","mir","nor","rion","thalas","thir","vahr","diel"],
+      tail: ["","", "an","el","is","or","yn"]
+    },
+    female: {
+      mode: "syllable",
+      prefix: ["Ael","Eli","Lae","Lyth","Mae","Nae","Rhi","Sae","Syl","Thae","Vae","Yse","Aer","Iria"],
+      bridge: ["a","e","i","ae","ia","ea","ei","y"],
+      suffix: ["lith","mira","nys","rael","rielle","sira","thea","vanna","wyn","riel","shae","thiel"],
+      tail: ["","", "a","el","ia","is","wen"]
+    }
+  },
+  avenen: {
+    label: "Avenen",
+    male: {
+      mode: "mixed",
+      direct: ["Caelan","Theren","Alric","Eldan","Marek","Corin","Darian","Vaelen","Lucan","Seren"],
+      prefix: ["Cae","The","Al","Eld","Mar","Cor","Dar","Vae","Lu","Se"],
+      bridge: ["a","e","i","ae","ia","o"],
+      suffix: ["lan","ren","ric","dan","rek","rin","dor","len","var","ian"],
+      tail: ["","", "","el","is","or"]
+    },
+    female: {
+      mode: "mixed",
+      direct: ["Elira","Caelyn","Maris","Ariana","Selene","Thera","Liora","Vaela","Coralie","Seris"],
+      prefix: ["Eli","Cae","Mar","Ari","Sel","The","Lio","Vae","Cora","Ser"],
+      bridge: ["a","e","i","ae","ia","o"],
+      suffix: ["ra","lyn","is","ana","ene","ira","ora","ella","iel","is"],
+      tail: ["","", "a","e","ia","yn"]
+    }
+  },
+  drauven: {
+    label: "Drauven",
+    male: {
+      mode: "syllable",
+      prefix: ["Drae","Nyr","Vyr","Xil","Zae","Vel","Syr","Kae","Ryx","Ulv"],
+      bridge: ["a","e","i","y","ae","ia"],
+      suffix: ["dris","ith","kar","ryn","thar","vyr","zael","thys","nox","var"],
+      tail: ["","", "","en","ir","os"]
+    },
+    female: {
+      mode: "syllable",
+      prefix: ["Drae","Nyx","Vyra","Xila","Zae","Vela","Syra","Kae","Ryl","Ulva"],
+      bridge: ["a","e","i","y","ae","ia"],
+      suffix: ["ara","ith","ra","shae","thys","vyr","zira","neth","lira","rynn"],
+      tail: ["","", "a","e","ia","ys"]
+    }
+  },
+  hearthkin: {
+    label: "Hearthkin",
+    male: {
+      mode: "direct",
+      direct: ["Milo","Perrin","Tobin","Bran","Hob","Odo","Samble","Fenn","Corby","Wes"],
+    },
+    female: {
+      mode: "direct",
+      direct: ["Lila","Rosie","Cora","Mira","Poppy","Della","Nella","Bree","Tansy","Willa"],
+    }
+  },
+  kardurin: {
+    label: "Kardurin",
+    male: {
+      mode: "syllable",
+      prefix: ["Bar","Bor","Dur","Gar","Grim","Kaz","Mor","Thra","Tor","Vorn"],
+      bridge: ["a","o","u","au","or"],
+      suffix: ["din","drum","gar","grim","mund","rik","gard","dorn","khar","brum"],
+      tail: ["","", "","ar","ek","or"]
+    },
+    female: {
+      mode: "syllable",
+      prefix: ["Bera","Dura","Gilda","Kaza","Mora","Thra","Torra","Vora","Bruna","Grima"],
+      bridge: ["a","o","u","au","or"],
+      suffix: ["da","dra","gret","hild","mora","rika","bruna","dora","grym","kara"],
+      tail: ["","", "a","hild","ra"]
+    }
+  },
+  thalmen: {
+    label: "Thalmen",
+    male: {
+      mode: "direct",
+      direct: ["Ragnar","Haldor","Sven","Torvald","Bjorn","Leif","Stig","Eirik","Brand","Ulfar"],
+    },
+    female: {
+      mode: "direct",
+      direct: ["Astrid","Brynja","Freya","Sigrid","Yrsa","Hilda","Runa","Inga","Solveig","Thyra"],
+    }
+  },
+  chosen: {
+    label: "The Chosen",
+    male: {
+      mode: "direct",
+      direct: ["Cedric","Tomas","Alric","Dorian","Garrick","Julian","Marcus","Edwin","Roland","Tristan"],
+    },
+    female: {
+      mode: "direct",
+      direct: ["Elena","Maris","Lydia","Cecily","Adeline","Talia","Rowena","Daphne","Selma","Vivian"],
+    }
+  },
+  veylen: {
+    label: "Veylen",
+    male: {
+      mode: "syllable",
+      prefix: ["Ari","Iri","Lae","Lyth","Sae","Syl","Vaer","Thae","Eli","Fae"],
+      bridge: ["a","e","i","ae","ia","ei","y"],
+      suffix: ["lin","mir","rael","riel","thir","var","wyn","syl","dor","lian"],
+      tail: ["","", "an","el","is","or"]
+    },
+    female: {
+      mode: "syllable",
+      prefix: ["Ari","Iri","Lae","Lyth","Sae","Syl","Vae","Thae","Eli","Fae"],
+      bridge: ["a","e","i","ae","ia","ei","y"],
+      suffix: ["lira","riel","syl","thira","vara","wyn","shae","nira","mira","liel"],
+      tail: ["","", "a","el","ia","wen"]
+    }
+  }
+};
+
+const surnameParts = {
+  first: [
+    "Amber","Apple","Ash","Black","Blue","Bramble","Bright","Bronze","Cinder","Cloud",
+    "Dawn","Deep","Dusk","Ember","Even","Fallow","Frost","Glen","Gold","Grand",
+    "Gray","Green","Hallow","High","Hollow","Ice","Iron","Light","Lone","Low",
+    "Moon","Moss","Night","Oak","Raven","Red","River","Rose","Shadow","Silver",
+    "Snow","Star","Stone","Storm","Sun","Swift","Thorn","Vale","Willow","Winter"
+  ],
+  second: [
+    "bank","bloom","brook","crest","fall","field","fire","foot","forge","garde",
+    "grove","hall","heart","helm","hold","mere","moor","shade","song","spire",
+    "stone","thorn","vale","veil","ward","watch","water","weaver","whisper","wild",
+    "wind","wood","wright","wynd","barrow","bridge","cliff","dell","fen","gate",
+    "haven","keep","march","rest","ridge","run","shaw","stead","strand","wall"
+  ]
+};
+
+const romanNumerals = ["I","II","III","IV","V","VI","VII","VIII","IX","X"];
+
+function pick(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
+
+function smoothName(name){
+  return name
+    .replace(/([aeiouy])\1\1/gi, "$1$1")
+    .replace(/aae/gi, "ae")
+    .replace(/iia/gi, "ia")
+    .replace(/eea/gi, "ea")
+    .replace(/yy/gi, "y");
+}
+
+function titleCase(name){
+  return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+}
+
+function formatCompound(name){
+  return name.replace(/\b\w/g, c => c.toUpperCase());
+}
+
+function buildSyllableName(set){
+  let name = pick(set.prefix);
+  if (set.bridge && Math.random() > 0.14) name += pick(set.bridge);
+  name += pick(set.suffix);
+  if (set.tail) name += pick(set.tail);
+  name = smoothName(name);
+  return titleCase(name);
+}
+
+function buildDirectName(set){ return pick(set.direct); }
+
+function buildMixedName(set){
+  if (Math.random() > 0.52 && set.direct) return pick(set.direct);
+  return buildSyllableName(set);
+}
+
+function buildFirstName(lineageKey, gender){
+  const set = lineageData[lineageKey][gender];
+  if (set.mode === "direct") return buildDirectName(set);
+  if (set.mode === "mixed")  return buildMixedName(set);
+  return buildSyllableName(set);
+}
+
+function buildSurname(){
+  const first = pick(surnameParts.first);
+  const second = pick(surnameParts.second);
+  let surname = first + second;
+  surname = surname.replace(/([a-z])\1([a-z])/gi, "$1$2");
+  return formatCompound(surname);
+}
+
+function getLineage(){ return document.querySelector('input[name="lineage"]:checked').value; }
+function getGender(){  return document.querySelector('input[name="gender"]:checked').value; }
+
+function buildFullName(){
+  const lineage = getLineage();
+  const gender  = getGender();
+  const first   = buildFirstName(lineage, gender);
+  const surname = buildSurname();
+  return {
+    full: `${first} ${surname}`,
+    first, surname,
+    lineageLabel: lineageData[lineage].label,
+    gender
+  };
+}
+
+function renderMainName(data){
+  const el = document.getElementById("mainName");
+  el.style.animation = "none";
+  el.offsetHeight; // reflow
+  el.style.animation = "";
+  el.textContent = data.full;
+  document.getElementById("mainMeta").textContent =
+    `${data.lineageLabel} ${data.gender} — drawn from the shared naming registry.`;
+}
+
+function renderList(names){
+  const list = document.getElementById("nameList");
+  list.innerHTML = "";
+  names.forEach((n, i) => {
+    const li = document.createElement("li");
+    li.setAttribute("data-num", romanNumerals[i] || (i + 1).toString());
+    li.style.animationDelay = `${i * 0.04}s`;
+    li.textContent = n.full;
+    list.appendChild(li);
+  });
+}
+
+function generateOne(){
+  const result = buildFullName();
+  renderMainName(result);
+  renderList([result]);
+}
+
+function generateTen(){
+  const results = Array.from({length: 10}, () => buildFullName());
+  renderMainName(results[0]);
+  renderList(results);
+}
+
+document.getElementById("generateOneBtn").addEventListener("click", generateOne);
+document.getElementById("generateTenBtn").addEventListener("click", generateTen);
+
+document.getElementById("copyBtn").addEventListener("click", async () => {
+  const text = document.getElementById("mainName").textContent;
+  try {
+    await navigator.clipboard.writeText(text);
+    document.getElementById("mainMeta").textContent = `"${text}" — copied to your scroll.`;
+  } catch(err) {
+    document.getElementById("mainMeta").textContent = "Clipboard unavailable — your name remains above.";
+  }
+});
+
+document.querySelectorAll('input[name="lineage"]').forEach(el => el.addEventListener("change", generateOne));
+document.querySelectorAll('input[name="gender"]').forEach(el  => el.addEventListener("change", generateOne));
+
+generateOne();
+</script>
+</body>
+</html>

@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resonant Path Effects</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- Styles -->
+<style>
+
+:root {
+--header-height: 72px;
+--footer-height: 72px;
+--content-max-width: 960px;
+--page-max-width: 1400px;
+--ink-color: #3a2a1a;
+--accent: #fff1d6;
+--nav-color: #f2e3c6;
+--nav-shadow: rgba(0,0,0,0.85);
+--footer-bg: rgba(0,0,0,0.88);
+--toggle-bg: rgba(255,248,235,0.55);
+--toggle-border: rgba(90,60,30,0.24);
+--toggle-hover: rgba(255,241,214,0.78);
+--toggle-doc-bg: rgba(255,248,235,0.48);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Crimson Text',Georgia,serif;
+color:var(--ink-color);
+min-height:100dvh;
+background:#000;
+line-height:1.75;
+font-size:1.18rem;
+}
+
+.page-wrapper{
+min-height:100dvh;
+display:flex;
+flex-direction:column;
+max-width:var(--page-max-width);
+margin:0 auto;
+background-color:#000;
+background-image:url('../images/bg.jpg');
+background-size:contain;
+background-position:center top;
+background-repeat:no-repeat;
+background-attachment:fixed;
+box-shadow:0 0 80px rgba(0,0,0,0.85);
+position:relative;
+}
+
+header{
+position:fixed;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--header-height);
+background-image:url('../images/header.png');
+background-size:contain;
+background-position:center;
+background-repeat:no-repeat;
+z-index:1000;
+box-shadow:0 6px 16px rgba(0,0,0,0.5);
+}
+
+header::after{
+content:"";
+position:absolute;
+left:0;
+right:0;
+bottom:-14px;
+height:18px;
+background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0));
+pointer-events:none;
+}
+
+nav{
+max-width:var(--content-max-width);
+width:100%;
+height:100%;
+margin:0 auto;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:2rem;
+padding:0 1.5rem;
+}
+
+nav a{
+color:var(--nav-color);
+text-decoration:none;
+font-family:Consolas,"Courier New",monospace;
+font-size:1.25rem;
+letter-spacing:0.14em;
+text-transform:uppercase;
+transition:all .25s ease;
+position:relative;
+display:inline-flex;
+align-items:center;
+gap:.5rem;
+padding:.2rem .1rem;
+text-shadow:
+0 1px 2px var(--nav-shadow),
+0 0 6px rgba(0,0,0,0.45);
+}
+
+nav a i{
+color:inherit;
+font-size:1.1rem;
+margin-right:4px;
+position:relative;
+top:-1px;
+}
+
+nav a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-4px;
+width:0;
+height:2px;
+background:var(--accent);
+transition:width .28s ease;
+}
+
+nav a:hover{
+color:var(--accent);
+transform:translateY(-1px);
+}
+
+nav a:hover::after{
+width:100%;
+}
+
+main{
+flex:1;
+margin-top:var(--header-height);
+padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+display:flex;
+justify-content:center;
+}
+
+.content-container{
+max-width:var(--content-max-width);
+width:100%;
+padding:40px 80px 180px;
+color:var(--ink-color);
+margin:0 auto;
+border-radius:8px;
+box-shadow:0 20px 60px rgba(0,0,0,0.55);
+background-image:url('../images/content-scroll-bg.png');
+background-repeat:repeat-y;
+background-position:top center;
+background-size:100% auto;
+}
+
+.content-container h1,
+.content-container h2,
+.content-container h3{
+font-family:'Cinzel Decorative',serif;
+letter-spacing:.06em;
+}
+
+.content-container h1{
+font-size:3rem;
+text-align:center;
+margin:0 0 .75rem;
+}
+
+.content-container h2{
+font-size:2.15rem;
+margin:2.8rem 0 1.4rem;
+border-bottom:1px solid rgba(139,0,0,0.15);
+padding-bottom:.6rem;
+text-align:center;
+}
+
+.content-container h3{
+font-size:1.3rem;
+margin:2rem 0 1rem;
+text-align:center;
+}
+
+.content-container p{
+margin-bottom:0.35rem;
+}
+
+.content-container ul {
+  padding-left: 2rem;
+}
+
+.lore-toggle{
+margin-top:2rem;
+border:1px solid var(--toggle-border);
+border-radius:10px;
+background:var(--toggle-bg);
+overflow:hidden;
+box-shadow:0 10px 24px rgba(0,0,0,0.12);
+}
+
+.lore-toggle summary{
+list-style:none;
+cursor:pointer;
+padding:1rem 1.25rem;
+font-family:'Cinzel Decorative',serif;
+font-size:1.05rem;
+color:#6b1f1f;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:.75rem;
+text-align:center;
+transition:background .25s ease, color .25s ease;
+}
+
+.lore-toggle summary::-webkit-details-marker{
+display:none;
+}
+
+.lore-toggle summary::before{
+content:"\f078";
+font-family:"Font Awesome 6 Free";
+font-weight:900;
+font-size:.9rem;
+transition:transform .25s ease;
+}
+
+.lore-toggle[open] summary::before{
+transform:rotate(180deg);
+}
+
+.lore-toggle summary:hover{
+background:var(--toggle-hover);
+color:#8b2323;
+}
+
+.lore-document{
+padding:1.5rem 1.5rem 1.25rem;
+background:var(--toggle-doc-bg);
+border-top:1px solid rgba(90,60,30,0.15);
+}
+
+.lore-document h3{
+margin-top:0;
+}
+
+footer{
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--footer-height);
+background:var(--footer-bg);
+color:#ccc;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:0 1rem;
+font-size:.95rem;
+border-top:1px solid #444;
+z-index:1000;
+}
+
+footer a{
+color:#d4a373;
+text-decoration:none;
+}
+
+footer a:hover{
+text-decoration:underline;
+}
+
+@media (max-width: 768px){
+
+nav{
+gap:1rem;
+padding:0 1rem;
+flex-wrap:wrap;
+}
+
+nav a{
+font-size:.9rem;
+letter-spacing:.08em;
+}
+
+.content-container{
+padding:36px 32px 150px;
+}
+
+.content-container h1{
+font-size:2.2rem;
+}
+
+.content-container h2{
+font-size:1.7rem;
+}
+
+.content-container h3{
+font-size:1.15rem;
+}
+}
+
+@media (max-width: 480px){
+
+body{
+font-size:1.05rem;
+}
+
+.content-container{
+padding:28px 20px 130px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+<header>
+<nav>
+<a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+<a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+<a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+<a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+<a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+
+<div class="content-container">
+
+<h1>Resonant Path Effects</h1>
+
+<p>When Resonance enters combat, it does not replace the strike—it transforms its consequences. Each successful action sends ripples through the Song, producing effects determined by the Resonant Effect Die and the laws of the chosen Path. Fire agitates, wind displaces, stone shatters balance, and living force restrains without harm. Through these structured effects, Resonance reshapes the battlefield while remaining bound by the same disciplined engine that governs all combat</p>
+
+<details class="lore-toggle">
+  <summary>To read the full document, click here</summary>
+
+  <div class="lore-document">
+
+<h2>Resonant Effect Adjudication</h2>
+<p><strong>(Combat-Ready Version)</strong></p>
+
+<h3>I. Overview</h3>
+
+<p>Resonant actions in combat resolve in two stages:</p>
+
+<ol>
+<li>The action is resolved normally (attack or cast).</li>
+<li>On success, the Resonant Effect Die (RED) is rolled and applied.</li>
+</ol>
+
+<p>Resonance does not replace normal combat resolution.</p>
+<p>It modifies consequence.</p>
+<p>Wellspring cost is paid on attempt, regardless of success.</p>
+<p>Weapon damage and Resonant effects are separate systems.</p>
+
+
+<h3>II. What Is the Resonant Effect Die (RED)?</h3>
+
+<p>The Resonant Effect Die (RED) represents the intensity of Resonant disruption when a Resonant action succeeds.</p>
+
+<p>It does not determine whether the action hits.</p>
+
+<p>It determines how strongly the Path manifests.</p>
+
+<p>After a successful Resonant action:</p>
+
+<ul>
+<li>Apply normal damage (if applicable).</li>
+<li>Roll the RED.</li>
+<li>Determine the Band based on the result.</li>
+<li>Apply the effect for that Path and Band.</li>
+</ul>
+
+
+<h3>III. RED Scaling</h3>
+
+<p><strong>Resonant Hybrids</strong></p>
+
+<table>
+<tr>
+<th>Path Level</th>
+<th>RED</th>
+</tr>
+<tr>
+<td>1–2</td>
+<td>1d4</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1d6</td>
+</tr>
+</table>
+
+<p>Hybrids cannot exceed Path 3 under standard rules.</p>
+<p>Hybrids are tactical.</p>
+<p>They influence tempo.</p>
+<p>They do not dominate state.</p>
+
+<p><strong>Resonant Casters</strong></p>
+
+<table>
+<tr>
+<th>Path Level</th>
+<th>RED</th>
+</tr>
+<tr>
+<td>1–2</td>
+<td>1d6</td>
+</tr>
+<tr>
+<td>3–4</td>
+<td>1d8</td>
+</tr>
+<tr>
+<td>5–6</td>
+<td>1d10</td>
+</tr>
+</table>
+
+<p>Casters escalate intensity.</p>
+<p>They control and reshape encounters.</p>
+
+
+<h3>IV. Universal Band Structure</h3>
+
+<p>All Paths use the same Band system.</p>
+<p>Only the effect changes.</p>
+
+<p><strong>Hybrid Bands</strong></p>
+
+<ul>
+<li>1–2 → Minor</li>
+<li>3–4 → Moderate</li>
+</ul>
+
+<p><strong>1d6</strong></p>
+
+<ul>
+<li>1–2 → Minor</li>
+<li>3–4 → Moderate</li>
+<li>5–6 → Enhanced Moderate</li>
+</ul>
+
+<p>Hybrids cannot trigger Severe or Dominant bands.</p>
+
+<p><strong>Caster Bands</strong></p>
+
+<p><strong>1d6</strong></p>
+
+<ul>
+<li>1–2 → Minor</li>
+<li>3–4 → Moderate</li>
+<li>5–6 → Severe</li>
+</ul>
+
+<p><strong>1d8</strong></p>
+
+<ul>
+<li>1–2 → Minor</li>
+<li>3–4 → Moderate</li>
+<li>5–6 → Severe</li>
+<li>7–8 → Severe+</li>
+</ul>
+
+<p><strong>1d10</strong></p>
+
+<ul>
+<li>1–2 → Minor</li>
+<li>3–4 → Moderate</li>
+<li>5–6 → Severe</li>
+<li>7–8 → Severe+</li>
+<li>9–10 → Dominant</li>
+</ul>
+
+
+<h3>V. Resistance Rule</h3>
+
+<p>Only Dominant band effects may be resisted.</p>
+
+<p>Resistance is always a fixed DC 12 check.</p>
+
+<p>There are:</p>
+
+<ul>
+<li>No damage-derived DCs.</li>
+<li>No scaling DC formulas.</li>
+<li>No variable math.</li>
+</ul>
+
+<p>Minor, Moderate, Enhanced Moderate, Severe, and Severe+ apply automatically.</p>
+
+
+<h3>VI. Combat-Eligible Paths</h3>
+
+<ul>
+<li>Ignis</li>
+<li>Terra</li>
+<li>Aeris</li>
+<li>Aqua</li>
+<li>Vitae (non-lethal only)</li>
+</ul>
+
+<p>Obtenebrate cannot be used in combat.</p>
+
+
+<h3>VII. Path Effects</h3>
+
+<h3>IGNIS — Combustive Agitation</h3>
+
+<p>Ignis deals persistent damage.</p>
+<p>Burn does not stack.</p>
+<p>Reapplication refreshes duration.</p>
+
+<ul>
+<li><strong>Minor</strong> — Burn = RED damage per round for 2 rounds</li>
+<li><strong>Moderate</strong> — Burn = RED damage per round for 4 rounds</li>
+<li><strong>Enhanced Moderate</strong> — Burn = RED damage per round for 4 rounds; target loses reactions next turn</li>
+<li><strong>Severe</strong> — Burn = RED damage per round for 4 rounds; −2 to next action</li>
+<li><strong>Severe+</strong> — Burn = RED damage per round for 4 rounds; −2 to physical rolls for 1 round</li>
+<li><strong>Dominant</strong> — As Severe+; DC 12 or Staggered for 1 round</li>
+</ul>
+
+
+<h3>TERRA — Concussive Force</h3>
+
+<ul>
+<li><strong>Minor</strong> — Push target 5 ft</li>
+<li><strong>Moderate</strong> — Push target 10 ft</li>
+<li><strong>Enhanced Moderate</strong> — Push 10 ft; lose reactions next turn</li>
+<li><strong>Severe</strong> — Push 15 ft</li>
+<li><strong>Severe+</strong> — Push 15 ft; target falls prone</li>
+<li><strong>Dominant</strong> — Push 20 ft; prone (DC 12 to resist)</li>
+</ul>
+
+
+<h3>AERIS — Directed Momentum</h3>
+
+<ul>
+<li><strong>Minor</strong> — Shift target 5 ft</li>
+<li><strong>Moderate</strong> — Shift target 10 ft</li>
+<li><strong>Enhanced Moderate</strong> — Shift 10 ft; lose reactions</li>
+<li><strong>Severe</strong> — Shift 15 ft</li>
+<li><strong>Severe+</strong> — Shift 15 ft; lose reactions</li>
+<li><strong>Dominant</strong> — Shift 20 ft; lose reactions (DC 12 to resist displacement beyond 10 ft)</li>
+</ul>
+
+
+<h3>AQUA — Pressure and Suppression</h3>
+
+<ul>
+<li><strong>Minor</strong> — Movement halved for 1 round</li>
+<li><strong>Moderate</strong> — Movement halved; −2 to next physical action</li>
+<li><strong>Enhanced Moderate</strong> — Movement halved; −2 to next action; cannot Dash next turn</li>
+<li><strong>Severe</strong> — Movement halved; −2 for 2 rounds</li>
+<li><strong>Severe+</strong> — As Severe; knocked off balance</li>
+<li><strong>Dominant</strong> — As Severe+; DC 12 or prone</li>
+</ul>
+
+
+<h3>VITAE — Living Restraint & Protection</h3>
+
+<p>Vitae cannot deal damage.</p>
+
+<ul>
+<li><strong>Minor</strong> — Movement halved for 1 round</li>
+<li><strong>Moderate</strong> — Restrained (speed 0); action to break DC 12</li>
+<li><strong>Enhanced Moderate</strong> — Restrained; cannot take reactions</li>
+<li><strong>Severe</strong> — Fully restrained; DC 12 at start of turn to act normally</li>
+<li><strong>Severe+</strong> — Restrained; disarmed</li>
+<li><strong>Dominant</strong> — Area vines restrain all targets in radius</li>
+</ul>
+
+
+<h3>VIII. Design Integrity</h3>
+
+<ul>
+<li>One success roll</li>
+<li>One weapon damage roll (if applicable)</li>
+<li>One RED roll</li>
+<li>One Band lookup</li>
+<li>One possible resistance check (Dominant only)</li>
+</ul>
+
+<p>No stacking math.</p>
+<p>No damage-derived saves.</p>
+<p>No cross-system coupling.</p>
+<p>Hybrids are tactical.</p>
+<p>Casters dominate.</p>
+<p>Vitae controls without harm.</p>
+<p>Obtenebrate remains non-combat.</p>
+  </div>
+</details>
+
+</div>
+
+</main>
+
+<footer>
+<div>
+Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+&nbsp;&nbsp;•&nbsp;&nbsp;
+© 2026 jpcauthor. All rights reserved.
+&nbsp;&nbsp;•&nbsp;&nbsp;
+<a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+</div>
+</footer>
+
+</div>
+
+</body>
+</html>

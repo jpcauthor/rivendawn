@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Mechanics</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+:root{
+--header-height:72px;
+--footer-height:72px;
+--content-max-width:960px;
+--page-max-width:1400px;
+--ink-color:#3a2a1a;
+--accent:#fff1d6;
+--nav-color:#f2e3c6;
+--nav-shadow:rgba(0,0,0,0.85);
+--footer-bg:rgba(0,0,0,0.88);
+
+--toggle-bg:rgba(255,248,235,0.55);
+--toggle-border:rgba(90,60,30,0.24);
+--toggle-hover:rgba(255,241,214,0.78);
+--toggle-doc-bg:rgba(255,248,235,0.48);
+
+--blade-bg:rgba(244,230,204,0.88);
+--blade-border:rgba(94,62,33,0.35);
+--blade-shadow:rgba(0,0,0,0.25);
+--blade-hover-shadow:rgba(0,0,0,0.35);
+--blade-title:#4a2d18;
+--blade-desc:#5f4631;
+--blade-glow:rgba(214,170,92,0.22);
+--blade-accent:#7a4b25;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Crimson Text',Georgia,serif;
+color:var(--ink-color);
+min-height:100dvh;
+background:#000;
+line-height:1.75;
+font-size:1.18rem;
+}
+
+.page-wrapper{
+min-height:100dvh;
+display:flex;
+flex-direction:column;
+max-width:var(--page-max-width);
+margin:0 auto;
+background:#000;
+background-image:url('../images/bg.jpg');
+background-size:contain;
+background-position:center top;
+background-repeat:no-repeat;
+background-attachment:fixed;
+box-shadow:0 0 80px rgba(0,0,0,0.85);
+}
+
+header{
+position:fixed;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--header-height);
+background-image:url('../images/header.png');
+background-size:contain;
+background-position:center;
+background-repeat:no-repeat;
+z-index:1000;
+box-shadow:0 6px 16px rgba(0,0,0,0.5);
+}
+
+nav{
+max-width:var(--content-max-width);
+width:100%;
+height:100%;
+margin:0 auto;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:2rem;
+padding:0 1.5rem;
+}
+
+nav a{
+color:var(--nav-color);
+text-decoration:none;
+font-family:Consolas,"Courier New",monospace;
+font-size:1.25rem;
+letter-spacing:0.14em;
+text-transform:uppercase;
+transition:.25s;
+}
+
+nav a:hover{
+color:var(--accent);
+}
+
+main{
+flex:1;
+margin-top:var(--header-height);
+padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+display:flex;
+justify-content:center;
+}
+
+.content-container{
+max-width:var(--content-max-width);
+width:100%;
+padding:40px 80px 180px;
+border-radius:8px;
+box-shadow:0 20px 60px rgba(0,0,0,0.55);
+background-image:url('../images/content-scroll-bg.png');
+background-repeat:repeat-y;
+background-position:top center;
+background-size:100% auto;
+}
+
+.content-container h1,
+.content-container h2,
+.content-container h3{
+font-family:'Cinzel Decorative',serif;
+letter-spacing:.06em;
+}
+
+.mechanics-links{
+background:#2a1f17;
+color:#f3e6cf;
+padding:20px 30px;
+border-radius:6px;
+margin:25px auto;
+max-width:600px;
+font-size:0.9rem;
+}
+
+.mechanics-links ul{
+margin:0;
+padding-left:20px;
+}
+
+.mechanics-links li{
+margin:6px 0;
+}
+
+.content-container h1{
+font-size:3rem;
+text-align:center;
+margin-bottom:1rem;
+}
+
+.content-container p{
+margin-bottom:1.25rem;
+}
+
+.lore-toggle{
+margin-top:2rem;
+border:1px solid var(--toggle-border);
+border-radius:10px;
+background:var(--toggle-bg);
+overflow:hidden;
+}
+
+.lore-toggle summary{
+cursor:pointer;
+padding:1rem;
+font-family:'Cinzel Decorative',serif;
+text-align:center;
+}
+
+.lore-document{
+padding:1.5rem;
+background:var(--toggle-doc-bg);
+}
+
+/* ARCHIVE BLADES */
+
+.archive-grid{
+display:flex;
+flex-direction:column;
+gap:1rem;
+margin-top:2.5rem;
+}
+
+.archive-blade{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:1rem 1.5rem;
+text-decoration:none;
+color:inherit;
+background:linear-gradient(
+90deg,
+rgba(250,240,220,0.92) 0%,
+var(--blade-bg) 58%,
+rgba(214,189,148,0.86) 100%
+);
+border:1px solid var(--blade-border);
+box-shadow:0 12px 24px var(--blade-shadow);
+transition:.25s;
+}
+
+.archive-blade:hover{
+transform:translateX(6px);
+box-shadow:0 18px 34px var(--blade-hover-shadow);
+}
+
+.archive-blade-content{
+display:flex;
+flex-direction:column;
+}
+
+.archive-kicker{
+font-size:.75rem;
+letter-spacing:.18em;
+text-transform:uppercase;
+font-family:Consolas,"Courier New",monospace;
+color:#8a6847;
+}
+
+.archive-title{
+font-family:'Cinzel Decorative',serif;
+font-size:1.2rem;
+color:var(--blade-title);
+}
+
+.archive-desc{
+font-size:.95rem;
+color:var(--blade-desc);
+}
+
+.archive-arrow{
+font-size:1.35rem;
+color:var(--blade-accent);
+}
+
+footer{
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--footer-height);
+background:var(--footer-bg);
+color:#ccc;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:0 1rem;
+font-size:.95rem;
+border-top:1px solid #444;
+z-index:1000;
+backdrop-filter:blur(2px);
+}
+
+footer a{
+color:#d4a373;
+text-decoration:none;
+}
+
+footer a:hover,
+footer a:focus{
+text-decoration:underline;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+<header>
+<nav>
+<a href="geography.html">GEOGRAPHY</a>
+<a href="lore.html">LORE</a>
+<a href="rules.html">RULES</a>
+<a href="create.html">CREATE</a>
+<a href="tables.html">TABLES</a>
+</nav>
+</header>
+
+<main>
+<div class="content-container">
+
+<h1>GAME MECHANICS</h1>
+
+<p style="text-align: center;">
+<p>The mechanics of Rivendawn exist to translate intention into consequence. Every action—whether martial, resonant, or environmental—passes through a unified resolution engine designed to keep the game clear, fast, and focused on the unfolding story.</p>
+
+<p>The pages below form the complete mechanical framework of the system. Each document explores a specific component of that structure, from the core dice engine that resolves actions to the ways Resonance alters the battlefield during conflict.</p>
+
+<p>Within this section you will find:</p>
+
+<div class="mechanics-links">
+
+<ul>
+<div class="mechanics-links">
+<ul>
+<li>Dice Resolution System — The core mechanic used to resolve actions and outcomes.</li>
+<li>Common Resolution Patterns — Standard approaches to frequent gameplay situations.</li>
+<li>Game Mechanics Introduction — Overview of the system’s structure and philosophy.</li>
+<li>Combat System — Rules governing combat encounters and tactical resolution.</li>
+<li>Structured Resonance — Rules governing Resonance in combat.</li>
+<li>Resonant Path Effects — Mechanical outcomes of Resonant actions.</li>
+<li>The Theory of Resonant Instruction — Philosophy behind Resonant power.</li>
+<li>Healing System — Full rules governing injury and recovery.</li>
+<li>Healing Quick Guide — Fast reference for battlefield healing.</li>
+</ul>
+
+</div>
+
+</div>
+
+<p></p>
+<hr>
+<p></p>
+
+<p>Each document focuses on a specific layer of the system. Together they form the complete rule architecture that defines how the Song responds when characters act.</p></p>
+
+<details class="lore-toggle">
+<summary>Expand Full Document</summary>
+
+<div class="lore-document">
+<p>The mechanics of Rivendawn are built to serve a single purpose: to translate intent into consequence with clarity, consistency, and thematic cohesion. Across every layer of play—whether a character is attempting a mundane task, engaging in structured combat, invoking Resonance, or struggling to survive mortal injury—the system is designed to answer a single question: how does the world respond when a character acts?</p>
+
+<p>Rather than scattering resolution across disconnected subsystems, Rivendawn uses a unified mechanical architecture. The core engine establishes how success and failure are determined, while supporting documents explain how that engine behaves during combat, environmental challenges, Resonant instruction, healing, and other situations that arise during play.</p>
+
+<p>Within this section, each document contributes a specific piece to the overall mechanical framework:</p>
+
+<div class="mechanics-links">
+<ul>
+<li><strong>Combat System</strong> — Defines the structure of combat encounters, including initiative, movement, engagement, and damage resolution.</li>
+
+<li><strong>Common Resolution Patterns</strong> — Standardized approaches for common gameplay situations such as opposed rolls, assistance, and environmental difficulty.</li>
+
+<li><strong>Dice Resolution System</strong> — The universal engine used to determine success or failure across all actions in the game.</li>
+
+<li><strong>Healing Quick Guide</strong> — A rapid reference for combat healing, stabilization, and survival during encounters.</li>
+
+<li><strong>Healing System</strong> — The complete rules governing injury, recovery, restorative healing, and Resonant Transference.</li>
+
+<li><strong>Resonant Path Effects</strong> — Describes the mechanical consequences produced when Resonant actions succeed.</li>
+
+<li><strong>Structured Resonance</strong> — Explains how Resonance functions under the strict rules of structured combat.</li>
+
+<li><strong>The Theory of Resonant Instruction</strong> — The philosophical and metaphysical laws that govern the Song and the instruction of Resonant power.</li>
+</ul>
+</div>
+
+<p>Together these documents form the complete mechanical architecture of Rivendawn. The Dice Resolution System provides the foundation, combat rules define the structure of conflict, healing rules govern survival, and the Resonant systems describe how the Song alters the world in response to a character’s will.</p>
+
+<p>This page serves as a guide to the system as a whole. The documents themselves provide the detailed procedures, rules, and examples required to bring the mechanics of Rivendawn fully to life at the table.</p>
+
+<div class="mechanics-links" style="text-align:center; font-size:1rem;">
+⇓ ⇓ <strong>LINKS TO EACH SECTION ARE BELOW</strong> ⇓ ⇓
+</div>
+</div>
+
+</details>
+
+<section class="archive-grid">
+
+<a href="dice-resolution-system.html" class="archive-blade">
+<div class="archive-blade-content">
+<span class="archive-kicker">Core Rules</span>
+<span class="archive-title">Dice Resolution System</span>
+<span class="archive-desc">The core dice mechanics used to resolve actions and outcomes.</span>
+</div>
+<span class="archive-arrow"><i class="fa-solid fa-angle-right"></i></span>
+</a>
+
+<a href="common-resolution-patterns.html" class="archive-blade">
+<div class="archive-blade-content">
+<span class="archive-kicker">Core Rules</span>
+<span class="archive-title">Common Resolution Patterns</span>
+<span class="archive-desc">Standardized resolution approaches used throughout the system.</span>
+</div>
+<span class="archive-arrow"><i class="fa-solid fa-angle-right"></i></span>
+</a>
+
+<a href="combat-system.html" class="archive-blade">
+<div class="archive-blade-content">
+<span class="archive-kicker">Combat</span>
+<span class="archive-title">Combat System</span>
+<span class="archive-desc">The rules governing combat encounters, actions, and tactical resolution.</span>
+</div>
+<span class="archive-arrow"><i class="fa-solid fa-angle-right"></i></span>
+</a>
+
+<a href="structured-resonance.html" class="archive-blade">
+<div class="archive-blade-content">
+<span class="archive-kicker">Resonance</span>
+<span class="archive-title">Structured Resonance</span>
+<span class="archive-desc">The structured rules for applying resonance within gameplay.</span>
+</div>
+<span class="archive-arrow"><i class="fa-solid fa-angle-right"></i></span>
+</a>
+
+<a href="resonant-path-effects.html" class="archive-blade">
+<div class="archive-blade-content">
+<span class="archive-kicker">Resonance</span>
+<span class="archive-title">Resonant Path Effects</span>
+<span class="archive-desc">Mechanical effects produced by resonance paths.</span>
+</div>
+<span class="archive-arrow"><i class="fa-solid fa-angle-right"></i></span>
+</a>
+
+<a href="the-theory-of-resonant-instruction.html" class="archive-blade">
+<div class="archive-blade-content">
+<span class="archive-kicker">Theory</span>
+<span class="archive-title">The Theory of Resonant Instruction</span>
+<span class="archive-desc">The foundational philosophy behind resonance mechanics.</span>
+</div>
+<span class="archive-arrow"><i class="fa-solid fa-angle-right"></i></span>
+</a>
+
+<a href="healing-system.html" class="archive-blade">
+<div class="archive-blade-content">
+<span class="archive-kicker">Healing</span>
+<span class="archive-title">Healing System</span>
+<span class="archive-desc">The full rules governing injury, recovery, and restorative effects.</span>
+</div>
+<span class="archive-arrow"><i class="fa-solid fa-angle-right"></i></span>
+</a>
+
+<a href="healing-quick-guide.html" class="archive-blade">
+<div class="archive-blade-content">
+<span class="archive-kicker">Healing</span>
+<span class="archive-title">Healing Quick Guide</span>
+<span class="archive-desc">A rapid reference for healing rules and recovery procedures.</span>
+</div>
+<span class="archive-arrow"><i class="fa-solid fa-angle-right"></i></span>
+</a>
+
+</section>
+
+</div>
+</main>
+
+    <footer>
+      <div>
+        Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+        &nbsp;&nbsp;•&nbsp;&nbsp;
+        © 2026 jpcauthor. All rights reserved.
+        &nbsp;&nbsp;•&nbsp;&nbsp;
+        <a href="https://amazon.com/rivendawn" target="_blank" rel="noopener noreferrer">Read the Novel</a>
+      </div>
+    </footer>
+
+</div>
+
+</body>
+</html>

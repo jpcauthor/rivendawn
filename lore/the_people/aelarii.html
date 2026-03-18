@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Aelarii</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- Styles -->
+<style>
+
+:root {
+--header-height: 72px;
+--footer-height: 72px;
+--content-max-width: 960px;
+--page-max-width: 1400px;
+--ink-color: #3a2a1a;
+--accent: #fff1d6;
+--nav-color: #f2e3c6;
+--nav-shadow: rgba(0,0,0,0.85);
+--footer-bg: rgba(0,0,0,0.88);
+--toggle-bg: rgba(255,248,235,0.55);
+--toggle-border: rgba(90,60,30,0.24);
+--toggle-hover: rgba(255,241,214,0.78);
+--toggle-doc-bg: rgba(255,248,235,0.48);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Crimson Text',Georgia,serif;
+color:var(--ink-color);
+min-height:100dvh;
+background:#000;
+line-height:1.75;
+font-size:1.18rem;
+}
+
+.page-wrapper{
+min-height:100dvh;
+display:flex;
+flex-direction:column;
+max-width:var(--page-max-width);
+margin:0 auto;
+background-color:#000;
+background-image:url('../../images/bg.jpg');
+background-size:contain;
+background-position:center top;
+background-repeat:no-repeat;
+background-attachment:fixed;
+box-shadow:0 0 80px rgba(0,0,0,0.85);
+position:relative;
+}
+
+header{
+position:fixed;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--header-height);
+background-image:url('../../images/header.png');
+background-size:contain;
+background-position:center;
+background-repeat:no-repeat;
+z-index:1000;
+box-shadow:0 6px 16px rgba(0,0,0,0.5);
+}
+
+header::after{
+content:"";
+position:absolute;
+left:0;
+right:0;
+bottom:-14px;
+height:18px;
+background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0));
+pointer-events:none;
+}
+
+nav{
+max-width:var(--content-max-width);
+width:100%;
+height:100%;
+margin:0 auto;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:2rem;
+padding:0 1.5rem;
+}
+
+nav a{
+color:var(--nav-color);
+text-decoration:none;
+font-family:Consolas,"Courier New",monospace;
+font-size:1.25rem;
+letter-spacing:0.14em;
+text-transform:uppercase;
+transition:all .25s ease;
+position:relative;
+display:inline-flex;
+align-items:center;
+gap:.5rem;
+padding:.2rem .1rem;
+text-shadow:
+0 1px 2px var(--nav-shadow),
+0 0 6px rgba(0,0,0,0.45);
+}
+
+nav a i{
+color:inherit;
+font-size:1.1rem;
+margin-right:4px;
+position:relative;
+top:-1px;
+}
+
+nav a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-4px;
+width:0;
+height:2px;
+background:var(--accent);
+transition:width .28s ease;
+}
+
+nav a:hover{
+color:var(--accent);
+transform:translateY(-1px);
+}
+
+nav a:hover::after{
+width:100%;
+}
+
+main{
+flex:1;
+margin-top:var(--header-height);
+padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+display:flex;
+justify-content:center;
+}
+
+.content-container{
+max-width:var(--content-max-width);
+width:100%;
+padding:40px 80px 180px;
+color:var(--ink-color);
+margin:0 auto;
+border-radius:8px;
+box-shadow:0 20px 60px rgba(0,0,0,0.55);
+background-image:url('../../images/content-scroll-bg.png');
+background-repeat:repeat-y;
+background-position:top center;
+background-size:100% auto;
+}
+
+.content-container h1,
+.content-container h2,
+.content-container h3{
+font-family:'Cinzel Decorative',serif;
+letter-spacing:.06em;
+}
+
+.content-container h1{
+font-size:3rem;
+text-align:center;
+margin:0 0 .75rem;
+}
+
+.content-container h2{
+font-size:2.15rem;
+margin:2.8rem 0 1.4rem;
+border-bottom:1px solid rgba(139,0,0,0.15);
+padding-bottom:.6rem;
+text-align:center;
+}
+
+.content-container h3{
+font-size:1.3rem;
+margin:2rem 0 1rem;
+text-align:center;
+}
+
+.content-container p{
+margin-bottom:1.25rem;
+}
+
+.lore-toggle{
+margin-top:2rem;
+border:1px solid var(--toggle-border);
+border-radius:10px;
+background:var(--toggle-bg);
+overflow:hidden;
+box-shadow:0 10px 24px rgba(0,0,0,0.12);
+}
+
+.lore-toggle summary{
+list-style:none;
+cursor:pointer;
+padding:1rem 1.25rem;
+font-family:'Cinzel Decorative',serif;
+font-size:1.05rem;
+color:#6b1f1f;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:.75rem;
+text-align:center;
+transition:background .25s ease, color .25s ease;
+}
+
+.lore-toggle summary::-webkit-details-marker{
+display:none;
+}
+
+.lore-toggle summary::before{
+content:"\f078";
+font-family:"Font Awesome 6 Free";
+font-weight:900;
+font-size:.9rem;
+transition:transform .25s ease;
+}
+
+.lore-toggle[open] summary::before{
+transform:rotate(180deg);
+}
+
+.lore-toggle summary:hover{
+background:var(--toggle-hover);
+color:#8b2323;
+}
+
+.lore-document{
+padding:1.5rem 1.5rem 1.25rem;
+background:var(--toggle-doc-bg);
+border-top:1px solid rgba(90,60,30,0.15);
+}
+
+.lore-document h3{
+margin-top:0;
+}
+
+footer{
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--footer-height);
+background:var(--footer-bg);
+color:#ccc;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:0 1rem;
+font-size:.95rem;
+border-top:1px solid #444;
+z-index:1000;
+}
+
+footer a{
+color:#d4a373;
+text-decoration:none;
+}
+
+footer a:hover{
+text-decoration:underline;
+}
+
+/* ── Slideshow ── */
+/* ── Film Strip Slideshow ── */
+.film-strip-wrapper {
+  width: 100%;
+  margin: 2rem 0 1.5rem;
+  position: relative;
+}
+
+.film-strip {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: #000;
+  border-top: 2px solid rgba(200,146,42,0.45);
+  border-bottom: 2px solid rgba(200,146,42,0.45);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+}
+
+.film-strip::before,
+.film-strip::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 60px;
+  z-index: 5;
+  pointer-events: none;
+}
+.film-strip::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.7), transparent);
+}
+.film-strip::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(0,0,0,0.7), transparent);
+}
+
+.film-track {
+  display: flex;
+  gap: 10px;
+  padding: 4px;
+  will-change: transform;
+}
+
+.film-track.animating {
+  transition: none;
+}
+
+.film-frame {
+  flex-shrink: 0;
+  width: calc(25% - 6px);
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 2px;
+  position: relative;
+}
+
+.film-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+  transition: transform 0.4s ease;
+  pointer-events: none;
+}
+
+.film-frame:hover img {
+  transform: scale(1.05);
+}
+
+.film-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0);
+  transition: background 0.3s ease;
+}
+
+.film-frame:hover::after {
+  background: rgba(200,146,42,0.08);
+}
+
+.film-dots {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 0.55rem;
+  flex-wrap: wrap;
+}
+
+.film-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: rgba(94,62,33,0.28);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.film-dot.active {
+  background: var(--gold, #c8922a);
+  transform: scale(1.4);
+}
+
+/* ── Lightbox ── */
+.lineage-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+}
+
+.lineage-lightbox.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.lineage-lightbox img {
+  max-width: 90vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 0 80px rgba(0,0,0,0.8);
+  transform: scale(0.96);
+  transition: transform 0.28s ease;
+}
+
+.lineage-lightbox.active img {
+  transform: scale(1);
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 1.2rem; right: 1.5rem;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: rgba(42,22,8,0.85);
+  border: 1px solid rgba(242,227,198,0.3);
+  color: #f2e3c6;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 3001;
+}
+
+.lightbox-close:hover {
+  background: rgba(42,22,8,1);
+  border-color: rgba(242,227,198,0.6);
+}
+
+@media (max-width: 768px){
+
+nav{
+gap:1rem;
+padding:0 1rem;
+flex-wrap:wrap;
+}
+
+nav a{
+font-size:.9rem;
+letter-spacing:.08em;
+}
+
+.content-container{
+padding:36px 32px 150px;
+}
+
+.content-container h1{
+font-size:2.2rem;
+}
+
+.content-container h2{
+font-size:1.7rem;
+}
+
+.content-container h3{
+font-size:1.15rem;
+}
+}
+
+@media (max-width: 480px){
+
+body{
+font-size:1.05rem;
+}
+
+.content-container{
+padding:28px 20px 130px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+<header>
+<nav>
+<a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+<a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+<a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+<a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+<a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+
+<div class="content-container">
+
+<h1>The Aelarii</h1>
+<p>Luminous and deliberate, the Aelarii move through the world as seekers of harmony and interpreters of the great patterns that underpin reality. Theirs is a culture of patient analysis, where education is a sacred responsibility and diplomacy is the preferred language over the clatter of steel.</p>
+
+<p>Whether walking the high halls of the Citadels or advising the councils of the Cradle, they seek to align their lives with the underlying structures of the Song, believing that understanding the world's patterns is the only sure path to maintaining harmony.</p>
+
+<p>Their relationship with Resonance is one of interpretation and grace, seeking to move in step with the world.</p>
+
+<p>Enter the world of the pattern-seekers to find the harmony within the chaos.</p>
+
+<!-- ── Film Strip Slideshow ── -->
+<div class="film-strip-wrapper">
+  <div class="film-strip" id="film-strip">
+    <div class="film-track" id="film-track"></div>
+  
+  </div>
+  <div class="film-dots" id="film-dots"></div>
+</div>
+
+<!-- ── Lightbox ── -->
+<div class="lineage-lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+  <img id="lightbox-img" src="" alt="Aelarii">
+</div>
+
+<details class="lore-toggle">
+  <summary>To read the full document, click here</summary>
+
+  <div class="lore-document">
+    
+<p>Among the peoples of Rivendawn, the Aelarii are most often associated with scholarship, diplomacy, and the careful study of patterns within the world. Tall, luminous in bearing, and known for their deliberate composure, the Aelarii have long cultivated a reputation as interpreters of structure and harmony.</p>
+
+<p>Aelarii culture places great value on clarity of thought and the pursuit of understanding. Their scholars and thinkers are known for examining problems patiently, seeking underlying patterns that might otherwise remain unseen. This intellectual tradition has led many Aelarii to pursue study within the Citadels, where their aptitude for historical analysis, political theory, and Resonance scholarship is widely respected.</p>
+
+<p>Historically, Aelarii communities developed around centers of learning and governance where order and knowledge were treated as essential foundations of society. Records preserved within the Citadel describe Aelarii settlements as places where archives, councils, and schools often stand at the heart of civic life. Within these communities, education is not merely a personal pursuit but a responsibility shared across generations.</p>
+
+<p>The Aelarii worldview reflects a deep belief that the world contains patterns that can be understood and harmonized. Disorder is not ignored but studied, and conflicts are often approached through analysis and negotiation before force is considered. This approach has made Aelarii diplomats and advisors common participants in regional negotiations across Rivendawn.</p>
+
+<p>Their relationship to the Song is often described by Citadel scholars as one of interpretation rather than domination. Many Aelarii believe the Song expresses underlying structures within the world, and that understanding those structures allows individuals to move in harmony with it. This perspective has produced numerous students of Resonance theory and contributed greatly to the Citadel’s ongoing study of the phenomenon.</p>
+
+<p>Although Aelarii communities may be found throughout several regions of Rivendawn, they are most frequently encountered in places where scholarship and governance intersect, including the cities of the Cradle and within the halls of the Citadels themselves. Their presence in these institutions has helped shape much of the intellectual culture that now defines Rivendawn’s study of history, philosophy, and Resonance.</p>
+
+<p>For students of Rivendawn, the Aelarii represent a tradition that values understanding before action, believing that the careful study of the world’s patterns offers the surest path to maintaining harmony within it.</p>
+
+<div style="
+  display: flex;
+  justify-content: center;
+  margin: 2.5rem 0 1rem;
+">
+  <div style="
+    background: #000;
+    border-radius: 50% / 18%;
+    padding: 3px;
+    background: linear-gradient(135deg, #b8cfe8 0%, #3a6080 40%, #1a3a50 60%, #c8d8e8 100%);
+    box-shadow: 0 0 30px rgba(160,200,240,0.18), 0 0 60px rgba(100,160,210,0.10);
+  ">
+    <div style="
+      background: #050a0f;
+      border-radius: calc(50% - 3px) / calc(18% - 3px);
+      padding: 2.4rem 3.5rem 2.2rem;
+      text-align: center;
+      min-width: 300px;
+    ">
+      <p style="font-family:'Cinzel Decorative',serif; font-size:0.5rem; letter-spacing:0.25em; color:#5a8aaa; text-transform:uppercase; margin:0 0 0.4rem;">Lineage Bonuses</p>
+      <h3 style="font-family:'Cinzel Decorative',serif; font-size:1.3rem; color:#d8eaf8; margin:0; text-shadow:0 0 16px rgba(160,210,255,0.35); border:none; padding:0;">Aelarii</h3>
+      <p style="font-family:'Crimson Text',serif; font-style:italic; font-size:0.95rem; color:#7aaac8; margin:0.2rem 0 0.9rem;">Interpreters of Order</p>
+      <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:1rem;">
+        <div style="flex:1; height:1px; background:linear-gradient(to right, transparent, #3a6080);"></div>
+        <span style="color:#5a8aaa; font-size:0.6rem;">◆</span>
+        <div style="flex:1; height:1px; background:linear-gradient(to left, transparent, #3a6080);"></div>
+      </div>
+      <p style="font-family:'Cinzel Decorative',serif; font-size:0.45rem; letter-spacing:0.2em; color:#5a8aaa; text-transform:uppercase; margin:0 0 0.5rem;">Innate Gift</p>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.3rem;">
+        <span style="font-family:'Crimson Text',serif; color:#a8c8e0; font-size:1rem;">Resonance Theory</span>
+        <span style="font-family:'Cinzel Decorative',serif; color:#d8eaf8; font-size:1rem; font-weight:700;">+2</span>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <span style="font-family:'Crimson Text',serif; color:#a8c8e0; font-size:1rem;">Political Theory</span>
+        <span style="font-family:'Cinzel Decorative',serif; color:#d8eaf8; font-size:1rem; font-weight:700;">+2</span>
+      </div>
+      <p style="font-family:'Cinzel Decorative',serif; font-size:0.45rem; letter-spacing:0.2em; color:#5a8aaa; text-transform:uppercase; margin:0 0 0.5rem;">Resonance Affinity</p>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <span style="font-family:'Crimson Text',serif; color:#a8c8e0; font-size:1rem;">Aeris <em style="font-size:0.85rem; color:#7aaac8;">(Motion & Instinct)</em></span>
+        <span style="font-family:'Cinzel Decorative',serif; color:#d8eaf8; font-size:1rem; font-weight:700;">+1</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.9rem;">
+        <div style="flex:1; height:1px; background:linear-gradient(to right, transparent, #3a6080);"></div>
+        <span style="color:#5a8aaa; font-size:0.6rem;">◆</span>
+        <div style="flex:1; height:1px; background:linear-gradient(to left, transparent, #3a6080);"></div>
+      </div>
+      <p style="font-family:'Crimson Text',serif; font-style:italic; font-size:0.85rem; color:#4a7a9a; margin:0;">"Beneath every storm lies a pattern worth seeing."</p>
+    </div>
+  </div>
+</div>
+
+  </div>
+</details>
+
+</div>
+
+</main>
+
+<footer>
+<div>
+Email: <a href="/cdn-cgi/l/email-protection#11727e7f6570726551637867747f7570667f3f727e7c"><span class="__cf_email__" data-cfemail="761519180217150236041f001318121701185815191b">[email&#160;protected]</span></a>
+&nbsp;&nbsp;•&nbsp;&nbsp;
+© 2026 jpcauthor. All rights reserved.
+&nbsp;&nbsp;
+<script>
+// ── Film Strip Configuration ──
+const COUNT   = 22;
+const BASE    = 'lineages/aelarii/aelarii';
+const EXT     = '.jpg';
+const SPEED   = 0.4;   // px per animation frame — lower = slower/more cinematic
+
+const IMAGES = [];
+for (let i = 1; i <= COUNT; i++) {
+  IMAGES.push(BASE + String(i).padStart(2, '0') + EXT);
+}
+
+const track       = document.getElementById('film-track');
+const dotsWrapper = document.getElementById('film-dots');
+const lightbox    = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const closeBtn    = document.getElementById('lightbox-close');
+
+let offset    = 0;
+let rafId     = null;
+let frameW    = 0;
+let totalW    = 0;
+let activeIdx = 0;
+const dots    = [];
+
+// Build dots
+IMAGES.forEach((src, i) => {
+  const dot = document.createElement('div');
+  dot.classList.add('film-dot');
+  if (i === 0) dot.classList.add('active');
+  dotsWrapper.appendChild(dot);
+  dots.push(dot);
+});
+
+// Build TWO sets of frames for seamless looping
+function buildFrames() {
+  track.innerHTML = '';
+  [...IMAGES, ...IMAGES].forEach((src, i) => {
+    const frame = document.createElement('div');
+    frame.classList.add('film-frame');
+    frame.dataset.index = i % IMAGES.length;
+
+    const img = document.createElement('img');
+    img.src   = src;
+    img.alt   = 'Aelarii ' + ((i % IMAGES.length) + 1);
+    img.loading = 'lazy';
+
+    frame.appendChild(img);
+    track.appendChild(frame);
+
+    // Click -> lightbox
+    frame.addEventListener('click', () => {
+      const idx = parseInt(frame.dataset.index);
+      lightboxImg.src = IMAGES[idx];
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+}
+
+buildFrames();
+
+function getFrameWidth() {
+  const f = track.querySelector('.film-frame');
+  return f ? f.offsetWidth + 10 : 0; // +10 for gap
+}
+
+function updateDot() {
+  const idx = Math.round(offset / frameW) % IMAGES.length;
+  if (idx !== activeIdx && idx >= 0 && idx < IMAGES.length) {
+    dots[activeIdx].classList.remove('active');
+    activeIdx = idx;
+    dots[activeIdx].classList.add('active');
+  }
+}
+
+function animate() {
+  frameW = getFrameWidth();
+  totalW = frameW * IMAGES.length;
+
+  offset += SPEED;
+
+  // Seamless loop — when we have scrolled one full set, reset
+  if (offset >= totalW) {
+    offset -= totalW;
+  }
+
+  track.style.transform = 'translateX(-' + offset + 'px)';
+  updateDot();
+  rafId = requestAnimationFrame(animate);
+}
+
+// Start after layout settles
+window.addEventListener('load', () => {
+  frameW = getFrameWidth();
+  animate();
+});
+
+// Pause on hover
+const stripEl = document.getElementById('film-strip');
+stripEl.addEventListener('mouseenter', () => cancelAnimationFrame(rafId));
+stripEl.addEventListener('mouseleave', () => { rafId = requestAnimationFrame(animate); });
+
+// Lightbox close
+function closeLightbox() {
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+closeBtn.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+</div>
+</body>
+</html>

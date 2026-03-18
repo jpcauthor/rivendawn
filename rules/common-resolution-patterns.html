@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Common Resolutions</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- Styles -->
+<style>
+
+:root {
+--header-height: 72px;
+--footer-height: 72px;
+--content-max-width: 960px;
+--page-max-width: 1400px;
+--ink-color: #3a2a1a;
+--accent: #fff1d6;
+--nav-color: #f2e3c6;
+--nav-shadow: rgba(0,0,0,0.85);
+--footer-bg: rgba(0,0,0,0.88);
+--toggle-bg: rgba(255,248,235,0.55);
+--toggle-border: rgba(90,60,30,0.24);
+--toggle-hover: rgba(255,241,214,0.78);
+--toggle-doc-bg: rgba(255,248,235,0.48);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Crimson Text',Georgia,serif;
+color:var(--ink-color);
+min-height:100dvh;
+background:#000;
+line-height:1.75;
+font-size:1.18rem;
+}
+
+.page-wrapper{
+min-height:100dvh;
+display:flex;
+flex-direction:column;
+max-width:var(--page-max-width);
+margin:0 auto;
+background-color:#000;
+background-image:url('../images/bg.jpg');
+background-size:contain;
+background-position:center top;
+background-repeat:no-repeat;
+background-attachment:fixed;
+box-shadow:0 0 80px rgba(0,0,0,0.85);
+position:relative;
+}
+
+header{
+position:fixed;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--header-height);
+background-image:url('../images/header.png');
+background-size:contain;
+background-position:center;
+background-repeat:no-repeat;
+z-index:1000;
+box-shadow:0 6px 16px rgba(0,0,0,0.5);
+}
+
+header::after{
+content:"";
+position:absolute;
+left:0;
+right:0;
+bottom:-14px;
+height:18px;
+background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0));
+pointer-events:none;
+}
+
+nav{
+max-width:var(--content-max-width);
+width:100%;
+height:100%;
+margin:0 auto;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:2rem;
+padding:0 1.5rem;
+}
+
+nav a{
+color:var(--nav-color);
+text-decoration:none;
+font-family:Consolas,"Courier New",monospace;
+font-size:1.25rem;
+letter-spacing:0.14em;
+text-transform:uppercase;
+transition:all .25s ease;
+position:relative;
+display:inline-flex;
+align-items:center;
+gap:.5rem;
+padding:.2rem .1rem;
+text-shadow:
+0 1px 2px var(--nav-shadow),
+0 0 6px rgba(0,0,0,0.45);
+}
+
+nav a i{
+color:inherit;
+font-size:1.1rem;
+margin-right:4px;
+position:relative;
+top:-1px;
+}
+
+nav a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-4px;
+width:0;
+height:2px;
+background:var(--accent);
+transition:width .28s ease;
+}
+
+nav a:hover{
+color:var(--accent);
+transform:translateY(-1px);
+}
+
+nav a:hover::after{
+width:100%;
+}
+
+main{
+flex:1;
+margin-top:var(--header-height);
+padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+display:flex;
+justify-content:center;
+}
+
+.content-container{
+max-width:var(--content-max-width);
+width:100%;
+padding:40px 80px 180px;
+color:var(--ink-color);
+margin:0 auto;
+border-radius:8px;
+box-shadow:0 20px 60px rgba(0,0,0,0.55);
+background-image:url('../images/content-scroll-bg.png');
+background-repeat:repeat-y;
+background-position:top center;
+background-size:100% auto;
+}
+
+.content-container h1,
+.content-container h2,
+.content-container h3{
+font-family:'Cinzel Decorative',serif;
+letter-spacing:.06em;
+}
+
+.content-container h1{
+font-size:3rem;
+text-align:center;
+margin:0 0 .75rem;
+}
+
+.content-container h2{
+font-size:2.15rem;
+margin:2.8rem 0 1.4rem;
+border-bottom:1px solid rgba(139,0,0,0.15);
+padding-bottom:.6rem;
+text-align:center;
+}
+
+.content-container h3{
+font-size:1.3rem;
+margin:2rem 0 1rem;
+text-align:center;
+}
+
+.content-container p{
+margin-bottom:0.35rem;
+}
+
+.content-container ul {
+  padding-left: 2rem;
+}
+
+.lore-toggle{
+margin-top:2rem;
+border:1px solid var(--toggle-border);
+border-radius:10px;
+background:var(--toggle-bg);
+overflow:hidden;
+box-shadow:0 10px 24px rgba(0,0,0,0.12);
+}
+
+.lore-toggle summary{
+list-style:none;
+cursor:pointer;
+padding:1rem 1.25rem;
+font-family:'Cinzel Decorative',serif;
+font-size:1.05rem;
+color:#6b1f1f;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:.75rem;
+text-align:center;
+transition:background .25s ease, color .25s ease;
+}
+
+.lore-toggle summary::-webkit-details-marker{
+display:none;
+}
+
+.lore-toggle summary::before{
+content:"\f078";
+font-family:"Font Awesome 6 Free";
+font-weight:900;
+font-size:.9rem;
+transition:transform .25s ease;
+}
+
+.lore-toggle[open] summary::before{
+transform:rotate(180deg);
+}
+
+.lore-toggle summary:hover{
+background:var(--toggle-hover);
+color:#8b2323;
+}
+
+.lore-document{
+padding:1.5rem 1.5rem 1.25rem;
+background:var(--toggle-doc-bg);
+border-top:1px solid rgba(90,60,30,0.15);
+}
+
+.lore-document h3{
+margin-top:0;
+}
+
+footer{
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--footer-height);
+background:var(--footer-bg);
+color:#ccc;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:0 1rem;
+font-size:.95rem;
+border-top:1px solid #444;
+z-index:1000;
+}
+
+footer a{
+color:#d4a373;
+text-decoration:none;
+}
+
+footer a:hover{
+text-decoration:underline;
+}
+
+@media (max-width: 768px){
+
+nav{
+gap:1rem;
+padding:0 1rem;
+flex-wrap:wrap;
+}
+
+nav a{
+font-size:.9rem;
+letter-spacing:.08em;
+}
+
+.content-container{
+padding:36px 32px 150px;
+}
+
+.content-container h1{
+font-size:2.2rem;
+}
+
+.content-container h2{
+font-size:1.7rem;
+}
+
+.content-container h3{
+font-size:1.15rem;
+}
+}
+
+@media (max-width: 480px){
+
+body{
+font-size:1.05rem;
+}
+
+.content-container{
+padding:28px 20px 130px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+<header>
+<nav>
+<a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+<a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+<a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+<a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+<a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+
+<div class="content-container">
+
+<h1>Common Resolutions</h1>
+
+<p>Most challenges in Rivendawn follow recognizable patterns. Whether characters oppose one another, assist an ally, overcome environmental hazards, or undertake extended effort, these common situations are resolved using the same unified engine that governs the rest of the game. These patterns do not create new subsystems; they simply clarify how the core resolution rules apply in everyday play, ensuring that cooperation, conflict, and sustained effort remain fast, consistent, and easy for the Watcher to adjudicate.</p>
+
+<details class="lore-toggle">
+  <summary>To read the full document, click here</summary>
+
+  <div class="lore-document">
+
+<!--<section class="lore-section">
+  <header class="lore-header">
+    <p class="lore-kicker">Rivendawn Beta 0.2.1</p>
+    <h1>Common Resolution Patterns</h1>
+    <p class="lore-subtitle">Frequent Applications of the Dice Resolution System</p>
+  </header>-->
+
+  <article class="lore-block">
+    <h2>I. Purpose</h2>
+    <p>While the Dice Resolution System defines how actions are resolved, certain situations arise frequently enough to warrant standardized guidance.</p>
+    <p>The following patterns describe common ways characters interact with opposition, cooperation, environmental challenges, and sustained effort.</p>
+    <p>All patterns use the unified Dice Resolution System described in the Dice Resolution System section.</p>
+    <p>Resolution always follows the same mechanical framework:</p>
+
+    <div class="rules-callout">
+      <p><strong>Capability</strong> = Primary Attribute + Ability/Knowledge + Context Rating</p>
+      <p><strong>Target Number</strong> = Baseline − Capability</p>
+      <p>Roll 1d20.</p>
+      <p>Success occurs when the roll equals or exceeds the Target Number.</p>
+    </div>
+  </article>
+
+  <article class="lore-block">
+    <h2>II. Opposed Actions</h2>
+    <p>Opposed actions occur when two characters directly attempt to overcome one another.</p>
+    <p>Both participants roll using the appropriate Capability.</p>
+    <p>Resolution follows these outcomes:</p>
+
+    <ul>
+      <li>If only one participant succeeds, that participant prevails.</li>
+      <li>If both succeed, the higher roll determines the winner.</li>
+      <li>If both fail, the situation remains unresolved.</li>
+    </ul>
+
+    <p>Opposed actions represent simultaneous effort rather than sequential attempts.</p>
+    <p>Typical examples include stealth versus awareness, deception versus insight, or grappling versus escape.</p>
+  </article>
+
+  <article class="lore-block">
+    <h2>III. Assistance</h2>
+    <p>One character may assist another in performing a task.</p>
+    <p>The assisting character rolls using the appropriate Capability.</p>
+
+    <ul>
+      <li>If the assistance roll succeeds, the primary actor receives −2 to their Target Number.</li>
+      <li>If the assistance roll fails, no benefit is granted.</li>
+    </ul>
+
+    <p>Only one assistance attempt may apply to a single action.</p>
+    <p>Assistance represents coordination, guidance, or supporting effort rather than shared execution.</p>
+  </article>
+
+  <article class="lore-block">
+    <h2>IV. Group Actions</h2>
+    <p>Group actions occur when multiple characters attempt the same task simultaneously.</p>
+    <p>Each participant rolls individually.</p>
+
+    <ul>
+      <li>If half or more of the participants succeed, the group succeeds.</li>
+      <li>If fewer than half succeed, the group fails.</li>
+    </ul>
+
+    <p>Group actions represent coordinated effort rather than individual performance.</p>
+    <p>Typical examples include forcing open a gate, searching a large area, or climbing a difficult surface together.</p>
+  </article>
+
+  <article class="lore-block">
+    <h2>V. Environmental Difficulty</h2>
+    <p>Environmental conditions may increase the difficulty of an action.</p>
+    <p>The Watcher may increase the Target Number when the environment introduces resistance or complication.</p>
+    <p>Typical modifiers include:</p>
+
+    <div class="rules-callout">
+      <p><strong>Minor Difficulty</strong><br>+2 to Target Number</p>
+      <p><strong>Severe Conditions</strong><br>+4 to Target Number</p>
+      <p><strong>Extreme Circumstances</strong><br>+6 to Target Number</p>
+    </div>
+
+    <p>Environmental difficulty represents external resistance rather than character limitation.</p>
+    <p>Examples include unstable footing, violent weather, darkness, hazardous terrain, or obstructed visibility.</p>
+  </article>
+
+  <article class="lore-block">
+    <h2>VI. Repeated Attempts</h2>
+    <p>Repeated attempts occur when a character tries the same action multiple times under unchanged circumstances.</p>
+    <p>Each additional attempt increases the Target Number by +1.</p>
+    <p>This penalty accumulates with each subsequent attempt.</p>
+    <p>The modifier resets once circumstances meaningfully change.</p>
+    <p>Repeated attempts represent growing difficulty, fatigue, or diminishing opportunity.</p>
+  </article>
+
+  <article class="lore-block">
+    <h2>VII. Extended Tasks</h2>
+    <p>Some actions require sustained effort rather than a single successful roll.</p>
+    <p>Extended tasks measure progress through accumulated successes.</p>
+    <p>Each successful roll contributes 1 Progress.</p>
+    <p>The Watcher determines the required progress threshold based on task complexity.</p>
+    <p>Typical progress thresholds include:</p>
+
+    <div class="rules-callout">
+      <p><strong>Simple Task</strong> — 2 successes</p>
+      <p><strong>Moderate Task</strong> — 4 successes</p>
+      <p><strong>Major Task</strong> — 6 successes</p>
+    </div>
+
+    <p>Extended tasks represent gradual accomplishment rather than immediate resolution.</p>
+    <p>Examples include dismantling complex mechanisms, stabilizing critically injured allies, or breaking through reinforced barriers.</p>
+  </article>
+
+  <article class="lore-block">
+    <h2>VIII. Design Principle</h2>
+    <p>These resolution patterns provide structure for common gameplay situations while remaining fully compatible with the Dice Resolution System.</p>
+    <p>They exist to simplify adjudication without introducing new mechanical subsystems.</p>
+    <p>All actions within Heroes Resonance ultimately resolve through the same unified engine.</p>
+    <p>The Song remains lawbound.</p>
+    <p>These patterns simply describe the situations where its laws most often apply.</p>
+  </article>
+</section>
+
+  </div>
+</details>
+
+</div>
+
+</main>
+
+<footer>
+<div>
+Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+&nbsp;&nbsp;•&nbsp;&nbsp;
+© 2026 jpcauthor. All rights reserved.
+&nbsp;&nbsp;•&nbsp;&nbsp;
+<a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+</div>
+</footer>
+
+</div>
+
+</body>
+</html>

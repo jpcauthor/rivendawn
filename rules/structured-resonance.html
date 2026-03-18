@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Structured Resonance</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- Styles -->
+<style>
+
+:root {
+--header-height: 72px;
+--footer-height: 72px;
+--content-max-width: 960px;
+--page-max-width: 1400px;
+--ink-color: #3a2a1a;
+--accent: #fff1d6;
+--nav-color: #f2e3c6;
+--nav-shadow: rgba(0,0,0,0.85);
+--footer-bg: rgba(0,0,0,0.88);
+--toggle-bg: rgba(255,248,235,0.55);
+--toggle-border: rgba(90,60,30,0.24);
+--toggle-hover: rgba(255,241,214,0.78);
+--toggle-doc-bg: rgba(255,248,235,0.48);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+font-family:'Crimson Text',Georgia,serif;
+color:var(--ink-color);
+min-height:100dvh;
+background:#000;
+line-height:1.75;
+font-size:1.18rem;
+}
+
+.page-wrapper{
+min-height:100dvh;
+display:flex;
+flex-direction:column;
+max-width:var(--page-max-width);
+margin:0 auto;
+background-color:#000;
+background-image:url('../images/bg.jpg');
+background-size:contain;
+background-position:center top;
+background-repeat:no-repeat;
+background-attachment:fixed;
+box-shadow:0 0 80px rgba(0,0,0,0.85);
+position:relative;
+}
+
+header{
+position:fixed;
+top:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--header-height);
+background-image:url('../images/header.png');
+background-size:contain;
+background-position:center;
+background-repeat:no-repeat;
+z-index:1000;
+box-shadow:0 6px 16px rgba(0,0,0,0.5);
+}
+
+header::after{
+content:"";
+position:absolute;
+left:0;
+right:0;
+bottom:-14px;
+height:18px;
+background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0));
+pointer-events:none;
+}
+
+nav{
+max-width:var(--content-max-width);
+width:100%;
+height:100%;
+margin:0 auto;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:2rem;
+padding:0 1.5rem;
+}
+
+nav a{
+color:var(--nav-color);
+text-decoration:none;
+font-family:Consolas,"Courier New",monospace;
+font-size:1.25rem;
+letter-spacing:0.14em;
+text-transform:uppercase;
+transition:all .25s ease;
+position:relative;
+display:inline-flex;
+align-items:center;
+gap:.5rem;
+padding:.2rem .1rem;
+text-shadow:
+0 1px 2px var(--nav-shadow),
+0 0 6px rgba(0,0,0,0.45);
+}
+
+nav a i{
+color:inherit;
+font-size:1.1rem;
+margin-right:4px;
+position:relative;
+top:-1px;
+}
+
+nav a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-4px;
+width:0;
+height:2px;
+background:var(--accent);
+transition:width .28s ease;
+}
+
+nav a:hover{
+color:var(--accent);
+transform:translateY(-1px);
+}
+
+nav a:hover::after{
+width:100%;
+}
+
+main{
+flex:1;
+margin-top:var(--header-height);
+padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+display:flex;
+justify-content:center;
+}
+
+.content-container{
+max-width:var(--content-max-width);
+width:100%;
+padding:40px 80px 180px;
+color:var(--ink-color);
+margin:0 auto;
+border-radius:8px;
+box-shadow:0 20px 60px rgba(0,0,0,0.55);
+background-image:url('../images/content-scroll-bg.png');
+background-repeat:repeat-y;
+background-position:top center;
+background-size:100% auto;
+}
+
+.content-container h1,
+.content-container h2,
+.content-container h3{
+font-family:'Cinzel Decorative',serif;
+letter-spacing:.06em;
+}
+
+.content-container h1{
+font-size:3rem;
+text-align:center;
+margin:0 0 .75rem;
+}
+
+.content-container h2{
+font-size:2.15rem;
+margin:2.8rem 0 1.4rem;
+border-bottom:1px solid rgba(139,0,0,0.15);
+padding-bottom:.6rem;
+text-align:center;
+}
+
+.content-container h3{
+font-size:1.3rem;
+margin:2rem 0 1rem;
+text-align:center;
+}
+
+.content-container p{
+margin-bottom:0.35rem;
+}
+
+.content-container ul {
+  padding-left: 2rem;
+}
+
+.lore-toggle{
+margin-top:2rem;
+border:1px solid var(--toggle-border);
+border-radius:10px;
+background:var(--toggle-bg);
+overflow:hidden;
+box-shadow:0 10px 24px rgba(0,0,0,0.12);
+}
+
+.lore-toggle summary{
+list-style:none;
+cursor:pointer;
+padding:1rem 1.25rem;
+font-family:'Cinzel Decorative',serif;
+font-size:1.05rem;
+color:#6b1f1f;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:.75rem;
+text-align:center;
+transition:background .25s ease, color .25s ease;
+}
+
+.lore-toggle summary::-webkit-details-marker{
+display:none;
+}
+
+.lore-toggle summary::before{
+content:"\f078";
+font-family:"Font Awesome 6 Free";
+font-weight:900;
+font-size:.9rem;
+transition:transform .25s ease;
+}
+
+.lore-toggle[open] summary::before{
+transform:rotate(180deg);
+}
+
+.lore-toggle summary:hover{
+background:var(--toggle-hover);
+color:#8b2323;
+}
+
+.lore-document{
+padding:1.5rem 1.5rem 1.25rem;
+background:var(--toggle-doc-bg);
+border-top:1px solid rgba(90,60,30,0.15);
+}
+
+.lore-document h3{
+margin-top:0;
+}
+
+footer{
+position:fixed;
+bottom:0;
+left:50%;
+transform:translateX(-50%);
+width:min(100%,var(--page-max-width));
+height:var(--footer-height);
+background:var(--footer-bg);
+color:#ccc;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:0 1rem;
+font-size:.95rem;
+border-top:1px solid #444;
+z-index:1000;
+}
+
+footer a{
+color:#d4a373;
+text-decoration:none;
+}
+
+footer a:hover{
+text-decoration:underline;
+}
+
+@media (max-width: 768px){
+
+nav{
+gap:1rem;
+padding:0 1rem;
+flex-wrap:wrap;
+}
+
+nav a{
+font-size:.9rem;
+letter-spacing:.08em;
+}
+
+.content-container{
+padding:36px 32px 150px;
+}
+
+.content-container h1{
+font-size:2.2rem;
+}
+
+.content-container h2{
+font-size:1.7rem;
+}
+
+.content-container h3{
+font-size:1.15rem;
+}
+}
+
+@media (max-width: 480px){
+
+body{
+font-size:1.05rem;
+}
+
+.content-container{
+padding:28px 20px 130px;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page-wrapper">
+
+<header>
+<nav>
+<a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+<a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+<a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+<a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+<a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+
+<div class="content-container">
+
+<h1>Structured Resonance</h1>
+
+<p>Resonance may be free in expression, but in combat it must obey law. Structured Resonance defines how the Song is instructed when battle demands precision. Some practitioners reshape reality itself through powerful projection, while others weave brief resonant effects into the rhythm of steel and motion. Whether caster or hybrid, all who wield the Song must balance power, discipline, and the limits imposed by the world’s harmonic laws. 
+</p>
+
+<details class="lore-toggle">
+  <summary>To read the full document, click here</summary>
+
+  <div class="lore-document">
+
+<h2>Structured Resonance in Combat</h2>
+
+<p><strong>Resonant Defensive Damage, Absorption Shields, & Avoidance</strong></p>
+
+<p>Resonance is freeform in expression.</p>
+<p>In combat, it is lawbound.</p>
+
+<p>When used within structured combat—whether through defensive projection or hybrid channeling—it must obey established harmonic law and systemic limits.</p>
+
+
+<h3>0. Resonance</h3>
+
+<p>Resonance may be expressed in any environment.</p>
+
+<p>A practitioner may instruct the Song during travel, exploration, labor, or conflict.</p>
+
+<p>The principles governing these instructions remain the same regardless of circumstance.</p>
+
+<p>However, when Resonance is used under structured conditions—such as combat or other moments where precise mechanical resolution is required—the Song must obey clearly defined systemic limits.</p>
+
+<p>The rules that follow describe the structured expression of Resonance.</p>
+
+<p>These procedures govern any situation where Resonant actions must be resolved mechanically, including but not limited to combat encounters.</p>
+
+<p>Outside of structured resolution, the Watcher may allow Resonant effects to manifest narratively where appropriate.</p>
+
+
+<h3>I. Combat Identity Profiles</h3>
+
+<p>Resonant combat divides practitioners into two operational disciplines:</p>
+
+<ul>
+<li><strong>True Resonant Casters</strong> — Masters of projection and large-scale harmonic instruction.</li>
+<li><strong>Hybrid Practitioners</strong> — Warriors who combine martial structure with localized Resonant effects.</li>
+</ul>
+
+<p>Each discipline obeys different limitations and methods of engagement.</p>
+
+
+<h3>II. Pure Resonant Casters</h3>
+
+<p>Pure Resonant Casters do not defend with steel or posture.</p>
+
+<p>They defend by shaping the harmonic structure of reality.</p>
+
+<p>Their survivability depends on:</p>
+
+<ul>
+<li>Resonant projection</li>
+<li>Wellspring stability</li>
+<li>Path mastery</li>
+</ul>
+
+
+<h3>III. Eligibility for Defensive Affinity</h3>
+
+<p>A caster may use Defensive Affinities only if:</p>
+
+<p><strong>Path Rating 4</strong></p>
+
+<p>Stable projection requires full alignment with a Path’s First Law.</p>
+
+<ul>
+<li>Aqua / Terra → Absorption Shield</li>
+<li>Ignis → Damage Shield</li>
+<li>Aeris → Dodge</li>
+</ul>
+
+<p><strong>Harmonic Focus</strong></p>
+
+<p>Casters cannot use martial stances or heavy weapon configurations while projecting.</p>
+
+<p><strong>Wellspring Stability</strong></p>
+
+<p>If the Wellspring reaches 0, the shield collapses instantly.</p>
+
+
+<h3>IV. Activating a Resonant Defensive Shield</h3>
+
+<p>Activation requires one full turn.</p>
+
+<p>During that turn:</p>
+
+<ul>
+<li>No offensive actions</li>
+<li>No Resonant casts</li>
+</ul>
+
+<p><strong>Duration</strong></p>
+
+<p>The shield lasts for the entire combat encounter.</p>
+
+<p>Conditions for maintaining the shield:</p>
+
+<ul>
+<li>Wellspring remains above 0</li>
+<li>Caster maintains concentration</li>
+<li>Caster does not shift to martial posture</li>
+</ul>
+
+<p>If the shield collapses due to Wellspring loss, it cannot be reactivated during that combat.</p>
+
+
+<h3>V. Pure Resonant Defensive Postures</h3>
+
+<h3>Absorption Shield (Aqua or Terra)</h3>
+
+<p>When activated:</p>
+
+<p>Roll a number of d4 equal to your Path Rating.</p>
+
+<p>Add the result to your Armor Points as Bonus Armor.</p>
+
+<p>Bonus Armor:</p>
+
+<ul>
+<li>Functions exactly like normal Armor</li>
+<li>Is reduced first when Armor damage is applied</li>
+<li>Does not prevent Health damage from the 50/50 rule</li>
+</ul>
+
+<p>Damage resolves normally.</p>
+
+
+<h3>Damage Shield (Ignis)</h3>
+
+<p>Provides no avoidance bonus.</p>
+
+<p>When struck in melee, the attacker takes retaliatory Ignis damage.</p>
+
+<p>Damage is determined using the Resonant Dice table.</p>
+
+
+<h3>Dodge (Aeris)</h3>
+
+<p>Adds +2 to Total Defensive Rating.</p>
+
+<p>Provides:</p>
+
+<ul>
+<li>No Damage Shield</li>
+<li>No Absorption Shield</li>
+</ul>
+
+
+<h3>VI. Resonant Dice Table (Pure Casters)</h3>
+
+<table>
+<tr>
+<th>Path Level</th>
+<th>Resonant Dice</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>1d4</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>d6</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>d8</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>d10</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>d12</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>d12 + d6</td>
+</tr>
+</table>
+
+
+<h3>VII. Offensive Resonant Casting</h3>
+
+<p>Pure Casters may:</p>
+
+<ul>
+<li>Declare Standard, Expanded, or Mass magnitude</li>
+<li>Use Capability = Primary Attribute + Ability/Knowledge + Path Rating</li>
+<li>Pay Wellspring cost on success or failure</li>
+</ul>
+
+<p>Casters do not combine weapon damage with Resonance.</p>
+
+<p>Resonant damage comes from Resonant dice, not weapon dice.</p>
+
+<p>Terrain, allies, and environment may interact depending on magnitude.</p>
+
+<p>Casters remain physically vulnerable without shield projection.</p>
+
+
+<h3>VIII. Hybrid Practitioners</h3>
+
+<p>The Hybrid is neither purely Resonant nor wholly Mundane.</p>
+
+<p>They are the disciplined convergence of steel and instruction.</p>
+
+<p>Where the Mundane masters consistency and the True Resonant masters magnitude, the Hybrid masters decision.</p>
+
+<p>Hybrids alter moments rather than battlefields.</p>
+
+
+<h3>IX. Hybrid Limitations</h3>
+
+<p>Hybrids may never:</p>
+
+<ul>
+<li>Use Resonant Defensive Postures</li>
+<li>Reach Path Rating 4</li>
+<li>Use Expanded or Mass magnitude</li>
+<li>Project defensive constructs</li>
+<li>Combine Offensive Rating and Path Rating in the same strike</li>
+<li>Apply more than one Resonant rider per attack</li>
+</ul>
+
+
+<h3>X. Hybrid Combat Lanes</h3>
+
+<p>A Hybrid possesses two methods of execution.</p>
+
+<p>Only one lane may be used per strike.</p>
+
+
+<h3>Lane 1 — Mundane Strike</h3>
+
+<p><strong>Capability</strong></p>
+
+<p>Primary Attribute + Ability/Knowledge + Offensive Rating</p>
+
+<p>Characteristics:</p>
+
+<ul>
+<li>No Wellspring cost</li>
+<li>No Path rider</li>
+<li>Pure weapon damage</li>
+</ul>
+
+<p>This represents martial discipline and training.</p>
+
+
+<h3>Lane 2 — Channeled Strike</h3>
+
+<p><strong>Capability</strong></p>
+
+<p>Primary Attribute + Ability/Knowledge + Path Rating</p>
+
+<p>Characteristics:</p>
+
+<ul>
+<li>Wellspring cost is paid</li>
+<li>Standard magnitude only</li>
+<li>One lawful Path rider may apply on hit</li>
+</ul>
+
+<p>Weapon damage remains unchanged.</p>
+
+<p>The steel is not made stronger.</p>
+
+<p>The world around it is instructed differently.</p>
+
+
+<h3>XI. Hybrid Resonant Dice Table</h3>
+
+<table>
+<tr>
+<th>Path Level</th>
+<th>Resonant Dice</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>1d4</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>d6</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>d8</td>
+</tr>
+</table>
+
+
+<h3>XII. Resonant Consequence Examples</h3>
+
+<h3>Aeris — Displacement</h3>
+
+<ul>
+<li>1 Point → 5 feet movement up to 20 feet</li>
+<li>5 Points → 20 feet + prone</li>
+<li>6 Points → 20 feet + prone (2 rounds; Athletics save TN 13)</li>
+</ul>
+
+<h3>Aqua — Pressure Binding</h3>
+
+<ul>
+<li>1 Point → Movement speed reduced by 1/4</li>
+<li>2 Points → Movement speed reduced by 1/2</li>
+<li>3 Points → Movement speed reduced to 1/4 speed</li>
+<li>4 Points → Immobilized for 1 round</li>
+<li>5 Points → Immobilized for 2 rounds (Save TN 13)</li>
+<li>6 Points → Complete immobilization</li>
+</ul>
+
+<h3>Ignis — Agitation</h3>
+
+<p>Ignites surfaces and imposes escalating heat effects.</p>
+
+<h3>Terra — Mass Impulse</h3>
+
+<ul>
+<li>1 Point → Balance Save TN 10</li>
+<li>2 Points → Balance Save TN 11</li>
+<li>3 Points → Balance Save TN 12</li>
+<li>4 Points → Balance Save TN 13</li>
+<li>5 Points → Balance Save TN 14 for 2 rounds</li>
+<li>6 Points → Balance Save TN 15 for 2 rounds</li>
+</ul>
+
+
+<h3>XIII. Hybrid Weapon Damage Rules</h3>
+
+<p>Hybrid weapon attacks:</p>
+
+<ul>
+<li>Always use weapon dice</li>
+<li>Never gain extra dice from Resonance</li>
+<li>Apply riders after weapon damage resolves</li>
+</ul>
+
+<p>Riders may not stack.</p>
+
+
+<h3>XIV. Stacking Rules</h3>
+
+<p>Resonant defense stacks with:</p>
+
+<ul>
+<li>general bonuses</li>
+<li>scrolls</li>
+<li>potions</li>
+<li>casted buffs</li>
+</ul>
+
+<p>Resonant defense does not stack with:</p>
+
+<ul>
+<li>martial defensive mechanics</li>
+<li>defensive postures</li>
+<li>Calling-based physical defense</li>
+</ul>
+
+<p>Only one self-cast Resonant defensive may be active at a time.</p>
+
+<p>Modifiers from scrolls, potions, or other players must be tracked by the player.</p>
+
+  </div>
+</details>
+
+</div>
+
+</main>
+
+<footer>
+<div>
+Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+&nbsp;&nbsp;•&nbsp;&nbsp;
+© 2026 jpcauthor. All rights reserved.
+&nbsp;&nbsp;•&nbsp;&nbsp;
+<a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+</div>
+</footer>
+
+</div>
+
+</body>
+</html>

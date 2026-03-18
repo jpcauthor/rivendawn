@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Rivendawn Dice Forge</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --parchment:      #f5ead6;
+  --parchment-deep: #ede0c4;
+  --parchment-dark: #e0cfa8;
+  --ink:            #2a1c0e;
+  --ink-mid:        #4a2e06;
+  --ink-dim:        #7a5a30;
+  --ink-faint:      #a08050;
+  --gold:           #c8922a;
+  --gold-light:     #d4a84a;
+  --gold-pale:      #e8c87a;
+  --gold-glow:      rgba(200,146,42,0.35);
+  --border:         rgba(74,46,6,0.22);
+  --border-strong:  rgba(74,46,6,0.42);
+  --danger:         #8b2a2a;
+  --danger-bg:      rgba(139,42,42,0.10);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { min-height: 100vh; }
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--ink);
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(200,146,42,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 100%, rgba(160,120,60,0.10) 0%, transparent 50%),
+    linear-gradient(160deg, #1a1006 0%, #0e0804 100%);
+  min-height: 100vh;
+  padding: 2rem 1rem 4rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+/* ── Forge shell ── */
+.forge {
+  position: relative;
+  z-index: 1;
+  width: min(960px, 100%);
+  background: linear-gradient(180deg, #f8eed8 0%, #f2e4c4 40%, #ede0be 100%);
+  border-radius: 4px;
+  box-shadow:
+    0 0 0 1px var(--border),
+    0 0 0 4px rgba(200,146,42,0.08),
+    0 2px 8px rgba(42,28,14,0.12),
+    0 8px 32px rgba(42,28,14,0.22),
+    0 32px 80px rgba(42,28,14,0.28);
+  overflow: hidden;
+  animation: pageReveal 0.6s ease both;
+}
+
+@keyframes pageReveal {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.forge::before {
+  content: '';
+  display: block;
+  height: 5px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold) 15%, var(--gold-pale) 50%, var(--gold) 85%, transparent 100%);
+}
+
+/* ── Header ── */
+.forge-header {
+  padding: 2.5rem 3.5rem 2rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.forge-header::after {
+  content: '✦';
+  position: absolute;
+  bottom: -0.7rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #f3e7cb;
+  padding: 0 0.75rem;
+  color: var(--gold);
+  font-size: 0.75rem;
+}
+
+.forge-kicker {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.75rem;
+}
+
+.forge-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  color: var(--ink-mid);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  margin-bottom: 0.75rem;
+}
+
+.forge-watcher {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-dim);
+  max-width: 540px;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+
+.forge-watcher cite {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  font-style: normal;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ── Body layout ── */
+.forge-body {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+}
+
+/* ── Controls ── */
+.forge-controls {
+  padding: 2rem 1.75rem;
+  border-right: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(200,146,42,0.04), transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.field-label {
+  display: block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.35rem;
+  margin-bottom: 0.85rem;
+}
+
+/* ── Die type pills ── */
+.die-type-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.45rem;
+}
+
+.die-opt { position: relative; }
+.die-opt input { position: absolute; opacity: 0; pointer-events: none; }
+
+.die-opt label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.25rem;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: rgba(255,248,230,0.5);
+  cursor: pointer;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.62rem;
+  color: var(--ink-dim);
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.die-opt label:hover {
+  background: rgba(200,146,42,0.08);
+  border-color: rgba(200,146,42,0.4);
+  color: var(--ink-mid);
+}
+
+.die-opt input:checked + label {
+  background: linear-gradient(180deg, rgba(200,146,42,0.18), rgba(200,146,42,0.08));
+  border-color: var(--gold);
+  color: var(--ink-mid);
+  box-shadow: inset 0 1px 0 rgba(255,240,180,0.4);
+}
+
+.die-opt.full { grid-column: 1 / -1; }
+
+/* ── Pool size ── */
+.pool-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.4rem;
+}
+
+.pool-opt { position: relative; }
+.pool-opt input { position: absolute; opacity: 0; pointer-events: none; }
+
+.pool-opt label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: rgba(255,248,230,0.5);
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  color: var(--ink-dim);
+  transition: all 0.18s ease;
+  user-select: none;
+}
+
+.pool-opt label:hover {
+  background: rgba(200,146,42,0.08);
+  border-color: rgba(200,146,42,0.4);
+  color: var(--ink-mid);
+}
+
+.pool-opt input:checked + label {
+  background: linear-gradient(180deg, rgba(200,146,42,0.18), rgba(200,146,42,0.08));
+  border-color: var(--gold);
+  color: var(--ink-mid);
+}
+
+/* ── Buttons ── */
+.btn {
+  appearance: none;
+  border: none;
+  border-radius: 4px;
+  padding: 0.8rem 1rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  width: 100%;
+}
+.btn:hover:not(:disabled) { transform: translateY(-1px); }
+.btn:active:not(:disabled) { transform: translateY(0); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-primary {
+  background: linear-gradient(180deg, #c8922a, #a87018);
+  color: #fff8e8;
+  box-shadow: 0 2px 8px rgba(200,146,42,0.3), inset 0 1px 0 rgba(255,240,180,0.2);
+  margin-bottom: 0.45rem;
+}
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(180deg, #d4a030, #b87c20);
+  box-shadow: 0 4px 14px rgba(200,146,42,0.4);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--ink-dim);
+  border: 1px solid var(--border);
+}
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(74,46,6,0.05);
+  color: var(--ink-mid);
+  border-color: var(--border-strong);
+}
+
+.rule-card {
+  background: rgba(200,146,42,0.06);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 4px 4px 0;
+  padding: 0.85rem 1rem;
+  font-family: 'Crimson Text', serif;
+  font-size: 0.88rem;
+  color: var(--ink-dim);
+  line-height: 1.65;
+}
+.rule-card strong { color: var(--ink-mid); }
+
+/* ── Results panel ── */
+.forge-results {
+  padding: 2rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Dice stage ── */
+.dice-stage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  min-height: 130px;
+}
+
+/* ── Die wrapper ── */
+.die-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* ── SVG die container ── */
+.die-svg-wrap {
+  position: relative;
+  width: 86px;
+  height: 86px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 3px 6px rgba(42,28,14,0.18));
+  transition: filter 0.25s ease, transform 0.25s ease;
+}
+
+.die-svg-wrap svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* The number on the die face */
+.die-face-text {
+  position: relative;
+  z-index: 2;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.55rem;
+  color: var(--ink-mid);
+  line-height: 1;
+  user-select: none;
+  transition: color 0.2s ease;
+  text-align: center;
+  /* nudge down slightly for d4 since shape apex is top */
+}
+
+.die-face-text.nudge-down { margin-top: 12px; }
+.die-face-text.nudge-up   { margin-top: -8px; }
+
+/* d100 tens/units get slightly wider area */
+.die-wrap.d100-die .die-svg-wrap { width: 90px; }
+
+.die-rank {
+  font-family: 'Cinzel', serif;
+  font-size: 0.48rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  transition: color 0.2s ease;
+}
+
+.d100-sublabel {
+  font-family: 'Cinzel', serif;
+  font-size: 0.44rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ── Winner / loser states ── */
+.die-wrap.winner .die-svg-wrap {
+  filter:
+    drop-shadow(0 0 10px rgba(200,146,42,0.55))
+    drop-shadow(0 4px 8px rgba(42,28,14,0.2));
+  transform: translateY(-5px);
+}
+
+.die-wrap.winner .die-svg-wrap .die-shape-fill {
+  fill: #fff6dc;
+  stroke: #c8922a;
+}
+
+.die-wrap.winner .die-face-text { color: var(--gold); }
+.die-wrap.winner .die-rank       { color: var(--gold); font-weight: 700; }
+
+.die-wrap.loser .die-svg-wrap { opacity: 0.48; }
+.die-wrap.loser .die-face-text { color: var(--ink-faint); }
+
+/* ── Rolling animation ── */
+@keyframes dieBounce {
+  0%   { transform: translateY(0)    rotate(0deg);   }
+  15%  { transform: translateY(-14px) rotate(-18deg); }
+  30%  { transform: translateY(2px)  rotate(8deg);   }
+  45%  { transform: translateY(-8px) rotate(-12deg); }
+  60%  { transform: translateY(1px)  rotate(5deg);   }
+  75%  { transform: translateY(-4px) rotate(-6deg);  }
+  88%  { transform: translateY(0px)  rotate(2deg);   }
+  100% { transform: translateY(0)    rotate(0deg);   }
+}
+
+.die-wrap.rolling .die-svg-wrap {
+  animation: dieBounce 0.42s ease-in-out infinite;
+}
+
+/* Stagger siblings so they don't all bounce in lockstep */
+.die-wrap:nth-child(2).rolling .die-svg-wrap { animation-delay: 0.07s; }
+.die-wrap:nth-child(3).rolling .die-svg-wrap { animation-delay: 0.14s; }
+.die-wrap:nth-child(4).rolling .die-svg-wrap { animation-delay: 0.05s; }
+.die-wrap:nth-child(5).rolling .die-svg-wrap { animation-delay: 0.11s; }
+.die-wrap:nth-child(6).rolling .die-svg-wrap { animation-delay: 0.18s; }
+
+/* ── Settle animation — plays once when rolling stops ── */
+@keyframes dieSettle {
+  0%   { transform: translateY(-6px) rotate(-4deg); }
+  55%  { transform: translateY(2px)  rotate(1deg);  }
+  80%  { transform: translateY(-1px) rotate(0deg);  }
+  100% { transform: translateY(0)    rotate(0deg);  }
+}
+
+.die-wrap.settling .die-svg-wrap {
+  animation: dieSettle 0.38s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+/* ── Result block ── */
+.result-block {
+  border-top: 1px solid var(--border);
+  padding-top: 1.25rem;
+}
+
+.result-eyebrow {
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.5rem;
+}
+
+.result-main {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: var(--ink-mid);
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+@keyframes resultIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.result-main.animate { animation: resultIn 0.3s ease both; }
+
+.result-detail {
+  font-family: 'Crimson Text', serif;
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink-dim);
+  line-height: 1.6;
+  min-height: 1.5rem;
+}
+
+.snake-badge {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 3px;
+  border: 1px solid rgba(139,42,42,0.35);
+  background: var(--danger-bg);
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--danger);
+}
+
+/* ── History ── */
+.history-block { border-top: 1px solid var(--border); padding-top: 1.25rem; }
+
+.history-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.75rem;
+}
+
+.history-list { list-style: none; padding: 0; margin: 0; }
+
+.history-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid rgba(74,46,6,0.07);
+  font-family: 'Crimson Text', serif;
+  font-size: 0.95rem;
+  color: var(--ink-dim);
+  animation: historyIn 0.2s ease both;
+}
+
+.history-list li:last-child { border-bottom: none; }
+.history-list li::before { content: '·'; color: var(--gold); font-size: 1rem; flex-shrink: 0; }
+
+@keyframes historyIn {
+  from { opacity: 0; transform: translateX(-4px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Footer ── */
+.forge-footer {
+  padding: 1rem 3.5rem 1.5rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  background: rgba(200,146,42,0.03);
+}
+
+.forge::after {
+  content: '';
+  display: block;
+  height: 4px;
+  background: linear-gradient(90deg, transparent 0%, var(--gold) 15%, var(--gold-pale) 50%, var(--gold) 85%, transparent 100%);
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .forge-body { grid-template-columns: 1fr; }
+  .forge-controls { border-right: none; border-bottom: 1px solid var(--border); }
+  .forge-header { padding: 2rem 1.5rem 1.75rem; }
+  .forge-controls, .forge-results { padding: 1.75rem 1.5rem; }
+  .forge-footer { padding: 1rem 1.5rem; }
+}
+
+@media (max-width: 420px) {
+  .die-svg-wrap { width: 72px; height: 72px; }
+  .die-face-text { font-size: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="forge">
+
+  <header class="forge-header">
+    <p class="forge-kicker">Rivendawn Utility — Dice Registry</p>
+    <h1 class="forge-title">The Dice Forge</h1>
+    <p class="forge-watcher">
+      "Fate is not random. It is merely indifferent to your preferences."
+      <cite>— The Watcher, Entry 211</cite>
+    </p>
+  </header>
+
+  <div class="forge-body">
+
+    <aside class="forge-controls">
+
+      <div>
+        <span class="field-label">Die Type</span>
+        <div class="die-type-grid">
+          <div class="die-opt"><input type="radio" id="dt-d4"   name="dietype" value="4"   /><label for="dt-d4">d4</label></div>
+          <div class="die-opt"><input type="radio" id="dt-d6"   name="dietype" value="6"   /><label for="dt-d6">d6</label></div>
+          <div class="die-opt"><input type="radio" id="dt-d8"   name="dietype" value="8" checked /><label for="dt-d8">d8</label></div>
+          <div class="die-opt"><input type="radio" id="dt-d10"  name="dietype" value="10"  /><label for="dt-d10">d10</label></div>
+          <div class="die-opt"><input type="radio" id="dt-d12"  name="dietype" value="12"  /><label for="dt-d12">d12</label></div>
+          <div class="die-opt"><input type="radio" id="dt-d20"  name="dietype" value="20"  /><label for="dt-d20">d20</label></div>
+          <div class="die-opt full"><input type="radio" id="dt-d100" name="dietype" value="100" /><label for="dt-d100">d100 — Percentile</label></div>
+        </div>
+      </div>
+
+      <div id="poolSection">
+        <span class="field-label">Dice in Pool</span>
+        <div class="pool-row">
+          <div class="pool-opt"><input type="radio" id="pool-1" name="poolsize" value="1" /><label for="pool-1">1</label></div>
+          <div class="pool-opt"><input type="radio" id="pool-2" name="poolsize" value="2" checked /><label for="pool-2">2</label></div>
+          <div class="pool-opt"><input type="radio" id="pool-3" name="poolsize" value="3" /><label for="pool-3">3</label></div>
+          <div class="pool-opt"><input type="radio" id="pool-4" name="poolsize" value="4" /><label for="pool-4">4</label></div>
+          <div class="pool-opt"><input type="radio" id="pool-5" name="poolsize" value="5" /><label for="pool-5">5</label></div>
+          <div class="pool-opt"><input type="radio" id="pool-6" name="poolsize" value="6" /><label for="pool-6">6</label></div>
+        </div>
+      </div>
+
+      <div>
+        <button class="btn btn-primary"   id="rollBtn">Cast the Dice</button>
+        <button class="btn btn-secondary" id="copyBtn">Copy Result</button>
+      </div>
+
+      <div class="rule-card" id="ruleCard">
+        <strong>Primary Rating Roll:</strong> Roll 2d8, take the highest die, divide by 2, round down. That is your Rating.
+      </div>
+
+    </aside>
+
+    <section class="forge-results">
+
+      <div class="dice-stage" id="diceStage"></div>
+
+      <div class="result-block">
+        <p class="result-eyebrow" id="resultEyebrow">Result</p>
+        <p class="result-main"    id="resultMain">—</p>
+        <p class="result-detail"  id="resultDetail">Select your die type and pool, then cast.</p>
+        <div id="snakeBadge" class="snake-badge" style="display:none;">Snake Eyes</div>
+      </div>
+
+      <div class="history-block">
+        <p class="history-label">Recent Rolls</p>
+        <ul class="history-list" id="historyList">
+          <li>Waiting for first roll…</li>
+        </ul>
+      </div>
+
+    </section>
+  </div>
+
+  <footer class="forge-footer">
+    Rivendawn Dice Forge &nbsp;·&nbsp; Single-file utility &nbsp;·&nbsp; No dependencies
+  </footer>
+
+</div>
+
+<script>
+/* ══════════════════════════════════════════
+   SVG SHAPE DEFINITIONS
+   Each returns an SVG string for the die face.
+   All shapes use class="die-shape-fill" for
+   easy winner/loser theming via CSS.
+══════════════════════════════════════════ */
+
+const DIE_SHAPES = {
+  // d4 — equilateral triangle pointing up
+  4: () => `<svg viewBox="0 0 86 86" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g4" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#fff8ee"/>
+        <stop offset="100%" stop-color="#f0e2c0"/>
+      </linearGradient>
+    </defs>
+    <polygon class="die-shape-fill" points="43,6 80,78 6,78"
+      fill="url(#g4)" stroke="rgba(74,46,6,0.5)" stroke-width="2"
+      stroke-linejoin="round"/>
+    <polygon points="43,14 74,72 12,72"
+      fill="none" stroke="rgba(74,46,6,0.12)" stroke-width="1"/>
+  </svg>`,
+
+  // d6 — square with rounded corners
+  6: () => `<svg viewBox="0 0 86 86" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g6" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#fff8ee"/>
+        <stop offset="100%" stop-color="#f0e2c0"/>
+      </linearGradient>
+    </defs>
+    <rect class="die-shape-fill" x="7" y="7" width="72" height="72" rx="12"
+      fill="url(#g6)" stroke="rgba(74,46,6,0.5)" stroke-width="2"/>
+    <rect x="13" y="13" width="60" height="60" rx="9"
+      fill="none" stroke="rgba(74,46,6,0.10)" stroke-width="1"/>
+  </svg>`,
+
+  // d8 — diamond (rhombus)
+  8: () => `<svg viewBox="0 0 86 86" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g8" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#fff8ee"/>
+        <stop offset="100%" stop-color="#f0e2c0"/>
+      </linearGradient>
+    </defs>
+    <polygon class="die-shape-fill" points="43,5 80,43 43,81 6,43"
+      fill="url(#g8)" stroke="rgba(74,46,6,0.5)" stroke-width="2"
+      stroke-linejoin="round"/>
+    <polygon points="43,14 71,43 43,72 15,43"
+      fill="none" stroke="rgba(74,46,6,0.10)" stroke-width="1"/>
+  </svg>`,
+
+  // d10 — elongated pentagon (kite-ish)
+  10: () => `<svg viewBox="0 0 86 86" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g10" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#fff8ee"/>
+        <stop offset="100%" stop-color="#f0e2c0"/>
+      </linearGradient>
+    </defs>
+    <polygon class="die-shape-fill" points="43,5 78,33 64,78 22,78 8,33"
+      fill="url(#g10)" stroke="rgba(74,46,6,0.5)" stroke-width="2"
+      stroke-linejoin="round"/>
+    <polygon points="43,14 70,37 58,70 28,70 16,37"
+      fill="none" stroke="rgba(74,46,6,0.10)" stroke-width="1"/>
+  </svg>`,
+
+  // d12 — regular pentagon
+  12: () => {
+    const cx=43, cy=44, r=36, r2=28;
+    const pts  = Array.from({length:5},(_,i)=>{ const a=(i*72-90)*Math.PI/180; return `${cx+r*Math.cos(a)},${cy+r*Math.sin(a)}`; }).join(' ');
+    const pts2 = Array.from({length:5},(_,i)=>{ const a=(i*72-90)*Math.PI/180; return `${cx+r2*Math.cos(a)},${cy+r2*Math.sin(a)}`; }).join(' ');
+    return `<svg viewBox="0 0 86 86" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="g12" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#fff8ee"/>
+          <stop offset="100%" stop-color="#f0e2c0"/>
+        </linearGradient>
+      </defs>
+      <polygon class="die-shape-fill" points="${pts}"
+        fill="url(#g12)" stroke="rgba(74,46,6,0.5)" stroke-width="2" stroke-linejoin="round"/>
+      <polygon points="${pts2}"
+        fill="none" stroke="rgba(74,46,6,0.10)" stroke-width="1"/>
+    </svg>`;
+  },
+
+  // d20 — upward triangle with icosahedron face lines
+  20: () => `<svg viewBox="0 0 86 86" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="g20" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#fff8ee"/>
+        <stop offset="100%" stop-color="#f0e2c0"/>
+      </linearGradient>
+    </defs>
+    <polygon class="die-shape-fill" points="43,6 80,78 6,78"
+      fill="url(#g20)" stroke="rgba(74,46,6,0.5)" stroke-width="2"
+      stroke-linejoin="round"/>
+    <polygon points="43,16 72,72 14,72"
+      fill="none" stroke="rgba(74,46,6,0.12)" stroke-width="1"/>
+    <line x1="43" y1="72" x2="43" y2="16" stroke="rgba(74,46,6,0.08)" stroke-width="1"/>
+    <line x1="14" y1="72" x2="58" y2="30" stroke="rgba(74,46,6,0.08)" stroke-width="1"/>
+    <line x1="72" y1="72" x2="28" y2="30" stroke="rgba(74,46,6,0.08)" stroke-width="1"/>
+  </svg>`,
+
+  // d100 — circle (because it's special)
+  100: () => `<svg viewBox="0 0 86 86" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="g100" cx="40%" cy="35%">
+        <stop offset="0%" stop-color="#fff8ee"/>
+        <stop offset="100%" stop-color="#e8d4a8"/>
+      </radialGradient>
+    </defs>
+    <circle class="die-shape-fill" cx="43" cy="43" r="37"
+      fill="url(#g100)" stroke="rgba(74,46,6,0.5)" stroke-width="2"/>
+    <circle cx="43" cy="43" r="30"
+      fill="none" stroke="rgba(74,46,6,0.10)" stroke-width="1"/>
+  </svg>`,
+};
+
+/* Text nudge per shape so numbers sit visually centred */
+const NUDGE = { 4:'nudge-down', 6:'', 8:'', 10:'', 12:'', 20:'nudge-down', 100:'' };
+
+/* ══════════════════════════════════════════
+   DOM REFS
+══════════════════════════════════════════ */
+const rollBtn       = document.getElementById("rollBtn");
+const copyBtn       = document.getElementById("copyBtn");
+const diceStage     = document.getElementById("diceStage");
+const resultEyebrow = document.getElementById("resultEyebrow");
+const resultMain    = document.getElementById("resultMain");
+const resultDetail  = document.getElementById("resultDetail");
+const snakeBadge    = document.getElementById("snakeBadge");
+const historyList   = document.getElementById("historyList");
+const poolSection   = document.getElementById("poolSection");
+const ruleCard      = document.getElementById("ruleCard");
+
+let isRolling = false;
+let history   = [];
+let lastResult = null;
+
+const romanNumerals = ["I","II","III","IV","V","VI","VII","VIII","IX","X"];
+
+function getDieType()  { return parseInt(document.querySelector('input[name="dietype"]:checked').value); }
+function getPoolSize() { return parseInt(document.querySelector('input[name="poolsize"]:checked').value); }
+function rollDie(sides) { return Math.floor(Math.random() * sides) + 1; }
+function calcRating(h)  { return Math.max(1, Math.floor(h / 2)); }
+
+/* ── Build one die-wrap element ── */
+function makeDie(sides, id, initialText) {
+  const wrap = document.createElement("div");
+  wrap.className = "die-wrap";
+  wrap.id = `wrap-${id}`;
+
+  const svgWrap = document.createElement("div");
+  svgWrap.className = "die-svg-wrap";
+  svgWrap.id = `svgwrap-${id}`;
+  svgWrap.innerHTML = DIE_SHAPES[sides in DIE_SHAPES ? sides : 6]();
+
+  const face = document.createElement("div");
+  face.className = `die-face-text ${NUDGE[sides] || ''}`;
+  face.id = `face-${id}`;
+  face.textContent = initialText;
+
+  svgWrap.appendChild(face);
+  wrap.appendChild(svgWrap);
+
+  const rank = document.createElement("div");
+  rank.className = "die-rank";
+  rank.id = `rank-${id}`;
+  wrap.appendChild(rank);
+
+  return wrap;
+}
+
+/* ── Build the stage ── */
+function buildStage(count, isPercentile) {
+  diceStage.innerHTML = "";
+
+  if (isPercentile) {
+    ["tens","units"].forEach(part => {
+      const wrap = makeDie(100, part, part === "tens" ? "00" : "0");
+      wrap.classList.add("d100-die");
+
+      const sub = document.createElement("div");
+      sub.className = "d100-sublabel";
+      sub.textContent = part === "tens" ? "Tens" : "Units";
+      wrap.appendChild(sub);
+
+      // Remove generic rank label for percentile
+      const rank = wrap.querySelector(".die-rank");
+      if (rank) rank.remove();
+
+      diceStage.appendChild(wrap);
+    });
+    return;
+  }
+
+  for (let i = 0; i < count; i++) {
+    diceStage.appendChild(makeDie(getDieType(), i, "—"));
+  }
+}
+
+/* ── Animate roll ── */
+async function animateRoll() {
+  if (isRolling) return;
+  isRolling = true;
+  rollBtn.disabled = true;
+  copyBtn.disabled = true;
+  snakeBadge.style.display = "none";
+
+  const sides        = getDieType();
+  const isPercentile = sides === 100;
+  const poolSize     = isPercentile ? 2 : getPoolSize();
+
+  buildStage(poolSize, isPercentile);
+
+  // Start bounce
+  diceStage.querySelectorAll(".die-wrap").forEach(w => {
+    w.classList.remove("winner","loser","settling");
+    w.classList.add("rolling");
+  });
+
+  // Tick numbers during animation
+  const ticks = 10 + Math.floor(Math.random() * 5);
+  await new Promise(resolve => {
+    let t = 0;
+    const interval = setInterval(() => {
+      if (isPercentile) {
+        document.getElementById("face-tens").textContent  = (Math.floor(Math.random()*10)*10).toString().padStart(2,"0");
+        document.getElementById("face-units").textContent = Math.floor(Math.random()*10).toString();
+      } else {
+        for (let i = 0; i < poolSize; i++) {
+          document.getElementById(`face-${i}`).textContent = rollDie(sides);
+        }
+      }
+      t++;
+      if (t >= ticks) { clearInterval(interval); resolve(); }
+    }, 90);
+  });
+
+  // Stop bounce, play settle
+  diceStage.querySelectorAll(".die-wrap").forEach(w => {
+    w.classList.remove("rolling");
+    w.classList.add("settling");
+  });
+
+  // Wait for settle animation
+  await new Promise(r => setTimeout(r, 120));
+
+  diceStage.querySelectorAll(".die-wrap").forEach(w => w.classList.remove("settling"));
+
+  if (isPercentile) resolvePercentile();
+  else              resolveStandard(sides, poolSize);
+
+  isRolling = false;
+  rollBtn.disabled = false;
+  copyBtn.disabled = false;
+}
+
+/* ── Resolve d100 ── */
+function resolvePercentile() {
+  const tensVal  = Math.floor(Math.random()*10)*10;
+  const unitsVal = Math.floor(Math.random()*10);
+  const total    = (tensVal===0 && unitsVal===0) ? 100 : tensVal+unitsVal;
+
+  document.getElementById("face-tens").textContent  = tensVal.toString().padStart(2,"0");
+  document.getElementById("face-units").textContent = unitsVal.toString();
+
+  document.getElementById("wrap-tens").classList.add("winner");
+  document.getElementById("wrap-units").classList.add("winner");
+
+  resultEyebrow.textContent = "Percentile Result";
+  animateResult(total.toString());
+  resultDetail.textContent = `Tens: ${tensVal.toString().padStart(2,"00")} + Units: ${unitsVal} = ${total}. Read it and weep — or rejoice.`;
+
+  const entry = `d100 — ${total}`;
+  lastResult = entry;
+  addHistory(entry);
+}
+
+/* ── Resolve standard ── */
+function resolveStandard(sides, poolSize) {
+  const rolls   = Array.from({length: poolSize}, () => rollDie(sides));
+  const indexed = rolls.map((v,i) => ({v,i}));
+  const sorted  = [...indexed].sort((a,b) => b.v - a.v);
+  const highest = sorted[0].v;
+  const rollStr = sorted.map(x => x.v).join(", ");
+
+  // Write final values
+  sorted.forEach((item, rankIdx) => {
+    document.getElementById(`face-${item.i}`).textContent = item.v;
+    document.getElementById(`rank-${item.i}`).textContent = poolSize > 1 ? romanNumerals[rankIdx] : "";
+  });
+
+  // Winner / loser
+  indexed.forEach(item => {
+    const wrap = document.getElementById(`wrap-${item.i}`);
+    if (poolSize === 1 || item.v === highest) wrap.classList.add("winner");
+    else wrap.classList.add("loser");
+  });
+
+  // Reorder DOM: winners first
+  const winnerWraps = sorted.filter(x => x.v===highest).map(x => document.getElementById(`wrap-${x.i}`));
+  const loserWraps  = sorted.filter(x => x.v!==highest).map(x => document.getElementById(`wrap-${x.i}`));
+  [...winnerWraps, ...loserWraps].forEach(w => diceStage.appendChild(w));
+
+  const is2d8       = (sides===8 && poolSize===2);
+  const isSnakeEyes = rolls.every(r => r===1);
+
+  snakeBadge.style.display = (is2d8 && isSnakeEyes) ? "inline-block" : "none";
+
+  if (is2d8) {
+    const rating = isSnakeEyes ? 1 : calcRating(highest);
+    resultEyebrow.textContent = "Highest Die — Rating";
+    animateResult(`Rating ${rating}`);
+    resultDetail.textContent  = isSnakeEyes
+      ? `Snake Eyes — both dice landed on 1. Rating locked at 1. The Song is not impressed.`
+      : `Rolled ${rollStr} — highest is ${highest}. ${highest} / 2 rounded down = Rating ${rating}.`;
+    const entry = `2d8 — [${rollStr}] — Highest: ${highest} — Rating ${rating}`;
+    lastResult  = `Rating ${rating} — ${resultDetail.textContent}`;
+    addHistory(entry);
+  } else {
+    resultEyebrow.textContent = poolSize > 1 ? "Highest Die" : "Result";
+    animateResult(highest.toString());
+    resultDetail.textContent  = poolSize===1
+      ? `Rolled ${rolls[0]} on a d${sides}.`
+      : `Rolled ${rollStr} — highest is ${highest}.`;
+    const entry = `${poolSize}d${sides} — [${rollStr}] — Highest: ${highest}`;
+    lastResult  = `${poolSize}d${sides}: [${rollStr}] — Highest: ${highest}`;
+    addHistory(entry);
+  }
+}
+
+/* ── Animate the result number ── */
+function animateResult(text) {
+  resultMain.classList.remove("animate");
+  resultMain.offsetHeight; // reflow
+  resultMain.textContent = text;
+  resultMain.classList.add("animate");
+}
+
+/* ── History ── */
+function addHistory(entry) {
+  history.unshift(entry);
+  history = history.slice(0,8);
+  historyList.innerHTML = "";
+  history.forEach((item,idx) => {
+    const li = document.createElement("li");
+    li.style.animationDelay = `${idx*0.03}s`;
+    li.textContent = item;
+    historyList.appendChild(li);
+  });
+}
+
+/* ── Rule card updates ── */
+function handleDieTypeChange() {
+  const sides        = getDieType();
+  const isPercentile = sides === 100;
+  poolSection.style.opacity       = isPercentile ? "0.4" : "1";
+  poolSection.style.pointerEvents = isPercentile ? "none" : "auto";
+
+  const pool = getPoolSize();
+  const is2d8 = (sides===8 && pool===2);
+
+  if (isPercentile) {
+    ruleCard.innerHTML = `<strong>Percentile Roll:</strong> Two d10s — tens die (00–90) plus units die (0–9). Read them together. 00 + 0 = 100. No shortcuts. Do the math.`;
+  } else if (is2d8) {
+    ruleCard.innerHTML = `<strong>Primary Rating Roll:</strong> Roll 2d8, take the highest die, divide by 2, round down. That is your Rating.`;
+  } else if (pool === 1) {
+    ruleCard.innerHTML = `<strong>Single Die:</strong> Roll 1d${sides}. Highest shown in gold.`;
+  } else {
+    ruleCard.innerHTML = `<strong>Pool Roll:</strong> Roll ${pool}d${sides}. Highest shown in gold, results sorted high to low.`;
+  }
+
+  buildStage(isPercentile ? 2 : pool, isPercentile);
+}
+
+function handlePoolChange() {
+  const sides = getDieType();
+  const pool  = getPoolSize();
+  const is2d8 = (sides===8 && pool===2);
+  ruleCard.innerHTML = is2d8
+    ? `<strong>Primary Rating Roll:</strong> Roll 2d8, take the highest die, divide by 2, round down. That is your Rating.`
+    : `<strong>Pool Roll:</strong> Roll ${pool}d${sides}. Highest shown in gold, results sorted high to low.`;
+  buildStage(pool, false);
+}
+
+document.querySelectorAll('input[name="dietype"]').forEach(el  => el.addEventListener("change", handleDieTypeChange));
+document.querySelectorAll('input[name="poolsize"]').forEach(el => el.addEventListener("change", handlePoolChange));
+
+rollBtn.addEventListener("click", animateRoll);
+
+copyBtn.addEventListener("click", async () => {
+  if (!lastResult) return;
+  try {
+    await navigator.clipboard.writeText(lastResult);
+    resultDetail.textContent = `Copied to scroll. ${resultDetail.textContent}`;
+  } catch {
+    resultDetail.textContent = "Clipboard unavailable — your result remains above.";
+  }
+});
+
+// Init
+handleDieTypeChange();
+</script>
+</body>
+</html>
