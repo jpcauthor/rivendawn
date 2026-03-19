@@ -1072,7 +1072,10 @@ textarea:focus {
   <hr class="section-rule">
 
   <!-- ABILITIES & KNOWLEDGES -->
-  <div class="section-header">Abilities &amp; Knowledges &nbsp;·&nbsp; Pool: 22 pts &nbsp;·&nbsp; Forged: 25 pts &nbsp;·&nbsp; Cap: 4</div>
+  <div class="section-header" style="display:flex; justify-content:space-between; align-items:center;">
+    <span>Abilities &amp; Knowledges &nbsp;·&nbsp; Pool: 22 pts &nbsp;·&nbsp; Forged: 25 pts &nbsp;·&nbsp; Cap: 4</span>
+    <span style="font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.12em; color:#fff8ee;">Points Spent: <span id="ab-points-spent">0</span></span>
+  </div>
   <div style="font-family:'Crimson Text',serif; font-style:italic; font-size:0.75rem; color:var(--ink-dim); margin-bottom:6px;">
     Spend pool, then apply Vocation (+1) and Lineage (+2) bonuses. &nbsp;◆ = Knowledge
   </div>
@@ -1438,6 +1441,64 @@ textarea:focus {
 </div><!-- /pages -->
 
 <script>
+const STORAGE_KEY = 'rivendawn-sheet';
+
+/* ═══ SAVE & LOAD ═══ */
+function saveSheet() {
+  const data = { pips: pipState, inputs: {}, checks: [] };
+
+  // Save all text inputs by a generated key (id or index)
+  document.querySelectorAll('input[type="text"], textarea').forEach((el, i) => {
+    const key = el.id || el.name || `input-${i}`;
+    data.inputs[key] = el.value;
+  });
+
+  // Save checked checkboxes by index
+  document.querySelectorAll('.check-box').forEach((el, i) => {
+    if (el.classList.contains('checked')) data.checks.push(i);
+  });
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function loadSheet() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+
+    // Restore pips
+    if (data.pips) {
+      Object.assign(pipState, data.pips);
+      Object.keys(pipState).forEach(group => {
+        syncPips(group);
+        // Sync number inputs in primary/path cards
+        const card = document.querySelector(`[data-group="${group}"]`)?.closest('.primary-card, .path-card');
+        if (card) {
+          const input = card.querySelector('input[type="text"][maxlength="1"]');
+          if (input) input.value = pipState[group] || '';
+        }
+      });
+      updateAbilityPoints();
+    }
+
+    // Restore text inputs
+    if (data.inputs) {
+      document.querySelectorAll('input[type="text"], textarea').forEach((el, i) => {
+        const key = el.id || el.name || `input-${i}`;
+        if (data.inputs[key] !== undefined) el.value = data.inputs[key];
+      });
+    }
+
+    // Restore checkboxes
+    if (data.checks) {
+      document.querySelectorAll('.check-box').forEach((el, i) => {
+        el.classList.toggle('checked', data.checks.includes(i));
+      });
+    }
+  } catch(e) { console.warn('Could not restore sheet data:', e); }
+}
+
 /* ═══ PIP INITIALIZATION ═══ */
 document.querySelectorAll('.pip-row[data-max]').forEach(row => {
   const max = parseInt(row.dataset.max);
@@ -1457,16 +1518,25 @@ const pipState = {};
 
 function handlePipClick(group, val) {
   const current = pipState[group] || 0;
-  // If clicking the already-active last pip, clear all; otherwise fill up to val
   pipState[group] = (current === val) ? 0 : val;
   syncPips(group);
 
-  // Also sync the number input in primary/path cards
   const card = document.querySelector(`[data-group="${group}"]`)?.closest('.primary-card, .path-card');
   if (card) {
     const input = card.querySelector('input[type="text"][maxlength="1"]');
     if (input) input.value = pipState[group] || '';
   }
+
+  updateAbilityPoints();
+  saveSheet();
+}
+
+function updateAbilityPoints() {
+  const total = Object.entries(pipState)
+    .filter(([key]) => key.startsWith('ab-'))
+    .reduce((sum, [, val]) => sum + val, 0);
+  const el = document.getElementById('ab-points-spent');
+  if (el) el.textContent = total;
 }
 
 function syncPips(group) {
@@ -1487,13 +1557,23 @@ document.querySelectorAll('.primary-rating-box input, .path-rating-box input').f
     const val = parseInt(input.value) || 0;
     pipState[group] = Math.min(val, 6);
     syncPips(group);
+    saveSheet();
   });
+});
+
+/* ═══ Save all text inputs on change ═══ */
+document.querySelectorAll('input[type="text"], textarea').forEach(input => {
+  input.addEventListener('input', saveSheet);
 });
 
 /* ═══ CHECKBOX TOGGLE ═══ */
 function toggleCheck(el) {
   el.classList.toggle('checked');
+  saveSheet();
 }
+
+/* ═══ LOAD ON START ═══ */
+window.addEventListener('load', () => { loadSheet(); scalePages(); });
 
 /* ═══ KEYBOARD NAV — Tab between write-lines naturally ═══ */
 // Already works via native tab order
@@ -1530,8 +1610,7 @@ function resetPages() {
   });
 }
 
-// Scale on load and on window resize
-window.addEventListener('load', scalePages);
+// Scale on resize
 window.addEventListener('resize', scalePages);
 window.addEventListener('beforeprint', scalePages);
 window.addEventListener('afterprint',  resetPages);
