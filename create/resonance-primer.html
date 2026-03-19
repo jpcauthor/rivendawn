@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rivendawn — Resonance Primer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+:root {
+  --header-height: 72px;
+  --footer-height: 72px;
+  --content-max-width: 960px;
+  --page-max-width: 1400px;
+  --ink-color: #3a2a1a;
+  --ink-mid: #4a2d18;
+  --ink-faint: rgba(58,42,26,0.45);
+  --accent: #fff1d6;
+  --nav-color: #f2e3c6;
+  --nav-shadow: rgba(0,0,0,0.85);
+  --footer-bg: rgba(0,0,0,0.88);
+  --border-warm: rgba(94,62,33,0.25);
+  --gold: #c8922a;
+  --label-bg: rgba(42,22,8,0.78);
+  --label-text: #f2e3c6;
+  --scroll-bg: rgba(255,248,232,0.72);
+  --scroll-alt: rgba(244,230,204,0.65);
+
+  /* Path colors */
+  --aeris:      #4a6fa5;
+  --aqua:       #2e7d91;
+  --ignis:      #b44a1a;
+  --terra:      #6b5c35;
+  --vitae:      #3a7a4a;
+  --obten:      #4a3060;
+  --shadow:     #2a2a2a;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--ink-color);
+  min-height: 100dvh;
+  background: #000;
+  line-height: 1.75;
+  font-size: 1.15rem;
+}
+
+.page-wrapper {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  background-color: #000;
+  background-image: url('../images/bg.jpg');
+  background-size: contain;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  box-shadow: 0 0 80px rgba(0,0,0,0.85);
+}
+
+/* ── HEADER / NAV ── */
+header {
+  position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+  width: min(100%, var(--page-max-width)); height: var(--header-height);
+  background-image: url('../images/header.png');
+  background-size: contain; background-position: center; background-repeat: no-repeat;
+  z-index: 1000; box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+}
+header::after {
+  content: ""; position: absolute; left:0; right:0; bottom:-14px;
+  height:18px; background: linear-gradient(to bottom, rgba(0,0,0,0.28), transparent);
+  pointer-events: none;
+}
+nav {
+  max-width: var(--content-max-width); width:100%; height:100%;
+  margin: 0 auto; display:flex; align-items:center; justify-content:center;
+  gap:2rem; padding:0 1.5rem;
+}
+nav a {
+  color: var(--nav-color); text-decoration:none;
+  font-family: Consolas, "Courier New", monospace;
+  font-size:1.25rem; letter-spacing:0.14em; text-transform:uppercase;
+  transition: all .25s ease; position:relative; display:inline-flex;
+  align-items:center; gap:.5rem; padding:.2rem .1rem;
+  text-shadow: 0 1px 2px var(--nav-shadow), 0 0 6px rgba(0,0,0,0.45);
+}
+nav a i { color:inherit; font-size:1.1rem; margin-right:4px; position:relative; top:-1px; }
+nav a::after { content:""; position:absolute; left:0; bottom:-4px; width:0; height:2px; background:var(--accent); transition:width .28s ease; }
+nav a:hover { color:var(--accent); transform:translateY(-1px); }
+nav a:hover::after { width:100%; }
+
+/* ── MAIN ── */
+main {
+  flex:1; margin-top:var(--header-height);
+  padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+  display:flex; justify-content:center;
+}
+
+.content-container {
+  max-width: var(--content-max-width); width:100%;
+  padding: 40px 80px 180px; margin:0 auto; border-radius:8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  background-image: url('../images/content-scroll-bg.png');
+  background-repeat: repeat-y; background-position: top center; background-size: 100% auto;
+}
+
+/* ── TYPOGRAPHY ── */
+h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.9rem; text-align:center; margin-bottom:0.4rem;
+  color: var(--ink-mid); letter-spacing:.06em;
+}
+.page-subtitle {
+  text-align:center; font-style:italic; color:var(--label-text);
+  background:var(--label-bg); display:inline-block;
+  padding:0.25rem 1rem; border-radius:4px; font-size:1.05rem;
+  margin-bottom:2.5rem; width:100%;
+}
+.back-link {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.2em;
+  text-transform:uppercase; color:var(--label-text); background:var(--label-bg);
+  padding:0.3rem 0.8rem; border-radius:4px; text-decoration:none;
+  margin-bottom:2rem; transition:opacity .2s ease;
+}
+.back-link:hover { opacity:0.8; }
+
+/* ── SECTION DIVIDERS ── */
+.section-rule {
+  display:flex; align-items:center; gap:1rem; margin:2.5rem 0 1.5rem;
+}
+.section-rule::before, .section-rule::after {
+  content:''; flex:1; height:1px;
+  background: linear-gradient(to right, transparent, rgba(74,46,6,0.35));
+}
+.section-rule::after { background: linear-gradient(to left, transparent, rgba(74,46,6,0.35)); }
+.section-rule span {
+  color:var(--label-text); font-size:.72rem; letter-spacing:.28em;
+  text-transform:uppercase; font-family:'Cinzel',serif;
+  background:var(--label-bg); padding:0.25rem 0.85rem; border-radius:4px; white-space:nowrap;
+}
+
+/* ── INTRO PROSE ── */
+.intro-block {
+  background: rgba(255,248,232,0.55);
+  border-left: 3px solid rgba(200,146,42,0.4);
+  border-radius: 0 6px 6px 0;
+  padding: 1.1rem 1.4rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+  line-height: 1.85;
+}
+.intro-block p + p { margin-top: 0.9rem; }
+
+/* ── WATCHER QUOTE BLOCK ── */
+.watcher-block {
+  background: rgba(42,22,8,0.82);
+  border: 1px solid rgba(200,146,42,0.3);
+  border-radius: 6px;
+  padding: 1.4rem 1.8rem;
+  margin: 1.5rem 0;
+  color: #e8d8b4;
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.9;
+  position: relative;
+}
+.watcher-block::before {
+  content: '\201C';
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 3rem;
+  color: rgba(200,146,42,0.45);
+  position: absolute;
+  top: -0.3rem; left: 0.8rem;
+  line-height: 1;
+  font-style: normal;
+}
+.watcher-label {
+  display: inline-block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.6rem;
+  font-style: normal;
+}
+.watcher-block p + p { margin-top: 0.75rem; }
+.watcher-block .laws-list {
+  list-style: none;
+  padding: 0.5rem 0 0 0.5rem;
+  margin: 0.5rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.2rem 1rem;
+}
+.watcher-block .laws-list li {
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+}
+
+/* ── THREE CONDITIONS ── */
+.conditions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1.2rem 0 1.8rem;
+}
+.condition-card {
+  background: var(--scroll-bg);
+  border: 1px solid var(--border-warm);
+  border-top: 3px solid var(--gold);
+  border-radius: 4px;
+  padding: 1rem 1rem 1.1rem;
+  text-align: center;
+}
+.condition-number {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.5rem;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+.condition-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.condition-body {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--ink-color);
+  font-style: italic;
+}
+
+/* ── KEY FACTS TABLE ── */
+.table-label {
+  font-family: 'Cinzel', serif; font-size: 0.62rem;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--label-text); background: var(--label-bg);
+  display: inline-block; padding: 0.2rem 0.7rem;
+  border-radius: 4px; margin-bottom: 0.65rem;
+}
+table {
+  width:100%; border-collapse:collapse;
+  font-family:'Crimson Text',serif; font-size:1rem;
+  margin-bottom: 1.5rem;
+}
+thead tr { background:var(--label-bg); }
+thead th {
+  color:var(--label-text); font-family:'Cinzel',serif;
+  font-size:0.62rem; letter-spacing:0.18em; text-transform:uppercase;
+  padding:0.55rem 0.85rem; text-align:left;
+  border:1px solid rgba(42,22,8,0.5);
+}
+tbody tr { background: rgba(255,248,230,0.55); transition:background .15s ease; }
+tbody tr:nth-child(even) { background: rgba(244,230,204,0.65); }
+tbody tr:hover { background: rgba(255,241,214,0.85); }
+tbody td {
+  padding:0.5rem 0.85rem; border:1px solid var(--border-warm);
+  color:var(--ink-color); vertical-align:top; line-height:1.55;
+}
+td.center, th.center { text-align:center; }
+td.bold { font-weight:600; color:var(--ink-mid); }
+td.gold-val { color:var(--gold); font-weight:600; }
+td.note-val { color:var(--ink-faint); font-style:italic; }
+td.success-cost { color: #3a7a4a; font-weight:600; }
+td.fail-cost { color: #8b3010; font-weight:600; }
+
+/* ── PATH CARDS ── */
+.paths-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem;
+  margin: 1.2rem 0 1.8rem;
+}
+.path-card {
+  background: rgba(255,248,232,0.6);
+  border: 1px solid var(--border-warm);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+.path-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 1rem;
+  color: #fff;
+}
+.path-card-header .path-icon {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+.path-card-header .path-name {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.path-card-header .path-law {
+  margin-left: auto;
+  font-size: 0.75rem;
+  opacity: 0.85;
+  font-style: italic;
+  font-family: 'Crimson Text', serif;
+  letter-spacing: 0.04em;
+}
+.path-card-body {
+  padding: 0.75rem 1rem 0.9rem;
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+.path-attr {
+  display: inline-block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.55rem;
+  border-radius: 3px;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+.path-principle {
+  margin-bottom: 0.5rem;
+  font-style: italic;
+  color: var(--ink-mid);
+}
+.path-does, .path-refuses {
+  font-size: 0.93rem;
+  margin-bottom: 0.2rem;
+}
+.path-does strong, .path-refuses strong {
+  font-family: 'Cinzel', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.path-drift {
+  margin-top: 0.45rem;
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--ink-faint);
+}
+.path-drift strong {
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(139,48,16,0.7);
+}
+
+/* Path-specific header colors */
+.path-aeris   .path-card-header { background: var(--aeris); }
+.path-aqua    .path-card-header { background: var(--aqua); }
+.path-ignis   .path-card-header { background: var(--ignis); }
+.path-terra   .path-card-header { background: var(--terra); }
+.path-vitae   .path-card-header { background: var(--vitae); }
+.path-obten   .path-card-header { background: var(--obten); }
+
+/* Attr badge colors match path */
+.badge-aeris  { background: var(--aeris); }
+.badge-aqua   { background: var(--aqua); }
+.badge-ignis  { background: var(--ignis); }
+.badge-terra  { background: var(--terra); }
+.badge-vitae  { background: var(--vitae); }
+.badge-obten  { background: var(--obten); }
+
+/* ── SHADOWMANCY WARNING ── */
+.shadow-warning {
+  background: rgba(30,10,10,0.85);
+  border: 1px solid rgba(139,48,16,0.5);
+  border-left: 4px solid #8b1a0a;
+  border-radius: 4px;
+  padding: 1rem 1.3rem;
+  color: #d4a0a0;
+  font-size: 0.97rem;
+  line-height: 1.7;
+  margin: 0.5rem 0 1.5rem;
+}
+.shadow-warning strong {
+  color: #e07070;
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+/* ── RESOLUTION FORMULA ── */
+.formula-block {
+  background: var(--label-bg);
+  border: 1px solid rgba(200,146,42,0.35);
+  border-radius: 6px;
+  padding: 1.1rem 1.5rem;
+  margin: 1rem 0 1.5rem;
+  color: var(--label-text);
+  font-family: 'Cinzel', serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 2.2;
+}
+.formula-block .formula-line {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.formula-block .f-term {
+  background: rgba(200,146,42,0.22);
+  border: 1px solid rgba(200,146,42,0.3);
+  border-radius: 3px;
+  padding: 0.1rem 0.5rem;
+  color: var(--gold);
+}
+.formula-block .f-op {
+  color: rgba(255,248,230,0.5);
+  font-size: 1rem;
+}
+.formula-block .f-result {
+  color: #fff;
+  font-size: 0.95rem;
+}
+.formula-note {
+  margin-top: 0.5rem;
+  font-family: 'Crimson Text', serif;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-size: 0.92rem;
+  color: #c8b898;
+  font-style: italic;
+}
+
+/* ── MAGNITUDE TIERS ── */
+.tier-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.8rem;
+  margin: 1rem 0 1.5rem;
+}
+.tier-card {
+  background: rgba(255,248,232,0.55);
+  border: 1px solid var(--border-warm);
+  border-radius: 5px;
+  padding: 0.8rem 1rem;
+  text-align: center;
+}
+.tier-name {
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+.tier-mod {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.4rem;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.2rem;
+}
+.tier-desc {
+  font-size: 0.88rem;
+  color: var(--ink-faint);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* ── SPECIAL ROLLS ── */
+.special-rolls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1rem 0 1.5rem;
+}
+.roll-card {
+  border-radius: 5px;
+  padding: 0.85rem 1rem;
+  border: 1px solid;
+}
+.roll-card.nat20 {
+  background: rgba(58,122,74,0.12);
+  border-color: rgba(58,122,74,0.35);
+}
+.roll-card.nat1 {
+  background: rgba(139,48,16,0.1);
+  border-color: rgba(139,48,16,0.35);
+}
+.roll-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+.nat20 .roll-label { color: #3a7a4a; }
+.nat1  .roll-label { color: #8b3010; }
+.roll-die {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.6rem;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+.nat20 .roll-die { color: #3a7a4a; }
+.nat1  .roll-die { color: #8b3010; }
+.roll-desc { font-size: 0.95rem; line-height: 1.6; color: var(--ink-color); }
+
+/* ── SPLIT ADVISORY ── */
+.advisory-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 0.8rem 0 1.5rem;
+}
+.advisory-card {
+  background: rgba(255,248,232,0.55);
+  border: 1px solid var(--border-warm);
+  border-radius: 5px;
+  padding: 0.8rem 1rem;
+}
+.advisory-card h4 {
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  margin-bottom: 0.4rem;
+}
+.advisory-card p { font-size: 0.98rem; line-height: 1.65; }
+
+/* ── DISSONANCE BOX ── */
+.dissonance-box {
+  background: rgba(74,48,96,0.12);
+  border: 1px solid rgba(74,48,96,0.35);
+  border-left: 4px solid var(--obten);
+  border-radius: 4px;
+  padding: 0.9rem 1.2rem;
+  font-size: 0.97rem;
+  line-height: 1.7;
+  margin: 0.5rem 0 1.5rem;
+}
+.dissonance-box strong {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--obten);
+}
+
+/* ── FOOTER ── */
+footer {
+  position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+  width:min(100%, var(--page-max-width)); height:var(--footer-height);
+  background:var(--footer-bg); color:#ccc;
+  display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:0 1rem; font-size:.95rem;
+  border-top:1px solid #444; z-index:1000;
+}
+footer a { color:#d4a373; text-decoration:none; }
+footer a:hover { text-decoration:underline; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  nav { gap:1rem; padding:0 1rem; flex-wrap:wrap; }
+  nav a { font-size:.9rem; letter-spacing:.08em; }
+  .content-container { padding:36px 32px 150px; }
+  h1 { font-size:2.2rem; }
+  .conditions-grid, .paths-grid, .tier-row, .special-rolls, .advisory-row { grid-template-columns:1fr; }
+}
+@media (max-width: 480px) {
+  body { font-size:1.05rem; }
+  .content-container { padding:28px 20px 130px; }
+}
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+
+<header>
+<nav>
+  <a href="../geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+  <a href="../lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+  <a href="../rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+  <a href="../create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+  <a href="main_tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
+</nav>
+</header>
+
+<main>
+<div class="content-container">
+
+  <a href="../rules.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Back to Rules</a>
+
+  <h1>Resonance</h1>
+  <p class="page-subtitle">A Primer for Players — What it is, how it works, and how to choose your Path.</p>
+
+  <!-- ═══════════════════════════════════════ WHAT IS RESONANCE -->
+  <div class="section-rule"><span>What Is Resonance?</span></div>
+
+  <div class="intro-block">
+    <p>Before steel is drawn or the first command of a Calling is spoken, there exists a deeper rhythm beneath the world of Rivendawn — a quiet lattice that scholars, mystics, and Watchers alike call simply <strong>the Song</strong>. Resonance is the disciplined understanding of that hidden structure.</p>
+    <p>The Song is neither conscious nor benevolent. It is the underlying order that allows reality to maintain its shape. Rivers follow its rhythm. Storms rise and fall according to its pulse. Even the quiet growth of a seed beneath the soil reflects its deeper cadence.</p>
+    <p>Those who study Resonance do not summon power from beyond the world. They <em>listen</em> to the harmonics already present within it — and learn, through study and discipline, to issue precise instructions that the Song may accept and carry forward.</p>
+    <p>Resonance is not conjuration. It is not prayer. <strong>It is structured instruction</strong> — and the Song obeys, within law.</p>
+  </div>
+
+  <!-- A Watcher Speaks -->
+  <div class="watcher-block">
+    <span class="watcher-label"><i class="fa-solid fa-eye"></i>&nbsp; A Watcher's Address</span>
+    <p>The Song is not magic. It is not a gift from gods. It is not a curse placed upon you. <em>It is what remains.</em></p>
+    <p>The world hums. It always has. Before your Citadels, before your wars, before you began arguing about who owns truth — the hum was there. It moves through stone, through water, through flesh, through memory. You do not create it. You do not command it. You <em>align</em> with it.</p>
+    <p>Each Path obeys a First Law. Attempt to bend that Law and the Song resists you — not because it judges, not because it is offended, but because it was never designed to do what you are asking of it.</p>
+    <ul class="laws-list">
+      <li>Motion displaces.</li>
+      <li>Flame transforms.</li>
+      <li>Water absorbs.</li>
+      <li>Earth refuses.</li>
+      <li>Growth adapts.</li>
+      <li>Shadow distorts.</li>
+    </ul>
+    <p><em>These are not suggestions. They are constraints.</em></p>
+  </div>
+
+  <!-- ═══════════════════════════════════════ THE WELLSPRING -->
+  <div class="section-rule"><span>The Wellspring</span></div>
+
+  <div class="intro-block">
+    <p>Every Resonant practitioner draws upon an internal reserve of focus and spiritual alignment called the <strong>Wellspring</strong>. This reservoir represents the mind's capacity to engage with the Song without fracturing under its complexity.</p>
+    <p>When the Wellspring is depleted, the connection collapses. This is preservation, not punishment. The Wellspring may be restored through rest, through realignment, and through Resonance freely given by others. The Song recognizes voluntary harmony. It does not respond to theft.</p>
+  </div>
+
+  <div class="table-label">Wellspring Pool by Calling Type</div>
+  <p style="font-style:italic; font-size:0.93rem; color:var(--ink-faint); margin-bottom:0.5rem;">Formula: 12 (Base Focus) + (1d<em>Y</em> Wellspring Die × 2)</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Wellspring Die</th>
+        <th class="center">Minimum Pool</th>
+        <th class="center">Maximum Pool</th>
+        <th>Example Callings</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="gold-val">d12</td>
+        <td class="center">14</td>
+        <td class="center bold">36</td>
+        <td>Pure Resonant</td>
+      </tr>
+      <tr>
+        <td class="gold-val">d10</td>
+        <td class="center">14</td>
+        <td class="center bold">32</td>
+        <td>Songweaver</td>
+      </tr>
+      <tr>
+        <td class="gold-val">d8</td>
+        <td class="center">14</td>
+        <td class="center bold">28</td>
+        <td>Resonant Hybrids</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ═══════════════════════════════════════ PATH SELECTION -->
+  <div class="section-rule"><span>Choosing Your Path</span></div>
+
+  <div class="intro-block">
+    <p>Path Points are allocated at character creation and are <strong>permanent once assigned</strong>. They define your harmonic identity — what the Song recognizes in you, and how it answers when you reach for it.</p>
+    <p>No bloodline owns the Song. No empire controls it. The difference between peoples is not possession, but <em>attunement</em>. Some lineages resonate more easily with particular Paths. These are affinities — not permissions.</p>
+  </div>
+
+  <div class="table-label">Path Points at Creation</div>
+  <table>
+    <thead>
+      <tr><th>Practitioner Type</th><th class="center">Path Points</th><th class="center">Per-Path Cap</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="bold">True Resonant Caster</td>
+        <td class="center gold-val">6</td>
+        <td class="center">Max 4 in any single Path</td>
+      </tr>
+      <tr>
+        <td class="bold">Hybrid</td>
+        <td class="center gold-val">3</td>
+        <td class="center">Max 3 in any single Path</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="advisory-row">
+    <div class="advisory-card">
+      <h4><i class="fa-solid fa-crosshairs"></i> Specialization</h4>
+      <p>Concentrating your Points into one or two Paths increases <em>precision and depth</em>. You become harder to resist within your chosen harmonic — but your options narrow.</p>
+    </div>
+    <div class="advisory-card">
+      <h4><i class="fa-solid fa-arrows-split-up-and-left"></i> Versatility</h4>
+      <p>Spreading your Points across multiple Paths increases <em>flexibility</em>. You can respond to more situations — but with less force in each. Both approaches are lawful. <strong>The choice defines identity.</strong></p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ THE SIX PATHS -->
+  <div class="section-rule"><span>The Six Lawful Paths</span></div>
+
+  <p style="font-size:0.98rem; font-style:italic; color:var(--ink-faint); margin-bottom:1rem;">Shadowmancy is not a lawful Path and cannot be selected at character creation. See the note below.</p>
+
+  <div class="paths-grid">
+
+    <!-- AERIS -->
+    <div class="path-card path-aeris">
+      <div class="path-card-header">
+        <i class="fa-solid fa-wind path-icon"></i>
+        <span class="path-name">Aeris</span>
+        <span class="path-law">The Path of Displacement</span>
+      </div>
+      <div class="path-card-body">
+        <span class="path-attr badge-aeris">Governs: Agility</span>
+        <p class="path-principle">Safety through displacement. Advantage through positioning.</p>
+        <p class="path-does"><strong>Does Well:</strong> Speed, momentum redirection, escape, pursuit, spatial disruption, repositioning.</p>
+        <p class="path-refuses"><strong>Refuses:</strong> Anchoring, fortification, trapping, structural permanence.</p>
+        <p class="path-drift"><strong>Drift toward failure:</strong> Recklessness. Avoidance. Abandonment disguised as survival.</p>
+      </div>
+    </div>
+
+    <!-- AQUA -->
+    <div class="path-card path-aqua">
+      <div class="path-card-header">
+        <i class="fa-solid fa-droplet path-icon"></i>
+        <span class="path-name">Aqua</span>
+        <span class="path-law">The Path of Absorption</span>
+      </div>
+      <div class="path-card-body">
+        <span class="path-attr badge-aqua">Governs: Vitality</span>
+        <p class="path-principle">Stability through endurance. Carry strain inward; redistribute rather than shatter.</p>
+        <p class="path-does"><strong>Does Well:</strong> Pressure regulation, burden carrying, sustained resilience, suppression, emotional attunement.</p>
+        <p class="path-refuses"><strong>Refuses:</strong> Erasure of harm. Direct domination. Immediate annihilation of force.</p>
+        <p class="path-drift"><strong>Drift toward failure:</strong> Stagnation. Emotional suppression. Drowning in accumulated burden.</p>
+      </div>
+    </div>
+
+    <!-- IGNIS -->
+    <div class="path-card path-ignis">
+      <div class="path-card-header">
+        <i class="fa-solid fa-fire path-icon"></i>
+        <span class="path-name">Ignis</span>
+        <span class="path-law">The Path of Combustive Transformation</span>
+      </div>
+      <div class="path-card-body">
+        <span class="path-attr badge-ignis">Governs: Intelligence</span>
+        <p class="path-principle">Change through decisive ignition. Ignis ends stalemates through escalation. It burns to reshape.</p>
+        <p class="path-does"><strong>Does Well:</strong> Rapid alteration, catalytic breakthrough, decisive escalation, damage.</p>
+        <p class="path-refuses"><strong>Refuses:</strong> Preservation. Sustained stillness. Passive endurance.</p>
+        <p class="path-drift"><strong>Drift toward failure:</strong> Volatility. Destruction without purpose.</p>
+      </div>
+    </div>
+
+    <!-- TERRA -->
+    <div class="path-card path-terra">
+      <div class="path-card-header">
+        <i class="fa-solid fa-mountain path-icon"></i>
+        <span class="path-name">Terra</span>
+        <span class="path-law">The Path of Refusal</span>
+      </div>
+      <div class="path-card-body">
+        <span class="path-attr badge-terra">Governs: Strength</span>
+        <p class="path-principle">Security through immovability. Terra survives by refusing displacement; it meets force and denies motion.</p>
+        <p class="path-does"><strong>Does Well:</strong> Fortification, anchoring, structural reinforcement, concussive force, sustained resistance.</p>
+        <p class="path-refuses"><strong>Refuses:</strong> Rapid repositioning. Fluid adaptability. Abandoning ground.</p>
+        <p class="path-drift"><strong>Drift toward failure:</strong> Rigidity. Obstruction. Inflexible dominance.</p>
+      </div>
+    </div>
+
+    <!-- VITAE -->
+    <div class="path-card path-vitae">
+      <div class="path-card-header">
+        <i class="fa-solid fa-seedling path-icon"></i>
+        <span class="path-name">Vitae</span>
+        <span class="path-law">The Path of Adaptive Growth</span>
+      </div>
+      <div class="path-card-body">
+        <span class="path-attr badge-vitae">Governs: Wisdom</span>
+        <p class="path-principle">Preservation through adaptive correction. Vitae preserves through refinement — it stabilizes and strengthens what lives.</p>
+        <p class="path-does"><strong>Does Well:</strong> Healing, reinforcement, regenerative stabilization, biological correction, restraint.</p>
+        <p class="path-refuses"><strong>Refuses:</strong> Lethal force. Corruption of life for destruction. <em>Vitae cannot kill.</em></p>
+        <p class="path-drift"><strong>Drift toward failure:</strong> Overgrowth. Control disguised as care.</p>
+      </div>
+    </div>
+
+    <!-- OBTENEBRATE -->
+    <div class="path-card path-obten">
+      <div class="path-card-header">
+        <i class="fa-solid fa-eye-slash path-icon"></i>
+        <span class="path-name">Obtenebrate</span>
+        <span class="path-law">The Path of Perceptual Distortion</span>
+      </div>
+      <div class="path-card-body">
+        <span class="path-attr badge-obten">Governs: Agility</span>
+        <p class="path-principle">Victory through misdirection. Obtenebrate alters awareness rather than substance — it wins before confrontation begins.</p>
+        <p class="path-does"><strong>Does Well:</strong> Concealment, infiltration, perceptual manipulation, subtle redirection, misdirection.</p>
+        <p class="path-refuses"><strong>Refuses:</strong> Open dominance. Sustained frontal confrontation.</p>
+        <p class="path-drift"><strong>Drift toward failure:</strong> Manipulation without purpose. Deception as identity.</p>
+      </div>
+    </div>
+
+  </div><!-- /paths-grid -->
+
+  <!-- Shadowmancy Warning -->
+  <div class="shadow-warning">
+    <strong><i class="fa-solid fa-triangle-exclamation"></i>&nbsp; Shadowmancy — Not a Lawful Path</strong>
+    Shadowmancy does not harmonize with the Song. It exploits <em>absence</em> rather than alignment. It extracts without renewal and destabilizes the structures it touches. Shadowmancy cannot be selected at character creation. Those who pursue it do so outside the law of the Paths — and the consequences are structural, not merely social.
+  </div>
+
+  <!-- ═══════════════════════════════════════ HOW RESONANCE RESOLVES -->
+  <div class="section-rule"><span>How Resonance Resolves</span></div>
+
+  <div class="intro-block">
+    <p>All acts of Resonance are governed by <strong>three immutable conditions</strong>. Where any one of these fails, the Cast collapses.</p>
+  </div>
+
+  <div class="conditions-grid">
+    <div class="condition-card">
+      <span class="condition-number">I</span>
+      <span class="condition-title">Clarity of Instruction</span>
+      <p class="condition-body">The Song answers structured will, not vague desire. You must declare specific intent, scope, and target.</p>
+    </div>
+    <div class="condition-card">
+      <span class="condition-number">II</span>
+      <span class="condition-title">Magnitude of Disruption</span>
+      <p class="condition-body">The greater the alteration imposed upon the world, the greater the resistance encountered.</p>
+    </div>
+    <div class="condition-card">
+      <span class="condition-number">III</span>
+      <span class="condition-title">Cost of Sustenance</span>
+      <p class="condition-body">The Wellspring is finite. No instruction is without burden. Every Cast draws from your reservoir.</p>
+    </div>
+  </div>
+
+  <!-- Capability Formula -->
+  <div class="table-label">The Resolution Formula</div>
+  <div class="formula-block">
+    <div class="formula-line">
+      <span class="f-term">Capability</span>
+      <span class="f-op">=</span>
+      <span>Primary Attribute</span>
+      <span class="f-op">+</span>
+      <span>Ability or Knowledge</span>
+      <span class="f-op">+</span>
+      <span>Path Rating</span>
+    </div>
+    <div class="formula-line" style="margin-top:0.4rem;">
+      <span class="f-term">Target Number</span>
+      <span class="f-op">=</span>
+      <span>Baseline</span>
+      <span class="f-op">−</span>
+      <span>Capability</span>
+    </div>
+    <div class="formula-line" style="margin-top:0.4rem;">
+      <span class="f-term">Roll 1d20</span>
+      <span class="f-op">—</span>
+      <span class="f-result">Equal to or above Target Number = <strong>SUCCESS</strong></span>
+    </div>
+    <p class="formula-note">Low governing Attributes reduce reliability of Resonant resolution. Build toward your Path's governing Attribute for best results.</p>
+  </div>
+
+  <!-- Magnitude Tiers -->
+  <div class="table-label">Magnitude Tiers (Target Number Modifier)</div>
+  <div class="tier-row">
+    <div class="tier-card">
+      <span class="tier-name">Standard</span>
+      <span class="tier-mod">+0</span>
+      <p class="tier-desc">Single target or contained effect. Localized, immediate, no modifier.</p>
+    </div>
+    <div class="tier-card">
+      <span class="tier-name">Expanded</span>
+      <span class="tier-mod">+3</span>
+      <p class="tier-desc">Multiple targets or structurally significant alteration. Greater resistance and cost.</p>
+    </div>
+    <div class="tier-card">
+      <span class="tier-name">Mass</span>
+      <span class="tier-mod">+9</span>
+      <p class="tier-desc">Battlefield or environment-wide scale. Extreme resistance. Extreme cost.</p>
+    </div>
+  </div>
+  <p style="font-size:0.9rem; font-style:italic; color:var(--ink-faint); margin-bottom:1.5rem;">Magnitude increases risk. It does not increase cost. A Cast is a single resolved expression — multiple discrete outcomes require multiple Casts.</p>
+
+  <!-- ═══════════════════════════════════════ COST OF CASTING -->
+  <div class="section-rule"><span>Cost of Casting</span></div>
+
+  <div class="table-label">Resonance Point (RP) Cost per Cast</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Practitioner Type</th>
+        <th class="center">Successful Cast</th>
+        <th class="center">Failed Cast</th>
+        <th>Note</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="bold">True Resonant Caster</td>
+        <td class="center success-cost">5 RP</td>
+        <td class="center fail-cost">8 RP</td>
+        <td class="note-val">Cost does not scale with magnitude.</td>
+      </tr>
+      <tr>
+        <td class="bold">Hybrid</td>
+        <td class="center success-cost">7 RP</td>
+        <td class="center fail-cost">9 RP</td>
+        <td class="note-val">Failure costs more — energy was engaged but not harmonized.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Special Rolls -->
+  <div class="table-label">Special Results</div>
+  <div class="special-rolls">
+    <div class="roll-card nat20">
+      <span class="roll-label"><i class="fa-solid fa-star"></i> Ultimate Success</span>
+      <span class="roll-die">20</span>
+      <p class="roll-desc">Perfect harmonic resolution. The Cast succeeds regardless of Target Number. Magnitude modifiers still apply to the declared action. A Natural 20 does not expand scope beyond what was declared. <em>Luck does not amplify — it validates.</em></p>
+    </div>
+    <div class="roll-card nat1">
+      <span class="roll-label"><i class="fa-solid fa-triangle-exclamation"></i> Harmonic Inversion</span>
+      <span class="roll-die">1</span>
+      <p class="roll-desc">The declared effect manifests upon the caster instead of the intended target. If the Cast was declared at Expanded or Mass scope, the backlash reflects that magnitude. <em>The Song does not punish. It mirrors.</em></p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ LIMITS & CONSTRAINTS -->
+  <div class="section-rule"><span>Limits & Constraints</span></div>
+
+  <div class="intro-block">
+    <p>Resonance rewards knowledge — but instruction must obey law. <strong>Combustion requires combustible matter. Pressure requires medium. Mass must exist to be moved. Life cannot be weaponized through Vitae.</strong></p>
+    <p>The Song does not create impossibility. It accelerates what is already possible.</p>
+    <p>Living beings also resist deep alteration. Resonance may strike exterior surfaces, constrain movement, agitate surface matter, or reshape environment. Direct lethal alteration of internal structure requires physical interaction or a lawful pathway. The world protects its living patterns.</p>
+  </div>
+
+  <!-- Harmonic Dissonance -->
+  <div class="table-label">Harmonic Dissonance</div>
+  <div class="dissonance-box">
+    <strong><i class="fa-solid fa-wave-square"></i>&nbsp; The Static Veil</strong>
+    Harmonic Dissonance occurs when a character's declared Harmonics contradict repeated behavior without narrative transformation. When Dissonance is active, the <strong>Static Veil</strong> applies: <strong>+3 to all Target Numbers</strong> for Ability, Knowledge, and Resonant Cast checks. Dissonance increases difficulty — it does not alter Capability or Baseline. It remains until the character demonstrates sustained realignment or formally redefines their Harmonic identity. Application is at Watcher discretion.
+  </div>
+
+  <!-- ═══════════════════════════════════════ PATH QUICK REFERENCE -->
+  <div class="section-rule"><span>Path Quick Reference</span></div>
+
+  <div class="table-label">All Six Lawful Paths</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Path</th>
+        <th>First Law</th>
+        <th>Governing Attribute</th>
+        <th>Core Expression</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="bold" style="color:var(--aeris);">Aeris</td>
+        <td>Displacement</td>
+        <td>Agility</td>
+        <td>Motion, repositioning, momentum</td>
+      </tr>
+      <tr>
+        <td class="bold" style="color:var(--aqua);">Aqua</td>
+        <td>Absorption</td>
+        <td>Vitality</td>
+        <td>Pressure, suppression, endurance</td>
+      </tr>
+      <tr>
+        <td class="bold" style="color:var(--ignis);">Ignis</td>
+        <td>Combustive Transformation</td>
+        <td>Intelligence</td>
+        <td>Damage, alteration, escalation</td>
+      </tr>
+      <tr>
+        <td class="bold" style="color:var(--terra);">Terra</td>
+        <td>Refusal through Solidity</td>
+        <td>Strength</td>
+        <td>Anchoring, fortification, concussive force</td>
+      </tr>
+      <tr>
+        <td class="bold" style="color:var(--vitae);">Vitae</td>
+        <td>Adaptive Growth</td>
+        <td>Wisdom</td>
+        <td>Healing, restraint, stabilization</td>
+      </tr>
+      <tr>
+        <td class="bold" style="color:var(--obten);">Obtenebrate</td>
+        <td>Distortion of Perception</td>
+        <td>Agility</td>
+        <td>Concealment, misdirection, infiltration</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="text-align:center; font-style:italic; font-size:0.97rem; color:var(--ink-faint); margin-top:1rem;">
+    <em>"Resonance is not dominion. It is alignment. It is structured will within immutable law.<br>
+    Those who treat the Song as limitless will be corrected.<br>
+    Those who treat it as law-bound may shape the world — but only as far as clarity, magnitude, and Wellspring allow."</em>
+  </p>
+
+</div><!-- /content-container -->
+</main>
+
+<footer>
+  <div>
+    Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    © 2026 jpcauthor. All rights reserved.
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    <a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+  </div>
+</footer>
+
+</div><!-- /page-wrapper -->
+</body>
+</html>
