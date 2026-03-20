@@ -22,6 +22,7 @@
 --nav-color: #f2e3c6;
 --nav-shadow: rgba(0,0,0,0.85);
 --footer-bg: rgba(0,0,0,0.88);
+--gold-light: #e0b965;
 --toggle-bg: rgba(255,248,235,0.55);
 --toggle-border: rgba(90,60,30,0.24);
 --toggle-hover: rgba(255,241,214,0.78);
@@ -51,30 +52,6 @@ background-repeat:no-repeat;
 background-attachment:fixed;
 box-shadow:0 0 80px rgba(0,0,0,0.85);
 position:relative;
-}
-header{
-position:fixed;
-top:0;
-left:50%;
-transform:translateX(-50%);
-width:min(100%,var(--page-max-width));
-height:var(--header-height);
-background-image:url('../../images/header.png');
-background-size:contain;
-background-position:center;
-background-repeat:no-repeat;
-z-index:1000;
-box-shadow:0 6px 16px rgba(0,0,0,0.5);
-}
-header::after{
-content:"";
-position:absolute;
-left:0;
-right:0;
-bottom:-14px;
-height:18px;
-background:linear-gradient(to bottom,rgba(0,0,0,0.28),rgba(0,0,0,0));
-pointer-events:none;
 }
 nav{
 max-width:var(--content-max-width);
@@ -241,19 +218,26 @@ body{font-size:1.05rem;}
 </style>
 </head>
 
-<body>
-<div class="page-wrapper">
+<body data-page="lore">
+
 
 <header>
-<nav>
-<a href="Lands.html"><i class="fa-solid fa-compass"></i>Lands</a>
-<a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
-<a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
-<a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
-<a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
-</nav>
+  <nav>
+    <a href="../../lore.html"        data-nav="lore"><i class="fa-solid fa-scroll"></i>Lore</a>
+    <a href="../../rules.html"       data-nav="rules"><i class="fa-solid fa-book"></i>Rules</a>
+    <a href="../../create.html"      data-nav="create"><i class="fa-solid fa-user-pen"></i>Create</a>
+    <a href="../../main_tables.html" data-nav="tables"><i class="fa-solid fa-dice-d20"></i>Tables</a>
+  </nav>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </header>
-
+<div class="nav-mobile-menu" id="navMobileMenu">
+  <a href="../../lore.html"        data-nav="lore"><i class="fa-solid fa-scroll"></i>Lore</a>
+  <a href="../../rules.html"       data-nav="rules"><i class="fa-solid fa-book"></i>Rules</a>
+  <a href="../../create.html"      data-nav="create"><i class="fa-solid fa-user-pen"></i>Create</a>
+  <a href="../../main_tables.html" data-nav="tables"><i class="fa-solid fa-dice-d20"></i>Tables</a>
+</div>
 <main>
 <div class="content-container">
 
@@ -312,5 +296,19 @@ Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
 </footer>
 
 </div>
+<script>
+(function(){
+  var page=document.body.dataset.page;
+  if(page){document.querySelectorAll('[data-nav="'+page+'"]').forEach(function(e){e.classList.add('nav-active');});}
+  var btn=document.getElementById('navHamburger');
+  var menu=document.getElementById('navMobileMenu');
+  var hdr=document.querySelector('header');
+  if(!btn||!menu)return;
+  btn.addEventListener('click',function(){var o=menu.classList.toggle('open');hdr.classList.toggle('menu-open',o);btn.setAttribute('aria-expanded',o);});
+  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');});});
+  document.addEventListener('click',function(e){if(!hdr.contains(e.target)&&!menu.contains(e.target)){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');}});
+  window.addEventListener('scroll',function(){if(menu.classList.contains('open')){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');}},{passive:true});
+})();
+</script>
 </body>
 </html>
