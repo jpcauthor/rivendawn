@@ -99,7 +99,7 @@ nav {
 nav a {
   color: var(--nav-color);
   text-decoration: none;
-  font-family: font-family: 'Cinzel', serif;
+  font-family: Consolas, "Courier New", monospace;
   font-size: 1.25rem; letter-spacing: 0.14em; text-transform: uppercase;
   transition: all .25s ease;
   position: relative;
@@ -494,11 +494,11 @@ footer a:hover { text-decoration: underline; }
 
 <header>
 <nav>
-      <a href="./lands/lands.html"><i class="fa-solid fa-compass"></i>Lands</a>
-      <a href="./lore/lore.html"><i class="fa-solid fa-scroll"></i>Lore</a>
-      <a href="./rules/rules.html"><i class="fa-solid fa-book"></i>Rules</a>
-      <a href="./create/create.html"><i class="fa-solid fa-user-pen"></i>Create</a>
-      <a href=" main_tables.html"><i class="fa-solid fa-dice-d20"></i>Tables</a>
+  <a href="geography.html"><i class="fa-solid fa-compass"></i>GEOGRAPHY</a>
+  <a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
+  <a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
+  <a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
+  <a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
 </nav>
 </header>
 
@@ -570,7 +570,9 @@ footer a:hover { text-decoration: underline; }
     </div>
     <div class="ability-cloud">
       <span class="ability-chip" data-id="combatfocus">Combat Focus</span>
+      <span class="ability-chip" data-id="command">Command</span>
       <span class="ability-chip" data-id="reaction">Reaction Timing</span>
+      <span class="ability-chip" data-id="stealth">Stealth</span>
       <span class="ability-chip" data-id="tactics">Tactics</span>
       <span class="ability-chip" data-id="weaponmastery">Weapon Mastery</span>
       <span class="ability-chip" data-id="navigation">Navigation</span>
@@ -590,6 +592,11 @@ footer a:hover { text-decoration: underline; }
       <span class="ability-chip" data-id="resonancetheory">Resonance Theory</span>
       <span class="ability-chip" data-id="paths">Paths (Resonant)</span>
       <span class="ability-chip" data-id="rivendawnlore">Rivendawn Lore</span>
+      <span class="ability-chip" data-id="history">History</span>
+      <span class="ability-chip" data-id="linguistics">Linguistics</span>
+      <span class="ability-chip" data-id="occultism">Occultism</span>
+      <span class="ability-chip" data-id="politicaltheory">Political Theory</span>
+      <span class="ability-chip" data-id="religion">Religion</span>
     </div>
   </div>
 
@@ -620,7 +627,7 @@ footer a:hover { text-decoration: underline; }
 
 <footer>
   <div>
-    Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+    Email: <a href="/cdn-cgi/l/email-protection#a8cbc7c6dcc9cbdce8dac1decdc6ccc9dfc686cbc7c5"><span class="__cf_email__" data-cfemail="f695999882979582b6849f80939892978198d895999b">[email&#160;protected]</span></a>
     &nbsp;&nbsp;•&nbsp;&nbsp;
     © 2026 jpcauthor. All rights reserved.
     &nbsp;&nbsp;•&nbsp;&nbsp;
@@ -630,7 +637,7 @@ footer a:hover { text-decoration: underline; }
 
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const ABILITIES = {
   acrobatics:      { name:"Acrobatics",          domain:"Physicality & Environment", desc:"Balance, tumbling, and controlled falling. The body as instrument — redirecting momentum rather than fighting it.", tiers:["Clumsy","Unsteady","Capable","Athletic","Graceful","Gravity-Defiant"] },
   athletics:       { name:"Athletics",            domain:"Physicality & Environment", desc:"Raw strength, sprinting, lifting, and grappling force. The foundation of every physical contest where power decides the outcome.", tiers:["Weak","Average","Fit","Powerful","Explosive","Feat-Worthy"] },
@@ -671,6 +678,13 @@ const ABILITIES = {
   resonancetheory: { name:"Resonance Theory",     domain:"Metaphysical & Scholarly", desc:"Academic study of resonance mechanics. The Song does not require understanding to function — but those who understand it go further.", tiers:["Uninitiated","Student","Scholar","Theoretical","Advanced","Theory-Bearer"] },
   paths:           { name:"Paths (Resonant)",     domain:"Metaphysical & Scholarly", desc:"Knowledge of individual Resonant Paths. Seven paths. Seven ways the world answers back to those willing to listen.", tiers:["Unaware","Familiar","Learned","Studied","Specialist","Path-Historian"] },
   rivendawnlore:   { name:"Rivendawn Lore",       domain:"Metaphysical & Scholarly", desc:"History, myth, and cultural memory of the world. 877 years of recorded history — and most of it is wrong. The rest is dangerous.", tiers:["Outsider","Curious","Informed","Lore-Keeper","Chronicler","Rivendawn-Bound"] },
+  history:         { name:"History",              domain:"Metaphysical & Scholarly", desc:"The record of what came before. Not simply dates and rulers — but the weight of decisions made by those who did not expect to be remembered.", tiers:["Unaware","Curious","Informed","Versed","Scholar","Chronicler"] },
+  linguistics:     { name:"Linguistics",          domain:"Metaphysical & Scholarly", desc:"The structure and evolution of language. The Scribe knows that syntax shapes cognition — and that words, properly arranged, can alter what a person is capable of believing.", tiers:["Monolingual","Conversant","Fluent","Polyglot","Tongue-Master","Script-Sage"] },
+  occultism:       { name:"Occultism",            domain:"Metaphysical & Scholarly", desc:"Forbidden rites, binding sigils, and void constructs. The Shadow Jailer does not fear what others refuse to name — they have already catalogued it.", tiers:["Ignorant","Aware","Initiated","Versed","Adept","Void-Literate"] },
+  politicaltheory: { name:"Political Theory",     domain:"Metaphysical & Scholarly", desc:"The mechanics of power, governance, and institutional behavior. The Mediator understands that every negotiation is a smaller version of every war.", tiers:["Naive","Aware","Informed","Analytical","Strategist","Power-Literate"] },
+  religion:        { name:"Religion",             domain:"Metaphysical & Scholarly", desc:"Sacred doctrine, faith systems, and the role of belief in the world. The Dawn Sentinel conviction is not decoration — it is structure.", tiers:["Secular","Familiar","Observant","Devoted","Theologian","Faith-Bound"] },
+  command:         { name:"Command",              domain:"Tactical & Martial", desc:"Directing others under pressure. The Dawn Sentinel does not simply protect allies — they tell allies where to stand, and allies listen.", tiers:["Unheard","Acknowledged","Followed","Respected","Obeyed","Voice-of-Battle"] },
+  stealth:         { name:"Stealth",              domain:"Tactical & Martial", desc:"Moving without detection. The Assassin does not enter rooms — they are simply discovered to have been in them.", tiers:["Noticed","Quiet","Hidden","Silent","Shadowstep","Invisible"] },
 };
 
 const DOMAIN_BADGE_STYLES = {
@@ -726,5 +740,6 @@ document.addEventListener('keydown', e => {
 });
 </script>
 
+</div>
 </body>
 </html>
