@@ -37,7 +37,7 @@
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior: smooth; }
 body { font-family: 'Crimson Text', Georgia, serif; color: var(--ink-color); min-height: 100dvh; background: #000; line-height: 1.75; font-size: 1.18rem; }
-.page-wrapper { min-height: 100dvh; display: flex; flex-direction: column; max-width: var(--page-max-width); margin: 0 auto; background-color: #000; background-image: url('images/bg.jpg'); background-size: contain; background-position: center top; background-repeat: no-repeat; background-attachment: fixed; box-shadow: 0 0 80px rgba(0,0,0,0.85); }
+.page-wrapper { min-height: 100dvh; display: flex; flex-direction: column; max-width: var(--page-max-width); margin: 0 auto; background-color: #000; background-image: url('images/bg.jpg'); background-size: contain; background-position: center top; background-repeat: no-repeat; background-attachment: scroll; box-shadow: 0 0 80px rgba(0,0,0,0.85); }
 header { position: fixed; top: 0; left: 50%; transform: translateX(-50%); width: min(100%, var(--page-max-width)); height: var(--header-height); background-image: url('images/header.png'); background-size: contain; background-position: center; background-repeat: no-repeat; z-index: 1000; box-shadow: 0 6px 16px rgba(0,0,0,0.5); }
 header::after { content: ""; position: absolute; left: 0; right: 0; bottom: -14px; height: 18px; background: linear-gradient(to bottom, rgba(0,0,0,0.28), rgba(0,0,0,0)); pointer-events: none; }
 nav { max-width: var(--content-max-width); width: 100%; height: 100%; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 2rem; padding: 0 1.5rem; }
@@ -73,17 +73,25 @@ footer a:hover { text-decoration: underline; }
 </style>
 </head>
 <body>
-<div class="page-wrapper">
+<body data-page="create">
 
 <header>
-<nav>
-      <a href="./lands/lands.html"><i class="fa-solid fa-compass"></i>Lands</a>
-      <a href="./lore/lore.html"><i class="fa-solid fa-scroll"></i>Lore</a>
-      <a href="./rules/rules.html"><i class="fa-solid fa-book"></i>Rules</a>
-      <a href="./create/create.html"><i class="fa-solid fa-user-pen"></i>Create</a>
-      <a href=" main_tables.html"><i class="fa-solid fa-dice-d20"></i>Tables</a>
-</nav>
+  <nav>
+    <a href="lore.html"        data-nav="lore"><i class="fa-solid fa-scroll"></i>Lore</a>
+    <a href="rules.html"       data-nav="rules"><i class="fa-solid fa-book"></i>Rules</a>
+    <a href="create.html"      data-nav="create"><i class="fa-solid fa-user-pen"></i>Create</a>
+    <a href="main_tables.html" data-nav="tables"><i class="fa-solid fa-dice-d20"></i>Tables</a>
+  </nav>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </header>
+<div class="nav-mobile-menu" id="navMobileMenu">
+  <a href="lore.html"        data-nav="lore"><i class="fa-solid fa-scroll"></i>Lore</a>
+  <a href="rules.html"       data-nav="rules"><i class="fa-solid fa-book"></i>Rules</a>
+  <a href="create.html"      data-nav="create"><i class="fa-solid fa-user-pen"></i>Create</a>
+  <a href="main_tables.html" data-nav="tables"><i class="fa-solid fa-dice-d20"></i>Tables</a>
+</div>
 
 <main>
 <div class="content-container">
