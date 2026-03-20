@@ -2905,8 +2905,8 @@ function onHarmonicsChange() {
    VOCATION DATA — STEP 4
 ════════════════════════════════════════════════════ */
 const VOCATIONS = {
-  artisan:           { name: 'Artisan',           heritage: 'Technical',              skills: [{type:'K',name:'Engineering'},{type:'A',name:'Weapon Mastery'},{type:'K',name:'Economics & Trade'},{type:'A',name:'Perception'}] },
-  baker:             { name: 'Baker',             heritage: 'Physicality & Environment', skills: [{type:'A',name:'Endurance'},{type:'A',name:'Survival'},{type:'K',name:'Economics & Trade'},{type:'K',name:'Provisioning'}] },
+  artisan:           { name: 'Artisan',           heritage: 'Technical',              skills: [{type:'K',name:'Engineering'},{type:'A',name:'Weapon Mastery'},{type:'K',name:'Provisioning'},{type:'A',name:'Perception'}] },
+  baker:             { name: 'Baker',             heritage: 'Physicality & Environment', skills: [{type:'A',name:'Endurance'},{type:'A',name:'Survival'},{type:'K',name:'Provisioning'},{type:'K',name:'Provisioning'}] },
   caretaker:         { name: 'Caretaker',         heritage: 'Social & Perceptual',    skills: [{type:'A',name:'Combat Medicine'},{type:'K',name:'Medicine'},{type:'A',name:'Endurance'},{type:'K',name:'Psychology'}] },
   courier:           { name: 'Courier',           heritage: 'Physicality & Environment', skills: [{type:'A',name:'Athletics'},{type:'A',name:'Reaction Timing'},{type:'K',name:'Cartography'},{type:'A',name:'Weapon Mastery'}] },
   hearthwarden:      { name: 'Hearthwarden',      heritage: 'Physicality & Environment', skills: [{type:'A',name:'Perception'},{type:'K',name:'Environmental Science'},{type:'A',name:'Endurance'},{type:'K',name:'Insight'}] },
@@ -2916,10 +2916,10 @@ const VOCATIONS = {
   manservant:        { name: 'Manservant',        heritage: 'Social & Perceptual',    skills: [{type:'K',name:'Insight'},{type:'A',name:'Deception'},{type:'A',name:'Perception'},{type:'K',name:'Psychology'}] },
   mediator:          { name: 'Mediator',          heritage: 'Social & Perceptual',    skills: [{type:'A',name:'Diplomacy'},{type:'K',name:'Insight'},{type:'A',name:'Persuasion'},{type:'K',name:'Political Theory'}] },
   nightwatchman:     { name: 'Nightwatchman',     heritage: 'Social & Perceptual',    skills: [{type:'A',name:'Perception'},{type:'A',name:'Weapon Mastery'},{type:'K',name:'Psychology'},{type:'K',name:'Insight'}] },
-  preserver:         { name: 'Preserver',         heritage: 'Physicality & Environment', skills: [{type:'A',name:'Survival'},{type:'K',name:'Environmental Science'},{type:'K',name:'Economics & Trade'},{type:'A',name:'Endurance'}] },
+  preserver:         { name: 'Preserver',         heritage: 'Physicality & Environment', skills: [{type:'A',name:'Survival'},{type:'K',name:'Environmental Science'},{type:'K',name:'Provisioning'},{type:'A',name:'Endurance'}] },
   protector:         { name: 'Protector',         heritage: 'Tactical & Martial',     skills: [{type:'A',name:'Combat Focus'},{type:'A',name:'Perception'},{type:'A',name:'Weapon Mastery'},{type:'A',name:'Reaction Timing'}] },
   scout:             { name: 'Scout',             heritage: 'Physicality & Environment', skills: [{type:'A',name:'Stealth'},{type:'A',name:'Perception'},{type:'A',name:'Survival'},{type:'K',name:'Cartography'}] },
-  steward:           { name: 'Steward',           heritage: 'Tactical & Martial',     skills: [{type:'K',name:'Economics & Trade'},{type:'K',name:'Insight'},{type:'A',name:'Tactics'},{type:'A',name:'Command'}] },
+  steward:           { name: 'Steward',           heritage: 'Tactical & Martial',     skills: [{type:'K',name:'Provisioning'},{type:'K',name:'Insight'},{type:'A',name:'Tactics'},{type:'A',name:'Command'}] },
   student:           { name: 'Student',           heritage: 'Metaphysical & Scholarly', skills: [{type:'K',name:'Investigation'},{type:'K',name:'Linguistics'},{type:'K',name:'Scientific Theory'},{type:'K',name:'History'}] },
   waykeeper:         { name: 'Waykeeper',         heritage: 'Tactical & Martial',     skills: [{type:'K',name:'Engineering'},{type:'A',name:'Weapon Mastery'},{type:'A',name:'Survival'},{type:'A',name:'Tactics'}] }
 };
