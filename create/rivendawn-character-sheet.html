@@ -29,7 +29,6 @@
   --red-accent:   #8b1a1a;
   --green-accent: #1a5a1a;
 
-  /* Path colors */
   --aeris:       #6b9abf;
   --aqua:        #4a8fa0;
   --ignis:       #c47a20;
@@ -37,7 +36,6 @@
   --vitae:       #3a7a6a;
   --obtenebrate: #5a4a7a;
 
-  /* Primary colors */
   --agility-c:   #6b9abf;
   --strength-c:  #8b3a14;
   --vitality-c:  #3a7a6a;
@@ -46,7 +44,7 @@
   --social-c:    #8b6a3a;
 
   --page-w: 8.5in;
-  --margin: 0.55in;
+  --margin: 0.52in;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -60,7 +58,7 @@ body {
 }
 
 /* ═══════════════════════════════════════════
-   PRINT BUTTON
+   PRINT BAR
 ═══════════════════════════════════════════ */
 .print-bar {
   position: fixed;
@@ -68,42 +66,97 @@ body {
   z-index: 1000;
   background: #1a1008;
   border-bottom: 1px solid #5a3a1a;
-  padding: 10px 20px;
+  padding: 8px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 .print-bar-title {
   font-family: 'Cinzel Decorative', serif;
   color: #d4a86a;
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
 }
 .print-bar-hint {
   font-family: 'Crimson Text', serif;
   color: #8b6a3a;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-style: italic;
+  flex: 1;
 }
-.btn-print {
+.print-bar-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-shrink: 0;
+}
+.btn-bar {
   font-family: 'Cinzel', serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  background: linear-gradient(135deg, #5a3a1a, #3a2a1a);
-  color: #f5e8c8;
-  border: 1px solid #8b5014;
-  padding: 8px 22px;
+  padding: 6px 16px;
   cursor: pointer;
   border-radius: 3px;
   transition: all 0.2s ease;
+  border: 1px solid;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.btn-print {
+  background: linear-gradient(135deg, #5a3a1a, #3a2a1a);
+  color: #f5e8c8;
+  border-color: #8b5014;
 }
 .btn-print:hover {
   background: linear-gradient(135deg, #7a5a2a, #5a3a1a);
-  color: #fdf6e3;
   box-shadow: 0 0 12px rgba(200,168,122,0.3);
 }
+.btn-import {
+  background: rgba(42,106,42,0.15);
+  color: #a8e8a8;
+  border-color: rgba(42,106,42,0.4);
+}
+.btn-import:hover {
+  background: rgba(42,106,42,0.28);
+}
+.btn-clear {
+  background: rgba(139,26,26,0.12);
+  color: #e8a8a8;
+  border-color: rgba(139,26,26,0.35);
+}
+.btn-clear:hover { background: rgba(139,26,26,0.22); }
+
+/* Import success flash */
+.import-flash {
+  position: fixed;
+  top: 52px; left: 50%;
+  transform: translateX(-50%);
+  background: rgba(42,106,42,0.92);
+  color: #d4f0d4;
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 8px 20px;
+  border-radius: 4px;
+  z-index: 2000;
+  display: none;
+  animation: fadeFlash 2.5s ease forwards;
+}
+@keyframes fadeFlash {
+  0%   { opacity: 0; transform: translateX(-50%) translateY(-6px); }
+  15%  { opacity: 1; transform: translateX(-50%) translateY(0); }
+  75%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Hidden file input */
+#importFileInput { display: none; }
 
 /* ═══════════════════════════════════════════
    PAGES WRAPPER
@@ -130,19 +183,15 @@ body {
     radial-gradient(ellipse at 10% 10%, rgba(200,160,80,0.12) 0%, transparent 60%),
     radial-gradient(ellipse at 90% 90%, rgba(180,140,60,0.10) 0%, transparent 60%),
     radial-gradient(ellipse at 50% 50%, rgba(255,248,220,0.4) 0%, transparent 80%);
-  background-color: var(--parchment);
 }
 
-/* Inner content wrapper — this is what gets scaled */
 .page-inner {
   width: 100%;
   padding: 0.52in 0.55in;
   position: relative;
   transform-origin: top left;
-  /* JS will set zoom at runtime and on beforeprint */
 }
 
-/* Border frame */
 .sheet-page::before {
   content: '';
   position: absolute;
@@ -160,11 +209,7 @@ body {
   z-index: 10;
 }
 
-/* Corner diamonds */
-.sheet-page .corner-tl,
-.sheet-page .corner-tr,
-.sheet-page .corner-bl,
-.sheet-page .corner-br {
+.corner-tl, .corner-tr, .corner-bl, .corner-br {
   position: absolute;
   width: 10px; height: 10px;
   background: var(--border);
@@ -172,15 +217,14 @@ body {
   z-index: 11;
   pointer-events: none;
 }
-.sheet-page .corner-tl { top: calc(0.28in - 5px); left: calc(0.28in - 5px); }
-.sheet-page .corner-tr { top: calc(0.28in - 5px); right: calc(0.28in - 5px); }
-.sheet-page .corner-bl { bottom: calc(0.28in - 5px); left: calc(0.28in - 5px); }
-.sheet-page .corner-br { bottom: calc(0.28in - 5px); right: calc(0.28in - 5px); }
+.corner-tl { top: calc(0.28in - 5px); left: calc(0.28in - 5px); }
+.corner-tr { top: calc(0.28in - 5px); right: calc(0.28in - 5px); }
+.corner-bl { bottom: calc(0.28in - 5px); left: calc(0.28in - 5px); }
+.corner-br { bottom: calc(0.28in - 5px); right: calc(0.28in - 5px); }
 
 .page-footer-num {
   position: absolute;
-  bottom: 0.15in;
-  left: 50%;
+  bottom: 0.15in; left: 50%;
   transform: translateX(-50%);
   font-family: 'Crimson Text', serif;
   font-style: italic;
@@ -193,19 +237,18 @@ body {
 ═══════════════════════════════════════════ */
 .page-title {
   text-align: center;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 .page-title h1 {
   font-family: 'Cinzel Decorative', serif;
-  font-size: 1.55rem;
+  font-size: 1.5rem;
   color: var(--ink);
   letter-spacing: 0.08em;
-  line-height: 1.2;
 }
 .page-title .subtitle {
   font-family: 'Crimson Text', serif;
   font-style: italic;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: var(--ink-dim);
   margin-top: 2px;
 }
@@ -213,10 +256,9 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 4px 0 8px;
+  margin: 4px 0 6px;
 }
-.title-rule::before,
-.title-rule::after {
+.title-rule::before, .title-rule::after {
   content: '';
   flex: 1;
   height: 1px;
@@ -239,9 +281,9 @@ body {
   background: var(--gold);
   color: #fff8ee;
   font-family: 'Cinzel', serif;
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   padding: 3px 8px;
   margin-bottom: 5px;
@@ -249,15 +291,14 @@ body {
 
 .section-rule {
   border: none;
-  border-top: 1px solid var(--border);
-  margin: 6px 0;
+  border-top: 1px solid var(--border-light);
+  margin: 5px 0;
 }
 
 /* ═══════════════════════════════════════════
-   FORM INPUTS
+   INPUTS
 ═══════════════════════════════════════════ */
-input[type="text"],
-textarea {
+input[type="text"], textarea {
   background: var(--surface);
   border: 0.6px solid var(--line);
   color: var(--ink);
@@ -270,28 +311,23 @@ textarea {
   border-radius: 0;
   resize: none;
 }
-input[type="text"]:focus,
-textarea:focus {
+input[type="text"]:focus, textarea:focus {
   border-color: var(--amber);
   background: #fffdf5;
 }
 
 .field-label {
   font-family: 'Cinzel', serif;
-  font-size: 0.52rem;
-  letter-spacing: 0.22em;
+  font-size: 0.5rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--ink-dim);
   display: block;
   margin-bottom: 2px;
 }
 
-.field-wrap {
-  display: flex;
-  flex-direction: column;
-}
+.field-wrap { display: flex; flex-direction: column; }
 
-/* Write lines */
 .write-line {
   border: none;
   border-bottom: 0.5px solid var(--line);
@@ -306,16 +342,17 @@ textarea:focus {
   margin-bottom: 7px;
 }
 .write-line:focus { border-bottom-color: var(--amber); }
+
 .write-line-label {
   font-family: 'Cinzel', serif;
-  font-size: 0.48rem;
-  letter-spacing: 0.22em;
+  font-size: 0.46rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--ink-dim);
   text-align: center;
   display: block;
-  margin-top: -8px;
-  margin-bottom: 6px;
+  margin-top: -6px;
+  margin-bottom: 5px;
 }
 
 /* Stat boxes */
@@ -326,7 +363,7 @@ textarea:focus {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4px;
+  padding: 3px 4px;
 }
 .stat-box input {
   text-align: center;
@@ -342,8 +379,8 @@ textarea:focus {
 .stat-box input:focus { outline: none; }
 .stat-box .stat-label {
   font-family: 'Cinzel', serif;
-  font-size: 0.48rem;
-  letter-spacing: 0.16em;
+  font-size: 0.46rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-dim);
   text-align: center;
@@ -352,16 +389,16 @@ textarea:focus {
 }
 
 /* ═══════════════════════════════════════════
-   PIP CIRCLES
+   PIPS
 ═══════════════════════════════════════════ */
 .pip-row {
   display: flex;
-  gap: 5px;
+  gap: 4px;
   align-items: center;
   flex-wrap: nowrap;
 }
 .pip {
-  width: 13px; height: 13px;
+  width: 12px; height: 12px;
   border-radius: 50%;
   border: 1.5px solid var(--border);
   background: var(--parchment2);
@@ -370,66 +407,57 @@ textarea:focus {
   flex-shrink: 0;
 }
 .pip:hover { transform: scale(1.15); border-color: var(--amber); }
-.pip.filled {
-  background: var(--ink);
-  border-color: var(--ink);
-}
+.pip.filled { background: var(--ink); border-color: var(--ink); }
 .pip-label {
   font-family: 'Cinzel', serif;
-  font-size: 0.48rem;
-  letter-spacing: 0.16em;
+  font-size: 0.46rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-dim);
-  margin-top: 3px;
+  margin-top: 2px;
 }
 
 /* ═══════════════════════════════════════════
    CHECKBOXES
 ═══════════════════════════════════════════ */
 .check-option {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   cursor: pointer;
+  margin-right: 10px;
 }
 .check-box {
-  width: 11px; height: 11px;
+  width: 10px; height: 10px;
   border: 1px solid var(--border);
   background: var(--surface);
   flex-shrink: 0;
   cursor: pointer;
   position: relative;
-  transition: background 0.12s;
-}
-.check-box.checked {
-  background: var(--ink);
 }
 .check-box.checked::after {
-  content: '';
+  content: '✓';
   position: absolute;
-  inset: 2px;
-  background: var(--parchment);
-  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  top: -2px; left: 1px;
+  font-size: 9px;
+  color: var(--ink);
+  font-weight: bold;
 }
 .check-label {
   font-family: 'Crimson Text', serif;
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   color: var(--ink);
 }
 
 /* ═══════════════════════════════════════════
-   GRIDS & LAYOUT HELPERS
+   GRID HELPERS
 ═══════════════════════════════════════════ */
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
-.grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 5px; }
-.grid-5 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 5px; }
-.gap-sm { gap: 4px; }
-
-.mb-4  { margin-bottom: 3px; }
-.mb-6  { margin-bottom: 5px; }
-.mb-8  { margin-bottom: 7px; }
-.mb-10 { margin-bottom: 8px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 4px; }
+.grid-5 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 4px; }
+.mb-4 { margin-bottom: 4px; }
+.mb-6 { margin-bottom: 6px; }
 
 /* ═══════════════════════════════════════════
    PRIMARY RATING CARDS
@@ -438,20 +466,21 @@ textarea:focus {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 .primary-card {
-  background: var(--surface);
+  background: var(--parchment2);
   border: 0.6px solid var(--border-light);
-  padding: 5px 8px 5px 12px;
+  border-radius: 4px;
+  padding: 5px 6px 5px 9px;
   position: relative;
   overflow: hidden;
 }
 .primary-card::before {
   content: '';
   position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 4px;
+  top: 0; left: 0;
+  width: 4px; height: 100%;
 }
 .primary-card.agility::before    { background: var(--agility-c); }
 .primary-card.strength::before   { background: var(--strength-c); }
@@ -462,153 +491,79 @@ textarea:focus {
 
 .primary-card-inner {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 6px;
 }
-.primary-card-info { flex: 1; min-width: 0; }
+.primary-card-info { flex: 1; }
 .primary-name {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 0.68rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  font-weight: 700;
   color: var(--ink);
-  margin-bottom: 1px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 .primary-anchor {
   font-family: 'Crimson Text', serif;
-  font-style: italic;
   font-size: 0.65rem;
+  font-style: italic;
   color: var(--amber);
-  margin-bottom: 4px;
+  margin-bottom: 3px;
 }
 .primary-rating-box {
-  background: var(--parchment2);
-  border: 0.7px solid var(--border);
-  width: 32px;
+  width: 28px;
   flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 .primary-rating-box input {
   text-align: center;
-  font-family: 'Cinzel', serif;
+  font-family: 'Cinzel Decorative', serif;
   font-size: 1.1rem;
   font-weight: 700;
   border: none;
+  border-bottom: 1px solid var(--border);
   background: transparent;
   width: 100%;
   color: var(--ink);
-  padding: 4px 0;
+  padding: 0;
 }
-.primary-rating-box input:focus { outline: none; }
+.primary-rating-box input:focus { outline: none; border-bottom-color: var(--amber); }
 
 /* ═══════════════════════════════════════════
-   PATH CARDS
-═══════════════════════════════════════════ */
-.path-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
-  margin-bottom: 8px;
-}
-.path-card {
-  background: var(--surface);
-  border: 0.6px solid var(--border-light);
-  overflow: hidden;
-}
-.path-card-header {
-  padding: 4px 8px;
-  color: #fff8ee;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-}
-.path-card-header.aeris        { background: var(--aeris); }
-.path-card-header.aqua         { background: var(--aqua); }
-.path-card-header.ignis        { background: var(--ignis); }
-.path-card-header.terra        { background: var(--terra); }
-.path-card-header.vitae        { background: var(--vitae); }
-.path-card-header.obtenebrate  { background: var(--obtenebrate); }
-
-.path-name {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
-}
-.path-card-body {
-  padding: 5px 8px 7px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.path-card-meta { flex: 1; min-width: 0; }
-.path-expr {
-  font-family: 'Crimson Text', serif;
-  font-style: italic;
-  font-size: 0.72rem;
-  color: var(--ink-dim);
-  margin-bottom: 1px;
-}
-.path-attr {
-  font-family: 'Crimson Text', serif;
-  font-size: 0.68rem;
-  color: var(--ink-dim);
-  margin-bottom: 4px;
-}
-.path-rating-box {
-  background: var(--parchment2);
-  border: 0.7px solid var(--border);
-  width: 28px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  align-self: stretch;
-}
-.path-rating-box input {
-  text-align: center;
-  font-family: 'Cinzel', serif;
-  font-size: 0.9rem;
-  font-weight: 700;
-  border: none;
-  background: transparent;
-  width: 100%;
-  color: var(--ink);
-  padding: 2px 0;
-}
-.path-rating-box input:focus { outline: none; }
-
-/* ═══════════════════════════════════════════
-   ABILITIES TABLE
+   ABILITIES GRID
 ═══════════════════════════════════════════ */
 .abilities-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0 8px;
+  gap: 8px;
+  margin-bottom: 4px;
 }
-.domain-block { margin-bottom: 2px; }
+
+.domain-block { margin-bottom: 5px; }
 .domain-header {
-  background: #d4b88a;
+  background: var(--parchment3);
+  border-bottom: 1px solid var(--border-light);
   font-family: 'Cinzel', serif;
-  font-size: 0.56rem;
+  font-size: 0.54rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--ink);
-  padding: 2px 6px;
-  margin-bottom: 1px;
+  color: var(--ink-dim);
+  padding: 2px 4px;
 }
+
 .ability-row {
   display: flex;
   align-items: center;
-  padding: 0px 4px;
-  min-height: 15px;
+  padding: 0px 3px;
+  min-height: 14px;
 }
 .ability-row:nth-child(odd)  { background: #fdf4e0; }
 .ability-row:nth-child(even) { background: #f8edce; }
+
 .ability-name {
   flex: 1;
   font-family: 'Crimson Text', serif;
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   color: var(--ink);
   white-space: nowrap;
   overflow: hidden;
@@ -619,14 +574,75 @@ textarea:focus {
   color: var(--ink-dim);
 }
 .ability-name.knowledge::before { content: '◆ '; }
-.ability-pips {
+
+.ability-pips { display: flex; gap: 2px; flex-shrink: 0; }
+.ability-pips .pip { width: 9px; height: 9px; }
+
+/* ═══════════════════════════════════════════
+   PATH CARDS
+═══════════════════════════════════════════ */
+.path-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-bottom: 5px;
+}
+.path-card {
+  border: 0.6px solid var(--border-light);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.path-card-header {
+  padding: 3px 6px;
   display: flex;
-  gap: 2px;
+  justify-content: space-between;
+  align-items: center;
+}
+.path-card-header.aeris       { background: var(--aeris); }
+.path-card-header.aqua        { background: var(--aqua); }
+.path-card-header.ignis       { background: var(--ignis); }
+.path-card-header.terra       { background: var(--terra); }
+.path-card-header.vitae       { background: var(--vitae); }
+.path-card-header.obtenebrate { background: var(--obtenebrate); }
+
+.path-name {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.08em;
+}
+.path-card-body {
+  background: var(--parchment2);
+  padding: 4px 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.path-card-meta { flex: 1; }
+.path-attr {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.65rem;
+  color: var(--ink-dim);
+  margin-bottom: 3px;
+}
+.path-rating-box {
+  width: 24px;
   flex-shrink: 0;
 }
-.ability-pips .pip {
-  width: 9px; height: 9px;
+.path-rating-box input {
+  text-align: center;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  width: 100%;
+  color: var(--ink);
+  padding: 0;
 }
+.path-rating-box input:focus { outline: none; border-bottom-color: var(--amber); }
 
 /* ═══════════════════════════════════════════
    LIABILITIES & BOONS
@@ -638,9 +654,9 @@ textarea:focus {
 }
 .liab-col-header {
   font-family: 'Cinzel', serif;
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   margin-bottom: 4px;
 }
@@ -650,20 +666,20 @@ textarea:focus {
 .liab-row {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   background: var(--surface);
   border: 0.5px solid var(--border-light);
-  padding: 2px 5px;
-  margin-bottom: 3px;
+  padding: 2px 4px;
+  margin-bottom: 2px;
 }
 .sev-label {
   font-family: 'Crimson Text', serif;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: var(--ink-dim);
   white-space: nowrap;
 }
 .sev-box {
-  width: 28px;
+  width: 26px;
   background: var(--parchment3);
   border: 0.6px solid var(--border);
   flex-shrink: 0;
@@ -672,7 +688,7 @@ textarea:focus {
   width: 100%;
   text-align: center;
   font-family: 'Cinzel', serif;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   border: none;
   background: transparent;
   color: var(--ink);
@@ -685,133 +701,89 @@ textarea:focus {
   border-bottom: 0.5px solid var(--line);
   background: transparent;
   font-family: 'Crimson Text', serif;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   color: var(--ink);
   padding: 0 2px;
   outline: none;
 }
 .liab-name-line:focus { border-bottom-color: var(--amber); }
 
-/* tracker pips row */
 .tracker-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-top: 6px;
+  gap: 6px;
+  margin-top: 5px;
 }
 .tracker-label {
   font-family: 'Crimson Text', serif;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--ink-dim);
   white-space: nowrap;
 }
-.tracker-pips .pip { width: 14px; height: 14px; }
+.tracker-pips .pip { width: 13px; height: 13px; }
 
 /* ═══════════════════════════════════════════
    FREEBIE POINTS TABLE
 ═══════════════════════════════════════════ */
-.fp-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
-.fp-table td { padding: 3px 6px; border-bottom: 0.5px solid var(--border-light); }
+.fp-table { width: 100%; border-collapse: collapse; font-size: 0.76rem; }
+.fp-table td { padding: 2px 5px; border-bottom: 0.5px solid var(--border-light); }
 .fp-table tr:last-child td { border-bottom: none; }
-.fp-table tr:nth-child(odd)  td { background: #fdf4e0; }
+.fp-table tr:nth-child(odd) td  { background: #fdf4e0; }
 .fp-table tr:nth-child(even) td { background: #f8edce; }
-.fp-cost { font-family: 'Cinzel', serif; font-size: 0.68rem; color: var(--accent); text-align: right; font-weight: 700; }
+.fp-cost {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  color: var(--accent);
+  text-align: right;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.fp-spent-cell {
+  width: 36px;
+  text-align: center;
+}
+.fp-spent-cell input {
+  width: 30px;
+  text-align: center;
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  color: var(--ink);
+}
+.fp-spent-cell input:focus { outline: none; border-bottom-color: var(--amber); }
 
 /* ═══════════════════════════════════════════
    FORMULA BLOCK
 ═══════════════════════════════════════════ */
-.formula-block {
+.formula-strip {
   background: #f5edd8;
   border-left: 3px solid var(--gold);
-  padding: 8px 10px;
-  margin-bottom: 6px;
-  font-size: 0.82rem;
-}
-.formula-block .f-label {
-  font-family: 'Cinzel', serif;
-  font-size: 0.52rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--ink-dim);
-  margin-bottom: 3px;
-}
-.formula-block .f-main {
-  font-family: 'Cinzel', serif;
-  font-size: 0.9rem;
+  padding: 4px 8px;
+  margin-bottom: 5px;
+  font-size: 0.78rem;
   color: var(--ink);
-  font-weight: 600;
 }
-.formula-block .f-note {
-  font-style: italic;
-  color: var(--ink-dim);
-  font-size: 0.75rem;
-  margin-top: 2px;
-}
-
-/* Page 3 — default spacing (same as rest of sheet); JS scaling fills the page */
 
 /* ═══════════════════════════════════════════
    PRINT STYLES
 ═══════════════════════════════════════════ */
 @media print {
-  @page {
-    size: 8.5in 11in;
-    margin: 0;
-  }
-
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-
+  @page { size: 8.5in 11in; margin: 0; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   .print-bar { display: none !important; }
-
-  html, body {
-    margin: 0 !important;
-    padding: 0 !important;
-    background: white !important;
-  }
-
-  .pages {
-    padding: 0 !important;
-    gap: 0 !important;
-    display: block !important;
-  }
-
+  html, body { margin: 0 !important; padding: 0 !important; background: white !important; }
+  .pages { padding: 0 !important; gap: 0 !important; display: block !important; }
   .sheet-page {
-    width: 8.5in !important;
-    height: 11in !important;
-    min-height: unset !important;
-    max-height: 11in !important;
-    overflow: hidden !important;    box-shadow: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    page-break-after: always !important;
-    break-after: page !important;
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
+    width: 8.5in !important; height: 11in !important;
+    overflow: hidden !important; box-shadow: none !important;
+    margin: 0 !important; padding: 0 !important;
+    page-break-after: always !important; break-after: page !important;
   }
-
-  .sheet-page:last-child {
-    page-break-after: avoid !important;
-    break-after: avoid !important;
-  }
-
-  .page-inner {
-    transform-origin: top left !important;
-  }
-
-  input[type="text"] {
-    border: none !important;
-    border-bottom: 0.5px solid #aaa !important;
-    background: transparent !important;
-    -webkit-appearance: none;
-  }
-
+  .sheet-page:last-child { page-break-after: avoid !important; break-after: avoid !important; }
+  input[type="text"] { border: none !important; border-bottom: 0.5px solid #aaa !important; background: transparent !important; }
   .stat-box input[type="text"] { border: none !important; }
-
-  /* ── Page 3: upscaling handled by JS scalePages() via beforeprint ── */
-
   .pip.filled { background: #2e1f0e !important; border-color: #2e1f0e !important; }
   .section-header { background: #3a2a1a !important; color: #fff8ee !important; }
   .domain-header { background: #d4b88a !important; }
@@ -828,7 +800,6 @@ textarea:focus {
   .primary-card.wisdom::before     { background: #7a6abf !important; }
   .primary-card.social::before     { background: #8b6a3a !important; }
 }
-
 </style>
 </head>
 <body>
@@ -836,14 +807,30 @@ textarea:focus {
 <!-- ═══ PRINT BAR ═══ -->
 <div class="print-bar">
   <span class="print-bar-title">Rivendawn — Character Record Sheet</span>
-  <span class="print-bar-hint">In Chrome print dialog: set <strong style="color:#d4a86a;">Margins → None</strong> and uncheck <strong style="color:#d4a86a;">Headers and footers</strong></span>
-  <button class="btn-print" onclick="window.print()">⬡ &nbsp; Print / Save as PDF</button>
+  <span class="print-bar-hint">Chrome: Margins → None · Uncheck Headers and footers</span>
+  <div class="print-bar-actions">
+    <button class="btn-bar btn-import" onclick="importFromLocalStorage()">
+      ⬡ Import from Pre-Builder
+    </button>
+    <button class="btn-bar btn-import" onclick="document.getElementById('importFileInput').click()">
+      ↑ Import JSON File
+    </button>
+    <input type="file" id="importFileInput" accept=".json" onchange="importFromFile(event)">
+    <button class="btn-bar btn-clear" onclick="clearSheet()">
+      ✕ Clear Sheet
+    </button>
+    <button class="btn-bar btn-print" onclick="window.print()">
+      ⬡ Print / Save PDF
+    </button>
+  </div>
 </div>
+
+<div class="import-flash" id="importFlash">Build Imported Successfully</div>
 
 <div class="pages">
 
 <!-- ══════════════════════════════════════════════════════════════
-     PAGE I — Identity & Primary Ratings
+     PAGE I — Identity, Primary Ratings, Defensive Profile
 ══════════════════════════════════════════════════════════════ -->
 <div class="sheet-page" id="page1">
   <span class="corner-tl"></span><span class="corner-tr"></span>
@@ -852,7 +839,7 @@ textarea:focus {
 
   <div class="page-inner">
 
-  <div class="page-title" style="margin-bottom:2px;">
+  <div class="page-title">
     <h1>Rivendawn</h1>
     <div class="subtitle">Character Record Sheet &nbsp;·&nbsp; Page I of III</div>
   </div>
@@ -861,26 +848,29 @@ textarea:focus {
   <!-- IDENTITY -->
   <div class="section-header">Character Identity</div>
 
-  <div class="field-wrap" style="margin-bottom:5px;">
+  <div class="field-wrap" style="margin-bottom:4px;">
     <label class="field-label">Character Name</label>
-    <input type="text" placeholder="Enter character name...">
+    <input type="text" id="cs-name" placeholder="Enter character name...">
   </div>
 
-  <div class="grid-3" style="margin-bottom:5px;">
-    <div class="field-wrap"><label class="field-label">Lineage</label><input type="text"></div>
-    <div class="field-wrap"><label class="field-label">Vocation</label><input type="text"></div>
-    <div class="field-wrap"><label class="field-label">Calling</label><input type="text"></div>
+  <div class="grid-3" style="margin-bottom:4px;">
+    <div class="field-wrap"><label class="field-label">Lineage</label><input type="text" id="cs-lineage"></div>
+    <div class="field-wrap"><label class="field-label">Vocation</label><input type="text" id="cs-vocation"></div>
+    <div class="field-wrap"><label class="field-label">Calling</label><input type="text" id="cs-calling"></div>
   </div>
 
-  <div class="grid-2" style="margin-bottom:5px;">
-    <div class="field-wrap"><label class="field-label">Harmonics / Discipline</label><input type="text"></div>
-    <div class="field-wrap"><label class="field-label">Primary Heritage Imprint</label><input type="text"></div>
+  <div class="grid-3" style="margin-bottom:4px;">
+    <div class="field-wrap"><label class="field-label">Dynamic</label><input type="text" id="cs-dynamic"></div>
+    <div class="field-wrap"><label class="field-label">Discipline</label><input type="text" id="cs-discipline"></div>
+    <div class="field-wrap"><label class="field-label">Primary Heritage Imprint</label><input type="text" id="cs-heritage"></div>
   </div>
 
-  <div class="grid-3" style="margin-bottom:6px;">
-    <div class="field-wrap"><label class="field-label">Player Name</label><input type="text"></div>
-    <div class="field-wrap"><label class="field-label">Campaign / Chronicle</label><input type="text"></div>
-    <div class="field-wrap"><label class="field-label">Session #</label><input type="text"></div>
+  <div class="grid-5" style="margin-bottom:4px;">
+    <div class="field-wrap"><label class="field-label">Health Die</label><input type="text" id="cs-health-die"></div>
+    <div class="field-wrap"><label class="field-label">Armor Tier (Start)</label><input type="text" id="cs-armor-tier"></div>
+    <div class="field-wrap"><label class="field-label">Calling Type</label><input type="text" id="cs-calling-type"></div>
+    <div class="field-wrap"><label class="field-label">Player Name</label><input type="text" id="cs-player"></div>
+    <div class="field-wrap"><label class="field-label">Campaign</label><input type="text" id="cs-campaign"></div>
   </div>
 
   <hr class="section-rule">
@@ -888,7 +878,7 @@ textarea:focus {
   <!-- PRIMARY RATINGS -->
   <div class="section-header">Primary Ratings &nbsp;·&nbsp; Creation Cap: 4 &nbsp;·&nbsp; Roll 2d8 → Take Highest → ÷2 Round Down</div>
 
-  <div class="primary-grid" style="margin-bottom:4px;">
+  <div class="primary-grid" style="margin-bottom:3px;">
     <div class="primary-card agility">
       <div class="primary-card-inner">
         <div class="primary-card-info">
@@ -897,7 +887,7 @@ textarea:focus {
           <div class="pip-row" data-max="6" data-group="primary-agi"></div>
           <div class="pip-label">Rating</div>
         </div>
-        <div class="primary-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+        <div class="primary-rating-box"><input type="text" id="cs-rat-agility" maxlength="1" placeholder="—"></div>
       </div>
     </div>
     <div class="primary-card strength">
@@ -908,7 +898,7 @@ textarea:focus {
           <div class="pip-row" data-max="6" data-group="primary-str"></div>
           <div class="pip-label">Rating</div>
         </div>
-        <div class="primary-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+        <div class="primary-rating-box"><input type="text" id="cs-rat-strength" maxlength="1" placeholder="—"></div>
       </div>
     </div>
     <div class="primary-card vitality">
@@ -919,7 +909,7 @@ textarea:focus {
           <div class="pip-row" data-max="6" data-group="primary-vit"></div>
           <div class="pip-label">Rating</div>
         </div>
-        <div class="primary-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+        <div class="primary-rating-box"><input type="text" id="cs-rat-vitality" maxlength="1" placeholder="—"></div>
       </div>
     </div>
     <div class="primary-card intelligence">
@@ -930,7 +920,7 @@ textarea:focus {
           <div class="pip-row" data-max="6" data-group="primary-int"></div>
           <div class="pip-label">Rating</div>
         </div>
-        <div class="primary-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+        <div class="primary-rating-box"><input type="text" id="cs-rat-intelligence" maxlength="1" placeholder="—"></div>
       </div>
     </div>
     <div class="primary-card wisdom">
@@ -941,7 +931,7 @@ textarea:focus {
           <div class="pip-row" data-max="6" data-group="primary-wis"></div>
           <div class="pip-label">Rating</div>
         </div>
-        <div class="primary-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+        <div class="primary-rating-box"><input type="text" id="cs-rat-wisdom" maxlength="1" placeholder="—"></div>
       </div>
     </div>
     <div class="primary-card social">
@@ -952,18 +942,18 @@ textarea:focus {
           <div class="pip-row" data-max="6" data-group="primary-soc"></div>
           <div class="pip-label">Rating</div>
         </div>
-        <div class="primary-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+        <div class="primary-rating-box"><input type="text" id="cs-rat-social" maxlength="1" placeholder="—"></div>
       </div>
     </div>
   </div>
 
-  <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:2px; margin-bottom:6px;">
-    <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.65rem; color:var(--ink-dim);">1 · Minimal</div>
-    <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.65rem; color:var(--ink-dim);">2 · Basic</div>
-    <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.65rem; color:var(--ink-dim);">3 · Solid</div>
-    <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.65rem; color:var(--ink-dim);">4 · Practiced ✦</div>
-    <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.65rem; color:var(--ink-dim);">5 · Exceptional</div>
-    <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.65rem; color:var(--ink-dim);">6 · Mastery</div>
+  <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:2px; margin-bottom:5px;">
+    <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.62rem; color:var(--ink-dim);">1 · Minimal</div>
+    <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.62rem; color:var(--ink-dim);">2 · Basic</div>
+    <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.62rem; color:var(--ink-dim);">3 · Solid</div>
+    <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.62rem; color:var(--ink-dim);">4 · Practiced ✦</div>
+    <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.62rem; color:var(--ink-dim);">5 · Exceptional</div>
+    <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.62rem; color:var(--ink-dim);">6 · Mastery</div>
   </div>
 
   <hr class="section-rule">
@@ -971,37 +961,81 @@ textarea:focus {
   <!-- DEFENSIVE PROFILE -->
   <div class="section-header">Defensive Profile</div>
 
-  <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:5px; margin-bottom:5px;">
-    <div style="grid-column:1/-1; background:#f5edd8; border-left:3px solid #3a2a1a; padding:4px 8px; font-family:'Crimson Text',serif; font-size:0.8rem; color:var(--ink);">
-      <strong>HP:</strong> 24 + (Health Die Roll × 3) &nbsp;&nbsp;
-      <strong>AP:</strong> Max HP × (Tier × 0.5) rounded up &nbsp;&nbsp;
-      <em style="color:var(--ink-dim);">While AP &gt; 0: damage split 50/50</em>
-    </div>
-    <div class="stat-box" style="height:40px;"><input type="text" placeholder="—"><div class="stat-label">Max HP</div></div>
-    <div class="stat-box" style="height:40px;"><input type="text" placeholder="—"><div class="stat-label">Current HP</div></div>
-    <div class="stat-box" style="height:40px;"><input type="text" placeholder="—"><div class="stat-label">Max AP</div></div>
-    <div class="stat-box" style="height:40px;"><input type="text" placeholder="—"><div class="stat-label">Current AP</div></div>
+  <div class="formula-strip" style="margin-bottom:4px;">
+    <strong>HP:</strong> 24 + (Health Die Roll × 3) &nbsp;&nbsp;
+    <strong>AP:</strong> Max HP × (0.Tier) rounded up &nbsp;&nbsp;
+    <em style="color:var(--ink-dim);">While AP &gt; 0: damage split 50/50</em>
+  </div>
+
+  <div class="grid-5" style="margin-bottom:5px;">
+    <div class="stat-box" style="height:38px;"><input type="text" id="cs-max-hp" placeholder="—"><div class="stat-label">Max HP</div></div>
+    <div class="stat-box" style="height:38px;"><input type="text" id="cs-current-hp" placeholder="—"><div class="stat-label">Current HP</div></div>
+    <div class="stat-box" style="height:38px;"><input type="text" id="cs-max-ap" placeholder="—"><div class="stat-label">Max AP</div></div>
+    <div class="stat-box" style="height:38px;"><input type="text" id="cs-current-ap" placeholder="—"><div class="stat-label">Current AP</div></div>
+    <div class="stat-box" style="height:38px;"><input type="text" id="cs-armor-tier-calc" placeholder="—"><div class="stat-label">Armor Tier Used</div></div>
   </div>
 
   <hr class="section-rule">
 
   <!-- INITIATIVE -->
   <div class="section-header">Initiative</div>
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-bottom:6px; font-family:'Crimson Text',serif; font-size:0.82rem; color:var(--ink);">
-    <div><strong>Forged / Hybrid:</strong> Combat Primary Rating + d20</div>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px; margin-bottom:4px; font-family:'Crimson Text',serif; font-size:0.8rem; color:var(--ink);">
+    <div><strong>Forged / Hybrid:</strong> Combat Primary Rating (Str or Agi) + d20</div>
     <div><strong>Pure Resonant:</strong> Highest Path Rating + d20</div>
+  </div>
+  <div style="display:flex; align-items:center; gap:8px; margin-bottom:5px;">
+    <span style="font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--ink-dim);">Your Initiative Rating Value:</span>
+    <div class="stat-box" style="width:36px; height:26px;"><input type="text" id="cs-initiative-rating" placeholder="—" style="font-size:0.9rem;"></div>
+    <span style="font-family:'Crimson Text',serif; font-size:0.8rem; color:var(--ink-dim); font-style:italic;">+ d20 each combat round</span>
   </div>
 
   <hr class="section-rule">
 
-  <!-- BARGAINING CHIP -->
-  <div class="section-header">Bargaining Chip Description</div>
-  <input class="write-line" type="text">
-  <input class="write-line" type="text">
-  <input class="write-line" type="text">
-  <input class="write-line" type="text">
-  <input class="write-line" type="text">
-  <input class="write-line" type="text">
+  <!-- COMBAT CONFIGURATION -->
+  <div class="section-header">Combat Configuration</div>
+
+  <div style="display:flex; align-items:center; gap:4px; margin-bottom:5px; flex-wrap:wrap;">
+    <span style="font-family:'Cinzel',serif; font-size:0.54rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--ink-dim); white-space:nowrap;">Offensive Category:</span>
+    <label class="check-option"><div class="check-box" id="cb-forged" onclick="toggleCheck(this, 'offensive-category')"></div><span class="check-label">Forged Combatant (6 CP)</span></label>
+    <label class="check-option"><div class="check-box" id="cb-hybrid" onclick="toggleCheck(this, 'offensive-category')"></div><span class="check-label">Resonant Hybrid (5 CP)</span></label>
+    <label class="check-option"><div class="check-box" id="cb-pure" onclick="toggleCheck(this, 'offensive-category')"></div><span class="check-label">True Resonant Caster (4 CP)</span></label>
+    <label class="check-option"><div class="check-box" id="cb-cadence" onclick="toggleCheck(this, 'offensive-category')"></div><span class="check-label">Cadence Discipline</span></label>
+    <label class="check-option"><div class="check-box" id="cb-stands-alone" onclick="toggleCheck(this, 'offensive-category')"></div><span class="check-label">Stands Alone</span></label>
+  </div>
+
+  <div class="grid-5 mb-4">
+    <div class="stat-box" style="height:36px;"><input type="text" id="cs-or" placeholder="—"><div class="stat-label">Offensive Rating (OR)</div></div>
+    <div class="stat-box" style="height:36px;"><input type="text" id="cs-bdr" placeholder="—"><div class="stat-label">Base Defensive Rating (BDR)</div></div>
+    <div class="stat-box" style="height:36px;"><input type="text" id="cs-tdr" placeholder="—"><div class="stat-label">Total Defensive Rating (TDR)</div></div>
+    <div class="stat-box" style="height:36px;"><input type="text" id="cs-combat-pts" placeholder="—"><div class="stat-label">Combat Points</div></div>
+    <div class="stat-box" style="height:36px;"><input type="text" id="cs-wellspring-die" placeholder="—"><div class="stat-label">Wellspring Die</div></div>
+  </div>
+
+  <div style="display:flex; align-items:center; gap:4px; margin-bottom:5px; flex-wrap:wrap;">
+    <span style="font-family:'Cinzel',serif; font-size:0.54rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--ink-dim); white-space:nowrap;">Defensive Posture:</span>
+    <label class="check-option"><div class="check-box" id="cb-dodge" onclick="toggleCheck(this, 'defensive-posture')"></div><span class="check-label">Dodge</span></label>
+    <label class="check-option"><div class="check-box" id="cb-parry" onclick="toggleCheck(this, 'defensive-posture')"></div><span class="check-label">Parry</span></label>
+    <label class="check-option"><div class="check-box" id="cb-riposte" onclick="toggleCheck(this, 'defensive-posture')"></div><span class="check-label">Riposte</span></label>
+    <label class="check-option"><div class="check-box" id="cb-absorption" onclick="toggleCheck(this, 'defensive-posture')"></div><span class="check-label">Absorption Shield</span></label>
+    <label class="check-option"><div class="check-box" id="cb-damage-shield" onclick="toggleCheck(this, 'defensive-posture')"></div><span class="check-label">Damage Shield</span></label>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- GIFTS & SURGES -->
+  <div class="section-header">Calling Gifts &amp; Surges</div>
+  <div class="grid-4" style="margin-bottom:4px;">
+    <div class="field-wrap"><label class="field-label">Offensive Gift</label><input type="text" id="cs-offensive-gift" placeholder=""></div>
+    <div class="field-wrap"><label class="field-label">Defensive Gift</label><input type="text" id="cs-defensive-gift" placeholder=""></div>
+    <div class="field-wrap"><label class="field-label">Offensive Surge</label><input type="text" id="cs-offensive-surge" placeholder=""></div>
+    <div class="field-wrap"><label class="field-label">Defensive Surge</label><input type="text" id="cs-defensive-surge" placeholder=""></div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- BARGAINING CHIP / NOTES -->
+  <div class="section-header">Character Notes</div>
+  <input class="write-line" type="text" placeholder="Backstory note, motivation, or character concept...">
   <input class="write-line" type="text">
   <input class="write-line" type="text">
   <input class="write-line" type="text">
@@ -1012,7 +1046,7 @@ textarea:focus {
 
 
 <!-- ══════════════════════════════════════════════════════════════
-     PAGE II — Abilities, Knowledges & Combat
+     PAGE II — Abilities, Knowledges & Heritage Imprints
 ══════════════════════════════════════════════════════════════ -->
 <div class="sheet-page" id="page2">
   <span class="corner-tl"></span><span class="corner-tr"></span>
@@ -1022,62 +1056,16 @@ textarea:focus {
   <div class="page-inner">
 
   <div class="page-title" style="margin-bottom:2px;">
-    <h1 style="font-size:1.1rem;">Abilities, Knowledges &amp; Combat</h1>
+    <h1 style="font-size:1.1rem;">Abilities, Knowledges &amp; Heritage Imprints</h1>
     <div class="subtitle">Page II of III</div>
   </div>
   <div class="title-rule"><span class="diamond"></span></div>
 
-  <!-- COMBAT CONFIG -->
-  <div class="section-header">Combat Configuration</div>
-
-  <div style="display:flex; align-items:center; gap:6px; margin-bottom:6px; flex-wrap:wrap;">
-    <span style="font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-dim); white-space:nowrap;">Offensive Category:</span>
-    <label class="check-option"><div class="check-box" onclick="toggleCheck(this)"></div><span class="check-label">Forged Combatant (6 CP)</span></label>
-    <label class="check-option"><div class="check-box" onclick="toggleCheck(this)"></div><span class="check-label">Martial Hybrid (5 CP)</span></label>
-    <label class="check-option"><div class="check-box" onclick="toggleCheck(this)"></div><span class="check-label">Pure Resonant (4 CP)</span></label>
-  </div>
-
-  <div class="grid-5 mb-4">
-    <div class="stat-box" style="height:38px;">
-      <input type="text" placeholder="—">
-      <div class="stat-label">Offensive<br>Rating (OR)</div>
-    </div>
-    <div class="stat-box" style="height:44px;">
-      <input type="text" placeholder="—">
-      <div class="stat-label">Base Defensive<br>Rating (BDR)</div>
-    </div>
-    <div class="stat-box" style="height:44px;">
-      <input type="text" placeholder="—">
-      <div class="stat-label">Total Defensive<br>Rating (TDR)</div>
-    </div>
-    <div class="stat-box" style="height:44px;">
-      <input type="text" placeholder="—">
-      <div class="stat-label">Defensive<br>Posture</div>
-    </div>
-    <div class="stat-box" style="height:44px;">
-      <input type="text" placeholder="—">
-      <div class="stat-label">Combat<br>Points</div>
-    </div>
-  </div>
-
-  <div style="display:flex; align-items:center; gap:6px; margin-bottom:8px; flex-wrap:wrap;">
-    <span style="font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-dim); white-space:nowrap;">Defensive Posture:</span>
-    <label class="check-option"><div class="check-box" onclick="toggleCheck(this)"></div><span class="check-label">Dodge</span></label>
-    <label class="check-option"><div class="check-box" onclick="toggleCheck(this)"></div><span class="check-label">Parry</span></label>
-    <label class="check-option"><div class="check-box" onclick="toggleCheck(this)"></div><span class="check-label">Riposte</span></label>
-    <label class="check-option"><div class="check-box" onclick="toggleCheck(this)"></div><span class="check-label">Absorption Shield</span></label>
-    <label class="check-option"><div class="check-box" onclick="toggleCheck(this)"></div><span class="check-label">Damage Shield</span></label>
-  </div>
-
-  <hr class="section-rule">
-
-  <!-- ABILITIES & KNOWLEDGES -->
-  <div class="section-header" style="display:flex; justify-content:space-between; align-items:center;">
-    <span>Abilities &amp; Knowledges &nbsp;·&nbsp; Pool: 22 pts &nbsp;·&nbsp; Forged: 25 pts &nbsp;·&nbsp; Cap: 4</span>
-    <span style="font-family:'Cinzel',serif; font-size:0.62rem; letter-spacing:0.12em; color:#fff8ee;">Points Spent: <span id="ab-points-spent">0</span></span>
-  </div>
-  <div style="font-family:'Crimson Text',serif; font-style:italic; font-size:0.75rem; color:var(--ink-dim); margin-bottom:6px;">
-    Spend pool, then apply Vocation (+1) and Lineage (+2) bonuses. &nbsp;◆ = Knowledge
+  <div class="section-header">Abilities &amp; Knowledges &nbsp;·&nbsp; Pool: 22 pts (Forged: 25 pts) &nbsp;·&nbsp; Cap: 4 &nbsp;·&nbsp; ◆ = Knowledge</div>
+  <div style="font-family:'Crimson Text',serif; font-style:italic; font-size:0.72rem; color:var(--ink-dim); margin-bottom:5px;">
+    Spend pool, then apply Vocation (+1 × 2) and Lineage (+2 × 2) bonuses. Final totals cannot exceed 4.
+    &nbsp;|&nbsp; Lineage: <input type="text" id="cs-lineage-bonus-note" style="width:120px; font-size:0.72rem; display:inline; border:none; border-bottom:0.5px solid var(--line); background:transparent;">
+    &nbsp;Vocation: <input type="text" id="cs-vocation-bonus-note" style="width:120px; font-size:0.72rem; display:inline; border:none; border-bottom:0.5px solid var(--line); background:transparent;">
   </div>
 
   <div class="abilities-grid">
@@ -1129,12 +1117,13 @@ textarea:focus {
         <div class="ability-row"><span class="ability-name knowledge">Engineering</span><div class="ability-pips pip-row" data-max="6" data-group="ab-engineering"></div></div>
         <div class="ability-row"><span class="ability-name knowledge">Medicine</span><div class="ability-pips pip-row" data-max="6" data-group="ab-medicine"></div></div>
         <div class="ability-row"><span class="ability-name knowledge">Investigation</span><div class="ability-pips pip-row" data-max="6" data-group="ab-investigation"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Inscribing</span><div class="ability-pips pip-row" data-max="6" data-group="ab-inscribing"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Provisioning</span><div class="ability-pips pip-row" data-max="6" data-group="ab-provisioning"></div></div>
+        <div class="ability-row"><span class="ability-name knowledge">Craft</span><div class="ability-pips pip-row" data-max="6" data-group="ab-craft"></div></div>
         <div class="ability-row"><span class="ability-name knowledge">Blacksmithing</span><div class="ability-pips pip-row" data-max="6" data-group="ab-blacksmith"></div></div>
         <div class="ability-row"><span class="ability-name knowledge">Alchemy</span><div class="ability-pips pip-row" data-max="6" data-group="ab-alchemy"></div></div>
         <div class="ability-row"><span class="ability-name knowledge">Leatherworking</span><div class="ability-pips pip-row" data-max="6" data-group="ab-leather"></div></div>
         <div class="ability-row"><span class="ability-name knowledge">Tailoring</span><div class="ability-pips pip-row" data-max="6" data-group="ab-tailoring"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Inscribing</span><div class="ability-pips pip-row" data-max="6" data-group="ab-inscribing"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Provisioning</span><div class="ability-pips pip-row" data-max="6" data-group="ab-provisioning"></div></div>
       </div>
 
       <div class="domain-block">
@@ -1154,31 +1143,35 @@ textarea:focus {
   <!-- HERITAGE IMPRINTS -->
   <div class="section-header">Heritage Imprints &nbsp;·&nbsp; Set by Vocation</div>
   <div class="grid-5" style="margin-bottom:4px;">
-    <div class="field-wrap">
-      <label class="field-label">Primary (4)</label>
-      <input type="text" style="height:26px;">
-    </div>
-    <div class="field-wrap">
-      <label class="field-label">Secondary (3)</label>
-      <input type="text" style="height:26px;">
-    </div>
-    <div class="field-wrap">
-      <label class="field-label">Third (2)</label>
-      <input type="text" style="height:26px;">
-    </div>
-    <div class="field-wrap">
-      <label class="field-label">Fourth (1)</label>
-      <input type="text" style="height:26px;">
-    </div>
-    <div class="field-wrap">
-      <label class="field-label">Fifth (1)</label>
-      <input type="text" style="height:26px;">
-    </div>
+    <div class="field-wrap"><label class="field-label">Primary (Locked @ 4)</label><input type="text" id="cs-heritage-primary" style="height:24px;"></div>
+    <div class="field-wrap"><label class="field-label">Secondary (3)</label><input type="text" id="cs-heritage-secondary" style="height:24px;"></div>
+    <div class="field-wrap"><label class="field-label">Third (2)</label><input type="text" id="cs-heritage-third" style="height:24px;"></div>
+    <div class="field-wrap"><label class="field-label">Fourth (1)</label><input type="text" id="cs-heritage-fourth" style="height:24px;"></div>
+    <div class="field-wrap"><label class="field-label">Fifth (1)</label><input type="text" id="cs-heritage-fifth" style="height:24px;"></div>
   </div>
 
   <hr class="section-rule">
 
-  <div style="font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:4px;">Ability / Knowledge Notes</div>
+  <!-- BACKGROUND -->
+  <div class="section-header">Background &amp; Personality</div>
+  <div class="grid-2" style="margin-bottom:5px;">
+    <div>
+      <input class="write-line" type="text" id="cs-motivation" placeholder="Motivation / Drive">
+      <input class="write-line" type="text" id="cs-fear" placeholder="Greatest Fear">
+      <input class="write-line" type="text" id="cs-bond" placeholder="Bond or Obligation">
+    </div>
+    <div>
+      <input class="write-line" type="text" id="cs-trait" placeholder="Personality Trait">
+      <input class="write-line" type="text" id="cs-dissonance" placeholder="Dissonance Trigger">
+      <input class="write-line" type="text" id="cs-backstory" placeholder="Backstory Note">
+    </div>
+  </div>
+
+  <div style="font-family:'Cinzel',serif; font-size:0.5rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:3px;">Equipment &amp; Inventory</div>
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
+  <input class="write-line" type="text">
   <input class="write-line" type="text">
   <input class="write-line" type="text">
 
@@ -1205,145 +1198,87 @@ textarea:focus {
   <!-- RESONANCE -->
   <div class="section-header">Resonance — Path Rating &amp; Wellspring</div>
 
-  <div style="display:grid; grid-template-columns: 1fr auto; gap:8px; margin-bottom:8px; align-items:start;">
+  <div style="display:grid; grid-template-columns:1fr auto; gap:8px; margin-bottom:6px; align-items:start;">
     <div>
-      <div class="formula-block">
-        <div class="f-label">Wellspring Formula</div>
-        <div class="f-main">12 + (1d[Wellspring Die] × 2)</div>
-        <div class="f-note">d8 → 14–28 &nbsp;·&nbsp; d10 → 14–32 &nbsp;·&nbsp; d12 → 14–36</div>
+      <div class="formula-strip">
+        <strong>Formula:</strong> Roll 2× Wellspring Die → Take highest → × 2 → Add to Base &nbsp;|&nbsp;
+        <em style="color:var(--ink-dim);">Hybrid: base 8, die d8 &nbsp;·&nbsp; Pure Resonant: base 12, die d12</em>
       </div>
-      <div style="font-family:'Crimson Text',serif; font-size:0.78rem; color:var(--ink-dim); font-style:italic;">
-        Path Points: &nbsp;True Resonant Caster: 6 pts (cap 4/path) &nbsp;·&nbsp; Hybrid: 3 pts (cap 3/path)
+      <div style="font-family:'Crimson Text',serif; font-size:0.76rem; color:var(--ink-dim);">
+        Path pts: Pure Resonant 6 (cap 4/path) &nbsp;·&nbsp; Hybrid 3 (cap 3/path) &nbsp;·&nbsp; Lineage Affinity stacks on top
       </div>
     </div>
-    <div style="display:grid; grid-template-columns: repeat(3,1fr); gap:5px;">
-      <div class="stat-box" style="height:52px; width:72px;">
-        <input type="text" placeholder="—">
-        <div class="stat-label">Wellspring Die</div>
-      </div>
-      <div class="stat-box" style="height:52px; width:72px;">
-        <input type="text" placeholder="—">
-        <div class="stat-label">Base Wellspring</div>
-      </div>
-      <div class="stat-box" style="height:52px; width:72px;">
-        <input type="text" placeholder="—">
-        <div class="stat-label">Current Wellspring</div>
-      </div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:4px;">
+      <div class="stat-box" style="height:44px; width:64px;"><input type="text" id="cs-wellspring-die-p3" placeholder="—"><div class="stat-label">Wellspring Die</div></div>
+      <div class="stat-box" style="height:44px; width:64px;"><input type="text" id="cs-wellspring-base" placeholder="—"><div class="stat-label">Base Wellspring</div></div>
+      <div class="stat-box" style="height:44px; width:64px;"><input type="text" id="cs-wellspring-max" placeholder="—"><div class="stat-label">Max Wellspring</div></div>
+      <div class="stat-box" style="height:44px; width:64px;"><input type="text" id="cs-wellspring-current" placeholder="—"><div class="stat-label">Current</div></div>
     </div>
   </div>
 
   <!-- PATH CARDS -->
   <div class="path-grid">
-
     <div class="path-card">
-      <div class="path-card-header aeris">
-        <span class="path-name">Aeris</span>
-        <span style="font-family:'Crimson Text',serif; font-size:0.68rem; font-style:italic;">Displacement</span>
-      </div>
+      <div class="path-card-header aeris"><span class="path-name">Aeris</span><span style="font-family:'Crimson Text',serif; font-size:0.65rem; font-style:italic; color:rgba(255,255,255,0.85);">Displacement</span></div>
       <div class="path-card-body">
-        <div class="path-card-meta">
-          <div class="path-attr">Gov. Attr: Agility</div>
-          <div class="pip-row" data-max="6" data-group="path-aeris"></div>
-          <div class="pip-label">Path Rating</div>
-        </div>
-        <div class="path-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+        <div class="path-card-meta"><div class="path-attr">Gov. Attr: Agility</div><div class="pip-row" data-max="6" data-group="path-aeris"></div><div class="pip-label">Path Rating</div></div>
+        <div class="path-rating-box"><input type="text" id="cs-path-aeris" maxlength="1" placeholder="—"></div>
       </div>
     </div>
-
     <div class="path-card">
-      <div class="path-card-header aqua">
-        <span class="path-name">Aqua</span>
-        <span style="font-family:'Crimson Text',serif; font-size:0.68rem; font-style:italic;">Pressure &amp; Absorption</span>
-      </div>
+      <div class="path-card-header aqua"><span class="path-name">Aqua</span><span style="font-family:'Crimson Text',serif; font-size:0.65rem; font-style:italic; color:rgba(255,255,255,0.85);">Pressure &amp; Absorption</span></div>
       <div class="path-card-body">
-        <div class="path-card-meta">
-          <div class="path-attr">Gov. Attr: Vitality</div>
-          <div class="pip-row" data-max="6" data-group="path-aqua"></div>
-          <div class="pip-label">Path Rating</div>
-        </div>
-        <div class="path-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+        <div class="path-card-meta"><div class="path-attr">Gov. Attr: Vitality</div><div class="pip-row" data-max="6" data-group="path-aqua"></div><div class="pip-label">Path Rating</div></div>
+        <div class="path-rating-box"><input type="text" id="cs-path-aqua" maxlength="1" placeholder="—"></div>
       </div>
     </div>
-
     <div class="path-card">
-      <div class="path-card-header ignis">
-        <span class="path-name">Ignis</span>
-        <span style="font-family:'Crimson Text',serif; font-size:0.68rem; font-style:italic;">Combustive Transformation</span>
-      </div>
+      <div class="path-card-header ignis"><span class="path-name">Ignis</span><span style="font-family:'Crimson Text',serif; font-size:0.65rem; font-style:italic; color:rgba(255,255,255,0.85);">Combustive Transformation</span></div>
       <div class="path-card-body">
-        <div class="path-card-meta">
-          <div class="path-attr">Gov. Attr: Intelligence</div>
-          <div class="pip-row" data-max="6" data-group="path-ignis"></div>
-          <div class="pip-label">Path Rating</div>
-        </div>
-        <div class="path-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+        <div class="path-card-meta"><div class="path-attr">Gov. Attr: Intelligence</div><div class="pip-row" data-max="6" data-group="path-ignis"></div><div class="pip-label">Path Rating</div></div>
+        <div class="path-rating-box"><input type="text" id="cs-path-ignis" maxlength="1" placeholder="—"></div>
       </div>
     </div>
-
     <div class="path-card">
-      <div class="path-card-header terra">
-        <span class="path-name">Terra</span>
-        <span style="font-family:'Crimson Text',serif; font-size:0.68rem; font-style:italic;">Stability &amp; Mass</span>
-      </div>
+      <div class="path-card-header terra"><span class="path-name">Terra</span><span style="font-family:'Crimson Text',serif; font-size:0.65rem; font-style:italic; color:rgba(255,255,255,0.85);">Stability &amp; Mass</span></div>
       <div class="path-card-body">
-        <div class="path-card-meta">
-          <div class="path-attr">Gov. Attr: Strength</div>
-          <div class="pip-row" data-max="6" data-group="path-terra"></div>
-          <div class="pip-label">Path Rating</div>
-        </div>
-        <div class="path-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+        <div class="path-card-meta"><div class="path-attr">Gov. Attr: Strength</div><div class="pip-row" data-max="6" data-group="path-terra"></div><div class="pip-label">Path Rating</div></div>
+        <div class="path-rating-box"><input type="text" id="cs-path-terra" maxlength="1" placeholder="—"></div>
       </div>
     </div>
-
     <div class="path-card">
-      <div class="path-card-header vitae">
-        <span class="path-name">Vitae</span>
-        <span style="font-family:'Crimson Text',serif; font-size:0.68rem; font-style:italic;">Adaptive Life</span>
-      </div>
+      <div class="path-card-header vitae"><span class="path-name">Vitae</span><span style="font-family:'Crimson Text',serif; font-size:0.65rem; font-style:italic; color:rgba(255,255,255,0.85);">Adaptive Life</span></div>
       <div class="path-card-body">
-        <div class="path-card-meta">
-          <div class="path-attr">Gov. Attr: Wisdom</div>
-          <div class="pip-row" data-max="6" data-group="path-vitae"></div>
-          <div class="pip-label">Path Rating</div>
-        </div>
-        <div class="path-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+        <div class="path-card-meta"><div class="path-attr">Gov. Attr: Wisdom</div><div class="pip-row" data-max="6" data-group="path-vitae"></div><div class="pip-label">Path Rating</div></div>
+        <div class="path-rating-box"><input type="text" id="cs-path-vitae" maxlength="1" placeholder="—"></div>
       </div>
     </div>
-
     <div class="path-card">
-      <div class="path-card-header obtenebrate">
-        <span class="path-name">Obtenebrate</span>
-        <span style="font-family:'Crimson Text',serif; font-size:0.68rem; font-style:italic;">Perceptual Distortion</span>
-      </div>
+      <div class="path-card-header obtenebrate"><span class="path-name">Obtenebrate</span><span style="font-family:'Crimson Text',serif; font-size:0.65rem; font-style:italic; color:rgba(255,255,255,0.85);">Perceptual Distortion</span></div>
       <div class="path-card-body">
-        <div class="path-card-meta">
-          <div class="path-attr">Gov. Attr: Agility</div>
-          <div class="pip-row" data-max="6" data-group="path-obtene"></div>
-          <div class="pip-label">Path Rating</div>
-        </div>
-        <div class="path-rating-box"><input type="text" maxlength="1" placeholder="—"></div>
+        <div class="path-card-meta"><div class="path-attr">Gov. Attr: Agility</div><div class="pip-row" data-max="6" data-group="path-obtene"></div><div class="pip-label">Path Rating</div></div>
+        <div class="path-rating-box"><input type="text" id="cs-path-obtene" maxlength="1" placeholder="—"></div>
       </div>
     </div>
-
-  </div><!-- /path-grid -->
+  </div>
 
   <hr class="section-rule">
 
   <!-- LIABILITIES & BOONS -->
-  <div class="section-header">Liabilities &amp; Boons &nbsp;·&nbsp; Up to 6 Severity Points &nbsp;·&nbsp; 1:1 Conversion</div>
-  <div style="font-family:'Crimson Text',serif; font-style:italic; font-size:0.75rem; color:var(--ink-dim); margin-bottom:6px;">
-    Liabilities are permanent and cannot be bought off. Severity Points convert 1:1 to Boon Points.
+  <div class="section-header">Liabilities &amp; Boons &nbsp;·&nbsp; Up to 6 Severity Points &nbsp;·&nbsp; Unused points convert to Freebie Points</div>
+  <div style="font-family:'Crimson Text',serif; font-style:italic; font-size:0.72rem; color:var(--ink-dim); margin-bottom:5px;">
+    Liabilities are permanent. Severity points → spend on Boons and/or convert remainder to Freebie Points 1:1.
   </div>
 
   <div class="liab-boon-grid">
     <div>
       <div class="liab-col-header liab">Liabilities</div>
-      <div class="liab-row"><span class="sev-label">Severity:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Liability name..."></div>
-      <div class="liab-row"><span class="sev-label">Severity:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Liability name..."></div>
-      <div class="liab-row"><span class="sev-label">Severity:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Liability name..."></div>
-      <div class="liab-row"><span class="sev-label">Severity:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Liability name..."></div>
-      <div class="liab-row"><span class="sev-label">Severity:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Liability name..."></div>
-      <div class="liab-row"><span class="sev-label">Severity:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Liability name..."></div>
+      <div class="liab-row"><span class="sev-label">Severity:</span><div class="sev-box"><input type="text" id="cs-lib-sev-1" maxlength="1"></div><input class="liab-name-line" type="text" id="cs-lib-name-1" placeholder="Liability name..."></div>
+      <div class="liab-row"><span class="sev-label">Severity:</span><div class="sev-box"><input type="text" id="cs-lib-sev-2" maxlength="1"></div><input class="liab-name-line" type="text" id="cs-lib-name-2" placeholder="Liability name..."></div>
+      <div class="liab-row"><span class="sev-label">Severity:</span><div class="sev-box"><input type="text" id="cs-lib-sev-3" maxlength="1"></div><input class="liab-name-line" type="text" id="cs-lib-name-3" placeholder="Liability name..."></div>
+      <div class="liab-row"><span class="sev-label">Severity:</span><div class="sev-box"><input type="text" id="cs-lib-sev-4" maxlength="1"></div><input class="liab-name-line" type="text" id="cs-lib-name-4" placeholder="Liability name..."></div>
+      <div class="liab-row"><span class="sev-label">Severity:</span><div class="sev-box"><input type="text" id="cs-lib-sev-5" maxlength="1"></div><input class="liab-name-line" type="text" id="cs-lib-name-5" placeholder="Liability name..."></div>
+      <div class="liab-row"><span class="sev-label">Severity:</span><div class="sev-box"><input type="text" id="cs-lib-sev-6" maxlength="1"></div><input class="liab-name-line" type="text" id="cs-lib-name-6" placeholder="Liability name..."></div>
       <div class="tracker-row">
         <span class="tracker-label">Total Severity:</span>
         <div class="pip-row tracker-pips" data-max="6" data-group="sev-tracker"></div>
@@ -1351,15 +1286,15 @@ textarea:focus {
     </div>
     <div>
       <div class="liab-col-header boon">Boons</div>
-      <div class="liab-row"><span class="sev-label">Cost:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Boon name..."></div>
-      <div class="liab-row"><span class="sev-label">Cost:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Boon name..."></div>
-      <div class="liab-row"><span class="sev-label">Cost:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Boon name..."></div>
-      <div class="liab-row"><span class="sev-label">Cost:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Boon name..."></div>
-      <div class="liab-row"><span class="sev-label">Cost:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Boon name..."></div>
-      <div class="liab-row"><span class="sev-label">Cost:</span><div class="sev-box"><input type="text" maxlength="1"></div><input class="liab-name-line" type="text" placeholder="Boon name..."></div>
+      <div class="liab-row"><span class="sev-label">Cost:</span><div class="sev-box"><input type="text" id="cs-boon-cost-1" maxlength="1"></div><input class="liab-name-line" type="text" id="cs-boon-name-1" placeholder="Boon name..."></div>
+      <div class="liab-row"><span class="sev-label">Cost:</span><div class="sev-box"><input type="text" id="cs-boon-cost-2" maxlength="1"></div><input class="liab-name-line" type="text" id="cs-boon-name-2" placeholder="Boon name..."></div>
+      <div class="liab-row"><span class="sev-label">Cost:</span><div class="sev-box"><input type="text" id="cs-boon-cost-3" maxlength="1"></div><input class="liab-name-line" type="text" id="cs-boon-name-3" placeholder="Boon name..."></div>
+      <div class="liab-row"><span class="sev-label">Cost:</span><div class="sev-box"><input type="text" id="cs-boon-cost-4" maxlength="1"></div><input class="liab-name-line" type="text" id="cs-boon-name-4" placeholder="Boon name..."></div>
+      <div class="liab-row"><span class="sev-label">Cost:</span><div class="sev-box"><input type="text" id="cs-boon-cost-5" maxlength="1"></div><input class="liab-name-line" type="text" id="cs-boon-name-5" placeholder="Boon name..."></div>
+      <div class="liab-row"><span class="sev-label">Cost:</span><div class="sev-box"><input type="text" id="cs-boon-cost-6" maxlength="1"></div><input class="liab-name-line" type="text" id="cs-boon-name-6" placeholder="Boon name..."></div>
       <div class="tracker-row">
-        <span class="tracker-label">Total Boons:</span>
-        <div class="pip-row tracker-pips" data-max="6" data-group="boon-tracker"></div>
+        <span class="tracker-label">Pts to Freebie Points:</span>
+        <div class="stat-box" style="width:30px; height:20px; display:inline-flex;"><input type="text" id="cs-liability-fp-carry" placeholder="0" style="font-size:0.75rem;"></div>
       </div>
     </div>
   </div>
@@ -1367,67 +1302,48 @@ textarea:focus {
   <hr class="section-rule">
 
   <!-- FREEBIE POINTS + RESOURCES -->
-  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:8px;">
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:6px;">
 
     <div>
-      <div class="section-header">Freebie Points &nbsp;·&nbsp; 10 pts &nbsp;·&nbsp; Forged: 15 pts</div>
+      <div class="section-header">Freebie Points &nbsp;·&nbsp; Base: 15 pts &nbsp;·&nbsp; Forged: +5 (total 20)</div>
       <table class="fp-table">
-        <tr><td>Primary Rating</td><td class="fp-cost">8 FP</td></tr>
-        <tr><td>Ability / Knowledge</td><td class="fp-cost">2 FP</td></tr>
-        <tr><td>Path Point</td><td class="fp-cost">10 FP</td></tr>
-        <tr><td>Resources / Finances</td><td class="fp-cost">2 FP</td></tr>
+        <tr><td>Primary Rating</td><td class="fp-cost">8 FP / +1</td><td class="fp-spent-cell"><input type="text" id="cs-fp-ratings" placeholder="0"></td></tr>
+        <tr><td>Ability / Knowledge</td><td class="fp-cost">2 FP / +1</td><td class="fp-spent-cell"><input type="text" id="cs-fp-abilities" placeholder="0"></td></tr>
+        <tr><td>Path Point</td><td class="fp-cost">10 FP / +1</td><td class="fp-spent-cell"><input type="text" id="cs-fp-paths" placeholder="0"></td></tr>
+        <tr><td>Resources / Finances</td><td class="fp-cost">Varies</td><td class="fp-spent-cell"><input type="text" id="cs-fp-resources" placeholder="0"></td></tr>
+        <tr><td>From Liabilities</td><td class="fp-cost">+X carry</td><td class="fp-spent-cell"><input type="text" id="cs-fp-from-liabilities" placeholder="0"></td></tr>
       </table>
-      <div style="display:flex; align-items:center; gap:6px; margin-top:6px;">
-        <span style="font-family:'Crimson Text',serif; font-size:0.78rem; color:var(--ink-dim);">FP Remaining:</span>
-        <div class="stat-box" style="width:44px; height:28px;"><input type="text" placeholder="—" style="font-size:0.85rem;"></div>
+      <div style="display:flex; align-items:center; gap:6px; margin-top:5px;">
+        <span style="font-family:'Crimson Text',serif; font-size:0.76rem; color:var(--ink-dim);">Total Pool:</span>
+        <div class="stat-box" style="width:36px; height:24px;"><input type="text" id="cs-fp-total" placeholder="—" style="font-size:0.8rem;"></div>
+        <span style="font-family:'Crimson Text',serif; font-size:0.76rem; color:var(--ink-dim);">FP Remaining:</span>
+        <div class="stat-box" style="width:36px; height:24px;"><input type="text" id="cs-fp-remaining" placeholder="—" style="font-size:0.8rem;"></div>
       </div>
     </div>
 
     <div>
-      <div class="section-header">Resources &amp; Finances</div>
-      <div style="font-family:'Crimson Text',serif; font-style:italic; font-size:0.72rem; color:var(--ink-dim); margin-bottom:5px;">Purchased with FP only. Cap: Rank 3 at creation.</div>
-      <div class="grid-3 mb-6">
-        <div class="stat-box" style="height:38px;"><input type="text" placeholder="Rank 1 = 100 MK" style="font-size:0.65rem;"><div class="stat-label">Rank 1 · 100 MK</div></div>
-        <div class="stat-box" style="height:38px;"><input type="text" placeholder="Rank 2 = 500 MK" style="font-size:0.65rem;"><div class="stat-label">Rank 2 · 500 MK</div></div>
-        <div class="stat-box" style="height:38px;"><input type="text" placeholder="Rank 3 = 2,500 MK" style="font-size:0.65rem;"><div class="stat-label">Rank 3 · 2,500 MK</div></div>
+      <div class="section-header">Resources &amp; Finances &nbsp;·&nbsp; FP only &nbsp;·&nbsp; Cap: Rank 3</div>
+      <div style="font-family:'Crimson Text',serif; font-style:italic; font-size:0.7rem; color:var(--ink-dim); margin-bottom:4px;">Financial Rank — purchased with Freebie Points exclusively.</div>
+      <div class="grid-4 mb-6">
+        <div class="stat-box" style="height:36px;"><input type="text" id="cs-wealth-rank" placeholder="0" style="font-size:0.85rem;"><div class="stat-label">Wealth Rank</div></div>
+        <div class="stat-box" style="height:36px;"><input type="text" id="cs-wealth-marks" placeholder="0 MK" style="font-size:0.72rem;"><div class="stat-label">Starting Marks</div></div>
+        <div class="stat-box" style="height:36px;"><input type="text" id="cs-wealth-fp-cost" placeholder="FP" style="font-size:0.72rem;"><div class="stat-label">FP Cost</div></div>
+        <div class="stat-box" style="height:36px;"><input type="text" id="cs-current-marks" placeholder="—"><div class="stat-label">Current Marks</div></div>
       </div>
-      <div style="font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:3px;">Social Resources</div>
-      <input class="write-line" type="text">
-      <input class="write-line" type="text">
-      <input class="write-line" type="text">
+      <div style="font-family:'Cinzel',serif; font-size:0.5rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:3px;">Social Resources</div>
+      <input class="write-line" type="text" id="cs-social-resource-1" placeholder="">
+      <input class="write-line" type="text" id="cs-social-resource-2" placeholder="">
+      <input class="write-line" type="text" id="cs-social-resource-3" placeholder="">
+      <input class="write-line" type="text" id="cs-social-resource-4" placeholder="">
+      <input class="write-line" type="text" id="cs-social-resource-5" placeholder="">
     </div>
 
   </div>
 
   <hr class="section-rule">
 
-  <!-- BACKGROUND & PERSONALITY -->
-  <div class="section-header">Background, Personality &amp; Notes</div>
-
-  <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 14px; margin-bottom:6px;">
-    <div>
-      <input class="write-line" type="text" placeholder="Motivation / Drive">
-      <input class="write-line" type="text" placeholder="Greatest Fear">
-      <input class="write-line" type="text" placeholder="Bond or Obligation">
-    </div>
-    <div>
-      <input class="write-line" type="text" placeholder="Personality Trait">
-      <input class="write-line" type="text" placeholder="Dissonance Trigger">
-      <input class="write-line" type="text" placeholder="Backstory Note">
-    </div>
-  </div>
-
-  <div style="font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:3px;">Equipment &amp; Inventory</div>
-  <input class="write-line" type="text">
-  <input class="write-line" type="text">
-  <input class="write-line" type="text">
-  <input class="write-line" type="text">
-  <input class="write-line" type="text">
-  <input class="write-line" type="text">
-
-  <hr class="section-rule" style="margin:12px 0;">
-
-  <div style="font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:3px;">Session Notes</div>
+  <!-- SESSION NOTES -->
+  <div class="section-header">Session Notes</div>
   <input class="write-line" type="text">
   <input class="write-line" type="text">
   <input class="write-line" type="text">
@@ -1441,65 +1357,9 @@ textarea:focus {
 </div><!-- /pages -->
 
 <script>
-const STORAGE_KEY = 'rivendawn-sheet';
-
-/* ═══ SAVE & LOAD ═══ */
-function saveSheet() {
-  const data = { pips: pipState, inputs: {}, checks: [] };
-
-  // Save all text inputs by a generated key (id or index)
-  document.querySelectorAll('input[type="text"], textarea').forEach((el, i) => {
-    const key = el.id || el.name || `input-${i}`;
-    data.inputs[key] = el.value;
-  });
-
-  // Save checked checkboxes by index
-  document.querySelectorAll('.check-box').forEach((el, i) => {
-    if (el.classList.contains('checked')) data.checks.push(i);
-  });
-
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
-
-function loadSheet() {
-  const raw = localStorage.getItem(STORAGE_KEY);
-  if (!raw) return;
-  try {
-    const data = JSON.parse(raw);
-
-    // Restore pips
-    if (data.pips) {
-      Object.assign(pipState, data.pips);
-      Object.keys(pipState).forEach(group => {
-        syncPips(group);
-        // Sync number inputs in primary/path cards
-        const card = document.querySelector(`[data-group="${group}"]`)?.closest('.primary-card, .path-card');
-        if (card) {
-          const input = card.querySelector('input[type="text"][maxlength="1"]');
-          if (input) input.value = pipState[group] || '';
-        }
-      });
-      updateAbilityPoints();
-    }
-
-    // Restore text inputs
-    if (data.inputs) {
-      document.querySelectorAll('input[type="text"], textarea').forEach((el, i) => {
-        const key = el.id || el.name || `input-${i}`;
-        if (data.inputs[key] !== undefined) el.value = data.inputs[key];
-      });
-    }
-
-    // Restore checkboxes
-    if (data.checks) {
-      document.querySelectorAll('.check-box').forEach((el, i) => {
-        el.classList.toggle('checked', data.checks.includes(i));
-      });
-    }
-  } catch(e) { console.warn('Could not restore sheet data:', e); }
-}
-
-/* ═══ PIP INITIALIZATION ═══ */
+/* ════════════════════════════════════════════════════
+   PIP INITIALIZATION
+════════════════════════════════════════════════════ */
 document.querySelectorAll('.pip-row[data-max]').forEach(row => {
   const max = parseInt(row.dataset.max);
   const group = row.dataset.group;
@@ -1513,30 +1373,18 @@ document.querySelectorAll('.pip-row[data-max]').forEach(row => {
   }
 });
 
-/* ═══ PIP CLICK — fill up to clicked, unfill all if clicking filled last ═══ */
 const pipState = {};
 
 function handlePipClick(group, val) {
   const current = pipState[group] || 0;
   pipState[group] = (current === val) ? 0 : val;
   syncPips(group);
-
+  // Sync rating input if present
   const card = document.querySelector(`[data-group="${group}"]`)?.closest('.primary-card, .path-card');
   if (card) {
-    const input = card.querySelector('input[type="text"][maxlength="1"]');
+    const input = card.querySelector('input[maxlength="1"]');
     if (input) input.value = pipState[group] || '';
   }
-
-  updateAbilityPoints();
-  saveSheet();
-}
-
-function updateAbilityPoints() {
-  const total = Object.entries(pipState)
-    .filter(([key]) => key.startsWith('ab-'))
-    .reduce((sum, [, val]) => sum + val, 0);
-  const el = document.getElementById('ab-points-spent');
-  if (el) el.textContent = total;
 }
 
 function syncPips(group) {
@@ -1546,7 +1394,7 @@ function syncPips(group) {
   });
 }
 
-/* ═══ Typing in the rating box syncs pips ═══ */
+// Sync rating box → pips
 document.querySelectorAll('.primary-rating-box input, .path-rating-box input').forEach(input => {
   input.addEventListener('input', () => {
     const card = input.closest('.primary-card, .path-card');
@@ -1557,44 +1405,416 @@ document.querySelectorAll('.primary-rating-box input, .path-rating-box input').f
     const val = parseInt(input.value) || 0;
     pipState[group] = Math.min(val, 6);
     syncPips(group);
-    saveSheet();
   });
 });
 
-/* ═══ Save all text inputs on change ═══ */
-document.querySelectorAll('input[type="text"], textarea').forEach(input => {
-  input.addEventListener('input', saveSheet);
-});
-
-/* ═══ CHECKBOX TOGGLE ═══ */
-function toggleCheck(el) {
+/* ════════════════════════════════════════════════════
+   CHECKBOX TOGGLE (radio-style per group)
+════════════════════════════════════════════════════ */
+function toggleCheck(el, group) {
+  if (group) {
+    // Radio-style: uncheck others in same group
+    document.querySelectorAll(`[onclick*="${group}"]`).forEach(other => {
+      other.classList.remove('checked');
+    });
+  }
   el.classList.toggle('checked');
-  saveSheet();
 }
 
-/* ═══ LOAD ON START ═══ */
-window.addEventListener('load', () => { loadSheet(); scalePages(); });
+/* ════════════════════════════════════════════════════
+   SKILL ID MAP (prebuild → sheet)
+════════════════════════════════════════════════════ */
+const SKILL_MAP = {
+  'sk-acrobatics':         'ab-acrobatics',
+  'sk-athletics':          'ab-athletics',
+  'sk-climb':              'ab-climb',
+  'sk-endurance':          'ab-endurance',
+  'sk-swim':               'ab-swim',
+  'sk-survival':           'ab-survival',
+  'sk-nature':             'ab-nature',
+  'sk-environmental_science': 'ab-enviro',
+  'sk-deception':          'ab-deception',
+  'sk-diplomacy':          'ab-diplomacy',
+  'sk-intimidation':       'ab-intimidation',
+  'sk-performance':        'ab-performance',
+  'sk-persuasion':         'ab-persuasion',
+  'sk-perception':         'ab-perception',
+  'sk-insight':            'ab-insight',
+  'sk-psychology':         'ab-psychology',
+  'sk-combat_medicine':    'ab-combatmed',
+  'sk-disable_device':     'ab-disable',
+  'sk-sleight_of_hand':    'ab-sleight',
+  'sk-engineering':        'ab-engineering',
+  'sk-medicine':           'ab-medicine',
+  'sk-investigation':      'ab-investigation',
+  'sk-inscribing':         'ab-inscribing',
+  'sk-provisioning':       'ab-provisioning',
+  'sk-combat_focus':       'ab-combatfocus',
+  'sk-reaction_timing':    'ab-reaction',
+  'sk-tactics':            'ab-tactics',
+  'sk-weapon_mastery':     'ab-weapon',
+  'sk-navigation':         'ab-navigation',
+  'sk-military_history':   'ab-milhistory',
+  'sk-resonant_infusion':  'ab-resinfusion',
+  'sk-soothsaying':        'ab-soothsaying',
+  'sk-resonance_theory':   'ab-restheory',
+  'sk-paths__resonant_':   'ab-paths',
+  'sk-rivendawn_lore':     'ab-rdlore',
+  'sk-craft':              'ab-craft',
+  'sk-political_theory':   'ab-political-theory',
+};
 
-/* ═══ KEYBOARD NAV — Tab between write-lines naturally ═══ */
-// Already works via native tab order
+/* ════════════════════════════════════════════════════
+   IMPORT LOGIC
+════════════════════════════════════════════════════ */
+function applyBuild(data) {
+  const s = data;
 
-/* ═══ SCALE-TO-FIT — scales .page-inner to fit within .sheet-page ═══ */
-const PAGE_H_PX = 11 * 96;  // 1056px at 96dpi
+  // Helper: set field value
+  const setField = (id, val) => {
+    const el = document.getElementById(id);
+    if (el && val !== undefined && val !== null) el.value = val;
+  };
+
+  // Helper: set pip group + rating input
+  const setRating = (group, inputId, val) => {
+    const v = parseInt(val) || 0;
+    pipState[group] = Math.min(v, 6);
+    syncPips(group);
+    const el = document.getElementById(inputId);
+    if (el) el.value = v || '';
+  };
+
+  // Helper: check a checkbox by id
+  const checkBox = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('checked');
+  };
+
+  const uncheckGroup = (group) => {
+    document.querySelectorAll(`[onclick*="${group}"]`).forEach(el => el.classList.remove('checked'));
+  };
+
+  // ── IDENTITY ──────────────────────────────────────
+  setField('cs-name', s.charName);
+  if (s.lineage && window.LINEAGES?.[s.lineage]) {
+    setField('cs-lineage', window.LINEAGES[s.lineage].name);
+  } else if (s.lineage) {
+    setField('cs-lineage', s.lineage);
+  }
+  if (s.vocation) {
+    setField('cs-vocation', s.vocationName || s.vocation);
+    setField('cs-heritage', s.vocationHeritage || '');
+    setField('cs-heritage-primary', s.vocationHeritage || '');
+  }
+
+  const callingKey = s.meleeCalling || s.casterCalling || '';
+
+  // Always set calling name directly from exported JSON — no lookup needed
+  if (s.callingName) setField('cs-calling', s.callingName);
+
+  if (callingKey && window.CALLINGS?.[callingKey]) {
+    const calling = window.CALLINGS[callingKey];
+    setField('cs-health-die', calling.healthDie);
+    setField('cs-armor-tier', calling.armorStart);
+    setField('cs-wellspring-die', calling.wellspring);
+    setField('cs-wellspring-die-p3', calling.wellspring);
+    if (calling.category === 'caster') {
+      setField('cs-wellspring-base', '12');
+    } else if (calling.type === 'hybrid') {
+      setField('cs-wellspring-base', '8');
+    }
+  }
+
+  // Gifts & Surges — always read directly from exported JSON
+  if (s.offensiveGift)  setField('cs-offensive-gift',  s.offensiveGift);
+  if (s.defensiveGift)  setField('cs-defensive-gift',  s.defensiveGift);
+  if (s.offensiveSurge) setField('cs-offensive-surge', s.offensiveSurge);
+  if (s.defensiveSurge) setField('cs-defensive-surge', s.defensiveSurge);
+
+  setField('cs-dynamic', s.dynamic);
+  setField('cs-discipline', s.discipline);
+
+  // Harmonic identity bonus note
+  if (s.dynamic && s.discipline) {
+    const dynName = s.dynamic.charAt(0).toUpperCase() + s.dynamic.slice(1);
+    const discName = s.discipline.charAt(0).toUpperCase() + s.discipline.slice(1);
+  }
+
+  // Calling type checkbox
+  uncheckGroup('offensive-category');
+  const isForged = s.combatType === 'forged';
+  const isHybrid = s.combatType === 'hybrid';
+  const callingData = callingKey ? window.CALLINGS?.[callingKey] : null;
+  if (isForged)            checkBox('cb-forged');
+  else if (isHybrid)       checkBox('cb-hybrid');
+  else if (callingData?.type === 'pure')    checkBox('cb-pure');
+  else if (callingData?.type === 'cadence') checkBox('cb-cadence');
+  else if (callingData?.type === 'unique')  checkBox('cb-stands-alone');
+
+  // Calling type text
+  if (isForged) setField('cs-calling-type', 'Forged Combatant');
+  else if (isHybrid) setField('cs-calling-type', 'Resonant Hybrid');
+  else if (callingData?.type === 'pure') setField('cs-calling-type', 'True Resonant Caster');
+  else if (callingData?.type === 'cadence') setField('cs-calling-type', 'Cadence Discipline');
+  else if (callingData?.type === 'unique') setField('cs-calling-type', 'Stands Alone');
+
+  // Combat points
+  if (isForged) setField('cs-combat-pts', '6');
+  else if (isHybrid) setField('cs-combat-pts', '5');
+  else if (callingData?.type === 'pure') setField('cs-combat-pts', '4');
+
+  // OR / BDR / TDR / Defensive Posture — Hybrid/Forged
+  if (s.combatOR)  setField('cs-or',  s.combatOR);
+  if (s.combatBDR) setField('cs-bdr', s.combatBDR);
+  if (s.combatTDR) setField('cs-tdr', s.combatTDR);
+
+  // OR / BDR — Pure Resonant
+  if (s.pureOR)  setField('cs-or',  s.pureOR);
+  if (s.pureBDR) setField('cs-bdr', s.pureBDR);
+
+  // Defensive Posture checkbox
+  const postureVal = s.combatPosture || s.purePosture || '';
+  if (postureVal) {
+    uncheckGroup('defensive-posture');
+    const postureMap = {
+      'dodge':            'cb-dodge',
+      'parry':            'cb-parry',
+      'riposte':          'cb-riposte',
+      'absorption-aqua':  'cb-absorption',
+      'damage-shield':    'cb-damage-shield',
+      'dodge-aeris':      'cb-dodge',
+    };
+    const cbId = postureMap[postureVal.toLowerCase()];
+    if (cbId) checkBox(cbId);
+  }
+
+  // ── PRIMARY RATINGS ───────────────────────────────
+  const primMap = {
+    agility:      ['primary-agi', 'cs-rat-agility'],
+    strength:     ['primary-str', 'cs-rat-strength'],
+    vitality:     ['primary-vit', 'cs-rat-vitality'],
+    intelligence: ['primary-int', 'cs-rat-intelligence'],
+    wisdom:       ['primary-wis', 'cs-rat-wisdom'],
+    social:       ['primary-soc', 'cs-rat-social'],
+  };
+  Object.entries(primMap).forEach(([key, [group, inputId]]) => {
+    const val = s[`rat-${key}`] || s.ratings?.[key];
+    if (val) setRating(group, inputId, val);
+  });
+
+  // ── DEFENSIVE PROFILE ──────────────────────────────
+  if (s.hpResult || s['hp-result']) {
+    setField('cs-max-hp', s.hpResult || s['hp-result']);
+  }
+  if (s.apResult || s['ap-result']) {
+    setField('cs-max-ap', s.apResult || s['ap-result']);
+  }
+  if (s['hp-roll'] && callingData) {
+    const roll = parseInt(s['hp-roll']) || 0;
+    if (roll > 0) setField('cs-max-hp', 24 + roll * 3);
+  }
+  if (s['ap-tier'] && s['hp-roll'] && callingData) {
+    const tier = parseInt(s['ap-tier']) || 0;
+    const hp = 24 + (parseInt(s['hp-roll']) || 0) * 3;
+    if (tier > 0 && hp > 0) {
+      setField('cs-max-ap', Math.ceil(hp * (tier / 10)));
+      setField('cs-armor-tier-calc', tier);
+    }
+  }
+
+  // ── INITIATIVE ─────────────────────────────────────
+  setField('cs-initiative-rating', s['init-rating'] || s.initiativeRating);
+
+  // ── ABILITIES & KNOWLEDGES ─────────────────────────
+  // Build lineage + vocation bonus notes
+  if (s.lineage && window.LINEAGES?.[s.lineage]) {
+    const lin = window.LINEAGES[s.lineage];
+    const bonusStr = lin.innate.map(b => `${b.name} +2`).join(', ');
+    setField('cs-lineage-bonus-note', bonusStr);
+  }
+  if (s.vocation && window.VOCATIONS?.[s.vocation] && s.vocSkills?.length) {
+    const voc = window.VOCATIONS[s.vocation];
+    const bonusStr = s.vocSkills.map(idx => `${voc.skills[idx]?.name} +1`).join(', ');
+    setField('cs-vocation-bonus-note', bonusStr);
+  }
+
+  // Apply skill values to pips from exported JSON skills object
+  // The skills object contains pool-spent values; we need to add bonuses back
+  // Bonuses are already baked into the total in the export (spent + bonus = total)
+  if (s.skills) {
+    Object.entries(s.skills).forEach(([preId, val]) => {
+      const sheetGroup = SKILL_MAP[preId];
+      if (!sheetGroup) return;
+      const total = parseInt(val) || 0;
+      if (total > 0) {
+        pipState[sheetGroup] = Math.min(total, 6);
+        syncPips(sheetGroup);
+      }
+    });
+  }
+
+  // ── PATH RATINGS ───────────────────────────────────
+  const pathMap = {
+    aeris:        ['path-aeris',  'cs-path-aeris'],
+    aqua:         ['path-aqua',   'cs-path-aqua'],
+    ignis:        ['path-ignis',  'cs-path-ignis'],
+    terra:        ['path-terra',  'cs-path-terra'],
+    vitae:        ['path-vitae',  'cs-path-vitae'],
+    obtenebrate:  ['path-obtene', 'cs-path-obtene'],
+  };
+  Object.entries(pathMap).forEach(([key, [group, inputId]]) => {
+    const val = s[`path-${key}`] || s.paths?.[key];
+    if (val) setRating(group, inputId, val);
+  });
+
+  // Wellspring result
+  if (s.wsResult) {
+    setField('cs-wellspring-max', s.wsResult);
+    setField('cs-wellspring-current', s.wsResult);
+  }
+
+  // ── LIABILITIES ────────────────────────────────────
+  if (s.liabilities) {
+    let row = 1;
+    Object.entries(s.liabilities).forEach(([name, sev]) => {
+      if (row > 6 || !sev) return;
+      setField(`cs-lib-name-${row}`, name);
+      setField(`cs-lib-sev-${row}`, sev);
+      row++;
+    });
+  }
+
+  // ── BOONS ──────────────────────────────────────────
+  if (s.selectedBoons && window.BOONS) {
+    s.selectedBoons.forEach((boonId, i) => {
+      if (i >= 6) return;
+      const boon = window.BOONS.find(b => b.id === boonId);
+      if (boon) {
+        setField(`cs-boon-name-${i+1}`, boon.name);
+        setField(`cs-boon-cost-${i+1}`, boon.cost);
+      }
+    });
+  }
+
+  // ── FREEBIE POINTS ─────────────────────────────────
+  const fpRatings   = parseInt(s['fp-ratings'])   || 0;
+  const fpAbilities = parseInt(s['fp-abilities'])  || 0;
+  const fpPaths     = parseInt(s['fp-paths'])      || 0;
+  const fpResources = parseInt(s['fp-resources'])  || 0;
+  const fpCarry     = Math.max(0, (parseInt(s.liabilityTotal) || 0) - (parseInt(s.boonSpent) || 0));
+  const fpBase      = isForged ? 20 : 15;
+  const fpTotal     = fpBase + fpCarry;
+  const fpSpent     = fpRatings + fpAbilities + fpPaths + fpResources;
+
+  setField('cs-fp-ratings',        fpRatings || '');
+  setField('cs-fp-abilities',      fpAbilities || '');
+  setField('cs-fp-paths',          fpPaths || '');
+  setField('cs-fp-resources',      fpResources || '');
+  setField('cs-fp-from-liabilities', fpCarry || '');
+  setField('cs-fp-total',          fpTotal);
+  setField('cs-fp-remaining',      fpTotal - fpSpent);
+  setField('cs-liability-fp-carry', fpCarry || '');
+
+  // ── RESOURCES & FINANCES ────────────────────────────
+  const wealthRanks = { 0: {marks:'0 MK', fp:'0 FP'}, 1: {marks:'100 MK', fp:'1 FP'}, 2: {marks:'500 MK', fp:'2 FP'}, 3: {marks:'2,500 MK', fp:'5 FP'} };
+  const wr = parseInt(s.selectedWealthRank) || 0;
+  setField('cs-wealth-rank',  wr);
+  setField('cs-wealth-marks', wealthRanks[wr]?.marks || '0 MK');
+  setField('cs-wealth-fp-cost', wealthRanks[wr]?.fp || '0 FP');
+
+  // Social resources
+  const resNames = ['informant','benefactor','underworld','cache','legal','renown'];
+  let resRow = 1;
+  resNames.forEach(key => {
+    const rank = parseInt(s[`res-${key}`]) || 0;
+    if (rank > 0 && resRow <= 5) {
+      const nameMap = {
+        informant:'Informant Network', benefactor:'Benefactor',
+        underworld:'Underworld Contacts', cache:'Emergency Cache',
+        legal:'Legal Immunity', renown:'Region Renown'
+      };
+      setField(`cs-social-resource-${resRow}`, `${nameMap[key]} — Rank ${rank}`);
+      resRow++;
+    }
+  });
+
+  // Flash success
+  showImportFlash();
+}
+
+function showImportFlash() {
+  const flash = document.getElementById('importFlash');
+  flash.style.display = 'block';
+  setTimeout(() => { flash.style.display = 'none'; }, 2800);
+}
+
+/* ════════════════════════════════════════════════════
+   IMPORT FROM LOCALSTORAGE (#6 — seamless handoff)
+════════════════════════════════════════════════════ */
+function importFromLocalStorage() {
+  try {
+    const raw = localStorage.getItem('rivendawn_prebuild');
+    if (!raw) {
+      alert('No Pre-Builder data found. Complete the Pre-Builder first, then return here to import.');
+      return;
+    }
+    const data = JSON.parse(raw);
+    applyBuild(data);
+  } catch(e) {
+    alert('Could not read Pre-Builder data. Please try importing the JSON file instead.');
+  }
+}
+
+/* ════════════════════════════════════════════════════
+   IMPORT FROM JSON FILE
+════════════════════════════════════════════════════ */
+function importFromFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      applyBuild(data);
+    } catch(err) {
+      alert('Could not parse the JSON file. Please make sure it was exported from the Rivendawn Pre-Builder.');
+    }
+  };
+  reader.readAsText(file);
+  // Reset input so same file can be re-imported
+  event.target.value = '';
+}
+
+/* ════════════════════════════════════════════════════
+   CLEAR SHEET
+════════════════════════════════════════════════════ */
+function clearSheet() {
+  if (!confirm('Clear all fields on this sheet? This cannot be undone.')) return;
+  document.querySelectorAll('input[type="text"]').forEach(el => el.value = '');
+  document.querySelectorAll('.check-box').forEach(el => el.classList.remove('checked'));
+  Object.keys(pipState).forEach(group => {
+    pipState[group] = 0;
+    syncPips(group);
+  });
+}
+
+/* ════════════════════════════════════════════════════
+   SCALE TO FIT
+════════════════════════════════════════════════════ */
+const PAGE_H_PX = 11 * 96;
 
 function scalePages() {
   const inners = [...document.querySelectorAll('.page-inner')];
-  // Pass 1: reset
   inners.forEach(inner => {
     inner.style.transform = '';
     inner.style.transformOrigin = '';
     inner.style.width = '';
   });
-  // Pass 2: measure height only (width is 100% so always fits)
   inners.forEach(inner => {
     const h = inner.scrollHeight;
     const scale = PAGE_H_PX / h;
     if (Math.abs(scale - 1) > 0.005) {
-      // Scale vertically; compensate width so content still spans full page
       inner.style.transformOrigin = 'top left';
       inner.style.transform = `scaleY(${scale}) scaleX(${scale})`;
       inner.style.width = (100 / scale) + '%';
@@ -1610,10 +1830,27 @@ function resetPages() {
   });
 }
 
-// Scale on resize
+window.addEventListener('load', scalePages);
 window.addEventListener('resize', scalePages);
 window.addEventListener('beforeprint', scalePages);
-window.addEventListener('afterprint',  resetPages);
+window.addEventListener('afterprint', resetPages);
+
+/* ════════════════════════════════════════════════════
+   AUTO-IMPORT ON LOAD (check localStorage)
+════════════════════════════════════════════════════ */
+window.addEventListener('load', () => {
+  try {
+    const raw = localStorage.getItem('rivendawn_prebuild');
+    if (raw) {
+      const data = JSON.parse(raw);
+      // Only auto-import if the sheet appears empty (no name set)
+      const nameField = document.getElementById('cs-name');
+      if (nameField && !nameField.value && data.charName) {
+        applyBuild(data);
+      }
+    }
+  } catch(e) { /* silent fail */ }
+});
 </script>
 </body>
 </html>
