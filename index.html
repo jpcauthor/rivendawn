@@ -444,17 +444,35 @@
     padding: 0.75rem 2.5rem 1.5rem;
   }
 
-  .nav-btn {
-    appearance: none; border: none; background: transparent;
-    font-family: 'Cinzel', serif; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--p-ink-faint); cursor: pointer;
-    display: flex; align-items: center; gap: 0.5rem;
-    padding: 0.4rem 0.75rem; border-radius: 3px; border: 1px solid transparent;
-    transition: all 0.18s ease;
-  }
+.nav-btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  font-family: 'Cinzel', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--p-ink-mid);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  transition: all 0.18s ease;
+}
 
-  .nav-btn:hover:not(:disabled) { color: var(--p-ink-mid); border-color: var(--p-border); background: rgba(200,146,42,0.06); }
-  .nav-btn:disabled { opacity: 0.25; cursor: not-allowed; }
+.nav-btn:hover:not(:disabled) {
+  color: var(--p-gold);
+  border-color: var(--p-border);
+  background: rgba(200,146,42,0.06);
+}
+
+.nav-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
 
   .tab-counter { font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.2em; color: var(--p-ink-faint); }
 
