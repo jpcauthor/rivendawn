@@ -644,9 +644,9 @@ lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightb
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 </script>
 
-<script>
+
 (function(){
-  var page=document.body.dataset.page;
+  var <script>page=document.body.dataset.page;
   if(page){document.querySelectorAll('[data-nav="'+page+'"]').forEach(function(e){e.classList.add('nav-active');});}
   var btn=document.getElementById('navHamburger');
   var menu=document.getElementById('navMobileMenu');
