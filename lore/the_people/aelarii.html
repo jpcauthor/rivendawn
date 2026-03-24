@@ -571,8 +571,79 @@ Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
 <a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
 </div>
 </footer>
-
 </div>
+
+<script>
+const IMAGES = [];
+const BASE  = 'lineages/chosen/chosen';
+const COUNT = 23;
+const EXT   = '.jpg';
+for (let i = 1; i <= COUNT; i++) {
+  IMAGES.push(BASE + String(i).padStart(2, '0') + EXT);
+}
+
+const INTERVAL = 4000;
+const track       = document.getElementById('film-track');
+const dotsWrapper = document.getElementById('film-dots');
+const filmStrip   = document.getElementById('film-strip');
+const lightbox    = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const closeBtn    = document.getElementById('lightbox-close');
+
+let offset = 0, rafId = null, frameW = 0, totalW = 0, activeIdx = 0;
+const SPEED = 0.4;
+const dots = [];
+
+IMAGES.forEach((src, i) => {
+  const dot = document.createElement('div');
+  dot.classList.add('film-dot');
+  if (i === 0) dot.classList.add('active');
+  dotsWrapper.appendChild(dot);
+  dots.push(dot);
+});
+
+function buildFrames() {
+  track.innerHTML = '';
+  [...IMAGES, ...IMAGES].forEach((src, i) => {
+    const frame = document.createElement('div');
+    frame.classList.add('film-frame');
+    frame.dataset.index = i % IMAGES.length;
+    const img = document.createElement('img');
+    img.src = src; img.alt = 'The Chosen ' + ((i % IMAGES.length) + 1); img.loading = 'lazy';
+    frame.appendChild(img); track.appendChild(frame);
+    frame.addEventListener('click', () => {
+      lightboxImg.src = IMAGES[parseInt(frame.dataset.index)];
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+}
+buildFrames();
+
+function getFrameWidth() { const f = track.querySelector('.film-frame'); return f ? f.offsetWidth + 10 : 0; }
+function updateDot() {
+  const idx = Math.round(offset / frameW) % IMAGES.length;
+  if (idx !== activeIdx && idx >= 0 && idx < IMAGES.length) {
+    dots[activeIdx].classList.remove('active'); activeIdx = idx; dots[activeIdx].classList.add('active');
+  }
+}
+function animate() {
+  frameW = getFrameWidth(); totalW = frameW * IMAGES.length;
+  offset += SPEED; if (offset >= totalW) offset -= totalW;
+  track.style.transform = 'translateX(-' + offset + 'px)';
+  updateDot(); rafId = requestAnimationFrame(animate);
+}
+
+window.addEventListener('load', () => { frameW = getFrameWidth(); animate(); });
+filmStrip.addEventListener('mouseenter', () => cancelAnimationFrame(rafId));
+filmStrip.addEventListener('mouseleave', () => { rafId = requestAnimationFrame(animate); });
+
+function closeLightbox() { lightbox.classList.remove('active'); document.body.style.overflow = ''; }
+closeBtn.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+
 <script>
 (function(){
   var page=document.body.dataset.page;
