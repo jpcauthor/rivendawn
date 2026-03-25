@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intel Dossier: The Dragon's Scythe</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstylesheet" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root {
+  --primary-dark: #1a1a1a;
+  --primary-light: #f5f5f5;
+  --accent-gold: #d4a574;
+  --accent-red: #8b3a3a;
+  --accent-blue: #4a5f7f;
+  --accent-shadow: #2a1a3a;
+  --text-main: #2a2a2a;
+  --text-light: #555;
+  --border-color: #ddd;
+  --stamp-color: #1a1a1a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--text-main);
+  background: linear-gradient(135deg, #f9f7f4 0%, #e8e3de 100%);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.dossier-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fefdfb;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  border: 2px solid var(--border-color);
+  position: relative;
+}
+
+.dossier-header {
+  background: linear-gradient(90deg, #1a0a2a 0%, #0a0a1a 100%);
+  color: #f5f5f5;
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid #6a4a8a;
+}
+
+.dossier-header::before {
+  content: "CLASSIFIED INTELLIGENCE";
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  opacity: 0.6;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.dossier-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.dossier-subtitle {
+  font-size: 1.1rem;
+  color: #aa7aca;
+  font-style: italic;
+  letter-spacing: 0.15em;
+}
+
+.dossier-stamp {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  width: 100px;
+  height: 100px;
+  border: 2px solid #6a4a8a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  color: #6a4a8a;
+  font-size: 0.75rem;
+  transform: rotate(-15deg);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+}
+
+.dossier-content {
+  padding: 3rem 2.5rem;
+  line-height: 1.8;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section-header {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.6rem;
+  color: var(--accent-shadow);
+  border-bottom: 2px solid var(--accent-gold);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.section-label {
+  display: inline-block;
+  background: var(--accent-shadow);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.subsection {
+  margin-bottom: 1.5rem;
+}
+
+.subsection-title {
+  font-weight: bold;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.quote-box {
+  border-left: 4px solid var(--accent-gold);
+  padding: 1rem 1.5rem;
+  background: rgba(212, 165, 116, 0.08);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+}
+
+.watcher-note {
+  border-left: 4px solid var(--accent-blue);
+  padding: 1rem 1.5rem;
+  background: rgba(74, 95, 127, 0.06);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #3a4a5a;
+  font-size: 0.95rem;
+}
+
+.watcher-marginalia {
+  border-left: 4px dashed var(--accent-gold);
+  padding: 0.75rem 1.5rem;
+  background: rgba(212, 165, 116, 0.04);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.intel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+
+.intel-card {
+  background: #f9f7f4;
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-radius: 4px;
+}
+
+.intel-label {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--accent-shadow);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+}
+
+.intel-value {
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+
+.threat-meter {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.threat-label {
+  font-weight: bold;
+  min-width: 120px;
+}
+
+.threat-bar {
+  flex: 1;
+  height: 20px;
+  background: #e0e0e0;
+  border: 1px solid #999;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.threat-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50 0%, #ffc107 50%, #ff5722 100%);
+  width: 90%;
+}
+
+.warning-box {
+  background: rgba(106, 74, 138, 0.12);
+  border: 2px solid #6a4a8a;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 4px;
+}
+
+.warning-title {
+  color: #6a4a8a;
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+ul {
+  margin-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.75rem;
+  text-align: justify;
+}
+
+.dossier-footer {
+  background: #f0ebe5;
+  padding: 2rem;
+  border-top: 2px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+.footer-note {
+  margin-bottom: 0.5rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 768px) {
+  .dossier-content {
+    padding: 2rem 1.5rem;
+  }
+  .intel-grid {
+    grid-template-columns: 1fr;
+  }
+  .dossier-title {
+    font-size: 2rem;
+  }
+  .dossier-stamp {
+    width: 80px;
+    height: 80px;
+    font-size: 0.65rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="dossier-wrapper">
+
+  <div class="dossier-header">
+    <div class="dossier-stamp">
+      <span>NOT ALIVE<br>VERY LETHAL</span>
+    </div>
+    <h1 class="dossier-title">THE DRAGON'S SCYTHE</h1>
+    <p class="dossier-subtitle">Grevon's Elite Guard — The Undead Instruments</p>
+  </div>
+
+  <div class="dossier-content">
+
+    <div class="quote-box">
+      "They are not soldiers who have chosen their path. They are not even soldiers anymore. What remains is an echo of personhood bound to absolute obedience through necromantic enslavement. To call them 'alive' insults the concept. To call them 'warriors' denies them mercy."
+    </div>
+
+    <div class="section">
+      <div class="section-label">OVERVIEW</div>
+      <div class="section-header">Undead Constructs Bound to Grevon's Will</div>
+      
+      <p>
+        The Dragon's Scythe is not a military unit. It is not a guard formation. It is an act of necromantic atrocity made manifest. These are individuals — whether once living or constructed through shadowmancy — who have been stripped of autonomy and reanimated as instruments of absolute obedience to Grevon.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        They are elite in capability. They are devastating in combat. They are utterly ruthless in execution. And they are no longer living beings worthy of moral consideration in any traditional sense.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        To face the Dragon's Scythe is to understand that Grevon's cruelty extends beyond ideology into the realm of fundamental metaphysical violation. These beings represent the ultimate corruption of Shadowmancy — not merely control, but the erasure of self.
+      </p>
+
+      <div class="watcher-marginalia">
+        <strong>Marginalia:</strong> I have witnessed many abominations. But rarely have I encountered something so thoroughly divorced from the category of "living thing" while still being mobile and lethal. The existence of the Dragon's Scythe suggests Grevon is willing to cross metaphysical thresholds that other tyrants would recoil from. This reveals not merely ambition but something far more disturbing: the complete absence of restraint.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">COMPOSITION & NATURE</div>
+      <div class="section-header">What They Are (And What They Were)</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Undead Status</div>
+        <p>
+          The Dragon's Scythe members are not alive in any conventional sense. They are reanimated through Shadowmancy — their bodies maintained through necromantic binding, their minds enslaved through shadow tendrils that pierce what remains of their consciousness.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Whether they were once living humans, once living other races, or constructed directly from shadow is unclear. The distinction may be academic. What matters is the present reality: they exist in a state between death and animation, enslaved to Grevon's commands.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Command Structure</div>
+        <p>
+          The Dragon's Scythe operates through **Jadsia**, a shadowmancer of considerable power who serves as Grevon's instrument. Jadsia commands the individual members through direct mental compulsion, using shadow tendrils to execute complex orders with perfect obedience.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          The **Mournvale Twins** function as subordinate commanders, coordinating smaller operations and maintaining discipline among the unit. They operate with limited autonomy but complete allegiance to Grevon's will.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Individual Identities</div>
+        <p>
+          Some members of the Dragon's Scythe appear to retain fragments of their former identities. **Thenn**, for instance, maintains enough continuity that he can be distinguished as an individual — though what remains of his original self is impossible to determine.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Others appear to be entirely empty vessels, operating purely on command without any trace of individual personality or memory.
+        </p>
+      </div>
+
+      <div class="intel-grid">
+        <div class="intel-card">
+          <div class="intel-label">Known Members</div>
+          <div class="intel-value">8–12 (Confirmed Undead)</div>
+        </div>
+        <div class="intel-card">
+          <div class="intel-label">Commander</div>
+          <div class="intel-value">Jadsia (Shadowmancer)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">CAPABILITIES & TACTICS</div>
+      <div class="section-header">How They Fight (How They Destroy)</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Combat Efficiency</div>
+        <p>
+          The Dragon's Scythe do not fight with hesitation. They do not experience fear, fatigue, or pain-induced paralysis. They execute orders with perfect precision and absolute commitment. They will continue fighting until their bodies are so thoroughly destroyed that reanimation becomes impossible.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          This makes them extraordinarily effective in combat. They are not the strongest warriors ever created, but they are among the most consistent and reliable. There is no moral dimension to their violence — merely mechanical execution.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Shadowmancy Integration</div>
+        <p>
+          The Dragon's Scythe operate with shadowmantic enhancement. Shadow tendrils allow them to manipulate their environment, incapacitate opponents through direct psychic assault, and recover from injuries that would kill conventional soldiers.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          They are not merely enhanced physical combatants. They are walking expressions of corrupted Resonance, operating at the intersection of the physical and shadow realms.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Perfect Obedience</div>
+        <p>
+          Unlike living soldiers who might hesitate, disobey, or show mercy, the Dragon's Scythe execute orders with perfect consistency. They will sacrifice themselves without hesitation. They will destroy their companions if ordered. They will commit atrocities without moral consideration.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          This is not loyalty. Loyalty requires choice. This is enslavement so complete that choice has been obliterated.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">THREAT ASSESSMENT</div>
+      <div class="section-header">Why This Represents a Fundamental Danger</div>
+
+      <div class="threat-meter">
+        <div class="threat-label">Combat Threat:</div>
+        <div class="threat-bar">
+          <div class="threat-fill" style="width: 95%;"></div>
+        </div>
+      </div>
+      <p style="font-size: 0.9rem; color: var(--text-light);">Extreme. The Dragon's Scythe are among the most efficient killing machines in Verdanward. Direct combat against them is inadvisable.</p>
+
+      <div class="threat-meter">
+        <div class="threat-label">Tactical Danger:</div>
+        <div class="threat-bar">
+          <div class="threat-fill" style="width: 85%;"></div>
+        </div>
+      </div>
+      <p style="font-size: 0.9rem; color: var(--text-light);">Extreme. They operate with perfect coordination and absolute obedience. They cannot be intimidated, reasoned with, or turned.</p>
+
+      <div class="threat-meter">
+        <div class="threat-label">Moral Threat:</div>
+        <div class="threat-bar">
+          <div class="threat-fill" style="width: 100%;"></div>
+        </div>
+      </div>
+      <p style="font-size: 0.9rem; color: var(--text-light);">Critical. The existence of the Dragon's Scythe is an affront to the fundamental nature of living beings. Their presence suggests Grevon is willing to commit metaphysical atrocities without restraint.</p>
+
+      <div class="watcher-note">
+        <strong>Observation:</strong> The Dragon's Scythe represent a threshold that most tyrants respect — the threshold between enslaving the living and enslaving the dead. Grevon has crossed this threshold. This tells us something profound about his nature and the extent of his ambition. He does not merely seek power. He seeks the obliteration of boundaries that define humane governance.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">ETHICAL DIMENSION</div>
+      <div class="section-header">The Question of What Remains</div>
+      
+      <p>
+        The Dragon's Scythe raises profound questions about the nature of enslavement, personhood, and the ethics of destruction. Are they still "alive" in any meaningful sense? Do they retain souls? Can they suffer? Do they deserve mercy or merely destruction?
+      </p>
+
+      <p style="margin-top: 1rem;">
+        I do not have answers to these questions. But I will note that Grevon created them specifically to eliminate the possibility of answering these questions. By rendering them incomprehensible within traditional frameworks of personhood, he has made their status morally opaque.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        This is perhaps the greatest cruelty of all — not merely the enslavement itself, but the rendering of the enslaved into a category so fundamentally disturbing that conventional ethics cannot address them.
+      </p>
+
+      <div class="warning-box">
+        <div class="warning-title">⚠ CRITICAL ASSESSMENT</div>
+        <p>
+          The Dragon's Scythe is the ultimate expression of Grevon's worldview: that power is justified in any form, that any means serve the desired end, and that the traditional boundaries of living and dead are merely obstacles to overcome.
+        </p>
+        <p style="margin-top: 1rem;">
+          Their defeat is not merely a military necessity. It is a moral necessity. As long as they exist, they stand as a testament to the possibility of rendering living beings into instruments without will. Their elimination is essential not merely to stop Grevon, but to reassert that certain thresholds should not be crossed.
+        </p>
+      </div>
+
+      <div class="watcher-marginalia">
+        <strong>Final marginalia:</strong> I have observed many horrors. But I confess that the Dragon's Scythe provoke something in me that I struggle to classify — it might be horror, revulsion, or something closer to despair. They represent the ultimate corruption not merely of Shadowmancy or politics, but of the very concept of living being. To face them is to understand that some abominations are worse than death. They are the absence of death granted motion.
+      </div>
+    </section>
+
+  </div>
+
+  <div class="dossier-footer">
+    <div class="footer-note">DISTRIBUTION: REGIONAL MILITARY COMMANDS, RESISTANCE LEADERS, CITADEL COUNCILS</div>
+    <div class="footer-note">LAST UPDATED: 877 RC | STATUS: ACTIVE THREAT | PRIORITY: IMMEDIATE THREAT NEUTRALIZATION</div>
+    <div style="margin-top: 1rem; font-style: italic;">
+      "They are not alive. They are not dead. They are something worse: the absence of choice made manifest. To destroy them is not cruelty. It is mercy."
+    </div>
+  </div>
+
+</div>
+
+</body>
+
+</html>

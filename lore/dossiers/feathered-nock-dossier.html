@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intel Dossier: The Feathered Nock</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstylesheet" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root {
+  --primary-dark: #1a1a1a;
+  --primary-light: #f5f5f5;
+  --accent-gold: #d4a574;
+  --accent-red: #8b3a3a;
+  --accent-blue: #4a5f7f;
+  --accent-brown: #6a5a4a;
+  --text-main: #2a2a2a;
+  --text-light: #555;
+  --border-color: #ddd;
+  --stamp-color: #1a1a1a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--text-main);
+  background: linear-gradient(135deg, #f9f7f4 0%, #e8e3de 100%);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.dossier-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fefdfb;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  border: 2px solid var(--border-color);
+  position: relative;
+}
+
+.dossier-header {
+  background: linear-gradient(90deg, #3a4a3a 0%, #2a3a2a 100%);
+  color: #f5f5f5;
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid #8a9a7a;
+}
+
+.dossier-header::before {
+  content: "CLASSIFIED INTELLIGENCE";
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  opacity: 0.6;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.dossier-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.dossier-subtitle {
+  font-size: 1.1rem;
+  color: #aaaaaa;
+  font-style: italic;
+  letter-spacing: 0.15em;
+}
+
+.dossier-stamp {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  width: 100px;
+  height: 100px;
+  border: 2px solid #8a9a7a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  color: #8a9a7a;
+  font-size: 0.75rem;
+  transform: rotate(-15deg);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+}
+
+.dossier-content {
+  padding: 3rem 2.5rem;
+  line-height: 1.8;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section-header {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.6rem;
+  color: var(--accent-brown);
+  border-bottom: 2px solid var(--accent-gold);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.section-label {
+  display: inline-block;
+  background: var(--accent-brown);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.subsection {
+  margin-bottom: 1.5rem;
+}
+
+.subsection-title {
+  font-weight: bold;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.quote-box {
+  border-left: 4px solid var(--accent-gold);
+  padding: 1rem 1.5rem;
+  background: rgba(212, 165, 116, 0.08);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+}
+
+.watcher-note {
+  border-left: 4px solid var(--accent-blue);
+  padding: 1rem 1.5rem;
+  background: rgba(74, 95, 127, 0.06);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #3a4a5a;
+  font-size: 0.95rem;
+}
+
+.watcher-marginalia {
+  border-left: 4px dashed var(--accent-gold);
+  padding: 0.75rem 1.5rem;
+  background: rgba(212, 165, 116, 0.04);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.intel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+
+.intel-card {
+  background: #f9f7f4;
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-radius: 4px;
+}
+
+.intel-label {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--accent-brown);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+}
+
+.intel-value {
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+
+.warning-box {
+  background: rgba(106, 90, 74, 0.08);
+  border: 2px solid var(--accent-brown);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 4px;
+}
+
+.warning-title {
+  color: var(--accent-brown);
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+ul {
+  margin-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.75rem;
+  text-align: justify;
+}
+
+.dossier-footer {
+  background: #f0ebe5;
+  padding: 2rem;
+  border-top: 2px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+.footer-note {
+  margin-bottom: 0.5rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 768px) {
+  .dossier-content {
+    padding: 2rem 1.5rem;
+  }
+  .intel-grid {
+    grid-template-columns: 1fr;
+  }
+  .dossier-title {
+    font-size: 2rem;
+  }
+  .dossier-stamp {
+    width: 80px;
+    height: 80px;
+    font-size: 0.65rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="dossier-wrapper">
+
+  <div class="dossier-header">
+    <div class="dossier-stamp">
+      <span>RANGERS<br>DISTANT</span>
+    </div>
+    <h1 class="dossier-title">THE FEATHERED NOCK</h1>
+    <p class="dossier-subtitle">Guardians of the Wilderness</p>
+  </div>
+
+  <div class="dossier-content">
+
+    <div class="quote-box">
+      "They are ancient lineage playing at the margins of civilization. They protect from a distance that suggests either profound wisdom or profound alienation. The distinction may be meaningless."
+    </div>
+
+    <div class="section">
+      <div class="section-label">OVERVIEW</div>
+      <div class="section-header">Keepers of Wild Spaces</div>
+      
+      <p>
+        The Feathered Nock is an order of Rangers — scouts, trackers, hunters, and guardians of wilderness. They maintain no cities, no permanent settlements, no institutions. Instead, they operate as distributed protectors across the wild places of Verdanward, moving between territories, never fully claiming any as their own.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        They are ancient beyond most institutions. Their lineage stretches back centuries, possibly to the very founding of organized civilization. They predate the Citadels. They will likely outlast them.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        They do not seek power. They do not pursue institutional authority. They simply persist in the spaces between civilization, doing what Rangers have always done: protecting the wild and protecting civilization from the consequences of ignoring the wild.
+      </p>
+
+      <div class="watcher-marginalia">
+        <strong>Marginalia:</strong> I have observed the Feathered Nock for centuries. They change slowly, if at all. They maintain traditions that predate my own observation. This suggests either exceptional stability or exceptional stagnation. I have not yet determined which.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">HERITAGE & LINEAGE</div>
+      <div class="section-header">Ancient Orders, Eternal Watch</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Origins Lost in Time</div>
+        <p>
+          The founding of the Feathered Nock is lost to history — or perhaps deliberately obscured. Rangers claim lineage to groups that predated the Citadels, though whether this is fact or mythology is unclear. What is clear is that they have maintained their order and their purpose across centuries of institutional flux.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          They do not record history in the way institutions do. They pass knowledge through apprenticeship and oral tradition. This makes their continuity both remarkable and difficult to verify.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Ranger Philosophy</div>
+        <p>
+          Rangers operate on the principle that civilization and wilderness exist in necessary tension. Neither should dominate the other completely. The Ranger's duty is to maintain this balance — protecting civilization from the wilderness when necessary, protecting the wilderness from civilization's encroachment when possible.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          This is not romantic idealism. It is pragmatic recognition that the two systems cannot coexist peacefully if one completely overwhelms the other. The Feathered Nock works to prevent that outcome.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">STRUCTURE & OPERATIONS</div>
+      <div class="section-header">No Hierarchy, Infinite Flexibility</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Rangers, Not Ranks</div>
+        <p>
+          The Feathered Nock has no formal hierarchy. Instead, they organize around experience and expertise. Older Rangers guide younger ones. Rangers with specific knowledge — tracking, survival, wilderness medicine — become authorities in their domains without formal appointment.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Leadership, when needed, emerges organically from those with demonstrated competence and wisdom. But day-to-day operations are largely autonomous — each Ranger operates independently within their territory, coordinating with others only when circumstances require it.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Territorial Organization</div>
+        <p>
+          Rangers claim territories — forests, mountains, rivers, marshes — and maintain responsibility for them. They know their land in ways that would astound scholars: every trail, every danger, every seasonal shift. They move within their territories constantly, never settling, always watching.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Territories are respected. Disputes are rare because Rangers understand implicitly that encroachment on another's territory violates the very principles the order is built upon. When disputes do occur, they are typically resolved through single combat or negotiated reconciliation.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Training Through Experience</div>
+        <p>
+          Entry to the Feathered Nock requires years of apprenticeship to an existing Ranger. There are no formal academies, no written tests. Instead, the apprentice learns by doing — living in the wilderness, tracking game, surviving seasons, understanding the land until the understanding becomes instinctive.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Many apprentices fail. They are simply released back to civilization or to other paths. There is no shame in this — the Ranger life is not for everyone, and forcing unsuitable individuals into the order weakens it.
+        </p>
+      </div>
+
+      <div class="intel-grid">
+        <div class="intel-card">
+          <div class="intel-label">Estimated Members</div>
+          <div class="intel-value">80–150 (Dispersed)</div>
+        </div>
+        <div class="intel-card">
+          <div class="intel-label">Primary Organization</div>
+          <div class="intel-value">Territorial Coverage</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">CAPABILITIES & ROLE</div>
+      <div class="section-header">Protectors in the Margins</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Wilderness Mastery</div>
+        <p>
+          Rangers are unmatched in wilderness environments. They track prey across impossible terrain. They navigate by stars and natural signs. They survive in conditions that would kill ordinary people within days. They are ghosts in forests and mountains — visible only when they choose to be.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Protection Function</div>
+        <p>
+          Rangers protect settlements from wilderness dangers — predators, environmental hazards, dangerous creatures. They also protect wilderness from human encroachment that crosses certain lines. They will negotiate with hunters and loggers, but they will defend sacred groves and breeding grounds with lethal force if necessary.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Information Network</div>
+        <p>
+          Rangers move constantly across territories. In doing so, they observe and gather information — trade routes, military movements, political shifts, institutional actions. They do not actively gather intelligence, but what they observe is shared within the order and sometimes traded to other organizations.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">RELATIONSHIPS & STANCE</div>
+      <div class="section-header">Allies to None, Useful to All</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">The Regions</div>
+        <p>
+          All three regions depend on Rangers for wilderness safety and information. The relationship is transactional but respectful. Regions generally do not interfere with Ranger operations, understanding that doing so would be catastrophically unpopular with populations who depend on their services.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Citadels</div>
+        <p>
+          Rangers view the Citadels with a mixture of respect and suspicion. Scholarly knowledge is valued, but Rangers understand that institutional knowledge sometimes conflicts with practical, lived understanding. They trade information with both Citadels but maintain independence from their authority.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Other Organizations</div>
+        <p>
+          Rangers maintain cordial but distant relationships with most organizations. They work occasionally with the Mender's Trust in wilderness areas. They avoid the Owls out of mutual respect for operational independence. They have no particularly strong feelings toward merchants, assassins, or anyone else — they simply maintain the boundaries that define their purpose.
+        </p>
+      </div>
+
+      <div class="watcher-note">
+        <strong>Observation:</strong> The Feathered Nock may be the least corrupted organization in Verdanward. Not because they are virtuous, but because they have deliberately positioned themselves at the margins where institutional power struggles are meaningless. This isolation is both their strength and their limitation.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">PRACTICAL</div>
+      <div class="section-header">Seeking Ranger Aid</div>
+      
+      <p>
+        If you need wilderness guidance, information about wild territories, or protection from environmental dangers, Rangers are invaluable. If you need someone tracked across wilderness, someone found in mountains or forests, Rangers can accomplish what ordinary hunters cannot.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        But understand that Rangers do not serve masters. They serve their territories and their principles. If your goal conflicts with wilderness protection or threatens the balance between civilization and wild, they will oppose you. Not from malice, but from duty.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        They are not mercenaries. They are not soldiers. They are guardians who will negotiate, trade, cooperate — but never compromise their fundamental purpose.
+      </p>
+
+      <div class="warning-box">
+        <div class="warning-title">⚠ CRITICAL NOTE</div>
+        <p>
+          The Feathered Nock represents a form of power that institutions often underestimate: the power of peripheral control. They do not seek central authority. But by dominating the margins, they exercise influence that rivals institutional power. Those who understand wilderness understand this threat immediately. Those who do not will eventually discover it through painful experience.
+        </p>
+      </div>
+
+      <div class="watcher-marginalia">
+        <strong>Final marginalia:</strong> I find myself respecting the Feathered Nock in ways I respect few institutions. They have chosen alignment with something larger than themselves — the wilderness itself — and pursued that alignment with consistency across centuries. This is either the highest form of wisdom or a profound kind of stagnation. Possibly both.
+      </div>
+    </section>
+
+  </div>
+
+  <div class="dossier-footer">
+    <div class="footer-note">DISTRIBUTION: REGIONAL SCOUTS, WILDERNESS OPERATIONS, ENVIRONMENTAL PRESERVATION</div>
+    <div class="footer-note">LAST UPDATED: 877 RC | STATUS: OPERATING INDEPENDENTLY | TERRITORIAL STABILITY: EXCEPTIONAL</div>
+    <div style="margin-top: 1rem; font-style: italic;">
+      "They guard the margins. That alone makes them more powerful than most institutions recognize."
+    </div>
+  </div>
+
+</div>
+
+</body>
+
+</html>

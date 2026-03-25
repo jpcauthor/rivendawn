@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intel Dossier: The Shadow Cabal</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstylesheet" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root {
+  --primary-dark: #1a1a1a;
+  --primary-light: #f5f5f5;
+  --accent-gold: #d4a574;
+  --accent-red: #8b3a3a;
+  --accent-blue: #4a5f7f;
+  --accent-shadow: #2a1a3a;
+  --text-main: #2a2a2a;
+  --text-light: #555;
+  --border-color: #ddd;
+  --stamp-color: #1a1a1a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--text-main);
+  background: linear-gradient(135deg, #f9f7f4 0%, #e8e3de 100%);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.dossier-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fefdfb;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  border: 2px solid var(--border-color);
+  position: relative;
+}
+
+.dossier-header {
+  background: linear-gradient(90deg, #0a0a1a 0%, #1a0a2a 100%);
+  color: #f5f5f5;
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid #6a3a7a;
+}
+
+.dossier-header::before {
+  content: "CLASSIFIED INTELLIGENCE";
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  opacity: 0.6;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.dossier-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.dossier-subtitle {
+  font-size: 1.1rem;
+  color: #9a6aaa;
+  font-style: italic;
+  letter-spacing: 0.15em;
+}
+
+.dossier-stamp {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  width: 100px;
+  height: 100px;
+  border: 2px solid #6a3a7a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  color: #6a3a7a;
+  font-size: 0.75rem;
+  transform: rotate(-15deg);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+}
+
+.dossier-content {
+  padding: 3rem 2.5rem;
+  line-height: 1.8;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section-header {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.6rem;
+  color: var(--accent-shadow);
+  border-bottom: 2px solid var(--accent-gold);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.section-label {
+  display: inline-block;
+  background: var(--accent-shadow);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.subsection {
+  margin-bottom: 1.5rem;
+}
+
+.subsection-title {
+  font-weight: bold;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.quote-box {
+  border-left: 4px solid var(--accent-gold);
+  padding: 1rem 1.5rem;
+  background: rgba(212, 165, 116, 0.08);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+}
+
+.watcher-note {
+  border-left: 4px solid var(--accent-blue);
+  padding: 1rem 1.5rem;
+  background: rgba(74, 95, 127, 0.06);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #3a4a5a;
+  font-size: 0.95rem;
+}
+
+.watcher-marginalia {
+  border-left: 4px dashed var(--accent-gold);
+  padding: 0.75rem 1.5rem;
+  background: rgba(212, 165, 116, 0.04);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.intel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+
+.intel-card {
+  background: #f9f7f4;
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-radius: 4px;
+}
+
+.intel-label {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--accent-shadow);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+}
+
+.intel-value {
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+
+.warning-box {
+  background: rgba(106, 58, 122, 0.12);
+  border: 2px solid var(--accent-shadow);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 4px;
+}
+
+.warning-title {
+  color: var(--accent-shadow);
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+ul {
+  margin-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.75rem;
+  text-align: justify;
+}
+
+.dossier-footer {
+  background: #f0ebe5;
+  padding: 2rem;
+  border-top: 2px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+.footer-note {
+  margin-bottom: 0.5rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 768px) {
+  .dossier-content {
+    padding: 2rem 1.5rem;
+  }
+  .intel-grid {
+    grid-template-columns: 1fr;
+  }
+  .dossier-title {
+    font-size: 2rem;
+  }
+  .dossier-stamp {
+    width: 80px;
+    height: 80px;
+    font-size: 0.65rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="dossier-wrapper">
+
+  <div class="dossier-header">
+    <div class="dossier-stamp">
+      <span>NO CENTER<br>SPREADING</span>
+    </div>
+    <h1 class="dossier-title">THE SHADOW CABAL</h1>
+    <p class="dossier-subtitle">Phenomenon, Not Faction</p>
+  </div>
+
+  <div class="dossier-content">
+
+    <div class="quote-box">
+      "It is not organized. It has no leaders. It does not formally exist. And yet it persists across regions, carried by practitioners who claim no allegiance to anything but their own power. This is either the most dangerous form of organization or the most dangerous form of disorganization. Possibly both."
+    </div>
+
+    <div class="section">
+      <div class="section-label">OVERVIEW</div>
+      <div class="section-header">The Undead Are Not Gone; They Are Simply Fragmented</div>
+      
+      <p>
+        The Shadow Cabal is not a faction in the traditional sense. It has no leadership, no central command, no formal organization. Instead, it is a phenomenon — a collection of necromancers and undead remnants operating independently across Verdanward, unified only by implicit respect for territorial boundaries and a shared embrace of Shadowmancy without restraint.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        During the period known as Folly's War, the Shadow Cabal functioned as something closer to a true faction — organized, coordinated, led. Thabius Azadriel systematically destroyed this organization. He killed approximately 24,000 practitioners. The leadership was extinguished. The hierarchy was obliterated.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        What remained were fragments. Survivors. Practitioners who continued their work not out of institutional allegiance but out of personal commitment to Shadowmancy and necromancy. These survivors established the understanding that persists today: each operator controls their own territory, respects others' territories, and maintains independence absolutely. There is no united Cabal — only scattered practitioners and undead populations operating in uneasy coexistence.
+      </p>
+
+      <div class="watcher-marginalia">
+        <strong>Marginalia:</strong> I was present during Folly's War. I observed Thabius kill practitioners with a thoroughness that approached systematic genocide. Yet the Shadow Cabal persists, albeit in drastically reduced form. This tells me something sobering: Shadowmancy as a practice is more resilient than Shadowmancy as an organization. You can destroy the organization. The practice continues anyway.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">NATURE OF THE REMNANT</div>
+      <div class="section-header">What Survived Destruction</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Scattered Practitioners</div>
+        <p>
+          Necromancers who survived Folly's War operate independently or in small clusters. They maintain laboratories, conduct experiments, and raise undead populations to serve their purposes. They do not report to central authority because no central authority exists. They are not bound by institutional constraint because no institution binds them.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          An estimated 40–80 practitioners remain active across Verdanward, each operating in relative secrecy. The exact number is unknown because they deliberately obscure their operations and numbers. They have learned that visibility attracts hunters.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Undead Populations</div>
+        <p>
+          Each territory controlled by a necromancer contains undead populations — raised from the dead, animated, and bound to the practitioner's will. These populations serve various functions: labor, defense, experimentation, ritual. The quality and sophistication of these populations varies wildly between practitioners, from crude reanimations to sophisticated undead servitors.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Notably, the Shadow Cabal's undead are **not** like Grevon's Dragon's Scythe. Cabal undead are typically feral, uncontrolled, dangerous. They are raised but not refined. They serve their master but not necessarily with perfect obedience. They are instruments of terror, not precision.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Territorial Respect</div>
+        <p>
+          The only organizing principle the Shadow Cabal maintains is territorial respect. Each necromancer controls a region — a forest, a set of ruins, a mountain valley. Other practitioners implicitly respect these boundaries. Violation of another's territory is considered grave offense, occasionally resulting in conflict.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          This respect is not codified law but rather evolved convention. It exists because practitioners understand that territorial conflict would attract hunters and authorities. It is pragmatic rather than ethical.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Grevon: The Exception</div>
+        <p>
+          Grevon represents something unique — a practitioner who has achieved sufficient power and control to dominate other practitioners. Unlike typical Cabal members who operate in isolated secrecy, Grevon operates openly within the Crimson Citadel, using institutional power to amplify his personal power. The Dragon's Scythe and his shadowmancy refinement are Grevon's unique achievements, not representative of typical Cabal practice.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Grevon views other Cabal practitioners with contempt — their work is crude, their undead are feral, their ambitions are limited. He sees himself as beyond the Cabal, refined above them through his access to institutional power and scholarly resources.
+        </p>
+      </div>
+
+      <div class="intel-grid">
+        <div class="intel-card">
+          <div class="intel-label">Estimated Active Practitioners</div>
+          <div class="intel-value">40–80 (Hidden)</div>
+        </div>
+        <div class="intel-card">
+          <div class="intel-label">Primary Organization</div>
+          <div class="intel-value">Territorial Isolation + Implicit Respect</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">OPERATIONS & METHODS</div>
+      <div class="section-header">The Work of Isolated Necromancers</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Necromantic Practice</div>
+        <p>
+          Shadow Cabal practitioners engage in classical necromancy — death magic, undead animation, rituals of binding and control. Their work is often crude compared to Grevon's refined shadowmancy, but it is effective for their purposes. They raise corpses, bind spirits, and construct undead servitors.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Some practitioners experiment with shadow corruption, attempting to create phenomena similar to what Grevon has achieved with his shadowmancy. Most fail. A few achieve limited success. None have matched Grevon's refinement and control.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Territory Control</div>
+        <p>
+          Each necromancer uses undead populations to control their territory. These undead prevent normal settlement, deter hunters, and establish the practitioner's dominance. Some territories have become known as cursed lands — places where the dead walk openly and the living do not venture.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Regional authorities occasionally organize expeditions to cleanse cursed territories, but these are dangerous and often costly. Many expeditions fail entirely.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Research & Experimentation</div>
+        <p>
+          Shadow Cabal practitioners are obsessed with improving their craft. They experiment with new resurrection techniques, new binding methods, new forms of undead. Some attempt to create intelligent undead capable of independent thought. Some work to create undead armies for unspecified purposes. Most experiments fail with fascinating consistency.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Isolation Protocol</div>
+        <p>
+          Practitioners maintain deliberate isolation. They avoid each other unless necessary. They obscure their operations. They use thralls and servants to conduct surface business. They operate primarily at night or in cursed territories where observation is difficult.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          This isolation makes the Shadow Cabal extremely difficult to track, hunt, or dismantle. Individual practitioners can be killed, but killing one provides no information about others. There are no hierarchies to exploit, no networks to infiltrate, no communications to intercept.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">THREAT ASSESSMENT</div>
+      <div class="section-header">Scattered but Persistent Danger</div>
+      
+      <p>
+        The Shadow Cabal poses a diffuse rather than concentrated threat. Individual practitioners are dangerous, potentially lethal. But they operate at such limited scale and in such isolation that they rarely threaten institutional stability. Regional authorities can tolerate Shadow Cabal activity in remote territories because the cost of complete elimination would exceed the benefit of territory reclamation.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        What makes the Cabal dangerous is its resilience. It cannot be destroyed centrally because it has no center. Individual practitioners can be hunted and killed, but others simply continue their work independently. It is a phenomenon that survives not through organizational strength but through organizational non-existence.
+      </p>
+
+      <div class="subsection">
+        <div class="subsection-title">Immediate Threats</div>
+        <ul>
+          <li>Undead incursions into settled territories from cursed lands</li>
+          <li>Individual practitioners achieving sufficient power to threaten regions</li>
+          <li>Shadow Cabal practitioners forming temporary alliances for specific purposes</li>
+          <li>Experimentation creating new, more dangerous forms of undead</li>
+        </ul>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Long-Term Concern</div>
+        <p>
+          If the Shadow Cabal ever unified again — if a charismatic leader emerged who could coordinate the scattered practitioners — the threat would become catastrophic. However, this appears unlikely. The survivors of Folly's War learned that organization attracts hunters. They have chosen isolation over coordination as survival strategy.
+        </p>
+      </div>
+
+      <div class="watcher-note">
+        <strong>Observation:</strong> The Shadow Cabal in its current form is less dangerous than it was as a unified faction. But it is also harder to eliminate. Trade-offs exist in all strategic calculus. The Cabal chose resilience over power and appears satisfied with that choice.
+      </div>
+    </section>
+
+    <div class="section">
+      <div class="section-label">PRACTICAL</div>
+      <div class="section-header">Engagement With the Cabal</div>
+      
+      <p>
+        There is no central Shadow Cabal to negotiate with. Each practitioner is independent and must be engaged individually. Some might be bribed, intimidated, or reasoned with. Others operate on such fundamental alienation from normal society that negotiation is impossible.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        The Shadow Cabal will not invade your territory unless you invade theirs. They will not attack settlements unless those settlements threaten their operations. They maintain implicit non-aggression with regions that permit their isolation.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        However, making a deal with one practitioner guarantees nothing about others. There is no honor code, no enforcement mechanism, no central authority to hold violators accountable. You are negotiating with scattered individuals, not with a unified organization.
+      </p>
+
+      <div class="warning-box">
+        <div class="warning-title">⚠ CRITICAL NOTE</div>
+        <p>
+          The Shadow Cabal cannot be destroyed. It can only be managed. Territories can be cleansed, practitioners can be hunted, undead can be destroyed. But the phenomenon persists. New practitioners emerge, territories are reclaimed, experiments continue.
+        </p>
+        <p style="margin-top: 1rem;">
+          The Shadow Cabal represents something fundamental about Shadowmancy and necromancy — they are practices that naturally tend toward isolation and fragmentation. A unified Cabal is inherently unstable. Fragmentation is the natural state.
+        </p>
+      </div>
+
+      <div class="watcher-marginalia">
+        <strong>Final marginalia:</strong> I killed thousands during Folly's War. I thought the Shadow Cabal was finished. I was partially correct — the faction is gone. But the phenomenon persists. This teaches me something valuable: organizations die, but practices are immortal. You cannot kill shadowmancy. You can only disperse its practitioners.
+      </div>
+    </section>
+
+  </div>
+
+  <div class="dossier-footer">
+    <div class="footer-note">DISTRIBUTION: REGIONAL AUTHORITIES, CURSED TERRITORY OVERSIGHT, UNDEAD CONTAINMENT</div>
+    <div class="footer-note">LAST UPDATED: 877 RC | STATUS: SCATTERED BUT RESILIENT | ORGANIZATIONAL STRUCTURE: NON-EXISTENT</div>
+    <div style="margin-top: 1rem; font-style: italic;">
+      "It is not a faction. It is a practice distributed across practitioners. You cannot kill the practice. You can only hunt its current practitioners until new ones emerge."
+    </div>
+  </div>
+
+</div>
+
+</body>
+
+</html>

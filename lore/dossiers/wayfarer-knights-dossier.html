@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intel Dossier: The Wayfarer Knights</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root {
+  --primary-dark: #1a1a1a;
+  --primary-light: #f5f5f5;
+  --accent-gold: #d4a574;
+  --accent-red: #8b3a3a;
+  --accent-blue: #4a5f7f;
+  --text-main: #2a2a2a;
+  --text-light: #555;
+  --border-color: #ddd;
+  --stamp-color: #cc3333;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--text-main);
+  background: linear-gradient(135deg, #f9f7f4 0%, #e8e3de 100%);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.dossier-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fefdfb;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  border: 2px solid var(--border-color);
+  position: relative;
+}
+
+.dossier-header {
+  background: linear-gradient(90deg, #2a2a2a 0%, #1a1a1a 100%);
+  color: #f5f5f5;
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid var(--accent-gold);
+}
+
+.dossier-header::before {
+  content: "CLASSIFIED INTELLIGENCE";
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  opacity: 0.6;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.dossier-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.dossier-subtitle {
+  font-size: 1.1rem;
+  color: var(--accent-gold);
+  font-style: italic;
+  letter-spacing: 0.15em;
+}
+
+.dossier-stamp {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  width: 100px;
+  height: 100px;
+  border: 2px solid var(--stamp-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  color: var(--stamp-color);
+  font-size: 0.75rem;
+  transform: rotate(-15deg);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+}
+
+.dossier-content {
+  padding: 3rem 2.5rem;
+  line-height: 1.8;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section-header {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.6rem;
+  color: var(--accent-red);
+  border-bottom: 2px solid var(--accent-gold);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.section-label {
+  display: inline-block;
+  background: var(--accent-red);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.subsection {
+  margin-bottom: 1.5rem;
+}
+
+.subsection-title {
+  font-weight: bold;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.quote-box {
+  border-left: 4px solid var(--accent-gold);
+  padding: 1rem 1.5rem;
+  background: rgba(212, 165, 116, 0.08);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+}
+
+.watcher-note {
+  border-left: 4px solid var(--accent-blue);
+  padding: 1rem 1.5rem;
+  background: rgba(74, 95, 127, 0.06);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #3a4a5a;
+  font-size: 0.95rem;
+}
+
+.watcher-marginalia {
+  border-left: 4px dashed var(--accent-gold);
+  padding: 0.75rem 1.5rem;
+  background: rgba(212, 165, 116, 0.04);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.intel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+
+.intel-card {
+  background: #f9f7f4;
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-radius: 4px;
+}
+
+.intel-label {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--accent-red);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+}
+
+.intel-value {
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+
+.threat-meter {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.threat-label {
+  font-weight: bold;
+  min-width: 120px;
+}
+
+.threat-bar {
+  flex: 1;
+  height: 20px;
+  background: #e0e0e0;
+  border: 1px solid #999;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.threat-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50 0%, #ffc107 50%, #ff5722 100%);
+  width: 35%;
+}
+
+.warning-box {
+  background: rgba(139, 58, 58, 0.08);
+  border: 2px solid var(--accent-red);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 4px;
+}
+
+.warning-title {
+  color: var(--accent-red);
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+ul {
+  margin-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.75rem;
+  text-align: justify;
+}
+
+.dossier-footer {
+  background: #f0ebe5;
+  padding: 2rem;
+  border-top: 2px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+.footer-note {
+  margin-bottom: 0.5rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 768px) {
+  .dossier-content {
+    padding: 2rem 1.5rem;
+  }
+  
+  .intel-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .dossier-title {
+    font-size: 2rem;
+  }
+  
+  .dossier-stamp {
+    width: 80px;
+    height: 80px;
+    font-size: 0.65rem;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="dossier-wrapper">
+
+  <div class="dossier-header">
+    <div class="dossier-stamp">
+      <span>STANDARD<br>REFERENCE</span>
+    </div>
+    <h1 class="dossier-title">THE WAYFARER KNIGHTS</h1>
+    <p class="dossier-subtitle">Highway Protectors & Wandering Guardians</p>
+  </div>
+
+  <div class="dossier-content">
+
+    <div class="quote-box">
+      "The roads remember those who protect them. And the roads always tell their stories to those who listen."
+    </div>
+
+    <div class="section">
+      <div class="section-label">OVERVIEW</div>
+      <div class="section-header">Retired Soldiers Playing Highway Patrol</div>
+      
+      <p>
+        The Wayfarer Knights are an open, visible order of traveling protectors who maintain the highways and byways of Verdanward. Unlike the Vanguard (who guard institutions and archives), the Wayfarer Knights guard the roads themselves. Unlike the Owls (who operate in shadow), they operate in full daylight. Unlike most military organizations, they are composed primarily of retired soldiers and former Vanguard members who have stepped away from institutional service.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        They are, essentially, what happens when people who spent decades defending one institution decide they would rather defend everyone. It is either remarkably noble or remarkably naive. History has not yet made a final determination.
+      </p>
+
+      <div class="watcher-marginalia">
+        <strong>Marginalia:</strong> I have observed the Wayfarer Knights with interest for several years. They are simultaneously the most competent and most idealistic organization I have encountered. This creates an internal tension that I find amusing to monitor.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">STRUCTURE</div>
+      <div class="section-header">Organization & Command</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Leadership Model</div>
+        <p>
+          The Wayfarer Knights operate under a decentralized command structure with regional chapter leaders reporting to a central administrative body. Each chapter is responsible for a specific highway corridor or region. Leadership is determined through a combination of military experience, demonstrated competence, and respect from the local population.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Unlike the Vanguard (hierarchical) or the Owls (shadowy), the Wayfarer Knights are transparent. Their leadership is known. Their structure is documented. Their decision-making processes are observable. This makes them simultaneously the easiest faction to understand and the hardest to infiltrate—because infiltration requires actually earning the respect of the existing membership.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Membership Composition</div>
+        <p>
+          The core of the Wayfarer Knights consists of retired soldiers—individuals who served in the Forge's armies, the Vanguard's martial orders, or regional militia. These are people who have seen combat and survived it. They are, as a general rule, competent, experienced, and tired of war.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Newer members are frequently younger individuals who have served brief military terms and decided the Wayfarer Knights offered more meaningful service than traditional armies. There is minimal tension between the old soldiers and the young idealists—possibly because the old soldiers are mostly made of the same idealism, just older and wearier.
+        </p>
+      </div>
+
+      <div class="intel-grid">
+        <div class="intel-card">
+          <div class="intel-label">Estimated Active Members</div>
+          <div class="intel-value">300–500 (Open Record)</div>
+        </div>
+        <div class="intel-card">
+          <div class="intel-label">Known Leadership</div>
+          <div class="intel-value">12+ Regional Commanders (Public Information)</div>
+        </div>
+      </div>
+
+      <div class="watcher-note">
+        <strong>Observation:</strong> The Wayfarer Knights publish their roster. They maintain public records. You can walk up to their chapter houses and ask questions. This is either the most transparent military organization in Verdanward or the most clever deception ever constructed. I am not yet certain which.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">PURPOSE & MISSION</div>
+      <div class="section-header">What They Actually Do</div>
+      
+      <p>
+        The Wayfarer Knights maintain the highways. This sounds simple. It is not.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        Maintaining the highways means:
+      </p>
+
+      <ul>
+        <li><strong>Protecting travelers</strong> from bandits, wild animals, and random violence</li>
+        <li><strong>Maintaining the roads themselves</strong> — reporting damage, coordinating repairs, ensuring passage remains clear</li>
+        <li><strong>Establishing way-stations</strong> — safe places to rest between major settlements</li>
+        <li><strong>Mediating disputes</strong> that occur between settlements or merchants</li>
+        <li><strong>Preventing major conflicts</strong> from erupting along trade corridors</li>
+        <li><strong>Escorting dangerous goods</strong> when commerce requires it</li>
+      </ul>
+
+      <p style="margin-top: 1rem;">
+        They are not soldiers in the traditional sense—they do not occupy territory or defend borders. They are police, maintenance workers, mediators, and sometimes warriors. It is a hybrid role that requires genuine versatility.
+      </p>
+
+      <div class="watcher-marginalia">
+        <strong>Marginalia:</strong> I have observed Wayfarer Knights mend roads, resolve merchant disputes, and execute bandits with equal competence. This suggests either exceptional training or exceptional individuals. I suspect the latter, which makes them more interesting than I would like to admit.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">RECRUITMENT & STANDARDS</div>
+      <div class="section-header">Who Gets to Wear the Badge</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Who They Accept</div>
+        <p>
+          The Wayfarer Knights recruit from three primary sources: retired military personnel, young idealists with some combat training, and occasionally individuals with specialized skills (scouts, medics, engineers). They have surprisingly rigorous standards for an open organization.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          A candidate must demonstrate:
+        </p>
+
+        <ul>
+          <li><strong>Combat competence</strong> — not necessarily military experience, but proven ability in conflict</li>
+          <li><strong>Physical endurance</strong> — the highways are not kind to those who cannot walk them</li>
+          <li><strong>Genuine commitment to protection</strong> — not to profit, power, or ideology, but to the safety of travelers</li>
+          <li><strong>Ability to follow orders</strong> — necessary for any group-based organization</li>
+          <li><strong>Acceptance of the code</strong> — the Wayfarer Knights have a written code of conduct that members must follow</li>
+        </ul>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Wayfarer Code</div>
+        <p>
+          The Knights operate under a written code of conduct that is surprisingly sophisticated. It covers:
+        </p>
+
+        <ul>
+          <li>Protection of travelers regardless of region or origin</li>
+          <li>Non-discrimination in service</li>
+          <li>Prohibition on extortion or abuse of authority</li>
+          <li>Requirement to assist other Wayfarer Knights in emergency</li>
+          <li>Accountability for misconduct</li>
+          <li>Fair distribution of supplies and resources</li>
+        </ul>
+
+        <p style="margin-top: 1rem;">
+          Breaking the code results in formal removal from the order. I have observed exactly two instances of this occurring in the past decade. The organization's discipline is stronger than it appears.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">CAPABILITIES</div>
+      <div class="section-header">What They Can Actually Do In a Fight</div>
+      
+      <p>
+        The Wayfarer Knights are composed of experienced fighters. Most have formal military training. Many have combat experience spanning decades. As an organized combat force, they are:
+      </p>
+
+      <ul>
+        <li><strong>Competent</strong> at small-unit tactics (squads of 5–8)</li>
+        <li><strong>Skilled</strong with sword, bow, and practical field weapons</li>
+        <li><strong>Experienced</strong in dealing with bandits, mercenaries, and organized threats</li>
+        <li><strong>Limited</strong in heavy siege warfare or large-scale pitched battles</li>
+        <li><strong>Minimal</strong Resonance capability (some members have basic attunement, but they are not a magical organization)</li>
+      </ul>
+
+      <p style="margin-top: 1rem;">
+        What they lack in Resonance power, they compensate for with experience, discipline, and knowledge of terrain. A Wayfarer Knight is more likely to win a fight through strategy and preparation than through magical power.
+      </p>
+
+      <div class="watcher-note">
+        <strong>Observation:</strong> I have observed Wayfarer Knights defeat opponents with superior magical ability through the simple application of tactics, preparation, and refusal to panic. It is less dramatic than Resonance combat, but frequently more effective.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">THREAT ASSESSMENT</div>
+      <div class="section-header">Are They Dangerous?</div>
+
+      <div class="threat-meter">
+        <div class="threat-label">Military Threat:</div>
+        <div class="threat-bar">
+          <div class="threat-fill" style="width: 35%;"></div>
+        </div>
+      </div>
+      <p style="font-size: 0.9rem; color: var(--text-light);">Moderate. The Wayfarer Knights are competent fighters, but they are not a match for organized armies. However, they are extremely difficult to ambush or surprise on their home territory (the highways).</p>
+
+      <div class="threat-meter">
+        <div class="threat-label">Political Threat:</div>
+        <div class="threat-bar">
+          <div class="threat-fill" style="width: 20%;"></div>
+        </div>
+      </div>
+      <p style="font-size: 0.9rem; color: var(--text-light);">Low. The Knights are not political actors. They maintain neutrality between regions and do not seek power. However, their control of highways gives them significant logistical influence.</p>
+
+      <div class="threat-meter">
+        <div class="threat-label">Trade Threat:</div>
+        <div class="threat-bar">
+          <div class="threat-fill" style="width: 40%;"></div>
+        </div>
+      </div>
+      <p style="font-size: 0.9rem; color: var(--text-light);">Significant. If the Wayfarer Knights were to become corrupt and use their highway control for extortion or trade manipulation, the economic consequences would be severe. This has not occurred. Vigilance is warranted.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">RELATIONSHIPS</div>
+      <div class="section-header">How They Relate to Others</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">The Citadels</div>
+        <p>
+          Respectful but independent. The Wayfarer Knights occasionally coordinate with Citadel agents, but they maintain distinct authority. The Citadels view them as effective but idealistic; the Knights view the Citadels as scholarly but disconnected from practical reality.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Vanguard (Crimson & Azure)</div>
+        <p>
+          Complicated. The Wayfarer Knights are composed primarily of former Vanguard members who chose a different path. This creates respect mixed with gentle rivalry. Both organizations are protective in nature; they simply protect different things.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Regions</div>
+        <p>
+          Generally positive. The Forge respects their martial competence. The Cradle appreciates their stability. Limestone sees them as fellow communities focused on practical service. All three regions benefit from functioning highways and thus support the Knights' mission.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Owls</div>
+        <p>
+          Mutually respectful but distinct. The Owls occasionally use Wayfarer Knights as intelligence assets (the Knights observe highway traffic). The Knights are aware of this and tolerate it, viewing it as part of maintaining regional stability. Open cooperation, limited overlap.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Merchant's Concourse</div>
+        <p>
+          Symbiotic. The Knights protect merchant trade. The merchants fund (directly and indirectly) the Knight's operations. This creates healthy economic alignment without the Knights compromising their independence.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">PRACTICAL</div>
+      <div class="section-header">Encountering the Wayfarer Knights</div>
+      
+      <p>
+        If you travel the highways, you will likely encounter a Wayfarer Knight. They patrol regularly. They maintain way-stations. They are visible and approachable.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        A Wayfarer Knight will:
+      </p>
+
+      <ul>
+        <li>Assist travelers in need</li>
+        <li>Provide information about conditions ahead</li>
+        <li>Escort merchants through dangerous sections</li>
+        <li>Resolve disputes fairly</li>
+        <li>Protect you from bandits and hazards</li>
+      </ul>
+
+      <p style="margin-top: 1rem;">
+        A Wayfarer Knight will not:
+      </p>
+
+      <ul>
+        <li>Extort payment for protection</li>
+        <li>Favor one region over another</li>
+        <li>Tolerate violence against travelers</li>
+        <li>Abandon injured people</li>
+      </ul>
+
+      <p style="margin-top: 1rem;">
+        If you are traveling for legitimate purposes and treating others with basic decency, a Wayfarer Knight represents safety. If you are traveling to commit harm, they represent a significant problem.
+      </p>
+
+      <div class="warning-box">
+        <div class="warning-title">⚠ IMPORTANT NOTE</div>
+        <p>
+          The Wayfarer Knights are one of the few organizations in Verdanward that maintains genuine commitment to their stated ideals. This makes them simultaneously the easiest to work with and the most dangerous to oppose. They will not negotiate with you if you represent a threat to travelers. They will not be corrupted. They will not stand aside.
+        </p>
+        <p style="margin-top: 1rem;">
+          If you encounter them as an adversary, expect maximum competence and minimum mercy.
+        </p>
+      </div>
+
+      <div class="watcher-marginalia">
+        <strong>Final marginalia:</strong> The Wayfarer Knights restore my faith in institutional competence. They are idealistic without being naive, disciplined without being rigid, transparent without being foolish. They are not perfect—no organization is—but they are admirably close. I recommend treating them well. The world is better with them in it.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="dossier-footer">
+    <div class="footer-note">DISTRIBUTION: GENERAL KNOWLEDGE | PUBLICLY AVAILABLE INFORMATION</div>
+    <div class="footer-note">LAST UPDATED: 877 RC | STATUS: ACTIVE ORGANIZATION | THREAT LEVEL: LOW-MODERATE</div>
+    <div style="margin-top: 1rem; font-style: italic;">
+      "The roads are safer because they stand watch. That is all that matters."
+    </div>
+  </div>
+
+</div>
+
+</body>
+
+</html>

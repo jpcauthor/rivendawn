@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intel Dossier: The Mender's Trust</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstylesheet" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root {
+  --primary-dark: #1a1a1a;
+  --primary-light: #f5f5f5;
+  --accent-gold: #d4a574;
+  --accent-red: #8b3a3a;
+  --accent-blue: #4a5f7f;
+  --accent-green: #4a6a4a;
+  --text-main: #2a2a2a;
+  --text-light: #555;
+  --border-color: #ddd;
+  --stamp-color: #1a1a1a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--text-main);
+  background: linear-gradient(135deg, #f9f7f4 0%, #e8e3de 100%);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.dossier-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fefdfb;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  border: 2px solid var(--border-color);
+  position: relative;
+}
+
+.dossier-header {
+  background: linear-gradient(90deg, #2a4a3a 0%, #1a3a2a 100%);
+  color: #f5f5f5;
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid #6a9a7a;
+}
+
+.dossier-header::before {
+  content: "CLASSIFIED INTELLIGENCE";
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  opacity: 0.6;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.dossier-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.dossier-subtitle {
+  font-size: 1.1rem;
+  color: #8abaaa;
+  font-style: italic;
+  letter-spacing: 0.15em;
+}
+
+.dossier-stamp {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  width: 100px;
+  height: 100px;
+  border: 2px solid #6a9a7a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  color: #6a9a7a;
+  font-size: 0.75rem;
+  transform: rotate(-15deg);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+}
+
+.dossier-content {
+  padding: 3rem 2.5rem;
+  line-height: 1.8;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section-header {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.6rem;
+  color: var(--accent-green);
+  border-bottom: 2px solid var(--accent-gold);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.section-label {
+  display: inline-block;
+  background: var(--accent-green);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.subsection {
+  margin-bottom: 1.5rem;
+}
+
+.subsection-title {
+  font-weight: bold;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.quote-box {
+  border-left: 4px solid var(--accent-gold);
+  padding: 1rem 1.5rem;
+  background: rgba(212, 165, 116, 0.08);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+}
+
+.watcher-note {
+  border-left: 4px solid var(--accent-blue);
+  padding: 1rem 1.5rem;
+  background: rgba(74, 95, 127, 0.06);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #3a4a5a;
+  font-size: 0.95rem;
+}
+
+.watcher-marginalia {
+  border-left: 4px dashed var(--accent-gold);
+  padding: 0.75rem 1.5rem;
+  background: rgba(212, 165, 116, 0.04);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.intel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+
+.intel-card {
+  background: #f9f7f4;
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-radius: 4px;
+}
+
+.intel-label {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--accent-green);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+}
+
+.intel-value {
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+
+.warning-box {
+  background: rgba(74, 106, 74, 0.08);
+  border: 2px solid var(--accent-green);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 4px;
+}
+
+.warning-title {
+  color: var(--accent-green);
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+ul {
+  margin-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.75rem;
+  text-align: justify;
+}
+
+.dossier-footer {
+  background: #f0ebe5;
+  padding: 2rem;
+  border-top: 2px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+.footer-note {
+  margin-bottom: 0.5rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 768px) {
+  .dossier-content {
+    padding: 2rem 1.5rem;
+  }
+  .intel-grid {
+    grid-template-columns: 1fr;
+  }
+  .dossier-title {
+    font-size: 2rem;
+  }
+  .dossier-stamp {
+    width: 80px;
+    height: 80px;
+    font-size: 0.65rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="dossier-wrapper">
+
+  <div class="dossier-header">
+    <div class="dossier-stamp">
+      <span>HEALERS<br>PRINCIPLED</span>
+    </div>
+    <h1 class="dossier-title">THE MENDER'S TRUST</h1>
+    <p class="dossier-subtitle">Healers Bound by Sacred Oath</p>
+  </div>
+
+  <div class="dossier-content">
+
+    <div class="quote-box">
+      "They have taken an oath older than nations. They will heal the guilty and the innocent with equal hands. This makes them either noble or naive, depending on one's perspective."
+    </div>
+
+    <div class="section">
+      <div class="section-label">OVERVIEW</div>
+      <div class="section-header">Medicine as Sacred Duty</div>
+      
+      <p>
+        The Mender's Trust is a guild of healers bound by a code that predates most institutional structures in Verdanward. They are practitioners of medicine and Resonant healing, organized not around profit or power but around a fundamental principle: healing is a sacred duty owed to all who suffer, regardless of status, affiliation, or circumstance.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        This principle, admirable though it may be, has made the Mender's Trust a persistent thorn in the side of those who would weaponize medicine or use healing as leverage for political gain.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        They are not warriors. They are not politicians. They are healers who refuse to be corrupted into anything else.
+      </p>
+
+      <div class="watcher-marginalia">
+        <strong>Marginalia:</strong> I have observed that institutions devoted to universal principle often fail to recognize when their principle becomes a liability. The Mender's Trust heals without judgment. This is admirable. It is also dangerous — for them.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">THE OATH</div>
+      <div class="section-header">The Binding Principle</div>
+      
+      <p>
+        Every member of the Mender's Trust takes an oath upon entry. The specific wording varies, but the core principles remain constant across centuries:
+      </p>
+
+      <ul>
+        <li>**Heal the suffering without judgment** — the healer does not ask whether the patient deserves healing. Suffering is sufficient grounds.</li>
+        <li>**Preserve life above all other considerations** — political allegiance, military advantage, institutional authority — none of these override the duty to preserve life.</li>
+        <li>**Refuse to weaponize healing** — medicine is never used as punishment, leverage, or tool of war.</li>
+        <li>**Maintain confidentiality** — what is learned in the course of healing is sacred and protected.</li>
+        <li>**Serve all people equally** — the vagrant receives the same care as the king.</li>
+      </ul>
+
+      <p style="margin-top: 1rem;">
+        This oath has made the Mender's Trust simultaneously beloved and resented. They are beloved because they truly do heal without condition. They are resented because their principles make them impossible to control.
+      </p>
+
+      <div class="watcher-note">
+        <strong>Observation:</strong> An oath is only as strong as the person who takes it. The Mender's Trust remains functional because its members genuinely believe in what they swear. This is rare enough to be noteworthy.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">STRUCTURE & ORGANIZATION</div>
+      <div class="section-header">Decentralized but Unified</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Local Chapters</div>
+        <p>
+          The Mender's Trust operates through local chapters established in major settlements across all three regions. Each chapter operates semi-autonomously but maintains connection to the broader network through shared principles and periodic councils.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Local healers treat patients, train apprentices, and maintain the confidence of their communities. They are often the most trusted professionals in their settlements — which gives them influence without requiring them to seek it.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Hierarchy of Skill, Not Power</div>
+        <p>
+          The Mender's Trust has no leaders in the traditional sense. Instead, it has teachers — the most experienced healers who guide apprentices and mentor younger practitioners. Authority flows from demonstrated competence and wisdom, not from institutional rank.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Major decisions are made through councils that include representatives from multiple chapters. Consensus is preferred; votes are taken only when necessary.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Apprenticeship System</div>
+        <p>
+          Entry to the Mender's Trust requires years of apprenticeship. Candidates must demonstrate not only technical skill but moral alignment with the oath. A brilliant healer with compromised principles will not be accepted. A mediocre healer with genuine commitment to the oath is valued.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          This ensures the Trust remains pure — but also means it grows slowly and has limited capacity to respond to emergencies that require rapid scaling.
+        </p>
+      </div>
+
+      <div class="intel-grid">
+        <div class="intel-card">
+          <div class="intel-label">Estimated Active Members</div>
+          <div class="intel-value">200–300 (Conservative)</div>
+        </div>
+        <div class="intel-card">
+          <div class="intel-label">Primary Organization</div>
+          <div class="intel-value">Local Chapters + Councils</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">CONFLICTS & PRESSURES</div>
+      <div class="section-header">When Principle Meets Power</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">The Weaponization Demand</div>
+        <p>
+          Institutions and powers regularly attempt to compromise the Mender's Trust into becoming a tool of their authority. They demand that healers refuse treatment to enemies, accelerate healing for allies, or use their medical knowledge to create poisons or biological weapons.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          The Mender's Trust refuses, consistently and absolutely. This refusal has cost them dearly — healers have been imprisoned, chapters have been raided, and the Trust's resources have been seized by those seeking to punish their intransigence.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Grevon Problem</div>
+        <p>
+          Under the Crimson Citadel's current regime, the Mender's Trust faces particular pressure. Grevon's shadowmancy leaves victims in states that require extraordinary healing. When the Trust heals shadowmancy victims without reporting them to Grevon's authorities, they become accomplices to resistance.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          The Trust accepts this role. They will heal the tortured, the enslaved, and the broken without asking who broke them. This principled stance has made them a target.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Resource Limitations</div>
+        <p>
+          The Trust's refusal to weaponize healing and its principle of equal treatment mean they cannot prioritize wealthy or powerful patients. They operate on the donation system, treating those who can pay and those who cannot with identical commitment. This ensures they are always under-resourced.
+        </p>
+      </div>
+
+      <div class="watcher-marginalia">
+        <strong>Marginalia:</strong> The Mender's Trust remains functional despite constant pressure precisely because its members understand they have chosen something harder than service — they have chosen principle over survival. This is rare enough to deserve notation.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">RELATIONSHIPS & POLITICAL POSITION</div>
+      <div class="section-header">Trusted by Many, Controlled by None</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">The Regions</div>
+        <p>
+          All three regions recognize the value of the Mender's Trust and maintain local chapters. The Trust is permitted to operate with unusual independence because removing them would be catastrophically unpopular with general populations who depend on their care.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Citadels</div>
+        <p>
+          The Crimson Citadel views the Trust with suspicion — their refusal to report victims of shadowmancy healing makes them unreliable allies. The Azure Citadel views them with respect and quiet gratitude. The Trust treats everyone equally, but their principle of patient confidentiality makes them natural supporters of resistance movements.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Owls</div>
+        <p>
+          The Owls occasionally work with the Mender's Trust, using their access to wounded operatives for intelligence gathering. The Trust tolerates this because it serves healing — they will not refuse to treat an Owl agent any more than they would refuse to treat Grevon's soldier.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">PRACTICAL</div>
+      <div class="section-header">What the Mender's Trust Offers</div>
+      
+      <p>
+        If you are wounded, the Mender's Trust will heal you without question. If you are hunted by authority and arrive at a healer's door, they will tend your injuries without reporting you. If you seek to become a healer, they will train you if you genuinely commit to the oath.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        What they will not do is compromise their principles. They will not tell you where other patients came from. They will not accelerate healing in exchange for political favor. They will not weaponize their knowledge.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        This makes them uniquely valuable and uniquely principled in a world where principle is increasingly treated as a luxury.
+      </p>
+
+      <div class="warning-box">
+        <div class="warning-title">⚠ CRITICAL NOTE</div>
+        <p>
+          The Mender's Trust represents something increasingly rare: an institution that has not been corrupted by power. Whether this is because they have refused power or because power has simply not bothered to truly corrupt them remains an open question. But for now, they stand as a reminder that principle can survive in the margins, even if it cannot thrive in the center.
+        </p>
+      </div>
+
+      <div class="watcher-marginalia">
+        <strong>Final marginalia:</strong> I confess the Mender's Trust provokes something in me that approaches admiration. They have chosen a path that guarantees suffering — both for their patients and for themselves. And they continue on it anyway. This is either the height of wisdom or the depth of foolishness. Possibly both.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="dossier-footer">
+    <div class="footer-note">DISTRIBUTION: REGIONAL AUTHORITIES, HEALING NETWORKS, HUMANITARIAN ORGANIZATIONS</div>
+    <div class="footer-note">LAST UPDATED: 877 RC | STATUS: OPERATING INDEPENDENTLY | INSTITUTIONAL INTEGRITY: EXCEPTIONAL</div>
+    <div style="margin-top: 1rem; font-style: italic;">
+      "They heal without judgment. They refuse to be weaponized. In a world of compromise, they are impossibly pure."
+    </div>
+  </div>
+
+</div>
+
+</body>
+
+</html>

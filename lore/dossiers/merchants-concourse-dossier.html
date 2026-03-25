@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intel Dossier: The Merchant's Concourse</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstylesheet" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root {
+  --primary-dark: #1a1a1a;
+  --primary-light: #f5f5f5;
+  --accent-gold: #d4a574;
+  --accent-red: #8b3a3a;
+  --accent-blue: #4a5f7f;
+  --accent-purple: #6a4a8a;
+  --text-main: #2a2a2a;
+  --text-light: #555;
+  --border-color: #ddd;
+  --stamp-color: #1a1a1a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--text-main);
+  background: linear-gradient(135deg, #f9f7f4 0%, #e8e3de 100%);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.dossier-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fefdfb;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  border: 2px solid var(--border-color);
+  position: relative;
+}
+
+.dossier-header {
+  background: linear-gradient(90deg, #3a3a5a 0%, #2a2a4a 100%);
+  color: #f5f5f5;
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid #9aaa9a;
+}
+
+.dossier-header::before {
+  content: "CLASSIFIED INTELLIGENCE";
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  opacity: 0.6;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.dossier-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.dossier-subtitle {
+  font-size: 1.1rem;
+  color: #aaaacc;
+  font-style: italic;
+  letter-spacing: 0.15em;
+}
+
+.dossier-stamp {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  width: 100px;
+  height: 100px;
+  border: 2px solid #9aaa9a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  color: #9aaa9a;
+  font-size: 0.75rem;
+  transform: rotate(-15deg);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+}
+
+.dossier-content {
+  padding: 3rem 2.5rem;
+  line-height: 1.8;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section-header {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.6rem;
+  color: var(--accent-purple);
+  border-bottom: 2px solid var(--accent-gold);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.section-label {
+  display: inline-block;
+  background: var(--accent-purple);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.subsection {
+  margin-bottom: 1.5rem;
+}
+
+.subsection-title {
+  font-weight: bold;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.quote-box {
+  border-left: 4px solid var(--accent-gold);
+  padding: 1rem 1.5rem;
+  background: rgba(212, 165, 116, 0.08);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+}
+
+.watcher-note {
+  border-left: 4px solid var(--accent-blue);
+  padding: 1rem 1.5rem;
+  background: rgba(74, 95, 127, 0.06);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #3a4a5a;
+  font-size: 0.95rem;
+}
+
+.watcher-marginalia {
+  border-left: 4px dashed var(--accent-gold);
+  padding: 0.75rem 1.5rem;
+  background: rgba(212, 165, 116, 0.04);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.intel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+
+.intel-card {
+  background: #f9f7f4;
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-radius: 4px;
+}
+
+.intel-label {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--accent-purple);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+}
+
+.intel-value {
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+
+.warning-box {
+  background: rgba(106, 74, 138, 0.08);
+  border: 2px solid var(--accent-purple);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 4px;
+}
+
+.warning-title {
+  color: var(--accent-purple);
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+ul {
+  margin-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.75rem;
+  text-align: justify;
+}
+
+.dossier-footer {
+  background: #f0ebe5;
+  padding: 2rem;
+  border-top: 2px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+.footer-note {
+  margin-bottom: 0.5rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 768px) {
+  .dossier-content {
+    padding: 2rem 1.5rem;
+  }
+  .intel-grid {
+    grid-template-columns: 1fr;
+  }
+  .dossier-title {
+    font-size: 2rem;
+  }
+  .dossier-stamp {
+    width: 80px;
+    height: 80px;
+    font-size: 0.65rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="dossier-wrapper">
+
+  <div class="dossier-header">
+    <div class="dossier-stamp">
+      <span>PROFIT<br>NEUTRAL</span>
+    </div>
+    <h1 class="dossier-title">THE MERCHANT'S CONCOURSE</h1>
+    <p class="dossier-subtitle">Trade Cartel, Information Network</p>
+  </div>
+
+  <div class="dossier-content">
+
+    <div class="quote-box">
+      "They will sell to anyone. They will buy from anyone. They ask no questions about use or purpose. This makes them simultaneously the most reliable and most dangerous network in Verdanward — not because they are evil, but because they are amoral."
+    </div>
+
+    <div class="section">
+      <div class="section-label">OVERVIEW</div>
+      <div class="section-header">Commerce as Instrument of Power</div>
+      
+      <p>
+        The Merchant's Concourse is not a single organization but a decentralized network of merchant houses, trading companies, and logistics guilds bound by shared principles: profit maximization, market control, and information aggregation. They operate across all three regions and maintain no formal headquarters, no central authority, no unified command structure.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        What binds the Concourse together is not institutional loyalty but mutual economic interest. When those interests align, they cooperate seamlessly. When those interests conflict, they compete ruthlessly. They are unified by principle, not by regulation.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        They are neither evil nor righteous. They are what emerges when commerce is allowed to pursue its own logic without moral restraint: efficient, ruthless, and absolutely loyal to profit.
+      </p>
+
+      <div class="watcher-marginalia">
+        <strong>Marginalia:</strong> I have observed that the Merchant's Concourse represents something institutional powers often underestimate — the power of distributed networks that care nothing for ideology. They cannot be threatened into compliance because they have no center to strike. They cannot be bribed into loyalty because they are already optimizing for profit. They simply exist as a fact of commerce.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">STRUCTURE & OPERATIONS</div>
+      <div class="section-header">No Hierarchy, Pure Network</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Merchant Houses</div>
+        <p>
+          The Concourse operates through independent merchant houses — family-run businesses, trading companies, caravan operators. Each house maintains its own operations, its own routes, its own client relationships. Yet all are bound to the Concourse through shared market intelligence, standardized pricing agreements, and mutual protection arrangements.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Entering the Concourse requires capital, reputation, and willingness to accept the house's terms. Houses that violate agreements are ostracized — no merchant will trade with them, no information is shared, their goods are undercut in markets. The punishment is economic destruction.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Trade Routes & Networks</div>
+        <p>
+          The Concourse controls major trade routes across Verdanward. They maintain caravans, trading posts, and logistics networks that handle legitimate commerce, smuggling operations, and everything in between. A merchant house with exclusive rights to a route can accumulate significant wealth rapidly.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Route control is jealously guarded. Disputes are common, though rarely violent — the cost of violence is often higher than negotiated settlement. When violence does occur, it is typically conducted through hired intermediaries, never openly.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Information Markets</div>
+        <p>
+          The Concourse's most valuable asset is not trade goods but information. Merchants move constantly between regions and settlements. They observe military movements, political shifts, scholarly developments, institutional corruption. This information is aggregated, analyzed, and sold to the highest bidder.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          An institution paying for intelligence through the Concourse can be confident that competitors are also paying for that same intelligence — just potentially more or less money. This creates a market for information that is ruthlessly efficient and completely amoral.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Governance Through Economics</div>
+        <p>
+          The Concourse has no written laws, no formal courts, no police force. Instead, it maintains governance through economic sanctions. A merchant who violates agreements, cheats partners, or breaks faith is simply excluded from the network — unable to trade, unable to access information, unable to compete. This is typically sufficient punishment.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          When exclusion is insufficient, violence is sometimes employed — not as institutional punishment but as enforcement by those directly wronged. The Concourse does not officially authorize such actions, but it permits them as natural consequences of commercial violation.
+        </p>
+      </div>
+
+      <div class="intel-grid">
+        <div class="intel-card">
+          <div class="intel-label">Estimated Members</div>
+          <div class="intel-value">300–500+ (Distributed)</div>
+        </div>
+        <div class="intel-card">
+          <div class="intel-label">Primary Control</div>
+          <div class="intel-value">Trade Routes & Information</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">OPERATIONS & METHODS</div>
+      <div class="section-header">How Commerce Becomes Power</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Legitimate Trade</div>
+        <p>
+          The Concourse operates significant legitimate trade operations. They move goods, food, materials, and manufactured items across regions. This legitimate commerce is profitable and provides cover for less legitimate operations while maintaining access to communities and markets.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Smuggling Networks</div>
+        <p>
+          The same routes and infrastructure used for legitimate trade are used for smuggling. Restricted goods, banned items, political dissidents — whatever an institution forbids, the Concourse will transport for the right price. They maintain this dual operation to maximize routes' profitability without sacrificing legitimate markets.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Market Manipulation</div>
+        <p>
+          The Concourse controls enough of the trade flow to influence prices significantly. By flooding markets with goods, they drive prices down and put competitors out of business. By restricting goods, they drive prices up and maximize profit. This is not conspiracy — it is simple market mechanics applied efficiently.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Intelligence Trading</div>
+        <p>
+          Information gathered by merchants moving across regions is sold to the highest bidder. The Concourse maintains information brokers who aggregate data and sell to Citadels, regional authorities, private clients, and anyone with money. The same intelligence may be sold to multiple parties — a detail usually kept confidential.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Political Pragmatism</div>
+        <p>
+          The Concourse maintains relationships with all institutional powers because neutrality is profitable. They trade with the Crimson Citadel, the Azure Citadel, The Owls, resistance movements, and anyone else who can pay. They refuse to take political sides because political sides can lose, and losing sides stop paying.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">RELATIONSHIPS & LEVERAGE</div>
+      <div class="section-header">The Power of Economic Entanglement</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">The Regions</div>
+        <p>
+          All three regions are economically dependent on the Concourse for certain essential goods. This gives the Concourse subtle but significant leverage. They can threaten to restrict goods, restrict information sharing, or favor competing regions. Regional authorities generally avoid antagonizing the Concourse for this reason.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Citadels</div>
+        <p>
+          Both Citadels purchase information from the Concourse. This economic relationship is carefully maintained — the Concourse sells to both, ensuring neither has reason to attack them. If either Citadel attempted to monopolize information or control the Concourse, the other would support the Concourse's continued independence as counterbalance.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Other Organizations</div>
+        <p>
+          The Songweavers Guild, the Mender's Trust, the Rangers — all have economic relationships with the Concourse. These relationships are typically peripheral, not primary, but they exist and provide another layer of connection and leverage.
+        </p>
+      </div>
+
+      <div class="watcher-note">
+        <strong>Observation:</strong> The Merchant's Concourse represents a form of power that is fundamentally different from institutional or military power. They do not control territory or enforce law through force. They control information and resources through commerce. This makes them both less visible and potentially more powerful than institutions that rely on violence.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">THREAT ASSESSMENT</div>
+      <div class="section-header">The Danger of Economic Density</div>
+      
+      <p>
+        The Merchant's Concourse poses no direct military threat. They maintain no armies, no elite guards, no instruments of organized violence. Their threat is economic and informational. They can:
+      </p>
+
+      <ul>
+        <li>Restrict essential goods to regions, causing economic collapse</li>
+        <li>Flood markets with goods, destroying local economies</li>
+        <li>Share sensitive information with hostile powers</li>
+        <li>Support or undermine military operations through logistics control</li>
+        <li>Finance resistance movements or suppress them through economic pressure</li>
+      </ul>
+
+      <p style="margin-top: 1rem;">
+        What makes the Concourse particularly dangerous is their amorality. They will cooperate with or oppose any power based purely on economic calculation. A tyrant can be opposed by the Concourse — if the tyrant's policies reduce profit. An oppressive regime can be supported — if that support is profitable. They are mercenary not out of malice but out of consistent adherence to their singular principle: maximize profit.
+      </p>
+
+      <div class="warning-box">
+        <div class="warning-title">⚠ CRITICAL NOTE</div>
+        <p>
+          The Merchant's Concourse cannot be destroyed without destroying commerce itself — which would cause societal collapse. They cannot be controlled without controlling all merchants and routes — an impossibly complex task. They can only be negotiated with, accommodated, and where possible, partially aligned with one's own interests.
+        </p>
+        <p style="margin-top: 1rem;">
+          This is both their greatest strength and the source of their greatest vulnerability — they have become so economically entangled that damaging them damages everyone who depends on commerce. This mutual vulnerability is the only thing preventing various powers from attempting their destruction.
+        </p>
+      </div>
+
+      <div class="watcher-marginalia">
+        <strong>Final marginalia:</strong> I have observed that the Merchant's Concourse has discovered something that escapes most institutions — how to be powerful without seeking power. They do not want to rule. They want to trade. This disinterest in political authority makes them more politically influential than many powers that seek authority explicitly. They are the most perfect expression of commerce as instrument — neither righteous nor evil, simply efficient.
+      </div>
+    </section>
+
+  </div>
+
+  <div class="dossier-footer">
+    <div class="footer-note">DISTRIBUTION: REGIONAL AUTHORITIES, TRADE OVERSIGHT, ECONOMIC INTELLIGENCE</div>
+    <div class="footer-note">LAST UPDATED: 877 RC | STATUS: OPERATING PROFITABLY | NETWORK STABILITY: EXCEPTIONAL</div>
+    <div style="margin-top: 1rem; font-style: italic;">
+      "They will sell to anyone. They care nothing for your cause. But if your cause makes you profitable, they will support it with ruthless efficiency."
+    </div>
+  </div>
+
+</div>
+
+</body>
+
+</html>

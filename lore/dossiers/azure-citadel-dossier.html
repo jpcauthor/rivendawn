@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intel Dossier: The Azure Citadel</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstylesheet" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root {
+  --primary-dark: #1a1a1a;
+  --primary-light: #f5f5f5;
+  --accent-gold: #d4a574;
+  --accent-red: #8b3a3a;
+  --accent-blue: #4a5f7f;
+  --text-main: #2a2a2a;
+  --text-light: #555;
+  --border-color: #ddd;
+  --stamp-color: #1a1a1a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--text-main);
+  background: linear-gradient(135deg, #f9f7f4 0%, #e8e3de 100%);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.dossier-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fefdfb;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  border: 2px solid var(--border-color);
+  position: relative;
+}
+
+.dossier-header {
+  background: linear-gradient(90deg, #1a4a6a 0%, #0a2a4a 100%);
+  color: #f5f5f5;
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid #5a9aca;
+}
+
+.dossier-header::before {
+  content: "CLASSIFIED INTELLIGENCE";
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  opacity: 0.6;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.dossier-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.dossier-subtitle {
+  font-size: 1.1rem;
+  color: #7aaacc;
+  font-style: italic;
+  letter-spacing: 0.15em;
+}
+
+.dossier-stamp {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  width: 100px;
+  height: 100px;
+  border: 2px solid #5a9aca;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  color: #5a9aca;
+  font-size: 0.75rem;
+  transform: rotate(-15deg);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+}
+
+.dossier-content {
+  padding: 3rem 2.5rem;
+  line-height: 1.8;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section-header {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.6rem;
+  color: var(--accent-blue);
+  border-bottom: 2px solid var(--accent-gold);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.section-label {
+  display: inline-block;
+  background: var(--accent-blue);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.subsection {
+  margin-bottom: 1.5rem;
+}
+
+.subsection-title {
+  font-weight: bold;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.quote-box {
+  border-left: 4px solid var(--accent-gold);
+  padding: 1rem 1.5rem;
+  background: rgba(212, 165, 116, 0.08);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+}
+
+.watcher-note {
+  border-left: 4px solid var(--accent-blue);
+  padding: 1rem 1.5rem;
+  background: rgba(74, 95, 127, 0.06);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #3a4a5a;
+  font-size: 0.95rem;
+}
+
+.watcher-marginalia {
+  border-left: 4px dashed var(--accent-gold);
+  padding: 0.75rem 1.5rem;
+  background: rgba(212, 165, 116, 0.04);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.intel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+
+.intel-card {
+  background: #f9f7f4;
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-radius: 4px;
+}
+
+.intel-label {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--accent-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+}
+
+.intel-value {
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+
+.warning-box {
+  background: rgba(90, 170, 202, 0.08);
+  border: 2px solid #5a9aca;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 4px;
+}
+
+.warning-title {
+  color: #5a9aca;
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+ul {
+  margin-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.75rem;
+  text-align: justify;
+}
+
+.dossier-footer {
+  background: #f0ebe5;
+  padding: 2rem;
+  border-top: 2px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+.footer-note {
+  margin-bottom: 0.5rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 768px) {
+  .dossier-content {
+    padding: 2rem 1.5rem;
+  }
+  .intel-grid {
+    grid-template-columns: 1fr;
+  }
+  .dossier-title {
+    font-size: 2rem;
+  }
+  .dossier-stamp {
+    width: 80px;
+    height: 80px;
+    font-size: 0.65rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="dossier-wrapper">
+
+  <div class="dossier-header">
+    <div class="dossier-stamp">
+      <span>RESISTANCE<br>FRAGILE</span>
+    </div>
+    <h1 class="dossier-title">THE AZURE CITADEL</h1>
+    <p class="dossier-subtitle">Young Institution, Principled Opposition</p>
+  </div>
+
+  <div class="dossier-content">
+
+    <div class="quote-box">
+      "They are trying to do the right thing in a world that has made righteousness terrifyingly expensive. One must respect this even as one fears for their survival."
+    </div>
+
+    <div class="section">
+      <div class="section-label">OVERVIEW</div>
+      <div class="section-header">A New Institution Built on Old Ideals</div>
+      
+      <p>
+        The Azure Citadel was founded only a decade ago, born from the wreckage of the Citadel Schism and the refusal of the Vanguard to serve tyranny. It represents an attempt to reclaim what the Crimson Citadel was meant to be: a sanctuary of truth, a neutral ground for scholarship, an institution dedicated to knowledge in service of all people rather than the power of a few.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        It is also fragile in ways the young rarely understand until it is too late.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        The Azure Citadel operates at a severe disadvantage. It lacks the resources, the archives, the political weight of its elder sibling. It is beleaguered, hunted, and operates knowing that its mere existence is a challenge to Grevon's authority. And yet it persists. One must decide whether this is admirable or foolish. History will likely determine the matter.
+      </p>
+
+      <div class="watcher-marginalia">
+        <strong>Marginalia:</strong> I have observed many institutions wage principled stands against tyranny. Most do not survive. Some do, and when they do, the world shifts. I do not yet know which fate awaits the Azure. Neither do they. This uncertainty is itself a form of courage.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">LEADERSHIP</div>
+      <div class="section-header">Veysha: Scholar, Fugitive, Leader</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">The Woman at the Center</div>
+        <p>
+          **Veysha** leads the Azure Citadel. She is not a figurehead but an active scholar, administrator, and strategist. She carries the trauma of exile, the weight of being accused of sympathies she does not hold, and the burden of knowing her father's artifacts were weaponized against her by the Crimson's new regime.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Her leadership is marked by pragmatism tempered with principle. She does not seek revenge. She seeks restoration. But she understands that restoration may require actions that weigh heavily on her conscience.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Vanguard's Choice</div>
+        <p>
+          When Grevon consolidated power, the Vanguard fractured. Sixty-five members were imprisoned. Thirty-five escaped. These thirty-five chose to stand with Veysha rather than submit to the new regime. This choice was not made lightly, and it is not made without cost.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          The Vanguard of the Azure operates as both defenders and administrators, protecting the Citadel's scholars while maintaining its ideological integrity. They are smaller than their Crimson counterparts but unified by genuine conviction rather than fear.
+        </p>
+      </div>
+
+      <div class="intel-grid">
+        <div class="intel-card">
+          <div class="intel-label">Current Leadership</div>
+          <div class="intel-value">Veysha (Scholar/Administrator)</div>
+        </div>
+        <div class="intel-card">
+          <div class="intel-label">Vanguard Members</div>
+          <div class="intel-value">35 (Escaped from Crimson)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">MISSION & OPERATIONS</div>
+      <div class="section-header">What They Are Trying to Build</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Restoration of Original Purpose</div>
+        <p>
+          The Azure Citadel's explicit mission is to reclaim the foundational ideals of the Crimson Citadel before Grevon's corruption. This means:
+        </p>
+
+        <ul>
+          <li>Preserving knowledge without ideological filtering</li>
+          <li>Training scholars in open inquiry rather than predetermined conclusions</li>
+          <li>Maintaining neutrality in regional politics</li>
+          <li>Protecting dangerous knowledge through security rather than suppression</li>
+          <li>Serving all peoples equally rather than consolidating power</li>
+        </ul>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Building Archives Anew</div>
+        <p>
+          The Azure Citadel lacks the vast archives of the Crimson. Instead, it is building new archives by gathering texts, records, and knowledge from communities across Verdanward. This is slower, less comprehensive, but arguably more resilient — less likely to be corrupted centrally because it is distributed across multiple sources.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          They are also recovering knowledge the Crimson has suppressed or rewritten, working to reconstruct truth from fragments and comparative analysis.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Training Without Propaganda</div>
+        <p>
+          The Azure trains scholars and Resonance practitioners. Critically, this training does not assume predetermined conclusions. Scholars are encouraged to question, investigate, and reach their own conclusions — even when those conclusions contradict institutional authority.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          This is dangerous. Many scholars trained this way will eventually disagree with each other and with institutional direction. But this disagreement is considered healthy. The pursuit of truth is not consensus.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">VULNERABILITIES & CHALLENGES</div>
+      <div class="section-header">The Fragility of Young Resistance</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Resource Scarcity</div>
+        <p>
+          The Azure Citadel operates with a fraction of the resources available to the Crimson. Funding is limited. Equipment is scarce. Many scholars work on faith rather than security. A single major setback could undermine the institution's ability to function.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Hunted Status</div>
+        <p>
+          Grevon views the Azure Citadel as a direct challenge to his authority. The institution is not merely disliked — it is actively threatened. Scholars have been arrested. Archives have been raided. The Crimson uses its resources to obstruct and impede Azure operations.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Leadership Burden</div>
+        <p>
+          Veysha carries the weight of leading an institution under siege while processing personal trauma. Her father's memory was weaponized against her. She was exiled from the institution she served. Now she leads a rival institution. This is not a burden everyone could sustain indefinitely.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Ideological Fragility</div>
+        <p>
+          The Azure Citadel's commitment to open inquiry means it will inevitably face internal disagreement, questioning of authority, and challenges to its own assumptions. This is healthy for truth-seeking but dangerous for institutional cohesion. Unlike the Crimson, which suppresses dissent, the Azure must tolerate it — which makes the institution more democratic but also more fragile.
+        </p>
+      </div>
+
+      <div class="watcher-note">
+        <strong>Observation:</strong> The Azure Citadel's greatest strength is also its greatest vulnerability. They are committed to truth even when that truth is uncomfortable. They tolerate dissent. They encourage questioning. This makes them admirable and exceptionally difficult to organize. Grevon's institution is efficient because it demands compliance. The Azure's institution is democratic because it permits choice. One is more powerful militarily. The other may be more resilient ideologically — if it survives long enough to prove it.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">PRACTICAL</div>
+      <div class="section-header">Engaging With the Azure Citadel</div>
+      
+      <p>
+        If you seek knowledge untainted by political agenda, the Azure is your resource. If you seek to challenge the Crimson's narrative, the Azure welcomes collaborative investigation. If you believe truth matters more than power, the Azure is worth supporting.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        But understand: association with the Azure marks you as an enemy to Grevon. The Crimson does not tolerate heresy, and challenging the Dominus's narrative is heresy by definition.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        Veysha and her institution are fighting for something worth fighting for. But they are vastly outnumbered, underfunded, and hunted. Help them if you can. Understand the cost if you do.
+      </p>
+
+      <div class="warning-box">
+        <div class="warning-title">⚠ CRITICAL NOTE</div>
+        <p>
+          The Azure Citadel represents the possibility of institutional restoration. If it survives, it proves that even corrupted systems can be reclaimed. If it falls, Grevon's tyranny becomes the defining institutional reality of this age.
+        </p>
+        <p style="margin-top: 1rem;">
+          Everything depends on whether principle can survive in a world designed to punish it.
+        </p>
+      </div>
+
+      <div class="watcher-marginalia">
+        <strong>Final marginalia:</strong> I do not often find myself hoping for institutional success. But I find myself hoping the Azure survives. Not because hope changes outcomes, but because their refusal to compromise on principle deserves to be remembered. If they fall, at least let them fall having tried. That, at minimum, is something.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="dossier-footer">
+    <div class="footer-note">DISTRIBUTION: REGIONAL ALLIES, SYMPATHETIC SCHOLARS, RESISTANCE OPERATIVES</div>
+    <div class="footer-note">LAST UPDATED: 877 RC | STATUS: OPERATING UNDER THREAT | INSTITUTIONAL STABILITY: MODERATE-LOW</div>
+    <div style="margin-top: 1rem; font-style: italic;">
+      "They are trying to restore what was corrupted. Whether they succeed or fail, the attempt itself matters more than most realize."
+    </div>
+  </div>
+
+</div>
+
+</body>
+
+</html>

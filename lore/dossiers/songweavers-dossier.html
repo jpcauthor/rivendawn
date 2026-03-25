@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intel Dossier: Songweavers Guild</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root {
+  --primary-dark: #1a1a1a;
+  --primary-light: #f5f5f5;
+  --accent-gold: #d4a574;
+  --accent-red: #8b3a3a;
+  --accent-blue: #4a5f7f;
+  --text-main: #2a2a2a;
+  --text-light: #555;
+  --border-color: #ddd;
+  --stamp-color: #cc3333;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--text-main);
+  background: linear-gradient(135deg, #f9f7f4 0%, #e8e3de 100%);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.dossier-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fefdfb;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  border: 2px solid var(--border-color);
+  position: relative;
+}
+
+.dossier-header {
+  background: linear-gradient(90deg, #2a2a2a 0%, #1a1a1a 100%);
+  color: #f5f5f5;
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid var(--accent-gold);
+}
+
+.dossier-header::before {
+  content: "CLASSIFIED INTELLIGENCE";
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  opacity: 0.6;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.dossier-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.dossier-subtitle {
+  font-size: 1.1rem;
+  color: var(--accent-gold);
+  font-style: italic;
+  letter-spacing: 0.15em;
+}
+
+.dossier-stamp {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  width: 100px;
+  height: 100px;
+  border: 2px solid var(--stamp-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  color: var(--stamp-color);
+  font-size: 0.75rem;
+  transform: rotate(-15deg);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+}
+
+.dossier-content {
+  padding: 3rem 2.5rem;
+  line-height: 1.8;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section-header {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.6rem;
+  color: var(--accent-red);
+  border-bottom: 2px solid var(--accent-gold);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.section-label {
+  display: inline-block;
+  background: var(--accent-red);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.subsection {
+  margin-bottom: 1.5rem;
+}
+
+.subsection-title {
+  font-weight: bold;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.quote-box {
+  border-left: 4px solid var(--accent-gold);
+  padding: 1rem 1.5rem;
+  background: rgba(212, 165, 116, 0.08);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+}
+
+.watcher-note {
+  border-left: 4px solid var(--accent-blue);
+  padding: 1rem 1.5rem;
+  background: rgba(74, 95, 127, 0.06);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #3a4a5a;
+  font-size: 0.95rem;
+}
+
+.watcher-marginalia {
+  border-left: 4px dashed var(--accent-gold);
+  padding: 0.75rem 1.5rem;
+  background: rgba(212, 165, 116, 0.04);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.intel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+
+.intel-card {
+  background: #f9f7f4;
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-radius: 4px;
+}
+
+.intel-label {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--accent-red);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+}
+
+.intel-value {
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+
+.warning-box {
+  background: rgba(139, 58, 58, 0.08);
+  border: 2px solid var(--accent-red);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 4px;
+}
+
+.warning-title {
+  color: var(--accent-red);
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+ul {
+  margin-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.75rem;
+  text-align: justify;
+}
+
+.dossier-footer {
+  background: #f0ebe5;
+  padding: 2rem;
+  border-top: 2px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+.footer-note {
+  margin-bottom: 0.5rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 768px) {
+  .dossier-content {
+    padding: 2rem 1.5rem;
+  }
+  .intel-grid {
+    grid-template-columns: 1fr;
+  }
+  .dossier-title {
+    font-size: 2rem;
+  }
+  .dossier-stamp {
+    width: 80px;
+    height: 80px;
+    font-size: 0.65rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="dossier-wrapper">
+
+  <div class="dossier-header">
+    <div class="dossier-stamp">
+      <span>MONITOR<br>CLOSELY</span>
+    </div>
+    <h1 class="dossier-title">SONGWEAVERS GUILD</h1>
+    <p class="dossier-subtitle">The Itinerant Practitioners of Resonant Instruction</p>
+  </div>
+
+  <div class="dossier-content">
+
+    <div class="quote-box">
+      "They do not cast spells. They cajole the Song into doing the work for them—notes curling like smoke, emotions stirred like soup, leaving taverns poorer and listeners convinced they've witnessed something divine. In reality, they have merely met someone very good at borrowing power and not paying it back."
+    </div>
+
+    <div class="section">
+      <div class="section-label">OVERVIEW</div>
+      <div class="section-header">What Exactly Are These Charming Parasites?</div>
+      
+      <p>
+        The Songweavers Guild operates under a deceptively simple premise: they teach people to understand Resonance. What they actually do is far more insidious. They are traveling instructors—some legitimate, most merely convincing—who move through villages, settlements, and cities teaching (or claiming to teach) how to manipulate the Song.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        Their philosophy, insofar as they possess one, centers on the idea that Resonance is a tool to be wielded by anyone clever enough to seize it. They do not subscribe to the Citadels' rigid theoretical frameworks or the Vanguard's protective instincts. The Song, to them, is opportunity wrapped in harmonic frequencies.
+      </p>
+
+      <div class="watcher-marginalia">
+        <strong>Marginalia:</strong> I have observed them in forty-seven settlements across Verdanward. In forty-three cases, the local population was demonstrably worse off after their departure. In the remaining four, the Songweavers were run out of town by angry mobs wielding farming implements. I found that outcome refreshingly efficient.
+      </div>
+    </p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">STRUCTURE</div>
+      <div class="section-header">Organization (Loose) & Hierarchy (Nonexistent)</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">How They Actually Operate</div>
+        <p>
+          The Songweavers Guild is not, technically, a guild. There is no central authority. No licensing body. No standards of conduct beyond "don't get caught doing anything too egregious." What exists instead is a loose confederation of traveling instructors who share knowledge through informal networks, word-of-mouth recommendations, and the occasional gathering at neutral taverns.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          A Songweaver might spend three months in one settlement teaching locals to "attune" to their Wellspring (which largely involves meditation, self-deception, and the occasional minor Resonance manipulation). Then they move on, leaving behind a village full of people convinced they now understand the Song—when in reality they understand nothing except the sensation of hope and the emptiness when the instructor vanishes with their silver.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Recruitment & "Accreditation"</div>
+        <p>
+          There is no formal recruitment process. A Songweaver is simply someone who has learned enough Resonance to convincingly teach it, and who possesses sufficient charisma to convince others to pay for the privilege of learning. The barrier to entry is depressingly low. The barrier to legitimacy even lower.
+        </p>
+      </div>
+
+      <div class="intel-grid">
+        <div class="intel-card">
+          <div class="intel-label">Estimated Active Practitioners</div>
+          <div class="intel-value">200–400 (Highly Variable)</div>
+        </div>
+        <div class="intel-card">
+          <div class="intel-label">Centralized Leadership</div>
+          <div class="intel-value">None</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">METHODS</div>
+      <div class="section-header">How They Con You (Politely)</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">The Teaching Model</div>
+        <p>
+          A typical Songweaver arrives in town and establishes themselves in a tavern, inn, or public square. They are charming. They are patient. They tell stories about the Song as though it were a person with feelings and preferences. They demonstrate minor Resonance effects—notes that glow faintly, emotions that shift in the room, small harmonies that make people feel briefly understood.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Then they offer to teach. For a modest fee. "Just a few coins. Enough to support my travels." They teach meditation. Breathing techniques. They explain the concept of the Wellspring. They make it sound simple. They make it sound *possible*.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          And for maybe ten percent of their students, it actually works. Those students become evangelists. They convince their friends. The word spreads. The Songweaver's reputation grows.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          The other ninety percent? They paid for the illusion of progress and the comfort of believing someone understood them. It's a transaction the Songweaver is perfectly comfortable with.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Actual Resonance Competence</div>
+        <p>
+          Here is what must be understood: not all Songweavers are frauds. Many genuinely possess Resonance sensitivity and basic instruction capability. The problem is not that they are incompetent—it is that they are *unaccountable*. A legitimate Songweaver might teach perfectly valid techniques. But so might a charlatan teach the same techniques while secretly draining emotional resonance from their students for personal benefit.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Without oversight, without standards, without consequence, the distinction becomes purely semantic.
+        </p>
+      </div>
+
+      <div class="watcher-note">
+        <strong>Observation:</strong> I have documented instances where Songweavers taught Resonance manipulation techniques that bordered on dangerous. A practitioner in the Limestone settlements taught students to "open their Wellspring fully"—which resulted in three cases of magical burnout and one case of what can only be described as temporary consciousness dissolution. The Songweaver was gone by the time the first victim screamed.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">THREAT ASSESSMENT</div>
+      <div class="section-header">Why They Matter (Even If They're Mostly Harmless)</div>
+      
+      <p>
+        The Songweavers Guild poses no direct military threat. They are not assassins. They are not revolutionaries. They are not bent on conquest or sabotage.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        What they represent is something more insidious: the erosion of trust in legitimate Resonance instruction. Every charlatan who teaches under the Songweaver banner makes it harder for people to believe the Citadels, the Concordance, or any actual authority on matters of the Song. They muddy the waters. They create confusion. They leave behind villages of people who believe they understand something they emphatically do not.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        Additionally—and this bears noting—some Songweavers have been observed operating as intelligence networks. Not officially. Not with coordination. But a traveling instructor with access to multiple settlements, multiple households, and multiple layers of trust? That person makes an excellent spy.
+      </p>
+
+      <div class="watcher-marginalia">
+        <strong>Marginalia:</strong> I have flagged seventeen Songweavers for potential Owl recruitment based on their demonstrated access to information. Of those seventeen, four have since disappeared. I suspect they were already working for someone. The question is: whom?
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">RELATIONS</div>
+      <div class="section-header">Songweavers & The World</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">The Citadels</div>
+        <p>
+          The Crimson Citadel views Songweavers with disdain—viewing them as diluters of knowledge, thieves of authority. The Azure Citadel is more pragmatic, recognizing that some Songweavers teach legitimate techniques and that attempted suppression would only drive them deeper underground. Neither institution can effectively regulate them.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Regions</div>
+        <p>
+          Attitudes vary. Limestone tends to be welcoming—their culture values knowledge-sharing and community instruction. The Cradle is more wary, having been burned by fraudulent practitioners. The Forge largely ignores them, considering anyone who doesn't work with steel to be irrelevant.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Owls</div>
+        <p>
+          The Owls monitor Songweavers carefully, less from threat assessment and more from utility assessment. A Songweaver's access is valuable. Some have been quietly recruited. Others have been observed passing information to rival factions. The Owls do not interfere unless a Songweaver's activities directly destabilize regional peace.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Concordance</div>
+        <p>
+          Professional contempt mixed with academic curiosity. The Concordance recognizes that Songweavers occasionally stumble upon legitimate Resonance techniques through trial and error. They collect this information. They do not acknowledge the Songweavers as peers.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">PRACTICAL</div>
+      <div class="section-header">If You Encounter a Songweaver</div>
+      
+      <p>
+        A Songweaver will present themselves as helpful, knowledgeable, and tragically underfunded. They will offer instruction, insight, or emotional support. They will seem genuinely interested in your wellbeing. Some of them actually are.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        The key indicators of a legitimate versus fraudulent practitioner:
+      </p>
+      
+      <ul>
+        <li><strong>Do they promise specific results?</strong> Legitimate teachers acknowledge that Resonance mastery takes time. Con artists promise rapid transformation.</li>
+        <li><strong>Can they articulate their philosophy?</strong> Frauds speak in vague mysticism. Real practitioners explain their methodology.</li>
+        <li><strong>Are they willing to be tested?</strong> A legitimate Songweaver can demonstrate their techniques under scrutiny. A fraudster will find reasons why that's "spiritually damaging."</li>
+        <li><strong>Do they disappear after taking payment?</strong> Then they were a fraudster. This bears noting as a definitive indicator.</li>
+      </ul>
+
+      <p style="margin-top: 1rem;">
+        That said: many Songweavers occupy a moral grey zone. They teach real techniques. They do help some students. But they also exploit hope, manipulate emotion, and leave behind communities worse off than they found them. Judge accordingly.
+      </p>
+
+      <div class="watcher-marginalia">
+        <strong>Final note:</strong> I have observed one Songweaver who appeared to actually believe her own philosophy—that the Song could be understood by anyone, that democratization of Resonance knowledge was inherently good, that the Citadels' gatekeeping was the real moral crime. She was delusional, but genuinely so. Her students actually learned things. I found the entire situation deeply unsettling and have not yet decided whether to flag her or leave her alone. The world, occasionally, rewards blind faith. It is an inefficient reward system.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="dossier-footer">
+    <div class="footer-note">DISTRIBUTION: FIELD OPERATIVES, CITADEL SCHOLARS, REGION ADMINISTRATORS</div>
+    <div class="footer-note">LAST UPDATED: 877 RC | STATUS: ONGOING MONITOR</div>
+    <div style="margin-top: 1rem; font-style: italic;">
+      "They are persuasive. That is all that matters."
+    </div>
+  </div>
+
+</div>
+
+</body>
+
+</html>

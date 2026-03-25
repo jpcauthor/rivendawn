@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intel Dossier: The Crimson Citadel</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstylesheet" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root {
+  --primary-dark: #1a1a1a;
+  --primary-light: #f5f5f5;
+  --accent-gold: #d4a574;
+  --accent-red: #8b3a3a;
+  --accent-blue: #4a5f7f;
+  --text-main: #2a2a2a;
+  --text-light: #555;
+  --border-color: #ddd;
+  --stamp-color: #1a1a1a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--text-main);
+  background: linear-gradient(135deg, #f9f7f4 0%, #e8e3de 100%);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.dossier-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fefdfb;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  border: 2px solid var(--border-color);
+  position: relative;
+}
+
+.dossier-header {
+  background: linear-gradient(90deg, #6b1f1f 0%, #4a1515 100%);
+  color: #f5f5f5;
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid var(--accent-gold);
+}
+
+.dossier-header::before {
+  content: "CLASSIFIED INTELLIGENCE";
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  opacity: 0.6;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.dossier-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.dossier-subtitle {
+  font-size: 1.1rem;
+  color: #e0b965;
+  font-style: italic;
+  letter-spacing: 0.15em;
+}
+
+.dossier-stamp {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  width: 100px;
+  height: 100px;
+  border: 2px solid var(--accent-gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  color: var(--accent-gold);
+  font-size: 0.75rem;
+  transform: rotate(-15deg);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+}
+
+.dossier-content {
+  padding: 3rem 2.5rem;
+  line-height: 1.8;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section-header {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.6rem;
+  color: var(--accent-red);
+  border-bottom: 2px solid var(--accent-gold);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.section-label {
+  display: inline-block;
+  background: var(--accent-red);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.subsection {
+  margin-bottom: 1.5rem;
+}
+
+.subsection-title {
+  font-weight: bold;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.quote-box {
+  border-left: 4px solid var(--accent-gold);
+  padding: 1rem 1.5rem;
+  background: rgba(212, 165, 116, 0.08);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+}
+
+.watcher-note {
+  border-left: 4px solid var(--accent-blue);
+  padding: 1rem 1.5rem;
+  background: rgba(74, 95, 127, 0.06);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #3a4a5a;
+  font-size: 0.95rem;
+}
+
+.watcher-marginalia {
+  border-left: 4px dashed var(--accent-gold);
+  padding: 0.75rem 1.5rem;
+  background: rgba(212, 165, 116, 0.04);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.intel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+
+.intel-card {
+  background: #f9f7f4;
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-radius: 4px;
+}
+
+.intel-label {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--accent-red);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+}
+
+.intel-value {
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+
+.warning-box {
+  background: rgba(139, 58, 58, 0.08);
+  border: 2px solid var(--accent-red);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 4px;
+}
+
+.warning-title {
+  color: var(--accent-red);
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+ul {
+  margin-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.75rem;
+  text-align: justify;
+}
+
+.dossier-footer {
+  background: #f0ebe5;
+  padding: 2rem;
+  border-top: 2px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+.footer-note {
+  margin-bottom: 0.5rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 768px) {
+  .dossier-content {
+    padding: 2rem 1.5rem;
+  }
+  .intel-grid {
+    grid-template-columns: 1fr;
+  }
+  .dossier-title {
+    font-size: 2rem;
+  }
+  .dossier-stamp {
+    width: 80px;
+    height: 80px;
+    font-size: 0.65rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="dossier-wrapper">
+
+  <div class="dossier-header">
+    <div class="dossier-stamp">
+      <span>CORRUPTED<br>AUTHORITY</span>
+    </div>
+    <h1 class="dossier-title">THE CRIMSON CITADEL</h1>
+    <p class="dossier-subtitle">Knowledge as a Weapon of Control</p>
+  </div>
+
+  <div class="dossier-content">
+
+    <div class="quote-box">
+      "It was once a library. Now it is a lockbox. The distinction matters less than one might hope, particularly if you are the thing being locked away."
+    </div>
+
+    <div class="section">
+      <div class="section-label">OVERVIEW</div>
+      <div class="section-header">The Oldest Institution, Now Corrupted</div>
+      
+      <p>
+        The Crimson Citadel was founded at the dawn of recorded history to preserve knowledge, train scholars, and protect dangerous discoveries. For nearly a thousand years, it fulfilled this mission with reasonable competence. It maintained neutral ground. It gathered scholars from across Verdanward. It served as the repository of accumulated wisdom.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        That institution no longer exists.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        What stands now is an institution of control. Knowledge is preserved, yes — but only knowledge deemed acceptable. Scholars are trained, but only to reach conclusions their masters have already determined. Dangerous discoveries are protected — protected from the world, protected from scrutiny, protected from truth.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        The Crimson Citadel has been weaponized. And the architect of this weaponization has named himself the Dominus.
+      </p>
+
+      <div class="watcher-marginalia">
+        <strong>Marginalia:</strong> I have cataloged institutions for longer than I care to admit. I have watched them rise with noble purpose and collapse into self-interest. But few have corrupted so completely and so deliberately. Fewer still have done so while maintaining the aesthetic of their former virtue.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">HISTORY & TRANSFORMATION</div>
+      <div class="section-header">From Sanctuary to Tyranny</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">The Original Mission (0–860 RC)</div>
+        <p>
+          The Crimson Citadel was established to preserve the fragments of pre-Citadel knowledge and train practitioners in the disciplined use of Resonance. It functioned as a neutral ground where scholars from all peoples could gather. Its Vanguard protected both the institution and the knowledge it held. For eight hundred years, this worked.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Imperfectly, certainly. Corruptly at times, inevitably. But the foundational principle held: knowledge served truth, and truth served all people.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Schism Era (860–870 RC)</div>
+        <p>
+          The corruption of Lorn Zyreth and the subsequent internal conflict fractured the institution. Greighton Lastlight killed Lorn to prevent catastrophe. The Vanguard fractured. Leadership shifted.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          And **Grevon rose to power**.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          What followed was not a gradual erosion but a systematic dismantling. Grevon consolidated authority through shadowmancy, fear, and the strategic imprisonment of those who questioned his direction. Within five years, he had transformed a scholarly institution into an apparatus of control.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Present Corruption (870–877 RC)</div>
+        <p>
+          Under Grevon's rule — now formalized as the **Dominus Scientiae** — the Crimson Citadel operates as an instrument of centralized authority. Knowledge is cataloged, controlled, and disseminated only to those deemed worthy. Scholars work under strict ideological supervision. The Vanguard has been transformed from protectors of knowledge into enforcers of orthodoxy.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          The institution preserves truth. But it does so the way a jailer preserves prisoners — by keeping them confined.
+        </p>
+      </div>
+
+      <div class="intel-grid">
+        <div class="intel-card">
+          <div class="intel-label">Current Leadership</div>
+          <div class="intel-value">Grevon (Dominus Scientiae)</div>
+        </div>
+        <div class="intel-card">
+          <div class="intel-label">Time Under Current Rule</div>
+          <div class="intel-value">7 years (870–877 RC)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">STRUCTURE & OPERATIONS</div>
+      <div class="section-header">Hierarchy of Control</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">The Dominus</div>
+        <p>
+          Grevon rules with near-absolute authority. He maintains power through Shadowmancy, strategic violence, and the cultivation of fear. His word is institutional law. Questioning his directives is considered heresy.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Vanguard Corrupted</div>
+        <p>
+          The Vanguard's Redoubt, once an elite guard dedicated to protecting knowledge and maintaining neutrality, has been restructured into Grevon's personal enforcement apparatus. Those who remain are either ideologically aligned with the Dominus or imprisoned in the Citadel's lower levels.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          The 35 Vanguard who escaped during the Schism now serve the Azure Citadel. The 65 imprisoned remain shackled, their fate unknown.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Dragon's Scythe</div>
+        <p>
+          Grevon's elite guard. These are not living soldiers but undead constructs bound through Shadowmancy to absolute obedience. They serve as both protectors and enforcement against internal dissent. Their existence suggests Grevon is prepared to maintain power through necromantic means regardless of cost.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Scholars</div>
+        <p>
+          Remaining scholars work under strict ideological control. Their research is directed toward conclusions the Dominus has already determined. Their work is reviewed for political acceptability before dissemination. Academic freedom has been replaced with institutional dogma.
+        </p>
+      </div>
+
+      <div class="intel-grid">
+        <div class="intel-card">
+          <div class="intel-label">Estimated Active Scholars</div>
+          <div class="intel-value">150–200 (Under Duress)</div>
+        </div>
+        <div class="intel-card">
+          <div class="intel-label">Dragon's Scythe Personnel</div>
+          <div class="intel-value">8–12 (Necromantic Constructs)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">KNOWLEDGE CONTROL</div>
+      <div class="section-header">The Weaponization of Truth</div>
+      
+      <p>
+        The Crimson Citadel's most dangerous function is its control of information. Under Grevon:
+      </p>
+
+      <ul>
+        <li><strong>Official histories are rewritten</strong> to support the Dominus's authority and legitimacy.</li>
+        <li><strong>Resonance research is compartmentalized</strong> so that no single scholar understands the full picture.</li>
+        <li><strong>Dangerous knowledge is locked away</strong> in restricted archives, accessible only with explicit permission.</li>
+        <li><strong>Contradictory information is suppressed</strong> or attributed to heresy.</li>
+        <li><strong>Scholars who dissent are imprisoned, exiled, or worse.</strong></li>
+      </ul>
+
+      <p style="margin-top: 1rem;">
+        The result is an institution that preserves knowledge while simultaneously weaponizing ignorance. The Citadel's vast archives are rendered useless to anyone seeking truth — they are merely weapons in Grevon's hands.
+      </p>
+
+      <div class="watcher-note">
+        <strong>Observation:</strong> I have watched empires rise and fall. I have seen tyrants and liberators alike. But few institutions have so completely perverted their foundational purpose while maintaining the appearance of serving it. The Crimson Citadel does not fail at its mission — it succeeds at a new one: the weaponization of knowledge as an instrument of control.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">THREAT ASSESSMENT</div>
+      <div class="section-header">The Danger of Institutional Corruption</div>
+      
+      <p>
+        The Crimson Citadel under Grevon represents one of the most insidious threats to Verdanward. It is not a military threat in the traditional sense. It is an **ideological and informational threat**.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        Grevon controls the narrative. He controls what is taught, what is remembered, what is considered true. This gives him power that extends far beyond the Citadel's walls. Scholars trained under his regime carry his ideology throughout Verdanward. Regional authorities consult Citadel scholars and receive Grevon's interpretations rather than truth. History is rewritten not through violence but through controlled dissemination.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        This is the most effective form of tyranny — the kind that controls not through force alone but through the manipulation of what people believe is true.
+      </p>
+
+      <div class="warning-box">
+        <div class="warning-title">⚠ CRITICAL ASSESSMENT</div>
+        <p>
+          The Crimson Citadel is not the problem. Grevon is the problem. But Grevon is only as dangerous as the institution allows him to be. An institution that was corrupted can theoretically be restored. But restoration requires removing Grevon, rebuilding the Vanguard, and systematically deprogramming an entire scholarly apparatus that has internalized his ideology.
+        </p>
+        <p style="margin-top: 1rem;">
+          The Azure Citadel represents the possibility of what the Crimson could be again. It also represents the threat Grevon perceives — that his authority is not inevitable, that alternatives exist, that knowledge can be liberated rather than controlled.
+        </p>
+      </div>
+
+      <div class="watcher-marginalia">
+        <strong>Final marginalia:</strong> I have observed that the most corrupting power is not the power to destroy but the power to redefine. Grevon does not merely rule the Crimson Citadel. He has redefined what the Citadel is, what scholarship means, what truth itself consists of. This is far more dangerous than any tyrant with merely military strength.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="dossier-footer">
+    <div class="footer-note">DISTRIBUTION: ALL REGIONAL AUTHORITIES, CITADEL COUNCIL (AZURE ONLY), ELITE OPERATIVES</div>
+    <div class="footer-note">LAST UPDATED: 877 RC | STATUS: OPERATING UNDER TYRANNY | THREAT LEVEL: CRITICAL (IDEOLOGICAL)</div>
+    <div style="margin-top: 1rem; font-style: italic;">
+      "It preserves knowledge by imprisoning it. This is the most perfect corruption — a system that succeeds at its stated purpose while becoming its opposite."
+    </div>
+  </div>
+
+</div>
+
+</body>
+
+</html>
