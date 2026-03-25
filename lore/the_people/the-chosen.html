@@ -536,14 +536,28 @@ padding:28px 20px 130px;
 <div class="page-wrapper">
 
 <header>
-<nav>
-<a href="Lands.html"><i class="fa-solid fa-compass"></i>Lands</a>
-<a href="lore.html"><i class="fa-solid fa-scroll"></i>LORE</a>
-<a href="rules.html"><i class="fa-solid fa-book"></i>RULES</a>
-<a href="create.html"><i class="fa-solid fa-user-pen"></i>CREATE</a>
-<a href="tables.html"><i class="fa-solid fa-dice-d20"></i>TABLES</a>
-</nav>
+  <nav>
+    <a href="/rivendawn/rivendawn/rivendawn.html" data-nav="rivendawn"><i class="fa-solid fa-dungeon"></i>Rivendawn</a>
+    <a href="/rivendawn/lore/lore.html" data-nav="lore"><i class="fa-solid fa-scroll"></i>Lore</a>
+    <a href="/rivendawn/rules/rules.html" data-nav="rules"><i class="fa-solid fa-book"></i>Rules</a>
+    <a href="/rivendawn/create/create.html" data-nav="create"><i class="fa-solid fa-user-pen"></i>Create</a>
+    <a href="/rivendawn/main_tables.html" data-nav="tables"><i class="fa-solid fa-dice-d20"></i>Tables</a>
+    <a href="/rivendawn/about/about.html" data-nav="about"><i class="fa-solid fa-circle-info"></i>About</a>
+  </nav>
+
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </header>
+
+<div class="nav-mobile-menu" id="navMobileMenu">
+  <a href="/rivendawn/rivendawn/rivendawn.html" data-nav="rivendawn"><i class="fa-solid fa-dungeon"></i>Rivendawn</a>
+  <a href="/rivendawn/lore/lore.html" data-nav="lore"><i class="fa-solid fa-scroll"></i>Lore</a>
+  <a href="/rivendawn/rules/rules.html" data-nav="rules"><i class="fa-solid fa-book"></i>Rules</a>
+  <a href="/rivendawn/create/create.html" data-nav="create"><i class="fa-solid fa-user-pen"></i>Create</a>
+  <a href="/rivendawn/main_tables.html" data-nav="tables"><i class="fa-solid fa-dice-d20"></i>Tables</a>
+  <a href="/rivendawn/about/about.html" data-nav="about"><i class="fa-solid fa-circle-info"></i>About</a>
+</div>
 
 <main>
 
@@ -655,7 +669,9 @@ padding:28px 20px 130px;
 Email: <a href="/cdn-cgi/l/email-protection#1a7975746e7b796e5a68736c7f747e7b6d7434797577"><span class="__cf_email__" data-cfemail="01626e6f7560627541736877646f6560766f2f626e6c">[email&#160;protected]</span></a>
 &nbsp;&nbsp;•&nbsp;&nbsp;
 © 2026 jpcauthor. All rights reserved.
-&nbsp;&nbsp;<script>
+
+
+<script>
 const IMAGES = [];
 const BASE  = 'lineages/chosen/chosen';
 const COUNT = 23;
@@ -725,6 +741,8 @@ closeBtn.addEventListener('click', closeLightbox);
 lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 </script>
+
+
 
 </body>
 </html>
