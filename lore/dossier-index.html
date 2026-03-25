@@ -4,10 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Intelligence Dossiers — Rivendawn</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 <style>
 :root {
   --header-height: 72px;
@@ -15,7 +17,9 @@
   --content-max-width: 960px;
   --page-max-width: 1400px;
   --ink-color: #3a2a1a;
+  --accent: #fff1d6;
   --nav-color: #f2e3c6;
+  --nav-shadow: rgba(0,0,0,0.85);
   --footer-bg: rgba(0,0,0,0.88);
   --gold-light: #e0b965;
   --blade-bg: rgba(244,230,204,0.88);
@@ -27,84 +31,439 @@
   --blade-glow: rgba(214,170,92,0.22);
   --blade-accent: #7a4b25;
 }
+
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
-body{font-family:'Crimson Text',Georgia,serif;color:var(--ink-color);min-height:100dvh;background:#000;line-height:1.75;font-size:1.18rem;}
-.page-wrapper{min-height:100dvh;display:flex;flex-direction:column;max-width:var(--page-max-width);margin:0 auto;background-color:#000;background-image:url('../images/bg.jpg');background-size:contain;background-position:center top;background-repeat:no-repeat;background-attachment:fixed;box-shadow:0 0 80px rgba(0,0,0,0.85);}
+body{
+  font-family:'Crimson Text',Georgia,serif;
+  color:var(--ink-color);
+  min-height:100dvh;
+  background:#000;
+  line-height:1.75;
+  font-size:1.18rem;
+}
+
+.page-wrapper{
+  min-height:100dvh;
+  display:flex;
+  flex-direction:column;
+  max-width:var(--page-max-width);
+  margin:0 auto;
+  background-color:#000;
+  background-image:url('../images/bg.jpg');
+  background-size:contain;
+  background-position:center top;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  box-shadow:0 0 80px rgba(0,0,0,0.85);
+  position:relative;
+}
+
+/* ── NAVIGATION ── */
 header{position:fixed;top:0;left:50%;transform:translateX(-50%);width:min(100%,var(--page-max-width));height:var(--header-height);background:var(--footer-bg);border-bottom:1px solid rgba(200,151,58,0.15);backdrop-filter:blur(4px);z-index:1000;}
 nav{max-width:var(--content-max-width);width:100%;height:100%;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:2.25rem;padding:0 1.5rem;}
-nav a{color:var(--nav-color);text-decoration:none;font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.22em;text-transform:uppercase;transition:color .25s,transform .25s;position:relative;display:inline-flex;align-items:center;gap:0.45rem;padding:0.25rem 0.1rem;white-space:nowrap;}
-nav a i{color:inherit;font-size:0.82rem;opacity:0.85;}
-nav a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:1px;background:var(--gold-light);transition:width .28s;}
+nav a{color:var(--nav-color);text-decoration:none;font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.22em;text-transform:uppercase;transition:color .25s ease,transform .25s ease;position:relative;display:inline-flex;align-items:center;gap:0.45rem;padding:0.25rem 0.1rem;white-space:nowrap;}
+nav a i{color:inherit;font-size:0.82rem;opacity:0.85;position:relative;top:-1px;}
+nav a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:1px;background:var(--gold-light);transition:width .28s ease;}
 nav a:hover{color:var(--gold-light);transform:translateY(-1px);}
 nav a:hover::after{width:100%;}
 nav a.nav-active{color:#e8b84b;}
 nav a.nav-active::after{width:100%;background:#e8b84b;height:1.5px;}
-.nav-hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;background:none;border:1px solid rgba(200,151,58,0.32);border-radius:4px;cursor:pointer;padding:0;position:absolute;right:1rem;top:50%;transform:translateY(-50%);z-index:1010;}
-.nav-hamburger span{display:block;width:18px;height:1.5px;background:var(--nav-color);border-radius:2px;transition:transform .3s,opacity .3s,width .3s;transform-origin:center;}
+.nav-hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;background:none;border:1px solid rgba(200,151,58,0.32);border-radius:4px;cursor:pointer;padding:0;position:absolute;right:1rem;top:50%;transform:translateY(-50%);z-index:1010;transition:border-color .2s ease;}
+.nav-hamburger:hover{border-color:rgba(200,151,58,0.65);}
+.nav-hamburger span{display:block;width:18px;height:1.5px;background:var(--nav-color);border-radius:2px;transition:transform .3s ease,opacity .3s ease,width .3s ease;transform-origin:center;}
 header.menu-open .nav-hamburger span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
 header.menu-open .nav-hamburger span:nth-child(2){opacity:0;width:0;}
 header.menu-open .nav-hamburger span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
-.nav-mobile-menu{display:none;position:fixed;top:var(--header-height);left:50%;transform:translateX(-50%);width:min(100%,var(--page-max-width));background:rgba(0,0,0,0.97);border-bottom:1px solid rgba(200,151,58,0.15);z-index:999;max-height:0;overflow:hidden;transition:max-height .38s cubic-bezier(0.4,0,0.2,1),opacity .28s;opacity:0;}
+.nav-mobile-menu{display:none;position:fixed;top:var(--header-height);left:50%;transform:translateX(-50%);width:min(100%,var(--page-max-width));background:rgba(0,0,0,0.97);border-bottom:1px solid rgba(200,151,58,0.15);z-index:999;max-height:0;overflow:hidden;transition:max-height .38s cubic-bezier(0.4,0,0.2,1),opacity .28s ease;opacity:0;}
 .nav-mobile-menu.open{max-height:400px;opacity:1;}
-.nav-mobile-menu a{display:flex;align-items:center;gap:0.9rem;padding:1rem 2rem;color:var(--nav-color);text-decoration:none;font-family:'Cinzel',serif;font-size:0.78rem;letter-spacing:0.22em;text-transform:uppercase;border-bottom:1px solid rgba(200,151,58,0.12);transition:color .2s,background .2s,padding-left .2s;}
+.nav-mobile-menu a{display:flex;align-items:center;gap:0.9rem;padding:1rem 2rem;color:var(--nav-color);text-decoration:none;font-family:'Cinzel',serif;font-size:0.78rem;letter-spacing:0.22em;text-transform:uppercase;border-bottom:1px solid rgba(200,151,58,0.12);transition:color .2s ease,background .2s ease,padding-left .2s ease;}
 .nav-mobile-menu a:last-child{border-bottom:none;}
 .nav-mobile-menu a i{color:#c8973a;font-size:0.9rem;width:18px;text-align:center;flex-shrink:0;}
 .nav-mobile-menu a:hover{color:#f5d978;background:rgba(200,151,58,0.06);padding-left:2.4rem;}
 .nav-mobile-menu a.nav-active{color:#e8b84b;background:rgba(200,151,58,0.08);}
+.nav-mobile-menu a.nav-active i{color:#e8b84b;}
 @media(max-width:680px){nav a{display:none;}.nav-hamburger{display:flex;}.nav-mobile-menu{display:block;}}
 @media(max-width:820px) and (min-width:681px){nav{gap:1.4rem;}nav a{font-size:0.72rem;letter-spacing:0.16em;}}
-main{flex:1;margin-top:var(--header-height);padding:3.25rem 1rem calc(var(--footer-height) + 3rem);display:flex;justify-content:center;}
-.content-container{max-width:var(--content-max-width);width:100%;padding:40px 80px 180px;margin:0 auto;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,0.55);background-image:url('../images/content-scroll-bg.png');background-repeat:repeat-y;background-position:top center;background-size:100% auto;}
-.content-container h1,.content-container h2{font-family:'Cinzel Decorative',serif;letter-spacing:.06em;}
-.content-container h1{font-size:3rem;text-align:center;margin-bottom:.5rem;}
-.content-container h2{font-size:1.8rem;margin:2.5rem 0 1rem;border-bottom:1px solid rgba(139,0,0,0.15);padding-bottom:.5rem;}
-.page-intro{text-align:center;font-style:italic;color:#7a5c3a;margin:0 auto 2.5rem;font-size:1.1rem;max-width:680px;}
-.classification-banner{display:flex;align-items:center;justify-content:center;gap:1rem;margin:0 auto 2.5rem;padding:.65rem 1.5rem;border:1.5px solid rgba(139,0,0,0.4);border-radius:2px;background:rgba(139,0,0,0.06);max-width:520px;}
-.classification-banner .stamp-text{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;color:#8b0000;font-weight:600;}
-.classification-banner i{color:#8b0000;font-size:.85rem;}
-.archive-grid{display:flex;flex-direction:column;gap:1rem;margin:2rem 0 3rem;}
-.archive-blade{position:relative;display:flex;align-items:center;justify-content:space-between;gap:1.25rem;padding:1rem 1.5rem;cursor:pointer;color:inherit;background:linear-gradient(90deg,rgba(250,240,220,0.92) 0%,var(--blade-bg) 58%,rgba(214,189,148,0.86) 100%);border:1px solid var(--blade-border);box-shadow:0 12px 24px var(--blade-shadow);clip-path:polygon(0 0,95% 0,100% 50%,95% 100%,0 100%,1.5% 50%);transition:transform .24s,box-shadow .24s,border-color .24s,filter .24s;overflow:hidden;user-select:none;}
+
+main{
+  flex:1;
+  margin-top:var(--header-height);
+  padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+  display:flex;
+  justify-content:center;
+}
+
+.content-container{
+  max-width:var(--content-max-width);
+  width:100%;
+  padding:40px 80px 180px;
+  margin:0 auto;
+  border-radius:8px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.55);
+  background-image:url('../images/content-scroll-bg.png');
+  background-repeat:repeat-y;
+  background-position:top center;
+  background-size:100% auto;
+}
+
+.content-container h1,
+.content-container h2{
+  font-family:'Cinzel Decorative',serif;
+  letter-spacing:.06em;
+}
+
+.content-container h1{
+  font-size:3rem;
+  text-align:center;
+  margin-bottom:.5rem;
+}
+
+.content-container h2{
+  font-size:1.8rem;
+  margin:2.5rem 0 1rem;
+  border-bottom:1px solid rgba(139,0,0,0.15);
+  padding-bottom:.5rem;
+}
+
+.page-intro{
+  text-align:center;
+  font-style:italic;
+  color:#7a5c3a;
+  margin-bottom:2.5rem;
+  font-size:1.1rem;
+  max-width:680px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+.classification-banner{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:1rem;
+  margin:0 auto 2.5rem;
+  padding:.65rem 1.5rem;
+  border:1.5px solid rgba(139,0,0,0.4);
+  border-radius:2px;
+  background:rgba(139,0,0,0.06);
+  max-width:520px;
+}
+
+.classification-banner .stamp-text{
+  font-family:'Cinzel',serif;
+  font-size:.72rem;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:#8b0000;
+  font-weight:600;
+}
+
+.classification-banner i{
+  color:#8b0000;
+  font-size:.85rem;
+}
+
+/* ARCHIVE BLADES */
+.archive-grid{
+  display:flex;
+  flex-direction:column;
+  gap:1rem;
+  margin:2rem 0 3rem;
+}
+
+.archive-blade{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1.25rem;
+  padding:1rem 1.5rem 1rem 1.5rem;
+  cursor:pointer;
+  color:inherit;
+  background:linear-gradient(90deg,rgba(250,240,220,0.92) 0%,var(--blade-bg) 58%,rgba(214,189,148,0.86) 100%);
+  border:1px solid var(--blade-border);
+  box-shadow:0 12px 24px var(--blade-shadow);
+  clip-path:polygon(0 0, 95% 0, 100% 50%, 95% 100%, 0 100%, 1.5% 50%);
+  transition:transform .24s ease,box-shadow .24s ease,border-color .24s ease,filter .24s ease;
+  overflow:hidden;
+  user-select:none;
+}
+
 .archive-blade *{pointer-events:none;}
-.archive-blade::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 0%,rgba(255,245,220,0.12) 35%,rgba(255,255,255,0.18) 50%,transparent 68%);transform:translateX(-120%);transition:transform .45s;pointer-events:none;}
-.archive-blade::after{content:"";position:absolute;top:0;bottom:0;right:0;width:90px;background:radial-gradient(circle at center,var(--blade-glow) 0%,rgba(0,0,0,0) 70%);opacity:0;transition:opacity .24s;pointer-events:none;}
-.archive-blade:hover{transform:translateX(8px) scale(1.01);box-shadow:0 18px 34px var(--blade-hover-shadow);border-color:rgba(130,85,42,0.55);filter:saturate(1.04);}
+
+.archive-blade::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg,transparent 0%,rgba(255,245,220,0.12) 35%,rgba(255,255,255,0.18) 50%,transparent 68%);
+  transform:translateX(-120%);
+  transition:transform .45s ease;
+  pointer-events:none;
+}
+
+.archive-blade::after{
+  content:"";
+  position:absolute;
+  top:0;bottom:0;right:0;
+  width:90px;
+  background:radial-gradient(circle at center, var(--blade-glow) 0%, rgba(0,0,0,0) 70%);
+  opacity:0;
+  transition:opacity .24s ease;
+  pointer-events:none;
+}
+
+.archive-blade:hover{
+  transform:translateX(8px) scale(1.01);
+  box-shadow:0 18px 34px var(--blade-hover-shadow);
+  border-color:rgba(130,85,42,0.55);
+  filter:saturate(1.04);
+}
+
 .archive-blade:hover::before{transform:translateX(120%);}
 .archive-blade:hover::after{opacity:1;}
-.archive-blade-content{display:flex;flex-direction:column;min-width:0;}
-.archive-kicker{font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;font-family:'Cinzel',serif;color:#8a6847;margin-bottom:.2rem;}
-.archive-title{font-family:'Cinzel Decorative',serif;font-size:1.2rem;line-height:1.3;color:var(--blade-title);margin-bottom:.2rem;}
-.archive-desc{font-size:1rem;color:var(--blade-desc);line-height:1.5;}
-.blade-lock{flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:3px;margin-right:.25rem;}
-.blade-lock i{color:#8b0000;font-size:1.1rem;opacity:.7;}
-.blade-lock-label{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:#8b0000;opacity:.7;}
-.modal-backdrop{display:none;position:fixed;inset:0;z-index:5000;background:rgba(0,0,0,0.82);backdrop-filter:blur(4px);align-items:center;justify-content:center;}
+
+.archive-blade-content{
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+}
+
+.archive-kicker{
+  font-size:.78rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  font-family:'Cinzel',serif;
+  color:#8a6847;
+  margin-bottom:.2rem;
+}
+
+.archive-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:1.2rem;
+  line-height:1.3;
+  color:var(--blade-title);
+  margin-bottom:.2rem;
+}
+
+.archive-desc{
+  font-size:1rem;
+  color:var(--blade-desc);
+  line-height:1.5;
+}
+
+.blade-lock{
+  flex-shrink:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+  margin-right:.25rem;
+}
+
+.blade-lock i{
+  color:#8b0000;
+  font-size:1.1rem;
+  opacity:.7;
+}
+
+.blade-lock-label{
+  font-family:'Cinzel',serif;
+  font-size:.55rem;
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  color:#8b0000;
+  opacity:.7;
+}
+
+/* ── PASSWORD MODAL ── */
+.modal-backdrop{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  background:rgba(0,0,0,0.82);
+  backdrop-filter:blur(4px);
+  align-items:center;
+  justify-content:center;
+}
+
 .modal-backdrop.active{display:flex;}
-.modal-box{background:#1a1209;border:1px solid rgba(200,151,58,0.3);border-radius:4px;padding:2.5rem 2rem;max-width:480px;width:90%;box-shadow:0 40px 80px rgba(0,0,0,0.7);animation:modalIn .3s ease;}
-@keyframes modalIn{from{opacity:0;transform:translateY(-20px) scale(0.96);}to{opacity:1;transform:translateY(0) scale(1);}}
-.modal-eyebrow{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:#8b0000;margin-bottom:.6rem;display:flex;align-items:center;gap:.5rem;}
-.modal-title{font-family:'Cinzel Decorative',serif;font-size:1.35rem;color:#e0b965;margin-bottom:.6rem;line-height:1.3;}
-.modal-riddle{font-family:'Crimson Text',serif;font-style:italic;color:#c8a870;font-size:1.05rem;line-height:1.6;margin-bottom:1.4rem;padding:.8rem 1rem;border-left:2px solid rgba(200,151,58,0.35);background:rgba(200,151,58,0.06);}
-.modal-riddle.is-password{font-style:normal;color:#a08060;font-size:.92rem;}
-.modal-input-row{display:flex;gap:.6rem;margin-bottom:.5rem;}
-.modal-input{flex:1;padding:.65rem 1rem;background:rgba(255,255,255,0.06);border:1px solid rgba(200,151,58,0.28);border-radius:2px;color:#f0e0c0;font-family:'Crimson Text',serif;font-size:1rem;outline:none;transition:border-color .2s;}
+
+.modal-box{
+  background:#1a1209;
+  border:1px solid rgba(200,151,58,0.3);
+  border-radius:4px;
+  padding:2.5rem 2rem;
+  max-width:480px;
+  width:90%;
+  box-shadow:0 40px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(200,151,58,0.08);
+  position:relative;
+  animation:modalIn .3s ease;
+}
+
+@keyframes modalIn{
+  from{opacity:0;transform:translateY(-20px) scale(0.96);}
+  to{opacity:1;transform:translateY(0) scale(1);}
+}
+
+.modal-eyebrow{
+  font-family:'Cinzel',serif;
+  font-size:.65rem;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:#8b0000;
+  margin-bottom:.6rem;
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+}
+
+.modal-eyebrow i{font-size:.7rem;}
+
+.modal-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:1.35rem;
+  color:#e0b965;
+  margin-bottom:.6rem;
+  line-height:1.3;
+}
+
+.modal-riddle{
+  font-family:'Crimson Text',serif;
+  font-style:italic;
+  color:#c8a870;
+  font-size:1.05rem;
+  line-height:1.6;
+  margin-bottom:1.4rem;
+  padding:.8rem 1rem;
+  border-left:2px solid rgba(200,151,58,0.35);
+  background:rgba(200,151,58,0.06);
+}
+
+.modal-riddle.is-password{
+  font-style:normal;
+  color:#a08060;
+  font-size:.92rem;
+}
+
+.modal-input-row{
+  display:flex;
+  gap:.6rem;
+  margin-bottom:.5rem;
+}
+
+.modal-input{
+  flex:1;
+  padding:.65rem 1rem;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(200,151,58,0.28);
+  border-radius:2px;
+  color:#f0e0c0;
+  font-family:'Crimson Text',serif;
+  font-size:1rem;
+  outline:none;
+  transition:border-color .2s ease;
+}
+
 .modal-input:focus{border-color:rgba(200,151,58,0.65);}
 .modal-input::placeholder{color:rgba(200,151,58,0.35);}
-.modal-submit{padding:.65rem 1.2rem;background:linear-gradient(135deg,#7a4b25,#5a3515);border:1px solid rgba(200,151,58,0.4);border-radius:2px;color:#e0b965;font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:background .2s,transform .15s;white-space:nowrap;}
+
+.modal-submit{
+  padding:.65rem 1.2rem;
+  background:linear-gradient(135deg,#7a4b25,#5a3515);
+  border:1px solid rgba(200,151,58,0.4);
+  border-radius:2px;
+  color:#e0b965;
+  font-family:'Cinzel',serif;
+  font-size:.72rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:background .2s ease,transform .15s ease;
+  white-space:nowrap;
+}
+
 .modal-submit:hover{background:linear-gradient(135deg,#8a5b35,#6a4525);transform:translateY(-1px);}
-.modal-error{font-family:'Crimson Text',serif;font-size:.9rem;color:#cc4444;min-height:1.2rem;margin-bottom:.4rem;display:flex;align-items:center;gap:.4rem;opacity:0;transition:opacity .2s;}
+.modal-submit:active{transform:translateY(0);}
+
+.modal-error{
+  font-family:'Crimson Text',serif;
+  font-size:.9rem;
+  color:#cc4444;
+  min-height:1.2rem;
+  margin-bottom:.4rem;
+  display:flex;
+  align-items:center;
+  gap:.4rem;
+  opacity:0;
+  transition:opacity .2s ease;
+}
+
 .modal-error.visible{opacity:1;}
-.modal-cancel{margin-top:.8rem;text-align:center;font-family:'Cinzel',serif;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(200,151,58,0.4);cursor:pointer;transition:color .2s;}
+
+.modal-cancel{
+  margin-top:.8rem;
+  text-align:center;
+  font-family:'Cinzel',serif;
+  font-size:.62rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:rgba(200,151,58,0.4);
+  cursor:pointer;
+  transition:color .2s ease;
+}
+
 .modal-cancel:hover{color:rgba(200,151,58,0.7);}
-@keyframes shakeInput{0%,100%{transform:translateX(0);}20%{transform:translateX(-6px);}40%{transform:translateX(6px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
+
+@keyframes shakeInput{
+  0%,100%{transform:translateX(0);}
+  20%{transform:translateX(-6px);}
+  40%{transform:translateX(6px);}
+  60%{transform:translateX(-4px);}
+  80%{transform:translateX(4px);}
+}
+
 .shake{animation:shakeInput .35s ease;}
-footer{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(100%,var(--page-max-width));height:var(--footer-height);background:var(--footer-bg);color:#ccc;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 1rem;font-size:.95rem;border-top:1px solid #444;z-index:1000;}
+
+/* ── FOOTER ── */
+footer{
+  position:fixed;
+  bottom:0;left:50%;transform:translateX(-50%);
+  width:min(100%,var(--page-max-width));
+  height:var(--footer-height);
+  background:var(--footer-bg);
+  color:#ccc;
+  display:flex;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:0 1rem;
+  font-size:.95rem;
+  border-top:1px solid #444;
+  z-index:1000;
+}
+
 footer a{color:#d4a373;text-decoration:none;}
 footer a:hover{text-decoration:underline;}
-@media(max-width:768px){.content-container{padding:36px 32px 150px;}.content-container h1{font-size:2.2rem;}.content-container h2{font-size:1.6rem;}.archive-blade{padding:1rem 1.15rem;gap:.9rem;clip-path:polygon(0 0,93% 0,100% 50%,93% 100%,0 100%);}.archive-title{font-size:1rem;}.archive-desc{font-size:.94rem;}}
-@media(max-width:480px){body{font-size:1.05rem;}.content-container{padding:28px 20px 130px;}.archive-blade{align-items:flex-start;}}
+
+@media(max-width:768px){
+  .content-container{padding:36px 32px 150px;}
+  .content-container h1{font-size:2.2rem;}
+  .content-container h2{font-size:1.6rem;}
+  .archive-blade{padding:1rem 1.15rem;gap:.9rem;clip-path:polygon(0 0, 93% 0, 100% 50%, 93% 100%, 0 100%);}
+  .archive-title{font-size:1rem;}
+  .archive-desc{font-size:.94rem;}
+}
+
+@media(max-width:480px){
+  body{font-size:1.05rem;}
+  .content-container{padding:28px 20px 130px;}
+  .archive-blade{align-items:flex-start;}
+  .archive-desc{line-height:1.4;}
+}
 </style>
 </head>
+
 <body data-page="lore">
 <div class="page-wrapper">
 
@@ -136,7 +495,9 @@ footer a:hover{text-decoration:underline;}
 
   <h1>Intelligence Dossiers</h1>
 
-  <p class="page-intro">Compiled from field reports, informant testimony, and recovered correspondence. Access to each file is restricted. Know the answer — or know the password.</p>
+  <p class="page-intro">
+    Compiled from field reports, informant testimony, and recovered correspondence. Access to each file is restricted. Know the answer — or know the password.
+  </p>
 
   <div class="classification-banner">
     <i class="fa-solid fa-triangle-exclamation"></i>
@@ -147,13 +508,207 @@ footer a:hover{text-decoration:underline;}
   <section class="archive-grid">
 
     <div class="archive-blade"
+         data-url="dossiers/azure-citadel-dossier.html"
+         data-mode="riddle"
+         data-riddle="I was born from a schism. I guard what others would destroy. My color is the sky, but I dwell in shadow. What am I?"
+         data-answer="the azure citadel"
+         data-answer-alt="azure citadel"
+         onclick="openGate(this)">
+      <div class="archive-blade-content">
+        <span class="archive-kicker">Dossier I</span>
+        <span class="archive-title">The Azure Citadel</span>
+        <span class="archive-desc">Young, hidden, and fiercely protective of knowledge the Crimson Citadel would see erased. Its existence is itself a provocation.</span>
+      </div>
+      <div class="blade-lock">
+        <i class="fa-solid fa-lock"></i>
+        <span class="blade-lock-label">Riddle</span>
+      </div>
+    </div>
+
+    <div class="archive-blade"
+         data-url="dossiers/celestial-collegiate-dossier.html"
+         data-mode="riddle"
+         data-riddle="I am studied by all who seek truth, yet I belong to none. I speak in patterns no single tongue can name. What am I?"
+         data-answer="the stars"
+         data-answer-alt="stars,the night sky,the heavens,the sky"
+         onclick="openGate(this)">
+      <div class="archive-blade-content">
+        <span class="archive-kicker">Dossier II</span>
+        <span class="archive-title">The Celestial Collegiate</span>
+        <span class="archive-desc">Scholars of things beyond ordinary reckoning. Whether their pursuit of knowledge serves Rivendawn — or only themselves — remains an open question.</span>
+      </div>
+      <div class="blade-lock">
+        <i class="fa-solid fa-lock"></i>
+        <span class="blade-lock-label">Riddle</span>
+      </div>
+    </div>
+
+    <div class="archive-blade"
+         data-url="dossiers/concordance-dossier.html"
+         data-mode="password"
+         data-answer="concordance"
+         data-answer-alt="the concordance"
+         onclick="openGate(this)">
+      <div class="archive-blade-content">
+        <span class="archive-kicker">Dossier III</span>
+        <span class="archive-title">The Concordance</span>
+        <span class="archive-desc">An accord forged in necessity. What it binds together — and what it conceals — may determine the fate of the regions.</span>
+      </div>
+      <div class="blade-lock">
+        <i class="fa-solid fa-key"></i>
+        <span class="blade-lock-label">Password</span>
+      </div>
+    </div>
+
+    <div class="archive-blade"
+         data-url="dossiers/crimson-citadel-dossier.html"
+         data-mode="password"
+         data-answer="crimson"
+         data-answer-alt="the crimson citadel,crimson citadel"
+         onclick="openGate(this)">
+      <div class="archive-blade-content">
+        <span class="archive-kicker">Dossier IV</span>
+        <span class="archive-title">The Crimson Citadel</span>
+        <span class="archive-desc">The oldest seat of power in Rivendawn. What it once stood for and what it has become are no longer the same thing.</span>
+      </div>
+      <div class="blade-lock">
+        <i class="fa-solid fa-key"></i>
+        <span class="blade-lock-label">Password</span>
+      </div>
+    </div>
+
+    <div class="archive-blade"
+         data-url="dossiers/dragons-scythe-dossier.html"
+         data-mode="riddle"
+         data-riddle="I am the weapon that outlives the hand that forged me. I do not swing — I am swung. What am I?"
+         data-answer="a scythe"
+         data-answer-alt="the scythe,scythe,the dragon's scythe,dragons scythe"
+         onclick="openGate(this)">
+      <div class="archive-blade-content">
+        <span class="archive-kicker">Dossier V</span>
+        <span class="archive-title">The Dragon's Scythe</span>
+        <span class="archive-desc">A name that inspires fear in merchants and soldiers alike. Precision, brutality, and a reputation carefully cultivated over decades.</span>
+      </div>
+      <div class="blade-lock">
+        <i class="fa-solid fa-lock"></i>
+        <span class="blade-lock-label">Riddle</span>
+      </div>
+    </div>
+
+    <div class="archive-blade"
+         data-url="dossiers/feathered-nock-dossier.html"
+         data-mode="riddle"
+         data-riddle="I guide the arrow but am not the bow. I am the last thing you touch before you let go. What am I?"
+         data-answer="the nock"
+         data-answer-alt="nock,a nock,the feathered nock,feathered nock"
+         onclick="openGate(this)">
+      <div class="archive-blade-content">
+        <span class="archive-kicker">Dossier VI</span>
+        <span class="archive-title">The Feathered Nock</span>
+        <span class="archive-desc">Scouts, couriers, and killers who move through Rivendawn's wilds like rumors — fast, quiet, and nearly impossible to catch.</span>
+      </div>
+      <div class="blade-lock">
+        <i class="fa-solid fa-lock"></i>
+        <span class="blade-lock-label">Riddle</span>
+      </div>
+    </div>
+
+    <div class="archive-blade"
+         data-url="dossiers/menders-trust-dossier.html"
+         data-mode="password"
+         data-answer="menders"
+         data-answer-alt="the menders trust,menders trust,the mender's trust,mender's trust"
+         onclick="openGate(this)">
+      <div class="archive-blade-content">
+        <span class="archive-kicker">Dossier VII</span>
+        <span class="archive-title">The Mender's Trust</span>
+        <span class="archive-desc">They heal. They also know where the wounds are. Whether that knowledge is neutral depends entirely on who is asking.</span>
+      </div>
+      <div class="blade-lock">
+        <i class="fa-solid fa-key"></i>
+        <span class="blade-lock-label">Password</span>
+      </div>
+    </div>
+
+    <div class="archive-blade"
+         data-url="dossiers/merchants-concourse-dossier.html"
+         data-mode="password"
+         data-answer="concourse"
+         data-answer-alt="the merchants concourse,merchants concourse,merchant's concourse"
+         onclick="openGate(this)">
+      <div class="archive-blade-content">
+        <span class="archive-kicker">Dossier VIII</span>
+        <span class="archive-title">The Merchants Concourse</span>
+        <span class="archive-desc">Gold moves faster than armies. The Concourse knows this better than anyone — and has built an empire on the fact.</span>
+      </div>
+      <div class="blade-lock">
+        <i class="fa-solid fa-key"></i>
+        <span class="blade-lock-label">Password</span>
+      </div>
+    </div>
+
+    <div class="archive-blade"
+         data-url="dossiers/owls-dossier.html"
+         data-mode="riddle"
+         data-riddle="I see in darkness. I make no sound in flight. I am patient beyond reckoning. What am I?"
+         data-answer="an owl"
+         data-answer-alt="the owl,owl,owls,the owls"
+         onclick="openGate(this)">
+      <div class="archive-blade-content">
+        <span class="archive-kicker">Dossier IX</span>
+        <span class="archive-title">The Owls</span>
+        <span class="archive-desc">They watch. They remember. They have been watching longer than most powers have existed. That alone should concern you.</span>
+      </div>
+      <div class="blade-lock">
+        <i class="fa-solid fa-lock"></i>
+        <span class="blade-lock-label">Riddle</span>
+      </div>
+    </div>
+
+    <div class="archive-blade"
+         data-url="dossiers/penumbra-dossier.html"
+         data-mode="password"
+         data-answer="penumbra"
+         data-answer-alt="the penumbra"
+         onclick="openGate(this)">
+      <div class="archive-blade-content">
+        <span class="archive-kicker">Dossier X</span>
+        <span class="archive-title">The Penumbra</span>
+        <span class="archive-desc">They operate in the space between light and shadow — neither fully hidden, nor fully revealed. Proceed with caution.</span>
+      </div>
+      <div class="blade-lock">
+        <i class="fa-solid fa-key"></i>
+        <span class="blade-lock-label">Password</span>
+      </div>
+    </div>
+
+    <div class="archive-blade"
+         data-url="dossiers/shadow-cabal-dossier.html"
+         data-mode="riddle"
+         data-riddle="I once had power. Now I have only memory of it. I am not dead, but I am no longer what I was. What am I?"
+         data-answer="a shadow"
+         data-answer-alt="shadow,the shadow,the shadow cabal,shadow cabal"
+         onclick="openGate(this)">
+      <div class="archive-blade-content">
+        <span class="archive-kicker">Dossier XI</span>
+        <span class="archive-title">The Shadow Cabal</span>
+        <span class="archive-desc">A remnant of something that should have died long ago. Fragmented, decayed — but not yet gone, and still dangerous for it.</span>
+      </div>
+      <div class="blade-lock">
+        <i class="fa-solid fa-lock"></i>
+        <span class="blade-lock-label">Riddle</span>
+      </div>
+    </div>
+
+    <div class="archive-blade"
          data-url="dossiers/silenced-chord-dossier.html"
          data-mode="riddle"
          data-riddle="I have strings, but I cannot play. I have a voice, but it has been taken away. What am I?"
          data-answer="the silenced chord"
-         data-answer-alt="silenced chord,a silenced chord">
+         data-answer-alt="silenced chord,a silenced chord"
+         onclick="openGate(this)">
       <div class="archive-blade-content">
-        <span class="archive-kicker">Dossier I</span>
+        <span class="archive-kicker">Dossier XII</span>
         <span class="archive-title">The Silenced Chord</span>
         <span class="archive-desc">A faction whose voice has been suppressed — but whose presence still vibrates beneath the surface of Rivendawn.</span>
       </div>
@@ -168,11 +723,12 @@ footer a:hover{text-decoration:underline;}
          data-mode="riddle"
          data-riddle="I am full of people, yet no one speaks. I hold the weight of generations, yet make no sound. What am I?"
          data-answer="the silent house"
-         data-answer-alt="silent house,a silent house">
+         data-answer-alt="silent house,a silent house"
+         onclick="openGate(this)">
       <div class="archive-blade-content">
-        <span class="archive-kicker">Dossier II</span>
+        <span class="archive-kicker">Dossier XIII</span>
         <span class="archive-title">The Silent House</span>
-        <span class="archive-desc">A lineage or institution that endures in stillness — its power measured not in declarations, but in absences.</span>
+        <span class="archive-desc">A lineage that endures in stillness — its power measured not in declarations, but in absences.</span>
       </div>
       <div class="blade-lock">
         <i class="fa-solid fa-lock"></i>
@@ -181,51 +737,37 @@ footer a:hover{text-decoration:underline;}
     </div>
 
     <div class="archive-blade"
-         data-url="dossiers/concordance-dossier.html"
-         data-mode="password"
-         data-answer="concordance"
-         data-answer-alt="the concordance">
-      <div class="archive-blade-content">
-        <span class="archive-kicker">Dossier III</span>
-        <span class="archive-title">The Concordance</span>
-        <span class="archive-desc">An accord forged in necessity. What it binds together — and what it conceals — may determine the fate of the regions.</span>
-      </div>
-      <div class="blade-lock">
-        <i class="fa-solid fa-key"></i>
-        <span class="blade-lock-label">Password</span>
-      </div>
-    </div>
-
-    <div class="archive-blade"
-         data-url="dossiers/penumbra-dossier.html"
-         data-mode="password"
-         data-answer="penumbra"
-         data-answer-alt="the penumbra">
-      <div class="archive-blade-content">
-        <span class="archive-kicker">Dossier IV</span>
-        <span class="archive-title">The Penumbra</span>
-        <span class="archive-desc">They operate in the space between light and shadow — neither fully hidden, nor fully revealed. Proceed with caution.</span>
-      </div>
-      <div class="blade-lock">
-        <i class="fa-solid fa-key"></i>
-        <span class="blade-lock-label">Password</span>
-      </div>
-    </div>
-
-    <div class="archive-blade"
-         data-url="dossiers/celestial-collegiate-dossier.html"
+         data-url="dossiers/songweavers-dossier.html"
          data-mode="riddle"
-         data-riddle="I am studied by all who seek truth, yet I belong to none. I speak in patterns no single tongue can name. What am I?"
-         data-answer="the stars"
-         data-answer-alt="stars,the night sky,the heavens,the sky">
+         data-riddle="I do not cast spells. I do not pray. I listen to what the world already knows, then ask it to remember. What am I?"
+         data-answer="a songweaver"
+         data-answer-alt="songweaver,the songweavers,songweavers"
+         onclick="openGate(this)">
       <div class="archive-blade-content">
-        <span class="archive-kicker">Dossier V</span>
-        <span class="archive-title">The Celestial Collegiate</span>
-        <span class="archive-desc">Scholars of things beyond ordinary reckoning. Whether their pursuit of knowledge serves Rivendawn — or only themselves — remains an open question.</span>
+        <span class="archive-kicker">Dossier XIV</span>
+        <span class="archive-title">The Songweavers</span>
+        <span class="archive-desc">Practitioners of Resonance unlike any other. What they are capable of — and what they refuse to do — defines them equally.</span>
       </div>
       <div class="blade-lock">
         <i class="fa-solid fa-lock"></i>
         <span class="blade-lock-label">Riddle</span>
+      </div>
+    </div>
+
+    <div class="archive-blade"
+         data-url="dossiers/wayfarer-knights-dossier.html"
+         data-mode="password"
+         data-answer="wayfarer"
+         data-answer-alt="the wayfarer knights,wayfarer knights"
+         onclick="openGate(this)">
+      <div class="archive-blade-content">
+        <span class="archive-kicker">Dossier XV</span>
+        <span class="archive-title">The Wayfarer Knights</span>
+        <span class="archive-desc">They do not hold land. They do not swear to crowns. They move, they protect, and they answer to a code older than the Citadels.</span>
+      </div>
+      <div class="blade-lock">
+        <i class="fa-solid fa-key"></i>
+        <span class="blade-lock-label">Password</span>
       </div>
     </div>
 
@@ -237,21 +779,21 @@ footer a:hover{text-decoration:underline;}
 <footer>
   <div>
     Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
-    &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+    &nbsp;&nbsp;•&nbsp;&nbsp;
     &copy; 2026 jpcauthor. All rights reserved.
-    &nbsp;&nbsp;&bull;&nbsp;&nbsp;
+    &nbsp;&nbsp;•&nbsp;&nbsp;
     <a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
   </div>
 </footer>
 
-</div>
+</div><!-- end .page-wrapper -->
 
-<!-- MODAL -->
+<!-- ── PASSWORD / RIDDLE MODAL ── -->
 <div class="modal-backdrop" id="gateModal">
-  <div class="modal-box">
-    <div class="modal-eyebrow" id="modalEyebrow">
+  <div class="modal-box" id="gateModalBox">
+    <div class="modal-eyebrow">
       <i class="fa-solid fa-file-shield"></i>
-      <span>Classified Dossier</span>
+      <span id="modalEyebrow">Classified Dossier</span>
     </div>
     <div class="modal-title" id="modalTitle"></div>
     <div class="modal-riddle" id="modalRiddle"></div>
@@ -260,128 +802,102 @@ footer a:hover{text-decoration:underline;}
       <span id="modalErrorText">Incorrect. Try again.</span>
     </div>
     <div class="modal-input-row">
-      <input class="modal-input" id="modalInput" type="text" placeholder="Your answer…" autocomplete="off" spellcheck="false" />
-      <button class="modal-submit" id="modalSubmit"><i class="fa-solid fa-unlock-keyhole"></i> Submit</button>
+      <input
+        class="modal-input"
+        id="modalInput"
+        type="text"
+        placeholder="Your answer…"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <button class="modal-submit" id="modalSubmit" onclick="checkAnswer()">
+        <i class="fa-solid fa-unlock-keyhole"></i> Submit
+      </button>
     </div>
-    <div class="modal-cancel" id="modalCancel">
+    <div class="modal-cancel" onclick="closeGate()">
       <i class="fa-solid fa-xmark"></i> Cancel — Close File
     </div>
   </div>
 </div>
 
 <script>
-(function () {
-
-  /* ── NAV ── */
+(function(){
   var page = document.body.dataset.page;
-  if (page) {
-    document.querySelectorAll('[data-nav="' + page + '"]').forEach(function (e) {
-      e.classList.add('nav-active');
-    });
-  }
-  var navBtn  = document.getElementById('navHamburger');
-  var navMenu = document.getElementById('navMobileMenu');
-  var navHdr  = document.querySelector('header');
-  if (navBtn && navMenu) {
-    navBtn.addEventListener('click', function () {
-      var open = navMenu.classList.toggle('open');
-      navHdr.classList.toggle('menu-open', open);
-      navBtn.setAttribute('aria-expanded', open);
-    });
-    navMenu.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () {
-        navMenu.classList.remove('open');
-        navHdr.classList.remove('menu-open');
-        navBtn.setAttribute('aria-expanded', 'false');
-      });
-    });
-    document.addEventListener('click', function (e) {
-      if (!navHdr.contains(e.target) && !navMenu.contains(e.target)) {
-        navMenu.classList.remove('open');
-        navHdr.classList.remove('menu-open');
-        navBtn.setAttribute('aria-expanded', 'false');
-      }
-    });
-    window.addEventListener('scroll', function () {
-      if (navMenu.classList.contains('open')) {
-        navMenu.classList.remove('open');
-        navHdr.classList.remove('menu-open');
-        navBtn.setAttribute('aria-expanded', 'false');
-      }
-    }, { passive: true });
+  if(page){document.querySelectorAll('[data-nav="'+page+'"]').forEach(function(e){e.classList.add('nav-active');});}
+  var btn = document.getElementById('navHamburger');
+  var menu = document.getElementById('navMobileMenu');
+  var hdr = document.querySelector('header');
+  if(!btn||!menu)return;
+  btn.addEventListener('click',function(){var o=menu.classList.toggle('open');hdr.classList.toggle('menu-open',o);btn.setAttribute('aria-expanded',o);});
+  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');});});
+  document.addEventListener('click',function(e){if(!hdr.contains(e.target)&&!menu.contains(e.target)){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');}});
+  window.addEventListener('scroll',function(){if(menu.classList.contains('open')){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');}},{passive:true});
+})();
+
+var currentTarget = null;
+
+function openGate(el) {
+  currentTarget = el;
+  var mode = el.dataset.mode;
+  var title = el.querySelector('.archive-title').textContent;
+  var riddle = el.dataset.riddle || '';
+
+  document.getElementById('modalTitle').textContent = title;
+
+  var riddleEl = document.getElementById('modalRiddle');
+  var eyebrow = document.getElementById('modalEyebrow');
+
+  if(mode === 'riddle') {
+    eyebrow.innerHTML = '<i class="fa-solid fa-scroll"></i> Answer the Riddle';
+    riddleEl.textContent = riddle;
+    riddleEl.className = 'modal-riddle';
+  } else {
+    eyebrow.innerHTML = '<i class="fa-solid fa-key"></i> Password Required';
+    riddleEl.textContent = 'This dossier is password-protected. Enter the correct passphrase to proceed.';
+    riddleEl.className = 'modal-riddle is-password';
   }
 
-  /* ── GATE ── */
-  var currentBlade   = null;
-  var modal          = document.getElementById('gateModal');
-  var elTitle        = document.getElementById('modalTitle');
-  var elEyebrow      = document.getElementById('modalEyebrow');
-  var elRiddle       = document.getElementById('modalRiddle');
-  var elError        = document.getElementById('modalError');
-  var elErrorText    = document.getElementById('modalErrorText');
-  var elInput        = document.getElementById('modalInput');
-  var elSubmit       = document.getElementById('modalSubmit');
-  var elCancel       = document.getElementById('modalCancel');
+  document.getElementById('modalError').classList.remove('visible');
+  document.getElementById('modalInput').value = '';
+  document.getElementById('gateModal').classList.add('active');
+  setTimeout(function(){ document.getElementById('modalInput').focus(); }, 80);
+}
 
-  document.querySelectorAll('.archive-blade').forEach(function (blade) {
-    blade.addEventListener('click', function () {
-      currentBlade = blade;
+function closeGate() {
+  document.getElementById('gateModal').classList.remove('active');
+  currentTarget = null;
+}
 
-      var mode   = blade.dataset.mode;
-      var title  = blade.querySelector('.archive-title').textContent;
-      var riddle = blade.dataset.riddle || '';
+function checkAnswer() {
+  if(!currentTarget) return;
+  var input = document.getElementById('modalInput').value.trim().toLowerCase();
+  var correct = currentTarget.dataset.answer.toLowerCase();
+  var alts = (currentTarget.dataset.answerAlt || '').toLowerCase().split(',').map(function(s){return s.trim();});
+  var allAnswers = [correct].concat(alts).filter(Boolean);
 
-      elTitle.textContent = title;
-      elError.classList.remove('visible');
-      elInput.value = '';
-
-      if (mode === 'riddle') {
-        elEyebrow.innerHTML = '<i class="fa-solid fa-scroll"></i> Answer the Riddle';
-        elRiddle.textContent = riddle;
-        elRiddle.className = 'modal-riddle';
-      } else {
-        elEyebrow.innerHTML = '<i class="fa-solid fa-key"></i> Password Required';
-        elRiddle.textContent = 'This dossier is password-protected. Enter the correct passphrase to proceed.';
-        elRiddle.className = 'modal-riddle is-password';
-      }
-
-      modal.classList.add('active');
-      setTimeout(function () { elInput.focus(); }, 80);
-    });
-  });
-
-  function closeGate() {
-    modal.classList.remove('active');
-    currentBlade = null;
+  if(allAnswers.indexOf(input) !== -1) {
+    var url = currentTarget.dataset.url;
+    closeGate();
+    window.location.href = url;
+  } else {
+    document.getElementById('modalErrorText').textContent = 'That is not correct. The dossier remains sealed.';
+    document.getElementById('modalError').classList.add('visible');
+    var inputEl = document.getElementById('modalInput');
+    inputEl.classList.remove('shake');
+    void inputEl.offsetWidth;
+    inputEl.classList.add('shake');
+    inputEl.select();
   }
+}
 
-  function checkAnswer() {
-    if (!currentBlade) return;
-    var input   = elInput.value.trim().toLowerCase();
-    var correct = currentBlade.dataset.answer.toLowerCase();
-    var alts    = (currentBlade.dataset.answerAlt || '').toLowerCase().split(',').map(function (s) { return s.trim(); });
-    var all     = [correct].concat(alts).filter(Boolean);
+document.getElementById('modalInput').addEventListener('keydown', function(e){
+  if(e.key === 'Enter') checkAnswer();
+});
 
-    if (all.indexOf(input) !== -1) {
-      var url = currentBlade.dataset.url;
-      closeGate();
-      window.location.href = url;
-    } else {
-      elErrorText.textContent = 'That is not correct. The dossier remains sealed.';
-      elError.classList.add('visible');
-      elInput.classList.remove('shake');
-      void elInput.offsetWidth;
-      elInput.classList.add('shake');
-      elInput.select();
-    }
-  }
-
-  elSubmit.addEventListener('click', checkAnswer);
-  elCancel.addEventListener('click', closeGate);
-  elInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') checkAnswer(); });
-  modal.addEventListener('click', function (e) { if (e.target === modal) closeGate(); });
-
-}());
+document.getElementById('gateModal').addEventListener('click', function(e){
+  if(e.target === this) closeGate();
+});
 </script>
+
 </body>
 </html>
