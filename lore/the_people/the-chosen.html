@@ -669,7 +669,25 @@ padding:28px 20px 130px;
 Email: <a href="/cdn-cgi/l/email-protection#1a7975746e7b796e5a68736c7f747e7b6d7434797577"><span class="__cf_email__" data-cfemail="01626e6f7560627541736877646f6560766f2f626e6c">[email&#160;protected]</span></a>
 &nbsp;&nbsp;•&nbsp;&nbsp;
 © 2026 jpcauthor. All rights reserved.
+</div>
+</footer>
 
+</div>
+
+<script>
+(function(){
+  var page=document.body.dataset.page;
+  if(page){document.querySelectorAll('[data-nav="'+page+'"]').forEach(function(e){e.classList.add('nav-active');});}
+  var btn=document.getElementById('navHamburger');
+  var menu=document.getElementById('navMobileMenu');
+  var hdr=document.querySelector('header');
+  if(!btn||!menu)return;
+  btn.addEventListener('click',function(){var o=menu.classList.toggle('open');hdr.classList.toggle('menu-open',o);btn.setAttribute('aria-expanded',o);});
+  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');});});
+  document.addEventListener('click',function(e){if(!hdr.contains(e.target)&&!menu.contains(e.target)){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');}});
+  window.addEventListener('scroll',function(){if(menu.classList.contains('open')){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');}},{passive:true});
+})();
+</script>
 
 <script>
 const IMAGES = [];
