@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intel Dossier: The Penumbra</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstylesheet" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root {
+  --primary-dark: #1a1a1a;
+  --primary-light: #f5f5f5;
+  --accent-gold: #d4a574;
+  --accent-red: #8b3a3a;
+  --accent-blue: #4a5f7f;
+  --text-main: #2a2a2a;
+  --text-light: #555;
+  --border-color: #ddd;
+  --stamp-color: #1a1a1a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--text-main);
+  background: linear-gradient(135deg, #f9f7f4 0%, #e8e3de 100%);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.dossier-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fefdfb;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  border: 2px solid var(--border-color);
+  position: relative;
+}
+
+.dossier-header {
+  background: linear-gradient(90deg, #2a2a2a 0%, #1a1a1a 100%);
+  color: #f5f5f5;
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid #cc3333;
+}
+
+.dossier-header::before {
+  content: "CLASSIFIED INTELLIGENCE";
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  opacity: 0.6;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.dossier-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.dossier-subtitle {
+  font-size: 1.1rem;
+  color: #cc3333;
+  font-style: italic;
+  letter-spacing: 0.15em;
+}
+
+.dossier-stamp {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  width: 100px;
+  height: 100px;
+  border: 3px solid #cc3333;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  color: #cc3333;
+  font-size: 0.75rem;
+  transform: rotate(-15deg);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.9;
+}
+
+.dossier-content {
+  padding: 3rem 2.5rem;
+  line-height: 1.8;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section-header {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.6rem;
+  color: var(--accent-red);
+  border-bottom: 2px solid var(--accent-gold);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.section-label {
+  display: inline-block;
+  background: var(--accent-red);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.subsection {
+  margin-bottom: 1.5rem;
+}
+
+.subsection-title {
+  font-weight: bold;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.quote-box {
+  border-left: 4px solid var(--accent-gold);
+  padding: 1rem 1.5rem;
+  background: rgba(212, 165, 116, 0.08);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+}
+
+.watcher-note {
+  border-left: 4px solid var(--accent-blue);
+  padding: 1rem 1.5rem;
+  background: rgba(74, 95, 127, 0.06);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #3a4a5a;
+  font-size: 0.95rem;
+}
+
+.watcher-marginalia {
+  border-left: 4px dashed var(--accent-gold);
+  padding: 0.75rem 1.5rem;
+  background: rgba(212, 165, 116, 0.04);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.intel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+
+.intel-card {
+  background: #f9f7f4;
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-radius: 4px;
+}
+
+.intel-label {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--accent-red);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+}
+
+.intel-value {
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+
+.threat-meter {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.threat-label {
+  font-weight: bold;
+  min-width: 120px;
+}
+
+.threat-bar {
+  flex: 1;
+  height: 20px;
+  background: #e0e0e0;
+  border: 1px solid #999;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.threat-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50 0%, #ffc107 50%, #ff5722 100%);
+  width: 65%;
+}
+
+.warning-box {
+  background: rgba(139, 58, 58, 0.08);
+  border: 2px solid var(--accent-red);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 4px;
+}
+
+.warning-title {
+  color: var(--accent-red);
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+ul {
+  margin-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.75rem;
+  text-align: justify;
+}
+
+.dossier-footer {
+  background: #f0ebe5;
+  padding: 2rem;
+  border-top: 2px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+.footer-note {
+  margin-bottom: 0.5rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 768px) {
+  .dossier-content {
+    padding: 2rem 1.5rem;
+  }
+  .intel-grid {
+    grid-template-columns: 1fr;
+  }
+  .dossier-title {
+    font-size: 2rem;
+  }
+  .dossier-stamp {
+    width: 80px;
+    height: 80px;
+    font-size: 0.65rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="dossier-wrapper">
+
+  <div class="dossier-header">
+    <div class="dossier-stamp">
+      <span>EXECUTION<br>PENDING</span>
+    </div>
+    <h1 class="dossier-title">THE PENUMBRA</h1>
+    <p class="dossier-subtitle">The Professional Black Estate</p>
+  </div>
+
+  <div class="dossier-content">
+
+    <div class="quote-box">
+      "They kill for coin, yes. But they kill with standards. They refuse contracts. They have rules. They operate as though murder were an art form rather than a trade. This is either admirable or deeply disturbing. I have not yet decided which."
+    </div>
+
+    <div class="section">
+      <div class="section-label">OVERVIEW</div>
+      <div class="section-header">Professional Killers With a Philosophy</div>
+      
+      <p>
+        The Penumbra is a Black Estate—a professional assassination guild organized around principles of discipline, honor, and refusal. They accept contracts. They execute them. But they do so within a framework of rules that most mercenary organizations would find quaintly restrictive.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        They are not cutthroat murderers. They are craftspeople. Their product is death, but they manufacture it according to specifications, with standards, and with reasons that extend beyond simple coin.
+      </p>
+
+      <div class="watcher-marginalia">
+        <strong>Marginalia:</strong> I have observed the Penumbra refuse more contracts than they accept. When asked why, the response is consistent: the kill was unjustifiable, the target was innocent, the reason was insufficient. A mercenary organization that turns down payment for reasons of conscience is either the most disciplined group I have encountered or the most delusional. Possibly both.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">STRUCTURE</div>
+      <div class="section-header">Organization & Hierarchy</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">The Black Estate Model</div>
+        <p>
+          The Penumbra operates as a true Estate system. Membership is hierarchical, earned through demonstrated competence and philosophical alignment. Entry is not purchase or birth—it is **recognition by the Estate that you belong**.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Below the highest ranks sit journeymen assassins—competent, reliable, bound by oath. Below them are apprentices learning the craft. Above all sits a Council of Masters whose identities are carefully guarded. These Masters determine which contracts are acceptable and which are refused.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Contract Review Process</div>
+        <p>
+          This is where the Penumbra differs fundamentally from typical assassination guilds. Contracts are not automatically accepted. They are reviewed by the Council against the Estate's principles:
+        </p>
+
+        <ul>
+          <li>Is the target genuinely guilty of crime or transgression worthy of death?</li>
+          <li>Is the contractor acting in good faith or from malice?</li>
+          <li>Will executing this contract create unjust collateral harm?</li>
+          <li>Is the reasoning sound, or is this murder dressed as justice?</li>
+        </ul>
+
+        <p style="margin-top: 1rem;">
+          Contracts that fail these tests are rejected. The Penumbra will return payment and refuse. This has made them simultaneously feared and respected—they will kill you, but only if they believe you deserve it.
+        </p>
+      </div>
+
+      <div class="intel-grid">
+        <div class="intel-card">
+          <div class="intel-label">Estimated Active Members</div>
+          <div class="intel-value">30–50 (Strict Selection)</div>
+        </div>
+        <div class="intel-card">
+          <div class="intel-label">Contract Acceptance Rate</div>
+          <div class="intel-value">~40% (Highly Selective)</div>
+        </div>
+      </div>
+
+      <div class="watcher-note">
+        <strong>Observation:</strong> The Penumbra refuses more contracts than any other assassination guild I have monitored. This suggests either extraordinary principle or extraordinary arrogance. The distinction may be academic.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">PHILOSOPHY & METHOD</div>
+      <div class="section-header">Murder as Craft</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">The Code of the Estate</div>
+        <p>
+          The Penumbra operates under unwritten but iron-clad principles:
+        </p>
+
+        <ul>
+          <li><strong>Justified killing only.</strong> The target must have committed genuine transgression. Political disagreement is not sufficient grounds.</li>
+          <li><strong>Minimal collateral.</strong> Civilians are not acceptable losses. Family members are not targets of opportunity.</li>
+          <li><strong>Professional execution.</strong> The kill must be clean, swift, and performed without sadism or cruelty.</li>
+          <li><strong>No poisoning of innocents.</strong> Methods that risk harming the undeserving are forbidden.</li>
+          <li><strong>Refusal of abuse.</strong> If a member discovers a contract was based on lies or malice, they may withdraw. The contract is then rejected and payment returned.</li>
+        </ul>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Tactical Approach</div>
+        <p>
+          The Penumbra prefers precision over spectacle. They research targets extensively. They understand motivations, movement patterns, vulnerabilities. They kill with the minimum necessary force, leaving evidence only if it serves the greater justice (such as making the cause of death obvious so the victim cannot be slandered).
+        </p>
+
+        <p style="margin-top: 1rem;">
+          They do not enjoy killing. They kill because they have determined it is necessary. This separates them from sadists and true mercenaries alike.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">RECRUITMENT & TRAINING</div>
+      <div class="section-header">Becoming One of the Black Estate</div>
+      
+      <p>
+        Entry to the Penumbra is not open. Candidates are identified through demonstrated combat skill, tactical intelligence, and—critically—moral discipline. A brilliant swordsman with no conscience is rejected. A person with strong principles but mediocre skill is rejected. The Estate seeks **skilled practitioners with ethical frameworks**.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        Training is rigorous and multi-year. Apprentices learn not only combat and infiltration but philosophy, history, and the reasoning behind the Estate's principles. They must understand *why* the code exists before they are permitted to enforce it.
+      </p>
+
+      <div class="watcher-marginalia">
+        <strong>Marginalia:</strong> I have observed Penumbra assassins refuse contracts on philosophical grounds. When confronted by employers demanding "why won't you kill this person," the response is patient explanation of the Estate's reasoning. This is either the most confident organization I have seen or the most committed to principles. The distinction may not exist.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">THREAT ASSESSMENT</div>
+      <div class="section-header">Danger Level & Capability</div>
+
+      <div class="threat-meter">
+        <div class="threat-label">Direct Threat:</div>
+        <div class="threat-bar">
+          <div class="threat-fill" style="width: 75%;"></div>
+        </div>
+      </div>
+      <p style="font-size: 0.9rem; color: var(--text-light);">Extreme. If the Penumbra accepts a contract on you, you are likely to die. They are skilled, disciplined, and will pursue the contract across regions if necessary.</p>
+
+      <div class="threat-meter">
+        <div class="threat-label">Unpredictability:</div>
+        <div class="threat-bar">
+          <div class="threat-fill" style="width: 25%;"></div>
+        </div>
+      </div>
+      <p style="font-size: 0.9rem; color: var(--text-light);">Low. The Penumbra is predictable in its principles. If you have not committed genuine transgression, they will not accept a contract on you. This reliability makes them less dangerous than chaotic mercenary groups, but far more dangerous than most professional organizations.</p>
+
+      <div class="threat-meter">
+        <div class="threat-label">Reliability as Allies:</div>
+        <div class="threat-bar">
+          <div class="threat-fill" style="width: 80%;"></div>
+        </div>
+      </div>
+      <p style="font-size: 0.9rem; color: var(--text-light);">High. If the Penumbra agrees to work with you, they will fulfill their obligations. Their word is their bond because their entire philosophy is built on honor.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">RELATIONSHIPS</div>
+      <div class="section-header">The Penumbra & Other Powers</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">The Regions</div>
+        <p>
+          All three regions have at various points attempted to co-opt the Penumbra. None have succeeded permanently. The Penumbra will accept regional contracts—removing tyrants, eliminating warlords, punishing criminals—but only when the reasoning is sound. They are not anyone's tool.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Citadels</div>
+        <p>
+          The Crimson Citadel views the Penumbra with cautious respect. The Azure Citadel is still determining their relationship. Neither Citadel has attempted to suppress them, possibly because the Penumbra has proven that suppression is costly.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Owls</div>
+        <p>
+          Cordial distance. The Penumbra and the Owls operate in different modes—one kills, one observes—but both respect professional discipline. They do not interfere with each other's operations.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Merchant's Concourse</div>
+        <p>
+          Neutral. Merchants occasionally contract the Penumbra for business rivals who have crossed ethical lines. The Penumbra accepts these contracts if the reasoning is sound.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">PRACTICAL</div>
+      <div class="section-header">If You Cross the Penumbra</div>
+      
+      <p>
+        If you have genuinely committed transgression and the Penumbra accepts a contract on you, understand this: you are dead. Not "likely to die." Not "in danger." Dead. The Penumbra does not fail contracts they accept.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        If you have not committed genuine transgression, you are safe. The Penumbra will refuse the contract. Your life is worth nothing to them because you have done nothing to deserve death.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        If you seek to hire the Penumbra, understand their standards. They will question your reasoning. They will investigate your target. They may refuse you. If they refuse, accept it. They have determined that what you are asking is unjust. Arguing will not change their minds.
+      </p>
+
+      <div class="warning-box">
+        <div class="warning-title">⚠ CRITICAL NOTE</div>
+        <p>
+          The Penumbra is one of the few organizations in Verdanward that operates with genuine moral framework. This makes them simultaneously more trustworthy and more dangerous than amoral mercenary groups. They will honor their word because their word is their entire identity. They will refuse your contract because they believe it is unjust. They will kill you because they believe you deserve it. Do not mistake discipline for flexibility. Do not mistake honor for weakness.
+        </p>
+      </div>
+
+      <div class="watcher-marginalia">
+        <strong>Final marginalia:</strong> The Penumbra reminds me that even organizations built on death and violence can maintain ethical frameworks. They are assassins, yes. But they are assassins with standards. This is either the most civilized form of killing I have encountered or the most disturbing. The Penumbra themselves would tell you it is both.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="dossier-footer">
+    <div class="footer-note">DISTRIBUTION: REGIONAL ADMINISTRATIONS, CITADEL COUNCIL, ELITE OPERATIVES ONLY</div>
+    <div class="footer-note">LAST UPDATED: 877 RC | STATUS: OPERATING NORMALLY | THREAT LEVEL: CRITICAL (IF ACTIVATED)</div>
+    <div style="margin-top: 1rem; font-style: italic;">
+      "They are killers. But they kill with honor. That distinction matters more than most would admit."
+    </div>
+  </div>
+
+</div>
+
+</body>
+
+</html>

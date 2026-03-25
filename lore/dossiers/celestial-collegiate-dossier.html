@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intel Dossier: The Celestial Collegiate</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstylesheet" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root {
+  --primary-dark: #1a1a1a;
+  --primary-light: #f5f5f5;
+  --accent-gold: #d4a574;
+  --accent-red: #8b3a3a;
+  --accent-blue: #4a5f7f;
+  --accent-star: #1a5a7a;
+  --text-main: #2a2a2a;
+  --text-light: #555;
+  --border-color: #ddd;
+  --stamp-color: #1a1a1a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--text-main);
+  background: linear-gradient(135deg, #f9f7f4 0%, #e8e3de 100%);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.dossier-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fefdfb;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  border: 2px solid var(--border-color);
+  position: relative;
+}
+
+.dossier-header {
+  background: linear-gradient(90deg, #1a2a3a 0%, #0a1a2a 100%);
+  color: #f5f5f5;
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid #4a7a9a;
+}
+
+.dossier-header::before {
+  content: "CLASSIFIED INTELLIGENCE";
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  opacity: 0.6;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.dossier-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.dossier-subtitle {
+  font-size: 1.1rem;
+  color: #7a9aaa;
+  font-style: italic;
+  letter-spacing: 0.15em;
+}
+
+.dossier-stamp {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  width: 100px;
+  height: 100px;
+  border: 3px solid #4a7a9a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  color: #4a7a9a;
+  font-size: 0.75rem;
+  transform: rotate(-15deg);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.9;
+}
+
+.dossier-content {
+  padding: 3rem 2.5rem;
+  line-height: 1.8;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section-header {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.6rem;
+  color: var(--accent-star);
+  border-bottom: 2px solid var(--accent-gold);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.section-label {
+  display: inline-block;
+  background: var(--accent-star);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.subsection {
+  margin-bottom: 1.5rem;
+}
+
+.subsection-title {
+  font-weight: bold;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.quote-box {
+  border-left: 4px solid var(--accent-gold);
+  padding: 1rem 1.5rem;
+  background: rgba(212, 165, 116, 0.08);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+}
+
+.watcher-note {
+  border-left: 4px solid var(--accent-blue);
+  padding: 1rem 1.5rem;
+  background: rgba(74, 95, 127, 0.06);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #3a4a5a;
+  font-size: 0.95rem;
+}
+
+.watcher-marginalia {
+  border-left: 4px dashed var(--accent-gold);
+  padding: 0.75rem 1.5rem;
+  background: rgba(212, 165, 116, 0.04);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.intel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+
+.intel-card {
+  background: #f9f7f4;
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-radius: 4px;
+}
+
+.intel-label {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--accent-star);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+}
+
+.intel-value {
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+
+.warning-box {
+  background: rgba(26, 90, 122, 0.08);
+  border: 2px solid var(--accent-star);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 4px;
+}
+
+.warning-title {
+  color: var(--accent-star);
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+ul {
+  margin-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.75rem;
+  text-align: justify;
+}
+
+.dossier-footer {
+  background: #f0ebe5;
+  padding: 2rem;
+  border-top: 2px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+.footer-note {
+  margin-bottom: 0.5rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 768px) {
+  .dossier-content {
+    padding: 2rem 1.5rem;
+  }
+  .intel-grid {
+    grid-template-columns: 1fr;
+  }
+  .dossier-title {
+    font-size: 2rem;
+  }
+  .dossier-stamp {
+    width: 80px;
+    height: 80px;
+    font-size: 0.65rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="dossier-wrapper">
+
+  <div class="dossier-header">
+    <div class="dossier-stamp">
+      <span>SEEKERS<br>OF LIGHT</span>
+    </div>
+    <h1 class="dossier-title">THE CELESTIAL COLLEGIATE</h1>
+    <p class="dossier-subtitle">Stargazers, Artifact Hunters, Knowledge Seekers</p>
+  </div>
+
+  <div class="dossier-content">
+
+    <div class="quote-box">
+      "They are brilliant, curious, reckless, and utterly unafraid of what they might discover. They approach dangerous knowledge the way adventurers approach treasure: with enthusiasm, planning, and willingness to accept risk. Some of the finest minds in Verdanward are quiet members. So are some of the most troublesome."
+    </div>
+
+    <div class="section">
+      <div class="section-label">OVERVIEW</div>
+      <div class="section-header">Scientists, Adventurers & Seekers of Hidden Truth</div>
+      
+      <p>
+        The Celestial Collegiate is an informal network of Starcallers, researchers, artifact hunters, and knowledge seekers operating across Verdanward. They maintain observatories, share research, and pursue lines of inquiry that would make the Concordance cautious and other institutions nervous.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        Unlike the Concordance, the Collegiate has no theological framework constraining their research. Unlike formal institutions, they have no centralized authority restricting investigation. What they have is **curiosity without guardrails and the resources to follow that curiosity to dangerous places**.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        Think of them as Learned Masons with the fearlessness of treasure hunters. They pursue knowledge for its own sake, investigate mysteries others would leave alone, and have been known to commit acts of archaeological audacity that would scandalize most institutions.
+      </p>
+
+      <div class="watcher-marginalia">
+        <strong>Marginalia:</strong> I have observed Collegiate members pursue research into forbidden tombs, sealed archives, and dangerous artifacts without apparent concern for consequences. When confronted by institutional resistance, they simply work around it or ignore it entirely. This either reflects extraordinary confidence in their methods or dangerous arrogance. Frequently both.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">STRUCTURE</div>
+      <div class="section-header">Organization & Membership</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Observatory Network</div>
+        <p>
+          The Collegiate maintains a network of observatories distributed across the Citadels and Regions. These are not secret facilities—they are generally public or semi-public, housing telescopes and research equipment. But within each observatory are researchers and scholars operating with broader freedom than they would in formal institutions.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          The largest observatories are associated with the Citadels, but significant facilities exist in the Regions as well. Each observatory functions semi-autonomously but maintains loose coordination with other Collegiate sites.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Membership Model</div>
+        <p>
+          Membership in the Collegiate is non-formal. Individuals research, publish findings (if they choose), and cooperate with other researchers. There is no official roster, no formal application process, no structured hierarchy. Instead, membership is defined by participation—if you are actively pursuing knowledge alongside other Collegiate researchers, you are part of the network.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Critically, many Collegiate members maintain official positions in Citadels, Regions, or other institutions. Their Collegiate work is often independent of their official roles.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Leadership Through Influence</div>
+        <p>
+          The Collegiate has no formal leadership, but certain researchers are recognized as authorities in their fields. These individuals influence research direction through publication, collaboration, and intellectual authority rather than formal command. Others follow their suggestions not because they must but because the suggestions are brilliant.
+        </p>
+      </div>
+
+      <div class="intel-grid">
+        <div class="intel-card">
+          <div class="intel-label">Known Observatories</div>
+          <div class="intel-value">12–15 Major Facilities</div>
+        </div>
+        <div class="intel-card">
+          <div class="intel-label">Estimated Active Members</div>
+          <div class="intel-value">80–150 (Informal Network)</div>
+        </div>
+      </div>
+
+      <div class="watcher-note">
+        <strong>Observation:</strong> The Collegiate's informal structure gives it remarkable resilience. You cannot destroy an organization that has no central points of failure, no official membership, and no formal hierarchy.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">RESEARCH & FOCUS AREAS</div>
+      <div class="section-header">What They Study & Why It Matters</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Astronomical Research</div>
+        <p>
+          Starcallers use the celestial patterns to understand Resonance and the fundamental structures of reality. The Collegiate maintains sophisticated observatories dedicated to mapping stellar configurations and correlating them with Resonant phenomena. This research has produced genuine insights into the Song's mechanics.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Artifact Investigation & Recovery</div>
+        <p>
+          The Collegiate actively seeks lost artifacts, ancient sites, and buried knowledge. They combine historical research with practical archaeology, undertaking expeditions that are part treasure hunt, part scholarly investigation. Some of their discoveries have been genuinely significant; others have simply been dangerous.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Notably, when the Collegiate finds artifacts, they often study them rather than returning them to authorities. This has created occasional friction with the Citadels, but the Collegiate's attitude is that knowledge should not be locked away.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Forbidden Knowledge Examination</div>
+        <p>
+          The Collegiate investigates topics the Concordance would refuse to touch. Corrupted Resonance, dangerous practices, sealed knowledge—if it is intellectually interesting, they pursue it. Not because they wish to weaponize the knowledge but because understanding forbidden things is essential to genuine scholarship.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          This willingness to study dangerous subjects sometimes produces dangerous results. But it also produces insights that more cautious researchers would never attain.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Riven Phenomenon Study</div>
+        <p>
+          Some of the Collegiate's most active research focuses on Rivens—the expanding toxic zones. They seek to understand their mechanism, predict their spread, and determine whether they can be contained or reversed. This research is collaborative with the Concordance, though the Collegiate is willing to investigate more dangerous aspects the Concordance refuses to touch.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Historical Investigation</div>
+        <p>
+          The Collegiate maintains extensive archives and conducts historical research. They investigate ancient events, lost civilizations, and pre-Citadel history. This sometimes uncovers information that contradicts official narratives, which creates occasional political tension.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">METHODS & APPROACH</div>
+      <div class="section-header">How They Pursue Knowledge</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Fearless Inquiry</div>
+        <p>
+          The Collegiate approaches dangerous subjects with systematic method rather than caution. They do not ask "should we study this?" but "how can we study this safely?" This distinction leads them into territory others avoid.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Expedition & Exploration</div>
+        <p>
+          Rather than relying on archives alone, Collegiate researchers conduct field expeditions. They travel to dangerous locations, investigate sealed sites, and pursue knowledge at its source. This produces better research and frequently produces complications.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Publication & Knowledge Sharing</div>
+        <p>
+          The Collegiate believes knowledge should be shared (within reason). They publish findings, share research methodologies, and collaborate openly with other researchers—even researchers outside the Collegiate. This democratization of knowledge sometimes creates friction with institutions that prefer restricted information.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">NOTABLE CHARACTERISTICS</div>
+      <div class="section-header">What Sets Them Apart</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Best Minds Available</div>
+        <p>
+          The Collegiate attracts brilliant researchers—some of the finest minds in Verdanward have been quiet members. These are not institutional bureaucrats but active researchers pursuing interesting problems. Their presence gives the network credibility and capability.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Lack of Central Authority Constraints</div>
+        <p>
+          Because the Collegiate has no formal authority structure, members are not subject to institutional constraints. A researcher working within the Concordance must answer to Masters. A researcher working within the Collegiate answers only to intellectual rigor and peer review.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Willingness to Accept Risk</div>
+        <p>
+          The Collegiate's members pursue dangerous research. They investigate cursed artifacts. They enter sealed sites. They work with corrupted materials to understand their nature. This produces casualties occasionally, but also produces knowledge that cautious researchers never attain.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Resource Availability</div>
+        <p>
+          Many Collegiate members maintain wealthy patrons, significant resources, or official institutional backing (even when pursuing unofficial research). This gives the network funding, equipment, and capability that independent researchers could not access.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">RELATIONSHIPS</div>
+      <div class="section-header">The Collegiate & Other Powers</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">The Concordance</div>
+        <p>
+          Collegial but tense. The Collegiate and Concordance collaborate on research, share findings, and maintain mutual respect. But the Collegiate's willingness to pursue dangerous knowledge and the Concordance's refusal to do so creates friction. The Concordance views the Collegiate as reckless; the Collegiate views the Concordance as timid.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Citadels</div>
+        <p>
+          The Citadels sponsor much of the Collegiate's work, provide facilities, and sometimes direct research toward practical applications. But the Citadels are also nervous about the Collegiate's independence. When the Collegiate discovers things the Citadels would prefer remained hidden, tension results.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Regions</div>
+        <p>
+          The Collegiate maintains equal standing in all three regions. Their observatories are distributed across the Regions, and their research benefits all three equally.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">PRACTICAL</div>
+      <div class="section-header">Working With (or Against) the Collegiate</div>
+      
+      <p>
+        If you seek knowledge, the Collegiate is often your best resource. They are more willing to investigate dangerous subjects than the Concordance, more practical than pure academics, and more resourced than independent researchers.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        However, understand that they will share what they learn. If you require secrets to remain secret, do not hire the Collegiate. If you require dangerous research conducted, they are your people. If you require forbidden knowledge pursued, they will pursue it.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        They are not hostile to authority, but they will not be constrained by it. They will investigate what they find intellectually important, publish their findings if appropriate, and pursue knowledge regardless of convenience or politics.
+      </p>
+
+      <div class="warning-box">
+        <div class="warning-title">⚠ CRITICAL NOTE</div>
+        <p>
+          The Celestial Collegiate is a double-edged sword. They produce knowledge that can be tremendously valuable. They also produce knowledge that is dangerous if widely distributed. They are generally responsible with dangerous discoveries, but they are not beholden to any authority that would constrain publication. If they believe knowledge should be shared, they will share it, consequences be damned.
+        </p>
+      </div>
+
+      <div class="watcher-marginalia">
+        <strong>Final marginalia:</strong> The Collegiate represents human (and non-human) intellectual endeavor at its best and most dangerous. They pursue knowledge without excessive fear, investigate questions others consider too dangerous, and contribute genuine insights to collective understanding. But they also sometimes pursue knowledge simply because it exists to be pursued, without adequate consideration for consequences. This makes them brilliant and reckless in equal measure. Support them for what they discover. Be cautious of what they decide to publish.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="dossier-footer">
+    <div class="footer-note">DISTRIBUTION: CITADEL COUNCILS, REGIONAL ADMINISTRATIONS, SCHOLARLY INSTITUTIONS</div>
+    <div class="footer-note">LAST UPDATED: 877 RC | STATUS: OPERATING NORMALLY | INSTITUTIONAL STABILITY: MODERATE-HIGH</div>
+    <div style="margin-top: 1rem; font-style: italic;">
+      "They are the brightest minds pursuing the most dangerous questions. Sometimes this produces genius. Sometimes it produces catastrophe. Usually both."
+    </div>
+  </div>
+
+</div>
+
+</body>
+
+</html>

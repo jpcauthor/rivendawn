@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Intel Dossier: The Concordance</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstylesheet" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root {
+  --primary-dark: #1a1a1a;
+  --primary-light: #f5f5f5;
+  --accent-gold: #d4a574;
+  --accent-red: #8b3a3a;
+  --accent-blue: #4a5f7f;
+  --accent-purple: #5a4880;
+  --text-main: #2a2a2a;
+  --text-light: #555;
+  --border-color: #ddd;
+  --stamp-color: #1a1a1a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--text-main);
+  background: linear-gradient(135deg, #f9f7f4 0%, #e8e3de 100%);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.dossier-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fefdfb;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  border: 2px solid var(--border-color);
+  position: relative;
+}
+
+.dossier-header {
+  background: linear-gradient(90deg, #2a2a3a 0%, #1a1a2a 100%);
+  color: #f5f5f5;
+  padding: 3rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid var(--accent-purple);
+}
+
+.dossier-header::before {
+  content: "CLASSIFIED INTELLIGENCE";
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  opacity: 0.6;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.dossier-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.8rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.05em;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.dossier-subtitle {
+  font-size: 1.1rem;
+  color: #9080c8;
+  font-style: italic;
+  letter-spacing: 0.15em;
+}
+
+.dossier-stamp {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  width: 100px;
+  height: 100px;
+  border: 3px solid var(--accent-purple);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  color: var(--accent-purple);
+  font-size: 0.75rem;
+  transform: rotate(-15deg);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.9;
+}
+
+.dossier-content {
+  padding: 3rem 2.5rem;
+  line-height: 1.8;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.section-header {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.6rem;
+  color: var(--accent-purple);
+  border-bottom: 2px solid var(--accent-gold);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.section-label {
+  display: inline-block;
+  background: var(--accent-purple);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.85rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: monospace;
+}
+
+.subsection {
+  margin-bottom: 1.5rem;
+}
+
+.subsection-title {
+  font-weight: bold;
+  color: var(--text-main);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.quote-box {
+  border-left: 4px solid var(--accent-gold);
+  padding: 1rem 1.5rem;
+  background: rgba(212, 165, 116, 0.08);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+}
+
+.watcher-note {
+  border-left: 4px solid var(--accent-blue);
+  padding: 1rem 1.5rem;
+  background: rgba(74, 95, 127, 0.06);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #3a4a5a;
+  font-size: 0.95rem;
+}
+
+.watcher-marginalia {
+  border-left: 4px dashed var(--accent-gold);
+  padding: 0.75rem 1.5rem;
+  background: rgba(212, 165, 116, 0.04);
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.intel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+
+.intel-card {
+  background: #f9f7f4;
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-radius: 4px;
+}
+
+.intel-label {
+  font-family: monospace;
+  font-size: 0.75rem;
+  color: var(--accent-purple);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.5rem;
+}
+
+.intel-value {
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+
+.warning-box {
+  background: rgba(90, 72, 128, 0.08);
+  border: 2px solid var(--accent-purple);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 4px;
+}
+
+.warning-title {
+  color: var(--accent-purple);
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+ul {
+  margin-left: 1.5rem;
+}
+
+li {
+  margin-bottom: 0.75rem;
+  text-align: justify;
+}
+
+.dossier-footer {
+  background: #f0ebe5;
+  padding: 2rem;
+  border-top: 2px solid var(--border-color);
+  font-size: 0.9rem;
+  color: var(--text-light);
+  text-align: center;
+}
+
+.footer-note {
+  margin-bottom: 0.5rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+@media (max-width: 768px) {
+  .dossier-content {
+    padding: 2rem 1.5rem;
+  }
+  .intel-grid {
+    grid-template-columns: 1fr;
+  }
+  .dossier-title {
+    font-size: 2rem;
+  }
+  .dossier-stamp {
+    width: 80px;
+    height: 80px;
+    font-size: 0.65rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="dossier-wrapper">
+
+  <div class="dossier-header">
+    <div class="dossier-stamp">
+      <span>SCHOLARS<br>SANCTIONED</span>
+    </div>
+    <h1 class="dossier-title">THE CONCORDANCE</h1>
+    <p class="dossier-subtitle">Keepers of Resonant Theory & Divine Reverence</p>
+  </div>
+
+  <div class="dossier-content">
+
+    <div class="quote-box">
+      "They are scholars without the atheism, priests without the theology, and researchers without the chaos of true inquiry. They operate within the framework of the Indomitable's order, accepting as foundational what others would question. This makes them simultaneously stable and intellectually limited."
+    </div>
+
+    <div class="section">
+      <div class="section-label">OVERVIEW</div>
+      <div class="section-header">An Academy of Reverent Inquiry</div>
+      
+      <p>
+        The Concordance is an institution of learning dedicated to understanding Resonance—the Song, the Cadence, the structures beneath existence. But it is not a purely secular academy. They operate within a framework of deep reverence for the Indomitable, treating the divine not as an object of study but as a foundational principle deserving respect and deference.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        Think of them as Jesuits without theology—highly disciplined scholars with access to the best minds in Verdanward, operating within a spiritual framework that constrains their inquiry even as it enables it.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        The Concordance is not hostile. It is not particularly secretive. It simply operates under the assumption that some things should not be questioned and some knowledge serves purposes beyond individual curiosity.
+      </p>
+
+      <div class="watcher-marginalia">
+        <strong>Marginalia:</strong> I have spent considerable time observing the Concordance's research methods. They are rigorous, systematic, and frequently brilliant. But there are gaps. Lines of inquiry that are pursued only to a certain point before respectfully withdrawing. Questions that are answered with "that is not for us to know." This self-imposed limitation is either profound wisdom or profound cowardice. I have not determined which.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">STRUCTURE</div>
+      <div class="section-header">Organization & Academic Hierarchy</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">The Academy Model</div>
+        <p>
+          The Concordance maintains several primary academies, with scholarly branches distributed across the Citadels and Regions. The largest and most prestigious is located at the Crimson Citadel, though the Azure Citadel maintains a significant secondary academy.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Each academy is headed by a Master of Concordance, typically a scholar of exceptional expertise and theological disposition. These Masters maintain collegial relationships with each other and coordinate broadly on matters of doctrine and research direction.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Ranks of Membership</div>
+        <p>
+          Within the Concordance, scholars progress through clearly defined ranks:
+        </p>
+
+        <ul>
+          <li><strong>Initiate:</strong> Entry-level scholars with theoretical knowledge but limited practical experience.</li>
+          <li><strong>Practitioner:</strong> Working researchers engaged in active study and experimentation.</li>
+          <li><strong>Adept:</strong> Senior scholars with demonstrated expertise in specific domains.</li>
+          <li><strong>Master:</strong> Leadership role within the academy, responsible for both scholarship and institutional stewardship.</li>
+        </ul>
+
+        <p style="margin-top: 1rem;">
+          Progression is merit-based, though "merit" includes both intellectual capability and theological disposition. A brilliant scholar lacking reverence for the Indomitable will advance more slowly than a capable scholar with genuine faith.
+        </p>
+      </div>
+
+      <div class="intel-grid">
+        <div class="intel-card">
+          <div class="intel-label">Primary Academies</div>
+          <div class="intel-value">6–8 Across Verdanward</div>
+        </div>
+        <div class="intel-card">
+          <div class="intel-label">Active Scholars</div>
+          <div class="intel-value">300–500 (Estimated)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">PURPOSE & FUNCTION</div>
+      <div class="section-header">What They Research & Why</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Resonance Theory & Practice</div>
+        <p>
+          The Concordance's primary mission is to understand Resonance—its mechanisms, limitations, potential, and applications. They maintain extensive libraries of theoretical texts, practical manuals, and experimental records documenting centuries of research.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          This makes them the definitive scholarly authority on Resonance within Verdanward. Practitioners from all disciplines consult Concordance texts. Citadel authorities defer to Concordance expertise on matters of resonant theory.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Training & Credentialing</div>
+        <p>
+          The Concordance trains scholars in resonant practice through formal curricula. While they do not develop Callings (those emerge through the Cadence's own mechanism), they teach practitioners how to understand and refine their practice within existing frameworks.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Scholars who complete Concordance training carry substantial credibility. They understand not just technique but theory—the why beneath the how.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Theological Integration</div>
+        <p>
+          Uniquely among research institutions, the Concordance integrates theological study with practical resonance work. They investigate how the divine order manifests through Resonance. They research whether the Cadence, the Song, and the fundamental structures are expressions of the Indomitable's will.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          This is not treated as separate from rigorous inquiry—it is treated as *part* of rigorous inquiry.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Rivendawn Phenomenon Study</div>
+        <p>
+          The Concordance maintains dedicated research on Rivens—the expanding toxic zones linked to corrupted Shadowmancy. Understanding their mechanism, predicting their spread, and potentially containing or reversing them is a priority research area.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">CONSTRAINTS & DOCTRINE</div>
+      <div class="section-header">The Limits of Concordance Inquiry</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">Theological Guardrails</div>
+        <p>
+          The Concordance operates within a framework of theological constraints. Certain lines of research are considered inappropriate or forbidden. These are not arbitrary limitations but emerge from deep theological conviction about what should and should not be investigated.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          For example, research into direct control or manipulation of the Indomitable's will is forbidden. Research designed to replace the Cadence or circumvent it is forbidden. Research that treats the divine as merely another system to be exploited is forbidden.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Self-Imposed Limits on Knowledge</div>
+        <p>
+          Critically, the Concordance has discovered that some knowledge is dangerous if broadly disseminated. They maintain restricted libraries of texts dealing with corrupted Resonance, forbidden practices, and potentially destabilizing information.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Access to these restricted collections requires specific authorization and theological clearance. This is intentional. They have judged that some knowledge requires gatekeeping.
+        </p>
+
+        <div class="watcher-note">
+          <strong>Observation:</strong> The Concordance's willingness to restrict knowledge suggests they have discovered things that would be destructive if broadly known. What these things are, I have not determined. That they are guarded this carefully suggests genuine danger rather than mere institutional control.
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">RELATIONSHIPS & ALIGNMENT</div>
+      <div class="section-header">The Concordance & Other Powers</div>
+      
+      <div class="subsection">
+        <div class="subsection-title">The Citadels</div>
+        <p>
+          The Concordance maintains formal relationships with both the Crimson Citadel and Azure Citadel. They are sponsored by these institutions, provide scholarly support to citadel administration, and receive resources and protection in return.
+        </p>
+
+        <p style="margin-top: 1rem;">
+          Neither Citadel views the Concordance as a threat. They view them as assets—sources of expertise and authority.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">The Regions</div>
+        <p>
+          The Concordance maintains branch academies in all three regions. These regional branches focus on practical application of resonant theory and training for regional practitioners. They are viewed as stable, trustworthy institutions across all regions.
+        </p>
+      </div>
+
+      <div class="subsection">
+        <div class="subsection-title">Other Knowledge Institutions</div>
+        <p>
+          The Concordance works collegially with the Celestial Collegiate on matters of shared research interest. They maintain careful distance from the Silent House (whose methods are antithetical to Concordance principle). They have no formal relationship with the Owls (though individual scholars may have personal connections).
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">PRACTICAL</div>
+      <div class="section-header">Engaging With the Concordance</div>
+      
+      <p>
+        If you seek resonant knowledge, the Concordance is your first stop. They maintain the most comprehensive libraries, the most rigorous scholars, and the most trustworthy credentials.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        However, understand their constraints. They will not research certain topics. They will not provide certain knowledge. They operate under theological framework that constrains what they consider appropriate inquiry.
+      </p>
+
+      <p style="margin-top: 1rem;">
+        If you seek knowledge they consider forbidden or dangerous, they will refuse. Their refusal is final and should be accepted respectfully. Attempting to coerce access to restricted materials is not only futile—it will result in complete institutional hostility.
+      </p>
+
+      <div class="warning-box">
+        <div class="warning-title">⚠ CRITICAL NOTE</div>
+        <p>
+          The Concordance is not hostile, but they are immovable on matters of principle. They have decided that certain things should not be known. This decision is made at institutional level and is not subject to negotiation. If you encounter Concordance refusal, your only option is acceptance or going elsewhere. The Concordance does not capitulate.
+        </p>
+      </div>
+
+      <div class="watcher-marginalia">
+        <strong>Final marginalia:</strong> The Concordance represents the best of human (and non-human) scholarship combined with the constraints of genuine conviction. They pursue knowledge with rigor and refuse it with integrity. They are, perhaps, the most stable institution in Verdanward precisely because they have clear principles and the discipline to maintain them. Whether this is strength or weakness depends on your perspective.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="dossier-footer">
+    <div class="footer-note">DISTRIBUTION: CITADEL COUNCILS, REGIONAL ADMINISTRATIONS, SCHOLARLY INSTITUTIONS</div>
+    <div class="footer-note">LAST UPDATED: 877 RC | STATUS: OPERATING NORMALLY | INSTITUTIONAL STABILITY: EXTREMELY HIGH</div>
+    <div style="margin-top: 1rem; font-style: italic;">
+      "They are scholars who answer to something higher than curiosity. This makes them trustworthy and limited in equal measure."
+    </div>
+  </div>
+
+</div>
+
+</body>
+
+</html>
