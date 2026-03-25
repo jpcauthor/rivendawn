@@ -355,7 +355,8 @@ Email: <a href="/cdn-cgi/l/email-protection#d8bbb7b6acb9bbac98aab1aebdb6bcb9afb6
 </footer>
 
 </div>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+
+<script>
 (function(){
   var page=document.body.dataset.page;
   if(page){document.querySelectorAll('[data-nav="'+page+'"]').forEach(function(e){e.classList.add('nav-active');});}
@@ -365,4 +366,9 @@ Email: <a href="/cdn-cgi/l/email-protection#d8bbb7b6acb9bbac98aab1aebdb6bcb9afb6
   if(!btn||!menu)return;
   btn.addEventListener('click',function(){var o=menu.classList.toggle('open');hdr.classList.toggle('menu-open',o);btn.setAttribute('aria-expanded',o);});
   menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');});});
-  document.addEventListener('click',function(e){if(!hdr.contains(e.target)&&!menu.contains(e.target)){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false'
+  document.addEventListener('click',function(e){if(!hdr.contains(e.target)&&!menu.contains(e.target)){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');}});
+  window.addEventListener('scroll',function(){if(menu.classList.contains('open')){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');}},{passive:true});
+})();
+</script>
+</body>
+</html>
