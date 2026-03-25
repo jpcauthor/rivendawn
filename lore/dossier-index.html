@@ -531,7 +531,7 @@ footer a:hover{text-decoration:underline;}
          data-riddle="I have strings, but I cannot play. I have a voice, but it has been taken away. What am I?"
          data-answer="the silenced chord"
          data-answer-alt="silenced chord,a silenced chord"
-         onclick="openGate(this)">
+         onclick="openGate(event.target)">
       <div class="archive-blade-content">
         <span class="archive-kicker">Dossier I</span>
         <span class="archive-title">The Silenced Chord</span>
@@ -550,7 +550,7 @@ footer a:hover{text-decoration:underline;}
          data-riddle="I am full of people, yet no one speaks. I hold the weight of generations, yet make no sound. What am I?"
          data-answer="the silent house"
          data-answer-alt="silent house,a silent house"
-         onclick="openGate(this)">
+         onclick="openGate(event.target)">
       <div class="archive-blade-content">
         <span class="archive-kicker">Dossier II</span>
         <span class="archive-title">The Silent House</span>
@@ -568,7 +568,7 @@ footer a:hover{text-decoration:underline;}
          data-mode="password"
          data-answer="concordance"
          data-answer-alt="the concordance"
-         onclick="openGate(this)">
+         onclick="openGate(event.target)">
       <div class="archive-blade-content">
         <span class="archive-kicker">Dossier III</span>
         <span class="archive-title">The Concordance</span>
@@ -586,7 +586,7 @@ footer a:hover{text-decoration:underline;}
          data-mode="password"
          data-answer="penumbra"
          data-answer-alt="the penumbra"
-         onclick="openGate(this)">
+         onclick="openGate(event.target)">
       <div class="archive-blade-content">
         <span class="archive-kicker">Dossier IV</span>
         <span class="archive-title">The Penumbra</span>
@@ -605,7 +605,7 @@ footer a:hover{text-decoration:underline;}
          data-riddle="I am studied by all who seek truth, yet I belong to none. I speak in patterns no single tongue can name. What am I?"
          data-answer="the stars"
          data-answer-alt="stars,the night sky,the heavens,the sky"
-         onclick="openGate(this)">
+         onclick="openGate(event.target)">
       <div class="archive-blade-content">
         <span class="archive-kicker">Dossier V</span>
         <span class="archive-title">The Celestial Collegiate</span>
@@ -689,7 +689,9 @@ footer a:hover{text-decoration:underline;}
 var currentTarget = null;
 
 function openGate(el) {
-  currentTarget = el;
+  // Walk up to the actual blade div in case a child element was clicked
+  var blade = el.closest('.archive-blade') || el;
+  currentTarget = blade;
   var mode = el.dataset.mode;
   var title = el.querySelector('.archive-title').textContent;
   var riddle = el.dataset.riddle || '';
