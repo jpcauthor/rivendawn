@@ -506,6 +506,104 @@ li {
 
 </div>
 
+<!-- CLOSE DOSSIER -->
+<div style="text-align:center;margin:3rem 0 2rem;">
+  <button id="burnBtn" style="font-family:Georgia,serif;font-size:.9rem;letter-spacing:.2em;text-transform:uppercase;color:#cc2200;background:transparent;border:1.5px solid rgba(180,30,0,0.45);border-radius:2px;padding:.7rem 1.8rem;cursor:pointer;">
+    &#128293; Close This Dossier &#128293;
+  </button>
+</div>
+
+<div id="burnOverlay" style="display:none;position:fixed;inset:0;z-index:9999;">
+  <canvas id="fireCanvas" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
+  <div id="burnText" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .6s;">
+    <span style="font-family:Georgia,serif;font-size:clamp(1.5rem,5vw,3rem);letter-spacing:.25em;text-transform:uppercase;color:#fff;text-shadow:0 0 30px #f60,0 0 60px #f30,0 0 90px #f00;">Dossier Destroyed</span>
+  </div>
+</div>
+
+<script>
+document.getElementById('burnBtn').addEventListener('click', function () {
+  var overlay = document.getElementById('burnOverlay');
+  var canvas  = document.getElementById('fireCanvas');
+  var ctx     = canvas.getContext('2d');
+  overlay.style.display = 'block';
+
+  var W = canvas.width  = window.innerWidth;
+  var H = canvas.height = window.innerHeight;
+
+  var CELL = 4;
+  var COLS = Math.ceil(W / CELL);
+  var ROWS = Math.ceil(H / CELL);
+  var grid     = new Uint8Array(COLS * ROWS);
+  var nextGrid = new Uint8Array(COLS * ROWS);
+
+  // Fire colour palette black -> red -> orange -> yellow -> white
+  var pal = [];
+  for (var i = 0; i < 256; i++) {
+    var t = i / 255;
+    var r, g, b;
+    if (t < 0.25)      { r = Math.round(180 * (t / 0.25)); g = 0; b = 0; }
+    else if (t < 0.55) { var tt = (t-.25)/.30; r = Math.round(180+75*tt); g = Math.round(80*tt); b = 0; }
+    else if (t < 0.80) { var tt = (t-.55)/.25; r = 255; g = Math.round(80+175*tt); b = 0; }
+    else               { var tt = (t-.80)/.20; r = 255; g = 255; b = Math.round(255*tt); }
+    pal.push('rgb('+r+','+g+','+b+')');
+  }
+
+  var start = performance.now();
+  var textShown = false;
+
+  function frame(now) {
+    var t = (now - start) / 1000;
+
+    // Seed bottom rows
+    for (var c = 0; c < COLS; c++) {
+      grid[(ROWS-1)*COLS+c] = 180 + Math.random()*75|0;
+      var front = Math.max(0, ROWS - Math.ceil(Math.min(1, t/1.2) * ROWS));
+      if (Math.random() < 0.55) grid[front*COLS+c] = t < 3 ? (120+Math.random()*135|0) : 0;
+    }
+
+    // Propagate upward
+    for (var row = 0; row < ROWS-1; row++) {
+      for (var col = 0; col < COLS; col++) {
+        var below = grid[(row+1)*COLS+col];
+        var decay = 8 + Math.random()*20|0;
+        var nc = col + (Math.random()<.5?-1:1);
+        if (nc < 0) nc = 0; if (nc >= COLS) nc = COLS-1;
+        nextGrid[row*COLS+nc] = Math.max(0, below - decay);
+      }
+    }
+    for (var c = 0; c < COLS; c++) nextGrid[(ROWS-1)*COLS+c] = grid[(ROWS-1)*COLS+c];
+    var tmp = grid; grid = nextGrid; nextGrid = tmp;
+
+    // Fading phase
+    if (t > 3) for (var fi = 0; fi < grid.length; fi++) grid[fi] = Math.max(0, grid[fi] - (15+Math.random()*25|0));
+
+    // Draw dark overlay then fire cells
+    ctx.fillStyle = 'rgba(0,0,0,'+Math.min(0.92, t/2.5)+')';
+    ctx.fillRect(0, 0, W, H);
+    for (var row = 0; row < ROWS; row++) {
+      for (var col = 0; col < COLS; col++) {
+        var v = grid[row*COLS+col];
+        if (v > 0) { ctx.fillStyle = pal[Math.min(255,v)]; ctx.fillRect(col*CELL, row*CELL, CELL, CELL); }
+      }
+    }
+
+    if (t > 1.5 && !textShown) { textShown = true; document.getElementById('burnText').style.opacity = '1'; }
+
+    if (t >= 5) {
+      try { window.close(); } catch(e){}
+      setTimeout(function(){ if(!window.closed) history.back(); }, 300);
+      return;
+    }
+    requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(frame);
+});
+</script>
+
+</body>
+</html>
+  
 </body>
 
 </html>
