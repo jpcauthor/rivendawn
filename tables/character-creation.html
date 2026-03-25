@@ -70,6 +70,12 @@ h1 { font-family: 'Cinzel Decorative', serif; font-size: 3rem; text-align: cente
 .title-rule::after { background: linear-gradient(to left, transparent, rgba(74,46,6,0.35)); }
 .title-rule span { color: var(--label-text); font-size: .75rem; letter-spacing: .28em; text-transform: uppercase; font-family: 'Cinzel', serif; background: var(--label-bg); padding: 0.25rem 0.85rem; border-radius: 4px; white-space: nowrap; }
 .table-block { margin-bottom: 2.5rem; }
+.
+table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 0.5rem;
+}
 .table-label { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--label-text); background: var(--label-bg); display: inline-block; padding: 0.2rem 0.7rem; border-radius: 4px; margin-bottom: 0.65rem; }
 .table-note { font-style: italic; font-size: 0.95rem; color: var(--label-text); background: var(--label-bg); display: inline-block; padding: 0.2rem 0.75rem; border-radius: 4px; margin-top: 0.4rem; margin-bottom: 0.65rem; }
 table { width: 100%; border-collapse: collapse; font-family: 'Crimson Text', serif; font-size: 1rem; margin-bottom: 0.5rem; }
@@ -120,94 +126,135 @@ footer a:hover { text-decoration: underline; }
 </div>
 
 <main>
-  <div class="table-block">
-    <div class="table-label">Ability &amp; Knowledge Allocation — Character Creation</div>
-    <table>
-      <thead><tr><th>Source</th><th>Mechanical Effect</th><th>Notes</th></tr></thead>
-      <tbody>
-        <tr><td class="highlight">Base Competence</td><td>All Abilities &amp; Knowledges begin at 1</td><td class="muted">Represents lived experience before heroism</td></tr>
-        <tr><td class="highlight">Allocation Pool</td><td>22 points to distribute</td><td class="muted">May not raise any entry above 4 at creation</td></tr>
-        <tr><td class="highlight">Vocation Bonus</td><td>Choose 2 listed options; each gains +1</td><td class="muted">Does not count against 22-point pool</td></tr>
-        <tr><td class="highlight">Lineage Bonus</td><td>+2 to two specified Abilities/Knowledges</td><td class="muted">Does not count against 22-point pool</td></tr>
-        <tr><td class="highlight">Lineage Path Affinity</td><td>+1 to specified Path</td><td class="muted">Applied to Path Rating, not Skills</td></tr>
-        <tr><td class="highlight">Creation Cap</td><td>Maximum 4 in any Ability or Knowledge</td><td class="muted">Hard cap at creation</td></tr>
-      </tbody>
-    </table>
-  </div>
+ <main>
+  <div class="content-container">
 
-  <div class="table-block">
-    <div class="table-label">Lineage Ability &amp; Knowledge Bonuses</div>
-    <table>
-      <thead><tr><th>Lineage</th><th>Ability Bonuses</th><th>Knowledge Bonuses</th></tr></thead>
-      <tbody>
-        <tr><td class="highlight">Aelarii</td><td class="muted">—</td><td>+2 Resonance Theory, +2 Political Theory</td></tr>
-        <tr><td class="highlight">Avenen</td><td>+2 Diplomacy</td><td>+2 Psychology</td></tr>
-        <tr><td class="highlight">Drauven</td><td>+2 Stealth</td><td>+2 Occult Knowledge</td></tr>
-        <tr><td class="highlight">Hearthkin</td><td class="muted">—</td><td>+2 Provisioning, +2 Economics &amp; Trade</td></tr>
-        <tr><td class="highlight">Kardurin</td><td class="muted">—</td><td>+2 Engineering, +2 Blacksmithing</td></tr>
-        <tr><td class="highlight">Thálmen</td><td>+2 Endurance, +2 Intimidation</td><td class="muted">—</td></tr>
-        <tr><td class="highlight">The Chosen</td><td class="muted">—</td><td>+2 Rivendawn Lore, +2 Investigation</td></tr>
-        <tr><td class="highlight">Veylen</td><td class="muted">—</td><td>+2 Nature, +2 Environmental Science</td></tr>
-        <tr><td class="highlight">Auris</td><td class="muted">—</td><td class="muted">—</td></tr>
-      </tbody>
-    </table>
-  </div>
+    <h1>Character Creation Tables</h1>
+    <p class="page-subtitle">Quick reference for building your character</p>
 
-  <div class="table-block">
-    <div class="table-label">Vocations Alignment</div>
-    <table>
-      <thead><tr><th>Vocation</th><th>Primary Heritage Imprint (Locked at 4)</th><th>Bonus Options (Pick Two)</th></tr></thead>
-      <tbody>
-        <tr><td class="highlight">Artisan</td><td>Technical</td><td>Engineering (K), Weapon Mastery (A), Economics &amp; Trade (K), Perception (A)</td></tr>
-        <tr><td class="highlight">Baker</td><td>Physicality &amp; Environment</td><td>Endurance (A), Survival (A), Economics &amp; Trade (K), Provisioning (K)</td></tr>
-        <tr><td class="highlight">Caretaker</td><td>Social &amp; Perceptual</td><td>Combat Medicine (A), Medicine (K), Endurance (A), Psychology (K)</td></tr>
-        <tr><td class="highlight">Courier</td><td>Physicality &amp; Environment</td><td>Athletics (A), Reaction Timing (A), Navigation (K), Perception (A)</td></tr>
-        <tr><td class="highlight">Hearthwarden</td><td>Physicality &amp; Environment</td><td>Perception (A), Environmental Science (K), Endurance (A), Insight (K)</td></tr>
-        <tr><td class="highlight">Initiate Resonant</td><td>Metaphysical &amp; Scholarly</td><td>Resonant Infusion (A), Paths (K), Resonance Theory (K), Soothsaying (A)</td></tr>
-        <tr><td class="highlight">Laborer</td><td>Physicality &amp; Environment</td><td>Athletics (A), Endurance (A), Engineering (K), Survival (A)</td></tr>
-        <tr><td class="highlight">Lorekeeper</td><td>Metaphysical &amp; Scholarly</td><td>History (K), Rivendawn Lore (K), Linguistics (K), Investigation (K)</td></tr>
-        <tr><td class="highlight">Manservant</td><td>Social &amp; Perceptual</td><td>Insight (K), Deception (A), Perception (A), Psychology (K)</td></tr>
-        <tr><td class="highlight">Mediator</td><td>Social &amp; Perceptual</td><td>Diplomacy (A), Insight (K), Persuasion (A), Political Theory (K)</td></tr>
-        <tr><td class="highlight">Nightwatchman</td><td>Social &amp; Perceptual</td><td>Perception (A), Investigation (K), Psychology (K), Insight (K)</td></tr>
-        <tr><td class="highlight">Preserver</td><td>Physicality &amp; Environment</td><td>Survival (A), Environmental Science (K), Economics &amp; Trade (K), Endurance (A)</td></tr>
-        <tr><td class="highlight">Protector</td><td>Tactical &amp; Martial</td><td>Combat Focus (A), Perception (A), Endurance (A), Reaction Timing (A)</td></tr>
-        <tr><td class="highlight">Scout</td><td>Physicality &amp; Environment</td><td>Stealth (A), Perception (A), Survival (A), Navigation (K)</td></tr>
-        <tr><td class="highlight">Steward</td><td>Tactical &amp; Martial</td><td>Economics &amp; Trade (K), Insight (K), Tactics (A), Command (A)</td></tr>
-        <tr><td class="highlight">Student</td><td>Metaphysical &amp; Scholarly</td><td>Investigation (K), Linguistics (K), Engineering (K), History (K)</td></tr>
-        <tr><td class="highlight">Waykeeper</td><td>Tactical &amp; Martial</td><td>Engineering (K), Navigation (K), Survival (A), Tactics (A)</td></tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="table-scroll">
+      <div class="table-block">
+        <div class="table-label">Ability &amp; Knowledge Allocation — Character Creation</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Source</th>
+              <th>Mechanical Effect</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="highlight">Base Competence</td><td>All Abilities &amp; Knowledges begin at 1</td><td class="muted">Represents lived experience before heroism</td></tr>
+            <tr><td class="highlight">Allocation Pool</td><td>22 points to distribute</td><td class="muted">May not raise any entry above 4 at creation</td></tr>
+            <tr><td class="highlight">Vocation Bonus</td><td>Choose 2 listed options; each gains +1</td><td class="muted">Does not count against 22-point pool</td></tr>
+            <tr><td class="highlight">Lineage Bonus</td><td>+2 to two specified Abilities/Knowledges</td><td class="muted">Does not count against 22-point pool</td></tr>
+            <tr><td class="highlight">Lineage Path Affinity</td><td>+1 to specified Path</td><td class="muted">Applied to Path Rating, not Skills</td></tr>
+            <tr><td class="highlight">Creation Cap</td><td>Maximum 4 in any Ability or Knowledge</td><td class="muted">Hard cap at creation</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-  <div class="table-block">
-    <div class="table-label">Calling Durability Reference</div>
-    <table>
-      <thead><tr><th>Calling</th><th class="center">Health Die</th><th class="center">HP Range</th><th class="center">Starting Armor Tier</th><th class="center">Max Armor Tier</th></tr></thead>
-      <tbody>
-        <tr><td class="highlight">Ascetic Adept</td><td class="center">d8</td><td class="center">27–48</td><td class="center">3</td><td class="center">5</td></tr>
-        <tr><td class="highlight">Peacewarden</td><td class="center">d8</td><td class="center">27–48</td><td class="center">1</td><td class="center">3</td></tr>
-        <tr><td class="highlight">Physicker</td><td class="center">d8</td><td class="center">27–48</td><td class="center">1</td><td class="center">3</td></tr>
-        <tr><td class="highlight">Resonant Architect</td><td class="center">d8</td><td class="center">27–48</td><td class="center">1</td><td class="center">3</td></tr>
-        <tr><td class="highlight">Scribe</td><td class="center">d8</td><td class="center">27–48</td><td class="center">1</td><td class="center">3</td></tr>
-        <tr><td class="highlight">Starcaller</td><td class="center">d8</td><td class="center">27–48</td><td class="center">1</td><td class="center">3</td></tr>
-        <tr><td class="highlight">Truthseeker</td><td class="center">d8</td><td class="center">27–48</td><td class="center">1</td><td class="center">3</td></tr>
-        <tr><td class="highlight">Assassin</td><td class="center">d10</td><td class="center">27–54</td><td class="center">6</td><td class="center">6</td></tr>
-        <tr><td class="highlight">Druid – Thornheart</td><td class="center">d10</td><td class="center">27–54</td><td class="center">6</td><td class="center">9</td></tr>
-        <tr><td class="highlight">Druid – Cataclysm</td><td class="center">d10</td><td class="center">27–54</td><td class="center">6</td><td class="center">9</td></tr>
-        <tr><td class="highlight">Druid – Thornheart</td><td class="center">d10</td><td class="center">27–54</td><td class="center">6</td><td class="center">9</td></tr>
-        <tr><td class="highlight">Mercenary</td><td class="center">d10</td><td class="center">27–54</td><td class="center">5</td><td class="center">9</td></tr>
-        <tr><td class="highlight">Ranger</td><td class="center">d10</td><td class="center">27–54</td><td class="center">6</td><td class="center">6</td></tr>
-        <tr><td class="highlight">Shadow Jailer</td><td class="center">d10</td><td class="center">27–54</td><td class="center">5</td><td class="center">7</td></tr>
-        <tr><td class="highlight">Wayfarer Knight</td><td class="center">d10</td><td class="center">27–54</td><td class="center">6</td><td class="center">6</td></tr>
-        <tr><td class="highlight">Dawn Sentinel</td><td class="center">d12</td><td class="center">27–60</td><td class="center">8</td><td class="center">10</td></tr>
-        <tr><td class="highlight">Shield Warden</td><td class="center">d12</td><td class="center">27–60</td><td class="center">9</td><td class="center">10</td></tr>
-        <tr><td class="highlight">Soldier</td><td class="center">d12</td><td class="center">27–60</td><td class="center">8</td><td class="center">10</td></tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="table-scroll">
+      <div class="table-block">
+        <div class="table-label">Lineage Ability &amp; Knowledge Bonuses</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Lineage</th>
+              <th>Ability Bonuses</th>
+              <th>Knowledge Bonuses</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="highlight">Aelarii</td><td class="muted">—</td><td>+2 Resonance Theory, +2 Political Theory</td></tr>
+            <tr><td class="highlight">Avenen</td><td>+2 Diplomacy</td><td>+2 Psychology</td></tr>
+            <tr><td class="highlight">Drauven</td><td>+2 Stealth</td><td>+2 Occult Knowledge</td></tr>
+            <tr><td class="highlight">Hearthkin</td><td class="muted">—</td><td>+2 Provisioning, +2 Economics &amp; Trade</td></tr>
+            <tr><td class="highlight">Kardurin</td><td class="muted">—</td><td>+2 Engineering, +2 Blacksmithing</td></tr>
+            <tr><td class="highlight">Thálmen</td><td>+2 Endurance, +2 Intimidation</td><td class="muted">—</td></tr>
+            <tr><td class="highlight">The Chosen</td><td class="muted">—</td><td>+2 Rivendawn Lore, +2 Investigation</td></tr>
+            <tr><td class="highlight">Veylen</td><td class="muted">—</td><td>+2 Nature, +2 Environmental Science</td></tr>
+            <tr><td class="highlight">Auris</td><td class="muted">—</td><td class="muted">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-</div>
+    <div class="table-scroll">
+      <div class="table-block">
+        <div class="table-label">Vocations Alignment</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Vocation</th>
+              <th>Primary Heritage Imprint (Locked at 4)</th>
+              <th>Bonus Options (Pick Two)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="highlight">Artisan</td><td>Technical</td><td>Engineering (K), Weapon Mastery (A), Economics &amp; Trade (K), Perception (A)</td></tr>
+            <tr><td class="highlight">Baker</td><td>Physicality &amp; Environment</td><td>Endurance (A), Survival (A), Economics &amp; Trade (K), Provisioning (K)</td></tr>
+            <tr><td class="highlight">Caretaker</td><td>Social &amp; Perceptual</td><td>Combat Medicine (A), Medicine (K), Endurance (A), Psychology (K)</td></tr>
+            <tr><td class="highlight">Courier</td><td>Physicality &amp; Environment</td><td>Athletics (A), Reaction Timing (A), Navigation (K), Perception (A)</td></tr>
+            <tr><td class="highlight">Hearthwarden</td><td>Physicality &amp; Environment</td><td>Perception (A), Environmental Science (K), Endurance (A), Insight (K)</td></tr>
+            <tr><td class="highlight">Initiate Resonant</td><td>Metaphysical &amp; Scholarly</td><td>Resonant Infusion (A), Paths (K), Resonance Theory (K), Soothsaying (A)</td></tr>
+            <tr><td class="highlight">Laborer</td><td>Physicality &amp; Environment</td><td>Athletics (A), Endurance (A), Engineering (K), Survival (A)</td></tr>
+            <tr><td class="highlight">Lorekeeper</td><td>Metaphysical &amp; Scholarly</td><td>History (K), Rivendawn Lore (K), Linguistics (K), Investigation (K)</td></tr>
+            <tr><td class="highlight">Manservant</td><td>Social &amp; Perceptual</td><td>Insight (K), Deception (A), Perception (A), Psychology (K)</td></tr>
+            <tr><td class="highlight">Mediator</td><td>Social &amp; Perceptual</td><td>Diplomacy (A), Insight (K), Persuasion (A), Political Theory (K)</td></tr>
+            <tr><td class="highlight">Nightwatchman</td><td>Social &amp; Perceptual</td><td>Perception (A), Investigation (K), Psychology (K), Insight (K)</td></tr>
+            <tr><td class="highlight">Preserver</td><td>Physicality &amp; Environment</td><td>Survival (A), Environmental Science (K), Economics &amp; Trade (K), Endurance (A)</td></tr>
+            <tr><td class="highlight">Protector</td><td>Tactical &amp; Martial</td><td>Combat Focus (A), Perception (A), Endurance (A), Reaction Timing (A)</td></tr>
+            <tr><td class="highlight">Scout</td><td>Physicality &amp; Environment</td><td>Stealth (A), Perception (A), Survival (A), Navigation (K)</td></tr>
+            <tr><td class="highlight">Steward</td><td>Tactical &amp; Martial</td><td>Economics &amp; Trade (K), Insight (K), Tactics (A), Command (A)</td></tr>
+            <tr><td class="highlight">Student</td><td>Metaphysical &amp; Scholarly</td><td>Investigation (K), Linguistics (K), Engineering (K), History (K)</td></tr>
+            <tr><td class="highlight">Waykeeper</td><td>Tactical &amp; Martial</td><td>Engineering (K), Navigation (K), Survival (A), Tactics (A)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="table-scroll">
+      <div class="table-block">
+        <div class="table-label">Calling Durability Reference</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Calling</th>
+              <th class="center">Health Die</th>
+              <th class="center">HP Range</th>
+              <th class="center">Starting Armor Tier</th>
+              <th class="center">Max Armor Tier</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="highlight">Ascetic Adept</td><td class="center">d8</td><td class="center">27–48</td><td class="center">3</td><td class="center">5</td></tr>
+            <tr><td class="highlight">Peacewarden</td><td class="center">d8</td><td class="center">27–48</td><td class="center">1</td><td class="center">3</td></tr>
+            <tr><td class="highlight">Physicker</td><td class="center">d8</td><td class="center">27–48</td><td class="center">1</td><td class="center">3</td></tr>
+            <tr><td class="highlight">Resonant Architect</td><td class="center">d8</td><td class="center">27–48</td><td class="center">1</td><td class="center">3</td></tr>
+            <tr><td class="highlight">Scribe</td><td class="center">d8</td><td class="center">27–48</td><td class="center">1</td><td class="center">3</td></tr>
+            <tr><td class="highlight">Starcaller</td><td class="center">d8</td><td class="center">27–48</td><td class="center">1</td><td class="center">3</td></tr>
+            <tr><td class="highlight">Truthseeker</td><td class="center">d8</td><td class="center">27–48</td><td class="center">1</td><td class="center">3</td></tr>
+            <tr><td class="highlight">Assassin</td><td class="center">d10</td><td class="center">27–54</td><td class="center">6</td><td class="center">6</td></tr>
+            <tr><td class="highlight">Druid – Verdant Thornheart</td><td class="center">d10</td><td class="center">27–54</td><td class="center">6</td><td class="center">9</td></tr>
+            <tr><td class="highlight">Druid – Verdant Cataclysm</td><td class="center">d10</td><td class="center">27–54</td><td class="center">6</td><td class="center">9</td></tr>
+            <tr><td class="highlight">Druid – Verdant Restoration</td><td class="center">d10</td><td class="center">27–54</td><td class="center">6</td><td class="center">9</td></tr>
+            <tr><td class="highlight">Mercenary</td><td class="center">d10</td><td class="center">27–54</td><td class="center">5</td><td class="center">9</td></tr>
+            <tr><td class="highlight">Ranger</td><td class="center">d10</td><td class="center">27–54</td><td class="center">6</td><td class="center">6</td></tr>
+            <tr><td class="highlight">Shadow Jailer</td><td class="center">d10</td><td class="center">27–54</td><td class="center">5</td><td class="center">7</td></tr>
+            <tr><td class="highlight">Wayfarer Knight</td><td class="center">d10</td><td class="center">27–54</td><td class="center">6</td><td class="center">6</td></tr>
+            <tr><td class="highlight">Dawn Sentinel</td><td class="center">d12</td><td class="center">27–60</td><td class="center">8</td><td class="center">10</td></tr>
+            <tr><td class="highlight">Shield Warden</td><td class="center">d12</td><td class="center">27–60</td><td class="center">9</td><td class="center">10</td></tr>
+            <tr><td class="highlight">Soldier</td><td class="center">d12</td><td class="center">27–60</td><td class="center">8</td><td class="center">10</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- end .content-container -->
 </main>
+
 <footer>
   <div>
     Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
