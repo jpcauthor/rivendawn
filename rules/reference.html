@@ -1655,11 +1655,10 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
 const tabBtns = document.querySelectorAll('.tab-btn');
 const panels  = document.querySelectorAll('.section-panel');
 
-function switchTab(tabId) {
+function switchTab(tabId, fromSearch = false) {
   tabBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === tabId));
   panels.forEach(p  => p.classList.toggle('active', p.id === 'tab-' + tabId));
-  // clear search when switching tabs
-  if (searchInput.value) {
+  if (!fromSearch && searchInput.value) {
     searchInput.value = '';
     clearSearch();
   }
