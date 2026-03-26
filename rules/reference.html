@@ -1737,7 +1737,7 @@ function runSearch(query) {
 
   // Auto-switch to first tab with results
   const firstHitTab = Object.keys(tabHits).find(t => tabHits[t] > 0);
-  if (firstHitTab) switchTab(firstHitTab);
+  if (firstHitTab) switchTab(firstHitTab, true);
 
   // Show no-results messages per tab
   const nrIds = {
