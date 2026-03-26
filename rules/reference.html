@@ -766,13 +766,13 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
 </div>
 
 <main>
-
+ 
 <!-- ══ PAGE TITLE ══════════════════════════════════════ -->
 <div class="page-header">
   <h1>Character Mechanics Reference</h1>
   <p class="page-subtitle">Complete mechanical compendium — Lineages · Callings · Vocations · Resonance · Harmonics · Combat</p>
 </div>
-
+ 
 <!-- ══ SEARCH ══════════════════════════════════════════ -->
 <div class="search-wrapper">
   <div class="search-bar">
@@ -782,8 +782,9 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
     <button class="search-clear" id="searchClear" title="Clear search"><i class="fa-solid fa-xmark"></i></button>
   </div>
 </div>
-
-<!-- ══ TAB BAR ═════════════════════════════════════════ -->
+ 
+<!-- ══ TAB BAR — FIX #5: Reordered tabs ═══════════════════════════════════ -->
+<!-- ORDER: Overview · Lineages · Harmonics · Vocations · Callings · Resonance Paths · Casting · Combat -->
 <div class="tab-bar-wrapper">
   <div class="tab-bar" role="tablist">
     <button class="tab-btn active" data-tab="dashboard" role="tab">
@@ -792,11 +793,14 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
     <button class="tab-btn" data-tab="lineages" role="tab">
       <i class="fa-solid fa-users"></i> Lineages
     </button>
-    <button class="tab-btn" data-tab="callings" role="tab">
-      <i class="fa-solid fa-shield-halved"></i> Callings
+    <button class="tab-btn" data-tab="harmonics" role="tab">
+      <i class="fa-solid fa-yin-yang"></i> Harmonics
     </button>
     <button class="tab-btn" data-tab="vocations" role="tab">
       <i class="fa-solid fa-hammer"></i> Vocations
+    </button>
+    <button class="tab-btn" data-tab="callings" role="tab">
+      <i class="fa-solid fa-shield-halved"></i> Callings
     </button>
     <button class="tab-btn" data-tab="paths" role="tab">
       <i class="fa-solid fa-wand-magic-sparkles"></i> Resonance Paths
@@ -804,23 +808,20 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
     <button class="tab-btn" data-tab="casting" role="tab">
       <i class="fa-solid fa-fire-flame-curved"></i> Casting
     </button>
-    <button class="tab-btn" data-tab="harmonics" role="tab">
-      <i class="fa-solid fa-yin-yang"></i> Harmonics
-    </button>
     <button class="tab-btn" data-tab="combat" role="tab">
       <i class="fa-solid fa-swords"></i> Combat
     </button>
   </div>
 </div>
-
+ 
 <!-- ══ CONTENT ═════════════════════════════════════════ -->
 <div class="content-container">
-
+ 
 <!-- ─────── TAB: DASHBOARD ──────────────────────────── -->
 <div class="section-panel active" id="tab-dashboard">
   <p class="section-title">Mechanics at a Glance</p>
   <p class="section-desc">Quick stats and navigation overview for the complete Rivendawn character system.</p>
-
+ 
   <div class="stats-grid">
     <div class="stat-card">
       <div class="stat-number">8</div>
@@ -863,7 +864,7 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
       <div class="stat-detail">Discussion → Narrative Shift → Static Veil (TN +3)</div>
     </div>
   </div>
-
+ 
   <div class="title-rule"><span>Resonance Paths</span></div>
   <div class="path-strip">
     <div class="path-card" style="background:rgba(184,216,232,0.45);">
@@ -897,7 +898,7 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
       <div class="path-card-expr">Healing · Restraint · Stabilization</div>
     </div>
   </div>
-
+ 
   <div class="title-rule"><span>Calling Distribution</span></div>
   <div class="table-block">
     <table>
@@ -910,12 +911,12 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
     </table>
   </div>
 </div>
-
+ 
 <!-- ─────── TAB: LINEAGES ──────────────────────────── -->
 <div class="section-panel" id="tab-lineages">
   <p class="section-title">Lineages</p>
   <p class="section-desc">Eight peoples of Rivendawn — innate gifts, resonance affinities, and path bonuses.</p>
-
+ 
   <div class="collapsible-block" id="col-lineages">
     <div class="collapsible-header" data-col="col-lineages">
       <span class="collapsible-title"><i class="fa-solid fa-users"></i> All Lineages</span>
@@ -1007,12 +1008,201 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
   </div>
   <div class="no-results-msg" id="nr-lineages"></div>
 </div>
-
+ 
+<!-- ─────── TAB: HARMONICS ──────────────────────────── -->
+<div class="section-panel" id="tab-harmonics">
+  <p class="section-title">Harmonics &amp; Dissonance</p>
+  <p class="section-desc">Dynamics, Disciplines, identity pairings, and the consequences of Dissonance.</p>
+ 
+  <div class="collapsible-block" id="col-dynamics">
+    <div class="collapsible-header" data-col="col-dynamics">
+      <span class="collapsible-title"><i class="fa-solid fa-bolt"></i> Dynamics (6)</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-dynamics">
+          <thead><tr><th>Dynamic</th><th>Expression</th><th>Resonant Feel</th><th>Table Presence</th></tr></thead>
+          <tbody>
+            <tr><td class="highlight">Quieted</td><td>Gentle, careful, steady strength held in reserve</td><td class="muted">Warm hum in chest</td><td>De-escalation, calm</td></tr>
+            <tr><td class="highlight">Assertive</td><td>Bold, confident power expressed with clarity</td><td class="muted">Sharp spark along arms</td><td>Clear directive leadership</td></tr>
+            <tr><td class="highlight">Unbridled</td><td>Wild, instinctual energy that erupts when demanded</td><td class="muted">Electric thrill through veins</td><td>Burst of raw power under pressure</td></tr>
+            <tr><td class="highlight">Surging</td><td>Sudden bursts of overwhelming intensity</td><td class="muted">Pressure building then bursting outward</td><td>Sudden turn-reversal</td></tr>
+            <tr><td class="highlight">Enduring</td><td>Steady resilience that persists through hardship</td><td class="muted">Grounding warmth in bones</td><td>Keeps group moving when others falter</td></tr>
+            <tr><td class="highlight">Flowing</td><td>Adaptive power that responds fluidly to change</td><td class="muted">Fluid current through limbs</td><td>Instant plan adaptation</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="collapsible-block" id="col-disciplines">
+    <div class="collapsible-header" data-col="col-disciplines">
+      <span class="collapsible-title"><i class="fa-solid fa-scale-balanced"></i> Disciplines (6)</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-disciplines">
+          <thead><tr><th>Discipline</th><th>Expression</th><th>Resonant Feel</th><th>Decision Philosophy</th></tr></thead>
+          <tbody>
+            <tr><td class="highlight">Ordinate</td><td>Bound by oath, code, or lawful order</td><td class="muted">Cool precise thread through veins</td><td>Rule-driven choices</td></tr>
+            <tr><td class="highlight">Custodial</td><td>Dedicated to protecting what matters most</td><td class="muted">Warm protective glow around heart</td><td>Protection-centered</td></tr>
+            <tr><td class="highlight">Judicial</td><td>Measured and balanced in pursuit of fairness</td><td class="muted">Steady even pulse in chest</td><td>Fairness-driven</td></tr>
+            <tr><td class="highlight">Witnessed</td><td>Transparent, accountable, openly behind every action</td><td class="muted">Bright warmth across shoulders</td><td>Accountability-focused</td></tr>
+            <tr><td class="highlight">Necessary</td><td>Acting only when required — deliberate restraint</td><td class="muted">Cool focused clarity in mind</td><td>Restraint-driven</td></tr>
+            <tr><td class="highlight">Redemptive</td><td>Offering mercy, healing, second chances</td><td class="muted">Gentle golden warmth in hands</td><td>Mercy-centered</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="collapsible-block" id="col-dissonance">
+    <div class="collapsible-header" data-col="col-dissonance">
+      <span class="collapsible-title"><i class="fa-solid fa-triangle-exclamation"></i> Dissonance Escalation &amp; Static Veil</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <div class="table-label">Dissonance Escalation Protocol</div>
+        <table>
+          <thead><tr><th>Step</th><th>Trigger</th><th>Watcher Action</th><th>Mechanical Effect</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr style="background:rgba(212,240,212,0.6)"><td class="highlight">1st Instance</td><td>Declared Harmonics contradict repeated behavior</td><td>Discussion with Player</td><td class="success">None yet</td><td class="muted">Narrative resolution opportunity</td></tr>
+            <tr style="background:rgba(255,232,180,0.6)"><td class="highlight">2nd Instance</td><td>Pattern continues after discussion</td><td>Player may pursue Narrative Shift</td><td class="muted">None yet</td><td class="muted">Narrative Shift becomes available</td></tr>
+            <tr style="background:rgba(255,200,200,0.6)"><td class="highlight">3rd Instance</td><td>Pattern is sustained and consistent</td><td>Static Veil applied</td><td class="danger"><strong>TN +3 on ALL checks</strong></td><td class="muted">Full mechanical penalty</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-block">
+        <div class="table-label">Static Veil Details</div>
+        <table>
+          <thead><tr><th>Aspect</th><th>Rule</th></tr></thead>
+          <tbody>
+            <tr><td class="highlight">Mechanical Effect</td><td class="danger"><strong>TN +3 on ALL Ability, Knowledge, and Resonant Cast checks</strong></td></tr>
+            <tr><td class="highlight">Duration</td><td>Persists until realignment or Narrative Shift</td></tr>
+            <tr><td class="highlight">Clearing Method</td><td>Sustained realignment with harmonic truth OR formal Harmonic redefinition (Watcher approval)</td></tr>
+            <tr><td class="highlight">Capability Impact</td><td class="muted">Does NOT alter Capability or Baseline — only modifies TN upward</td></tr>
+            <tr><td class="highlight">Narrative Shift</td><td>Meaningful character evolution through story; requires Watcher approval</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="no-results-msg" id="nr-harmonics"></div>
+</div>
+ 
+<!-- ─────── TAB: VOCATIONS ──────────────────────────── -->
+<div class="section-panel" id="tab-vocations">
+  <p class="section-title">Vocations</p>
+  <p class="section-desc">Background vocations granting Heritage Imprints and selectable skill pools.</p>
+ 
+  <div class="collapsible-block" id="col-voc-phys">
+    <div class="collapsible-header" data-col="col-voc-phys">
+      <span class="collapsible-title"><i class="fa-solid fa-person-running"></i> Physicality &amp; Environment (6)</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-voc-phys">
+          <thead><tr><th>Vocation</th><th>Skill Type</th><th>Selection</th><th>Skill 1</th><th>Skill 2</th><th>Skill 3</th><th>Skill 4</th></tr></thead>
+          <tbody>
+            <tr class="her-phys"><td class="highlight">Baker</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Endurance <span class="tag-choice">A</span></td><td>Survival <span class="tag-choice">A</span></td><td>Economics &amp; Trade <span class="tag-locked">K</span></td><td>Provisioning <span class="tag-locked">K</span></td></tr>
+            <tr class="her-phys"><td class="highlight">Courier</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Athletics <span class="tag-choice">A</span></td><td>Reaction Timing <span class="tag-choice">A</span></td><td>Navigation <span class="tag-locked">K</span></td><td>Weapon Mastery <span class="tag-choice">A</span></td></tr>
+            <tr class="her-phys"><td class="highlight">Hearthwarden</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Perception <span class="tag-choice">A</span></td><td>Environmental Sci. <span class="tag-locked">K</span></td><td>Endurance <span class="tag-choice">A</span></td><td>Insight <span class="tag-locked">K</span></td></tr>
+            <tr class="her-phys"><td class="highlight">Laborer</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Athletics <span class="tag-choice">A</span></td><td>Endurance <span class="tag-choice">A</span></td><td>Engineering <span class="tag-locked">K</span></td><td>Weapon Mastery <span class="tag-choice">A</span></td></tr>
+            <tr class="her-phys"><td class="highlight">Preserver</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Survival <span class="tag-choice">A</span></td><td>Environmental Sci. <span class="tag-locked">K</span></td><td>Economics &amp; Trade <span class="tag-locked">K</span></td><td>Endurance <span class="tag-choice">A</span></td></tr>
+            <tr class="her-phys"><td class="highlight">Scout</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Stealth <span class="tag-choice">A</span></td><td>Perception <span class="tag-choice">A</span></td><td>Survival <span class="tag-choice">A</span></td><td>Navigation <span class="tag-locked">K</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="collapsible-block" id="col-voc-soc">
+    <div class="collapsible-header" data-col="col-voc-soc">
+      <span class="collapsible-title"><i class="fa-solid fa-comments"></i> Social &amp; Perceptual (4)</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-voc-soc">
+          <thead><tr><th>Vocation</th><th>Skill Type</th><th>Selection</th><th>Skill 1</th><th>Skill 2</th><th>Skill 3</th><th>Skill 4</th></tr></thead>
+          <tbody>
+            <tr class="her-soc"><td class="highlight">Caretaker</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Combat Medicine <span class="tag-choice">A</span></td><td>Medicine <span class="tag-locked">K</span></td><td>Endurance <span class="tag-choice">A</span></td><td>Psychology <span class="tag-locked">K</span></td></tr>
+            <tr class="her-soc"><td class="highlight">Manservant</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Insight <span class="tag-locked">K</span></td><td>Deception <span class="tag-choice">A</span></td><td>Perception <span class="tag-choice">A</span></td><td>Psychology <span class="tag-locked">K</span></td></tr>
+            <tr class="her-soc"><td class="highlight">Mediator</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Diplomacy <span class="tag-choice">A</span></td><td>Insight <span class="tag-locked">K</span></td><td>Persuasion <span class="tag-choice">A</span></td><td>Political Theory <span class="tag-locked">K</span></td></tr>
+            <tr class="her-soc"><td class="highlight">Night Watchman</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Perception <span class="tag-choice">A</span></td><td>Weapon Mastery <span class="tag-choice">A</span></td><td>Psychology <span class="tag-locked">K</span></td><td>Insight <span class="tag-locked">K</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="collapsible-block" id="col-voc-tact">
+    <div class="collapsible-header" data-col="col-voc-tact">
+      <span class="collapsible-title"><i class="fa-solid fa-chess-rook"></i> Tactical &amp; Martial (3)</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-voc-tact">
+          <thead><tr><th>Vocation</th><th>Skill Type</th><th>Selection</th><th>Skill 1</th><th>Skill 2</th><th>Skill 3</th><th>Skill 4</th></tr></thead>
+          <tbody>
+            <tr class="her-tact"><td class="highlight">Protector</td><td class="sk-ability">Pure Ability</td><td class="muted">Choose 2</td><td>Combat Focus <span class="tag-choice">A</span></td><td>Perception <span class="tag-choice">A</span></td><td>Weapon Mastery <span class="tag-choice">A</span></td><td>Reaction Timing <span class="tag-choice">A</span></td></tr>
+            <tr class="her-tact"><td class="highlight">Steward</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Economics &amp; Trade <span class="tag-locked">K</span></td><td>Insight <span class="tag-locked">K</span></td><td>Tactics <span class="tag-choice">A</span></td><td>Command <span class="tag-choice">A</span></td></tr>
+            <tr class="her-tact"><td class="highlight">Waykeeper</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Engineering <span class="tag-locked">K</span></td><td>Weapon Mastery <span class="tag-choice">A</span></td><td>Survival <span class="tag-choice">A</span></td><td>Tactics <span class="tag-choice">A</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="collapsible-block" id="col-voc-meta">
+    <div class="collapsible-header" data-col="col-voc-meta">
+      <span class="collapsible-title"><i class="fa-solid fa-book-open"></i> Metaphysical &amp; Scholarly (3)</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-voc-meta">
+          <thead><tr><th>Vocation</th><th>Skill Type</th><th>Selection</th><th>Skill 1</th><th>Skill 2</th><th>Skill 3</th><th>Skill 4</th></tr></thead>
+          <tbody>
+            <tr class="her-meta"><td class="highlight">Initiate Resonant</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Resonant Infusion <span class="tag-choice">A</span></td><td>Paths <span class="tag-locked">K</span></td><td>Resonance Theory <span class="tag-locked">K</span></td><td>Soothsaying <span class="tag-choice">A</span></td></tr>
+            <tr class="her-meta"><td class="highlight">Lorekeeper</td><td class="sk-knowledge">Pure Knowledge</td><td class="muted">Choose 2</td><td>History <span class="tag-locked">K</span></td><td>Rivendawn Lore <span class="tag-locked">K</span></td><td>Linguistics <span class="tag-locked">K</span></td><td>Investigation <span class="tag-locked">K</span></td></tr>
+            <tr class="her-meta"><td class="highlight">Student</td><td class="sk-knowledge">Pure Knowledge</td><td class="muted">Choose 2</td><td>Investigation <span class="tag-locked">K</span></td><td>Linguistics <span class="tag-locked">K</span></td><td>Engineering <span class="tag-locked">K</span></td><td>History <span class="tag-locked">K</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- FIX #3: Artisan — "GRANTED all 4" replaced with "Choose 2" -->
+  <div class="collapsible-block" id="col-voc-tech">
+    <div class="collapsible-header" data-col="col-voc-tech">
+      <span class="collapsible-title"><i class="fa-solid fa-screwdriver-wrench"></i> Technical Heritage (1)</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-voc-tech">
+          <thead><tr><th>Vocation</th><th>Skill Type</th><th>Selection</th><th>Skill 1</th><th>Skill 2</th><th>Skill 3</th><th>Skill 4</th></tr></thead>
+          <tbody>
+            <tr class="her-tech"><td class="highlight">Artisan</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Engineering <span class="tag-locked">K</span></td><td>Weapon Mastery <span class="tag-choice">A</span></td><td>Economics &amp; Trade <span class="tag-locked">K</span></td><td>Perception <span class="tag-choice">A</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="no-results-msg" id="nr-vocations"></div>
+</div>
+ 
 <!-- ─────── TAB: CALLINGS ──────────────────────────── -->
 <div class="section-panel" id="tab-callings">
   <p class="section-title">Callings</p>
   <p class="section-desc">Combat identity, wellspring capacity, health, armor, and calling-specific rules.</p>
-
+ 
   <div class="collapsible-block" id="col-pure">
     <div class="collapsible-header" data-col="col-pure">
       <span class="collapsible-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Pure Casters (9)</span>
@@ -1051,7 +1241,7 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
       </div>
     </div>
   </div>
-
+ 
   <div class="collapsible-block" id="col-hybrid">
     <div class="collapsible-header" data-col="col-hybrid">
       <span class="collapsible-title"><i class="fa-solid fa-shield-halved"></i> Hybrids (7)</span>
@@ -1076,7 +1266,7 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
       </div>
     </div>
   </div>
-
+ 
   <div class="collapsible-block" id="col-special-call">
     <div class="collapsible-header" data-col="col-special-call">
       <span class="collapsible-title"><i class="fa-solid fa-star"></i> Special Callings (2)</span>
@@ -1096,116 +1286,12 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
   </div>
   <div class="no-results-msg" id="nr-callings"></div>
 </div>
-
-<!-- ─────── TAB: VOCATIONS ──────────────────────────── -->
-<div class="section-panel" id="tab-vocations">
-  <p class="section-title">Vocations</p>
-  <p class="section-desc">Background vocations granting Heritage Imprints and selectable skill pools.</p>
-
-  <div class="collapsible-block" id="col-voc-phys">
-    <div class="collapsible-header" data-col="col-voc-phys">
-      <span class="collapsible-title"><i class="fa-solid fa-person-running"></i> Physicality &amp; Environment (6)</span>
-      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
-    </div>
-    <div class="collapsible-body">
-      <div class="table-block">
-        <table id="tbl-voc-phys">
-          <thead><tr><th>Vocation</th><th>Skill Type</th><th>Selection</th><th>Skill 1</th><th>Skill 2</th><th>Skill 3</th><th>Skill 4</th></tr></thead>
-          <tbody>
-            <tr class="her-phys"><td class="highlight">Baker</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Endurance <span class="tag-choice">A</span></td><td>Survival <span class="tag-choice">A</span></td><td>Economics &amp; Trade <span class="tag-locked">K</span></td><td>Provisioning <span class="tag-locked">K</span></td></tr>
-            <tr class="her-phys"><td class="highlight">Courier</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Athletics <span class="tag-choice">A</span></td><td>Reaction Timing <span class="tag-choice">A</span></td><td>Navigation <span class="tag-locked">K</span></td><td>Weapon Mastery <span class="tag-choice">A</span></td></tr>
-            <tr class="her-phys"><td class="highlight">Hearthwarden</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Perception <span class="tag-choice">A</span></td><td>Environmental Sci. <span class="tag-locked">K</span></td><td>Endurance <span class="tag-choice">A</span></td><td>Insight <span class="tag-locked">K</span></td></tr>
-            <tr class="her-phys"><td class="highlight">Laborer</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Athletics <span class="tag-choice">A</span></td><td>Endurance <span class="tag-choice">A</span></td><td>Engineering <span class="tag-locked">K</span></td><td>Weapon Mastery <span class="tag-choice">A</span></td></tr>
-            <tr class="her-phys"><td class="highlight">Preserver</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Survival <span class="tag-choice">A</span></td><td>Environmental Sci. <span class="tag-locked">K</span></td><td>Economics &amp; Trade <span class="tag-locked">K</span></td><td>Endurance <span class="tag-choice">A</span></td></tr>
-            <tr class="her-phys"><td class="highlight">Scout</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Stealth <span class="tag-choice">A</span></td><td>Perception <span class="tag-choice">A</span></td><td>Survival <span class="tag-choice">A</span></td><td>Navigation <span class="tag-locked">K</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="collapsible-block" id="col-voc-soc">
-    <div class="collapsible-header" data-col="col-voc-soc">
-      <span class="collapsible-title"><i class="fa-solid fa-comments"></i> Social &amp; Perceptual (4)</span>
-      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
-    </div>
-    <div class="collapsible-body">
-      <div class="table-block">
-        <table id="tbl-voc-soc">
-          <thead><tr><th>Vocation</th><th>Skill Type</th><th>Selection</th><th>Skill 1</th><th>Skill 2</th><th>Skill 3</th><th>Skill 4</th></tr></thead>
-          <tbody>
-            <tr class="her-soc"><td class="highlight">Caretaker</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Combat Medicine <span class="tag-choice">A</span></td><td>Medicine <span class="tag-locked">K</span></td><td>Endurance <span class="tag-choice">A</span></td><td>Psychology <span class="tag-locked">K</span></td></tr>
-            <tr class="her-soc"><td class="highlight">Manservant</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Insight <span class="tag-locked">K</span></td><td>Deception <span class="tag-choice">A</span></td><td>Perception <span class="tag-choice">A</span></td><td>Psychology <span class="tag-locked">K</span></td></tr>
-            <tr class="her-soc"><td class="highlight">Mediator</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Diplomacy <span class="tag-choice">A</span></td><td>Insight <span class="tag-locked">K</span></td><td>Persuasion <span class="tag-choice">A</span></td><td>Political Theory <span class="tag-locked">K</span></td></tr>
-            <tr class="her-soc"><td class="highlight">Night Watchman</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Perception <span class="tag-choice">A</span></td><td>Weapon Mastery <span class="tag-choice">A</span></td><td>Psychology <span class="tag-locked">K</span></td><td>Insight <span class="tag-locked">K</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="collapsible-block" id="col-voc-tact">
-    <div class="collapsible-header" data-col="col-voc-tact">
-      <span class="collapsible-title"><i class="fa-solid fa-chess-rook"></i> Tactical &amp; Martial (3)</span>
-      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
-    </div>
-    <div class="collapsible-body">
-      <div class="table-block">
-        <table id="tbl-voc-tact">
-          <thead><tr><th>Vocation</th><th>Skill Type</th><th>Selection</th><th>Skill 1</th><th>Skill 2</th><th>Skill 3</th><th>Skill 4</th></tr></thead>
-          <tbody>
-            <tr class="her-tact"><td class="highlight">Protector</td><td class="sk-ability">Pure Ability</td><td class="muted">Choose 2</td><td>Combat Focus <span class="tag-choice">A</span></td><td>Perception <span class="tag-choice">A</span></td><td>Weapon Mastery <span class="tag-choice">A</span></td><td>Reaction Timing <span class="tag-choice">A</span></td></tr>
-            <tr class="her-tact"><td class="highlight">Steward</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Economics &amp; Trade <span class="tag-locked">K</span></td><td>Insight <span class="tag-locked">K</span></td><td>Tactics <span class="tag-choice">A</span></td><td>Command <span class="tag-choice">A</span></td></tr>
-            <tr class="her-tact"><td class="highlight">Waykeeper</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Engineering <span class="tag-locked">K</span></td><td>Weapon Mastery <span class="tag-choice">A</span></td><td>Survival <span class="tag-choice">A</span></td><td>Tactics <span class="tag-choice">A</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="collapsible-block" id="col-voc-meta">
-    <div class="collapsible-header" data-col="col-voc-meta">
-      <span class="collapsible-title"><i class="fa-solid fa-book-open"></i> Metaphysical &amp; Scholarly (3)</span>
-      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
-    </div>
-    <div class="collapsible-body">
-      <div class="table-block">
-        <table id="tbl-voc-meta">
-          <thead><tr><th>Vocation</th><th>Skill Type</th><th>Selection</th><th>Skill 1</th><th>Skill 2</th><th>Skill 3</th><th>Skill 4</th></tr></thead>
-          <tbody>
-            <tr class="her-meta"><td class="highlight">Initiate Resonant</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Resonant Infusion <span class="tag-choice">A</span></td><td>Paths <span class="tag-locked">K</span></td><td>Resonance Theory <span class="tag-locked">K</span></td><td>Soothsaying <span class="tag-choice">A</span></td></tr>
-            <tr class="her-meta"><td class="highlight">Lorekeeper</td><td class="sk-knowledge">Pure Knowledge</td><td class="muted">Choose 2</td><td>History <span class="tag-locked">K</span></td><td>Rivendawn Lore <span class="tag-locked">K</span></td><td>Linguistics <span class="tag-locked">K</span></td><td>Investigation <span class="tag-locked">K</span></td></tr>
-            <tr class="her-meta"><td class="highlight">Student</td><td class="sk-knowledge">Pure Knowledge</td><td class="muted">Choose 2</td><td>Investigation <span class="tag-locked">K</span></td><td>Linguistics <span class="tag-locked">K</span></td><td>Engineering <span class="tag-locked">K</span></td><td>History <span class="tag-locked">K</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="collapsible-block" id="col-voc-tech">
-    <div class="collapsible-header" data-col="col-voc-tech">
-      <span class="collapsible-title"><i class="fa-solid fa-screwdriver-wrench"></i> Technical Heritage (1)</span>
-      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
-    </div>
-    <div class="collapsible-body">
-      <div class="table-block">
-        <table id="tbl-voc-tech">
-          <thead><tr><th>Vocation</th><th>Skill Type</th><th>Selection</th><th>Skill 1</th><th>Skill 2</th><th>Skill 3</th><th>Skill 4</th></tr></thead>
-          <tbody>
-            <tr class="her-tech"><td class="highlight">Artisan</td><td class="sk-mixed">Mixed</td><td class="gold"><strong>GRANTED all 4</strong></td><td>Engineering <span class="tag-locked">K</span></td><td>Weapon Mastery <span class="tag-choice">A</span></td><td>Economics &amp; Trade <span class="tag-locked">K</span></td><td>Perception <span class="tag-choice">A</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  <div class="no-results-msg" id="nr-vocations"></div>
-</div>
-
+ 
 <!-- ─────── TAB: RESONANCE PATHS ──────────────────── -->
 <div class="section-panel" id="tab-paths">
   <p class="section-title">Resonance Paths</p>
   <p class="section-desc">The six paths of the Song — their first laws, expressions, and prohibitions.</p>
-
+ 
   <div class="collapsible-block" id="col-ws">
     <div class="collapsible-header" data-col="col-ws">
       <span class="collapsible-title"><i class="fa-solid fa-droplet"></i> Wellspring Pools by Calling Type</span>
@@ -1225,7 +1311,8 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
       </div>
     </div>
   </div>
-
+ 
+  <!-- FIX #2: Vitae "Lethal force [HARD]" → "Lethal force" -->
   <div class="collapsible-block" id="col-paths-detail">
     <div class="collapsible-header" data-col="col-paths-detail">
       <span class="collapsible-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Path Details</span>
@@ -1241,7 +1328,7 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
             <tr class="path-ignis"><td class="highlight"><span class="path-badge ignis">Ignis</span></td><td>Intelligence</td><td>Combustive Transformation</td><td>Damage · alteration · escalation</td><td>Rapid alteration, breakthrough</td><td>Preservation</td><td class="muted">Volatility</td><td class="success">Permitted</td></tr>
             <tr class="path-obtene"><td class="highlight"><span class="path-badge obtene">Obtenebrate</span></td><td>Agility</td><td>Perceptual Distortion</td><td>Concealment · misdirection · infiltration</td><td>Concealment, infiltration</td><td>Open dominance</td><td class="muted">Manipulation as identity</td><td class="danger"><span class="tag-danger">NON-COMBAT ONLY</span></td></tr>
             <tr class="path-terra"><td class="highlight"><span class="path-badge terra">Terra</span></td><td>Strength</td><td>Refusal through Solidity</td><td>Anchoring · fortification · force</td><td>Fortification, anchoring</td><td>Flow / Redirection</td><td class="muted">Rigidity</td><td class="success">Permitted</td></tr>
-            <tr class="path-vitae"><td class="highlight"><span class="path-badge vitae">Vitae</span></td><td>Wisdom</td><td>Adaptive Growth</td><td>Healing · restraint · stabilization</td><td>Healing, reinforcement</td><td class="danger">Lethal force [HARD]</td><td class="muted">Overgrowth</td><td class="muted">Non-lethal only</td></tr>
+            <tr class="path-vitae"><td class="highlight"><span class="path-badge vitae">Vitae</span></td><td>Wisdom</td><td>Adaptive Growth</td><td>Healing · restraint · stabilization</td><td>Healing, reinforcement</td><td class="danger">Lethal force</td><td class="muted">Overgrowth</td><td class="muted">Non-lethal only</td></tr>
           </tbody>
         </table>
       </div>
@@ -1249,12 +1336,12 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
   </div>
   <div class="no-results-msg" id="nr-paths"></div>
 </div>
-
+ 
 <!-- ─────── TAB: CASTING ──────────────────────────── -->
 <div class="section-panel" id="tab-casting">
   <p class="section-title">Casting Mechanics</p>
   <p class="section-desc">Resolution formula, WP costs, magnitude tiers, RED system, and per-path effect bands.</p>
-
+ 
   <div class="collapsible-block" id="col-cast-rules">
     <div class="collapsible-header" data-col="col-cast-rules">
       <span class="collapsible-title"><i class="fa-solid fa-dice-d20"></i> Core Casting Rules</span>
@@ -1284,7 +1371,7 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
       </div>
     </div>
   </div>
-
+ 
   <div class="collapsible-block" id="col-red">
     <div class="collapsible-header" data-col="col-red">
       <span class="collapsible-title"><i class="fa-solid fa-chart-bar"></i> RED System &amp; Band Structure</span>
@@ -1316,7 +1403,7 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
       </div>
     </div>
   </div>
-
+ 
   <div class="collapsible-block" id="col-path-effects">
     <div class="collapsible-header" data-col="col-path-effects">
       <span class="collapsible-title"><i class="fa-solid fa-bolt"></i> Path Effects by Band</span>
@@ -1399,96 +1486,13 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
   </div>
   <div class="no-results-msg" id="nr-casting"></div>
 </div>
-
-<!-- ─────── TAB: HARMONICS ──────────────────────────── -->
-<div class="section-panel" id="tab-harmonics">
-  <p class="section-title">Harmonics &amp; Dissonance</p>
-  <p class="section-desc">Dynamics, Disciplines, identity pairings, and the consequences of Dissonance.</p>
-
-  <div class="collapsible-block" id="col-dynamics">
-    <div class="collapsible-header" data-col="col-dynamics">
-      <span class="collapsible-title"><i class="fa-solid fa-bolt"></i> Dynamics (6)</span>
-      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
-    </div>
-    <div class="collapsible-body">
-      <div class="table-block">
-        <table id="tbl-dynamics">
-          <thead><tr><th>Dynamic</th><th>Expression</th><th>Resonant Feel</th><th>Table Presence</th></tr></thead>
-          <tbody>
-            <tr><td class="highlight">Quieted</td><td>Gentle, careful, steady strength held in reserve</td><td class="muted">Warm hum in chest</td><td>De-escalation, calm</td></tr>
-            <tr><td class="highlight">Assertive</td><td>Bold, confident power expressed with clarity</td><td class="muted">Sharp spark along arms</td><td>Clear directive leadership</td></tr>
-            <tr><td class="highlight">Unbridled</td><td>Wild, instinctual energy that erupts when demanded</td><td class="muted">Electric thrill through veins</td><td>Burst of raw power under pressure</td></tr>
-            <tr><td class="highlight">Surging</td><td>Sudden bursts of overwhelming intensity</td><td class="muted">Pressure building then bursting outward</td><td>Sudden turn-reversal</td></tr>
-            <tr><td class="highlight">Enduring</td><td>Steady resilience that persists through hardship</td><td class="muted">Grounding warmth in bones</td><td>Keeps group moving when others falter</td></tr>
-            <tr><td class="highlight">Flowing</td><td>Adaptive power that responds fluidly to change</td><td class="muted">Fluid current through limbs</td><td>Instant plan adaptation</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="collapsible-block" id="col-disciplines">
-    <div class="collapsible-header" data-col="col-disciplines">
-      <span class="collapsible-title"><i class="fa-solid fa-scale-balanced"></i> Disciplines (6)</span>
-      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
-    </div>
-    <div class="collapsible-body">
-      <div class="table-block">
-        <table id="tbl-disciplines">
-          <thead><tr><th>Discipline</th><th>Expression</th><th>Resonant Feel</th><th>Decision Philosophy</th></tr></thead>
-          <tbody>
-            <tr><td class="highlight">Ordinate</td><td>Bound by oath, code, or lawful order</td><td class="muted">Cool precise thread through veins</td><td>Rule-driven choices</td></tr>
-            <tr><td class="highlight">Custodial</td><td>Dedicated to protecting what matters most</td><td class="muted">Warm protective glow around heart</td><td>Protection-centered</td></tr>
-            <tr><td class="highlight">Judicial</td><td>Measured and balanced in pursuit of fairness</td><td class="muted">Steady even pulse in chest</td><td>Fairness-driven</td></tr>
-            <tr><td class="highlight">Witnessed</td><td>Transparent, accountable, openly behind every action</td><td class="muted">Bright warmth across shoulders</td><td>Accountability-focused</td></tr>
-            <tr><td class="highlight">Necessary</td><td>Acting only when required — deliberate restraint</td><td class="muted">Cool focused clarity in mind</td><td>Restraint-driven</td></tr>
-            <tr><td class="highlight">Redemptive</td><td>Offering mercy, healing, second chances</td><td class="muted">Gentle golden warmth in hands</td><td>Mercy-centered</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="collapsible-block" id="col-dissonance">
-    <div class="collapsible-header" data-col="col-dissonance">
-      <span class="collapsible-title"><i class="fa-solid fa-triangle-exclamation"></i> Dissonance Escalation &amp; Static Veil</span>
-      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
-    </div>
-    <div class="collapsible-body">
-      <div class="table-block">
-        <div class="table-label">Dissonance Escalation Protocol</div>
-        <table>
-          <thead><tr><th>Step</th><th>Trigger</th><th>Watcher Action</th><th>Mechanical Effect</th><th>Notes</th></tr></thead>
-          <tbody>
-            <tr style="background:rgba(212,240,212,0.6)"><td class="highlight">1st Instance</td><td>Declared Harmonics contradict repeated behavior</td><td>Discussion with Player</td><td class="success">None yet</td><td class="muted">Narrative resolution opportunity</td></tr>
-            <tr style="background:rgba(255,232,180,0.6)"><td class="highlight">2nd Instance</td><td>Pattern continues after discussion</td><td>Player may pursue Narrative Shift</td><td class="muted">None yet</td><td class="muted">Narrative Shift becomes available</td></tr>
-            <tr style="background:rgba(255,200,200,0.6)"><td class="highlight">3rd Instance</td><td>Pattern is sustained and consistent</td><td>Static Veil applied</td><td class="danger"><strong>TN +3 on ALL checks</strong></td><td class="muted">Full mechanical penalty</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="table-block">
-        <div class="table-label">Static Veil Details</div>
-        <table>
-          <thead><tr><th>Aspect</th><th>Rule</th></tr></thead>
-          <tbody>
-            <tr><td class="highlight">Mechanical Effect</td><td class="danger"><strong>TN +3 on ALL Ability, Knowledge, and Resonant Cast checks</strong></td></tr>
-            <tr><td class="highlight">Duration</td><td>Persists until realignment or Narrative Shift</td></tr>
-            <tr><td class="highlight">Clearing Method</td><td>Sustained realignment with harmonic truth OR formal Harmonic redefinition (Watcher approval)</td></tr>
-            <tr><td class="highlight">Capability Impact</td><td class="muted">Does NOT alter Capability or Baseline — only modifies TN upward</td></tr>
-            <tr><td class="highlight">Narrative Shift</td><td>Meaningful character evolution through story; requires Watcher approval</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  <div class="no-results-msg" id="nr-harmonics"></div>
-</div>
-
+ 
 <!-- ─────── TAB: COMBAT ──────────────────────────── -->
 <div class="section-panel" id="tab-combat">
   <p class="section-title">Combat Mechanics</p>
   <p class="section-desc">Combat identity profiles, armor tiers, defensive postures, and calling-specific abilities.</p>
-
+ 
+  <!-- FIX #4: "Choose lane per strike: Mundane or Channeled" → "Declare Mundane or Resonant Attack" -->
   <div class="collapsible-block" id="col-combat-ids">
     <div class="collapsible-header" data-col="col-combat-ids">
       <span class="collapsible-title"><i class="fa-solid fa-id-card"></i> Combat Identity Profiles</span>
@@ -1500,14 +1504,14 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
           <thead><tr><th>Identity</th><th>CP</th><th>WS Die</th><th>Path Cap</th><th>Magnitude</th><th>Pool</th><th>Special Rules</th></tr></thead>
           <tbody>
             <tr class="type-special"><td class="highlight">Forged Combatant</td><td class="center gold">6</td><td class="center muted">None</td><td class="center muted">N/A</td><td class="center muted">None</td><td class="center">25 pts</td><td>+5 FP, +1 free Primary Rating; no Resonance</td></tr>
-            <tr class="type-hybrid"><td class="highlight">Martial Hybrid</td><td class="center gold">5</td><td class="center gold">d8</td><td class="center">3/path</td><td class="center">Standard</td><td class="center">23 pts</td><td>Choose lane per strike: Mundane or Channeled</td></tr>
+            <tr class="type-hybrid"><td class="highlight">Martial Hybrid</td><td class="center gold">5</td><td class="center gold">d8</td><td class="center">3/path</td><td class="center">Standard</td><td class="center">23 pts</td><td>Declare Mundane or Resonant Attack</td></tr>
             <tr class="type-pure"><td class="highlight">True Resonant Caster</td><td class="center gold">4</td><td class="center gold">d12</td><td class="center">4/path</td><td class="center">All</td><td class="center">22 pts</td><td>Unspent CP converts: 2→+1 PP or 1→+5 WP</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
-
+ 
   <div class="collapsible-block" id="col-armor">
     <div class="collapsible-header" data-col="col-armor">
       <span class="collapsible-title"><i class="fa-solid fa-shield"></i> Armor &amp; Damage Mechanics</span>
@@ -1526,7 +1530,7 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
       </div>
     </div>
   </div>
-
+ 
   <div class="collapsible-block" id="col-postures">
     <div class="collapsible-header" data-col="col-postures">
       <span class="collapsible-title"><i class="fa-solid fa-person-running"></i> Defensive Postures</span>
@@ -1557,7 +1561,7 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
       </div>
     </div>
   </div>
-
+ 
   <div class="collapsible-block" id="col-ascetic">
     <div class="collapsible-header" data-col="col-ascetic">
       <span class="collapsible-title"><i class="fa-solid fa-fist-raised"></i> Ascetic Adept — Calling Abilities</span>
@@ -1579,7 +1583,7 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
       </div>
     </div>
   </div>
-
+ 
   <div class="collapsible-block" id="col-ranger">
     <div class="collapsible-header" data-col="col-ranger">
       <span class="collapsible-title"><i class="fa-solid fa-bow-arrow"></i> Ranger — Calling Abilities</span>
@@ -1602,7 +1606,7 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
       </div>
     </div>
   </div>
-
+ 
   <div class="collapsible-block" id="col-warden">
     <div class="collapsible-header" data-col="col-warden">
       <span class="collapsible-title"><i class="fa-solid fa-shield-halved"></i> Shield Warden — Calling Abilities</span>
@@ -1627,7 +1631,7 @@ tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
   </div>
   <div class="no-results-msg" id="nr-combat"></div>
 </div>
-
+ 
 <!-- END content-container -->
 </div>
 </main>
