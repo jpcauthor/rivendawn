@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rivendawn — Character Mechanics Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+/* ══════════════════════════════════════════════
+   ROOT & SITE VARIABLES
+══════════════════════════════════════════════ */
+:root {
+  --header-height: 72px;
+  --footer-height: 72px;
+  --content-max-width: 1100px;
+  --page-max-width: 1400px;
+  --ink-color: #3a2a1a;
+  --ink-mid: #4a2d18;
+  --ink-faint: rgba(58,42,26,0.45);
+  --ink-dim: rgba(58,42,26,0.6);
+  --accent: #fff1d6;
+  --nav-color: #f2e3c6;
+  --nav-shadow: rgba(0,0,0,0.85);
+  --footer-bg: rgba(0,0,0,0.88);
+  --border-warm: rgba(94,62,33,0.25);
+  --gold: #c8922a;
+  --label-bg: rgba(42,22,8,0.78);
+  --label-text: #f2e3c6;
+  --blade-bg: rgba(244,230,204,0.88);
+
+  /* Path colors */
+  --aeris:      #b8d8e8;
+  --aqua:       #b8e0d8;
+  --ignis:      #e8c8b8;
+  --obtene:     #d0d0d0;
+  --terra:      #d4b8a0;
+  --vitae:      #c8e8b8;
+
+  /* Calling type */
+  --pure-cast:  #b8d4e8;
+  --hybrid:     #d4e8b8;
+  --special:    #e8e8e8;
+
+  /* Heritage */
+  --phys-env:   #e8d4b8;
+  --social:     #e0d4e8;
+  --tactical:   #e8e0b8;
+  --meta:       #d4e0e8;
+  --tech:       #e0e0e0;
+
+  /* Ability type ring */
+  --tab-bar-height: 52px;
+  --tab-bar-top: calc(var(--header-height) + 0px);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--ink-color);
+  min-height: 100dvh;
+  background: #000;
+  line-height: 1.75;
+  font-size: 1.1rem;
+}
+
+/* ══════════════════════════════════════════════
+   LAYOUT
+══════════════════════════════════════════════ */
+.page-wrapper {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  background-color: #000;
+  background-image: url('../images/bg.jpg');
+  background-size: contain;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  box-shadow: 0 0 80px rgba(0,0,0,0.85);
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--page-max-width));
+  height: var(--header-height);
+  background-image: url('../images/header.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1000;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+}
+header::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -14px;
+  height: 18px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.28), rgba(0,0,0,0));
+  pointer-events: none;
+}
+
+nav {
+  max-width: var(--content-max-width);
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 0 1.5rem;
+}
+nav a {
+  color: var(--nav-color);
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: all .25s ease;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .2rem .1rem;
+  text-shadow: 0 1px 2px var(--nav-shadow), 0 0 6px rgba(0,0,0,0.45);
+}
+nav a i { color: inherit; font-size: 1.1rem; margin-right: 4px; position: relative; top: -1px; }
+nav a::after { content: ""; position: absolute; left: 0; bottom: -4px; width: 0; height: 2px; background: var(--accent); transition: width .28s ease; }
+nav a:hover { color: var(--accent); transform: translateY(-1px); }
+nav a:hover::after { width: 100%; }
+
+main {
+  flex: 1;
+  margin-top: var(--header-height);
+  padding: 0 1rem calc(var(--footer-height) + 3rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--page-max-width));
+  height: var(--footer-height);
+  background: var(--footer-bg);
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 1rem;
+  font-size: .95rem;
+  border-top: 1px solid #444;
+  z-index: 900;
+}
+footer a { color: #d4a373; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* ══════════════════════════════════════════════
+   PAGE HEADER
+══════════════════════════════════════════════ */
+.page-header {
+  max-width: var(--content-max-width);
+  width: 100%;
+  padding: 2.5rem 80px 0;
+  text-align: center;
+}
+.page-header h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.4rem;
+  color: var(--ink-mid);
+  letter-spacing: .06em;
+  margin-bottom: .4rem;
+}
+.page-subtitle {
+  font-style: italic;
+  color: var(--label-text);
+  background: var(--label-bg);
+  display: inline-block;
+  padding: 0.25rem 1.2rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+/* ══════════════════════════════════════════════
+   SEARCH BAR
+══════════════════════════════════════════════ */
+.search-wrapper {
+  max-width: var(--content-max-width);
+  width: 100%;
+  padding: 0 80px;
+  margin-bottom: .75rem;
+}
+.search-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  background: rgba(255,248,230,0.9);
+  border: 1px solid rgba(94,62,33,0.35);
+  border-radius: 6px;
+  padding: .45rem 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.search-bar i { color: var(--ink-faint); font-size: .95rem; flex-shrink: 0; }
+.search-bar input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: 'Crimson Text', serif;
+  font-size: 1.05rem;
+  color: var(--ink-color);
+  outline: none;
+}
+.search-bar input::placeholder { color: var(--ink-faint); font-style: italic; }
+.search-clear {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ink-faint);
+  font-size: .85rem;
+  padding: 0;
+  transition: color .2s;
+  display: none;
+}
+.search-clear:hover { color: var(--ink-mid); }
+.search-count {
+  font-family: 'Cinzel', serif;
+  font-size: .6rem;
+  letter-spacing: .15em;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+/* ══════════════════════════════════════════════
+   TAB BAR
+══════════════════════════════════════════════ */
+.tab-bar-wrapper {
+  position: sticky;
+  top: var(--tab-bar-top);
+  z-index: 800;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: rgba(0,0,0,0.82);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(200,146,42,0.25);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+.tab-bar {
+  max-width: var(--content-max-width);
+  width: 100%;
+  padding: 0 80px;
+  display: flex;
+  gap: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tab-bar::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: .58rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(242,227,198,0.6);
+  padding: .8rem .9rem;
+  transition: all .22s ease;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+.tab-btn i { font-size: .9rem; }
+.tab-btn:hover { color: var(--accent); }
+.tab-btn.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+/* ══════════════════════════════════════════════
+   CONTENT CONTAINER
+══════════════════════════════════════════════ */
+.content-container {
+  max-width: var(--content-max-width);
+  width: 100%;
+  padding: 2rem 80px 200px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  background-image: url('../images/content-scroll-bg.png');
+  background-repeat: repeat-y;
+  background-position: top center;
+  background-size: 100% auto;
+}
+
+/* ══════════════════════════════════════════════
+   SECTION PANELS (tabs)
+══════════════════════════════════════════════ */
+.section-panel { display: none; }
+.section-panel.active { display: block; }
+
+/* ══════════════════════════════════════════════
+   SECTION HEADERS
+══════════════════════════════════════════════ */
+.section-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.7rem;
+  color: var(--ink-mid);
+  text-align: center;
+  margin-bottom: .3rem;
+  letter-spacing: .04em;
+}
+.section-desc {
+  text-align: center;
+  color: var(--ink-faint);
+  font-style: italic;
+  font-size: .98rem;
+  margin-bottom: 2rem;
+}
+
+.title-rule {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2.5rem 0 1.2rem;
+}
+.title-rule::before, .title-rule::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(74,46,6,0.35));
+}
+.title-rule::after { background: linear-gradient(to left, transparent, rgba(74,46,6,0.35)); }
+.title-rule span {
+  color: var(--label-text);
+  font-size: .65rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  font-family: 'Cinzel', serif;
+  background: var(--label-bg);
+  padding: 0.25rem 0.85rem;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* ══════════════════════════════════════════════
+   COLLAPSIBLE SECTIONS
+══════════════════════════════════════════════ */
+.collapsible-block { margin-bottom: 1.8rem; }
+.collapsible-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  padding: .5rem .75rem;
+  background: var(--label-bg);
+  border-radius: 5px;
+  border: 1px solid rgba(200,146,42,0.2);
+  transition: background .18s ease;
+  margin-bottom: .5rem;
+}
+.collapsible-header:hover { background: rgba(52,30,10,0.88); }
+.collapsible-title {
+  font-family: 'Cinzel', serif;
+  font-size: .62rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--label-text);
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+}
+.collapsible-title i { color: var(--gold); font-size: .9rem; }
+.collapsible-chevron {
+  color: var(--gold);
+  font-size: .75rem;
+  transition: transform .25s ease;
+}
+.collapsible-block.collapsed .collapsible-chevron { transform: rotate(-90deg); }
+.collapsible-body { overflow: hidden; transition: max-height .3s ease; }
+.collapsible-block.collapsed .collapsible-body { display: none; }
+
+/* ══════════════════════════════════════════════
+   TABLE STYLES
+══════════════════════════════════════════════ */
+.table-block { margin-bottom: 1.8rem; overflow-x: auto; }
+.table-label {
+  font-family: 'Cinzel', serif;
+  font-size: .6rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--label-text);
+  background: var(--label-bg);
+  display: inline-block;
+  padding: .2rem .7rem;
+  border-radius: 4px;
+  margin-bottom: .55rem;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Crimson Text', serif;
+  font-size: .98rem;
+  margin-bottom: .4rem;
+}
+thead tr { background: var(--label-bg); }
+thead th {
+  color: var(--label-text);
+  font-family: 'Cinzel', serif;
+  font-size: .58rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  padding: .5rem .85rem;
+  text-align: left;
+  border: 1px solid rgba(42,22,8,0.5);
+  white-space: nowrap;
+}
+tbody tr {
+  background: rgba(255,248,230,0.55);
+  transition: background .14s ease;
+}
+tbody tr:nth-child(even) { background: rgba(244,230,204,0.65); }
+tbody tr:hover { background: rgba(255,241,214,0.88); }
+tbody td {
+  padding: .45rem .85rem;
+  border: 1px solid var(--border-warm);
+  color: var(--ink-color);
+  vertical-align: top;
+  line-height: 1.45;
+}
+td.center, th.center { text-align: center; }
+td.highlight { font-weight: 600; color: var(--ink-mid); }
+td.gold { color: var(--gold); font-weight: 600; }
+td.muted { color: var(--ink-faint); font-style: italic; }
+td.danger { color: #8b1a1a; font-weight: 600; }
+td.success { color: #1a5c2a; font-weight: 600; }
+
+/* Row hidden during search */
+tr.search-hidden { display: none; }
+
+/* Path color rows */
+tr.path-aeris   td { background: rgba(184,216,232,0.45); }
+tr.path-aqua    td { background: rgba(184,224,216,0.45); }
+tr.path-ignis   td { background: rgba(232,200,184,0.45); }
+tr.path-obtene  td { background: rgba(200,200,200,0.45); }
+tr.path-terra   td { background: rgba(212,184,160,0.45); }
+tr.path-vitae   td { background: rgba(200,232,184,0.45); }
+
+/* Calling type rows */
+tr.type-pure td { background: rgba(184,212,232,0.4); }
+tr.type-hybrid td { background: rgba(212,232,184,0.4); }
+tr.type-special td { background: rgba(232,232,232,0.55); }
+
+/* Heritage rows */
+tr.her-phys  td { background: rgba(232,212,184,0.4); }
+tr.her-soc   td { background: rgba(224,212,232,0.4); }
+tr.her-tact  td { background: rgba(232,224,184,0.4); }
+tr.her-meta  td { background: rgba(212,224,232,0.4); }
+tr.her-tech  td { background: rgba(224,224,224,0.55); }
+
+/* Path badge chips */
+.path-badge {
+  display: inline-block;
+  padding: .1rem .45rem;
+  border-radius: 3px;
+  font-size: .85rem;
+  font-weight: 600;
+}
+.path-badge.aeris   { background: var(--aeris);   color: #1a3a4a; }
+.path-badge.aqua    { background: var(--aqua);    color: #1a3a34; }
+.path-badge.ignis   { background: var(--ignis);   color: #4a2010; }
+.path-badge.obtene  { background: var(--obtene);  color: #2a2a2a; }
+.path-badge.terra   { background: var(--terra);   color: #3a2010; }
+.path-badge.vitae   { background: var(--vitae);   color: #1a3a10; }
+
+/* Type badge */
+.type-badge {
+  display: inline-block;
+  padding: .1rem .45rem;
+  border-radius: 3px;
+  font-size: .82rem;
+  font-weight: 600;
+}
+.type-badge.pure    { background: var(--pure-cast); color: #1a2a3a; }
+.type-badge.hybrid  { background: var(--hybrid);    color: #1a2a10; }
+.type-badge.special { background: var(--special);   color: #3a3a3a; }
+
+/* Ability type color */
+.sk-ability    { color: #1a5c1a; font-weight: 600; }
+.sk-knowledge  { color: #1a1a6e; font-weight: 600; }
+.sk-mixed      { color: var(--ink-mid); }
+
+/* Danger / restriction */
+.tag-danger {
+  display: inline-block;
+  background: rgba(139,26,26,0.12);
+  color: #8b1a1a;
+  border: 1px solid rgba(139,26,26,0.25);
+  padding: .05rem .4rem;
+  border-radius: 3px;
+  font-size: .82rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+.tag-choice {
+  display: inline-block;
+  background: rgba(200,146,42,0.15);
+  color: #6b4010;
+  border: 1px solid rgba(200,146,42,0.3);
+  padding: .05rem .4rem;
+  border-radius: 3px;
+  font-size: .82rem;
+  font-weight: 600;
+}
+.tag-locked {
+  display: inline-block;
+  background: rgba(60,42,26,0.12);
+  color: var(--ink-faint);
+  border: 1px solid var(--border-warm);
+  padding: .05rem .4rem;
+  border-radius: 3px;
+  font-size: .82rem;
+}
+
+/* Ability type block rows */
+tr.atype-school    td { background: rgba(220,220,220,0.45); }
+tr.atype-def-pos   td { background: rgba(212,240,212,0.5); }
+tr.atype-def-surge td { background: rgba(208,216,255,0.5); }
+tr.atype-def-gift  td { background: rgba(200,230,200,0.5); }
+tr.atype-off-gift  td { background: rgba(255,232,208,0.5); }
+tr.atype-off-surge td { background: rgba(255,240,192,0.5); }
+tr.atype-control   td { background: rgba(255,208,255,0.45); }
+tr.atype-restrict  td { background: rgba(255,208,208,0.45); }
+
+/* ══════════════════════════════════════════════
+   DASHBOARD STATS GRID
+══════════════════════════════════════════════ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.stat-card {
+  background: rgba(255,248,230,0.7);
+  border: 1px solid var(--border-warm);
+  border-radius: 6px;
+  padding: 1rem 1.1rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.stat-number {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2rem;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: .25rem;
+}
+.stat-label {
+  font-family: 'Cinzel', serif;
+  font-size: .55rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+}
+.stat-detail {
+  font-size: .88rem;
+  color: var(--ink-faint);
+  font-style: italic;
+  margin-top: .2rem;
+}
+
+/* Path distribution strip */
+.path-strip {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+.path-card {
+  flex: 1;
+  min-width: 130px;
+  padding: .65rem 1rem;
+  border-radius: 5px;
+  border: 1px solid rgba(94,62,33,0.2);
+  text-align: center;
+}
+.path-card-name {
+  font-family: 'Cinzel', serif;
+  font-size: .65rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  margin-bottom: .2rem;
+}
+.path-card-attr {
+  font-size: .88rem;
+  color: var(--ink-dim);
+  font-style: italic;
+}
+.path-card-expr {
+  font-size: .82rem;
+  color: var(--ink-faint);
+  margin-top: .1rem;
+}
+
+/* ══════════════════════════════════════════════
+   TOOLTIP
+══════════════════════════════════════════════ */
+[data-tip] {
+  position: relative;
+  cursor: help;
+  border-bottom: 1px dashed var(--ink-faint);
+}
+[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(22,12,4,0.96);
+  color: var(--accent);
+  font-family: 'Crimson Text', serif;
+  font-size: .88rem;
+  font-style: normal;
+  line-height: 1.4;
+  padding: .45rem .75rem;
+  border-radius: 5px;
+  white-space: normal;
+  min-width: 160px;
+  max-width: 280px;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .18s ease;
+  z-index: 500;
+  border: 1px solid rgba(200,146,42,0.3);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.5);
+}
+[data-tip]:hover::after { opacity: 1; }
+
+/* ══════════════════════════════════════════════
+   BAND TABLE (Resonance)
+══════════════════════════════════════════════ */
+.band-minor    { background: rgba(230,230,230,0.6) !important; }
+.band-moderate { background: rgba(255,240,200,0.6) !important; }
+.band-enhanced { background: rgba(255,215,155,0.6) !important; }
+.band-severe   { background: rgba(255,185,120,0.6) !important; }
+.band-severe-p { background: rgba(255,155,90,0.65) !important; }
+.band-dominant { background: rgba(210,80,60,0.2) !important; color: #6b1a1a; font-weight: 600; }
+
+/* ══════════════════════════════════════════════
+   MOBILE HAMBURGER
+══════════════════════════════════════════════ */
+.nav-hamburger {
+  display: none;
+  position: absolute;
+  right: 1.2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px;
+  z-index: 1001;
+}
+.nav-hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--nav-color);
+  border-radius: 2px;
+  transition: all .25s ease;
+}
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  top: var(--header-height);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, var(--page-max-width));
+  background: rgba(12,6,0,0.97);
+  z-index: 999;
+  flex-direction: column;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(200,146,42,0.2);
+}
+.nav-mobile-menu.open { display: flex; }
+.nav-mobile-menu a {
+  color: var(--nav-color);
+  text-decoration: none;
+  font-family: 'Cinzel', serif;
+  font-size: .9rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: .75rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  border-bottom: 1px solid rgba(200,146,42,0.08);
+  transition: background .18s ease;
+}
+.nav-mobile-menu a:hover { background: rgba(200,146,42,0.08); }
+
+/* ══════════════════════════════════════════════
+   NO-RESULTS
+══════════════════════════════════════════════ */
+.no-results-msg {
+  text-align: center;
+  padding: 2rem;
+  color: var(--ink-faint);
+  font-style: italic;
+  display: none;
+}
+.no-results-msg.visible { display: block; }
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .page-header, .search-wrapper, .content-container { padding-left: 32px; padding-right: 32px; }
+  .tab-bar { padding: 0 32px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  nav { display: none; }
+  .nav-hamburger { display: flex; }
+  .page-header, .search-wrapper, .content-container { padding-left: 20px; padding-right: 20px; }
+  .tab-bar { padding: 0 12px; }
+  .tab-btn { font-size: .52rem; padding: .75rem .6rem; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  thead th, tbody td { padding: .35rem .5rem; font-size: .9rem; }
+  .page-header h1 { font-size: 1.7rem; }
+}
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .path-strip { gap: .35rem; }
+  .path-card { min-width: 100px; }
+  tbody td { font-size: .85rem; }
+}
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+
+<!-- ══ HEADER / NAV ══════════════════════════════════════ -->
+<header>
+  <nav>
+    <a href="/rivendawn/rivendawn/rivendawn.html" data-nav="rivendawn"><i class="fa-solid fa-dungeon"></i>Rivendawn</a>
+    <a href="/rivendawn/lore/lore.html" data-nav="lore"><i class="fa-solid fa-scroll"></i>Lore</a>
+    <a href="/rivendawn/rules/rules.html" data-nav="rules"><i class="fa-solid fa-book"></i>Rules</a>
+    <a href="/rivendawn/create/create.html" data-nav="create"><i class="fa-solid fa-user-pen"></i>Create</a>
+    <a href="/rivendawn/main_tables.html" data-nav="tables"><i class="fa-solid fa-dice-d20"></i>Tables</a>
+    <a href="/rivendawn/about/about.html" data-nav="about"><i class="fa-solid fa-circle-info"></i>About</a>
+  </nav>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<div class="nav-mobile-menu" id="navMobileMenu">
+  <a href="/rivendawn/rivendawn/rivendawn.html"><i class="fa-solid fa-dungeon"></i>Rivendawn</a>
+  <a href="/rivendawn/lore/lore.html"><i class="fa-solid fa-scroll"></i>Lore</a>
+  <a href="/rivendawn/rules/rules.html"><i class="fa-solid fa-book"></i>Rules</a>
+  <a href="/rivendawn/create/create.html"><i class="fa-solid fa-user-pen"></i>Create</a>
+  <a href="/rivendawn/main_tables.html"><i class="fa-solid fa-dice-d20"></i>Tables</a>
+  <a href="/rivendawn/about/about.html"><i class="fa-solid fa-circle-info"></i>About</a>
+</div>
+
+<main>
+
+<!-- ══ PAGE TITLE ══════════════════════════════════════ -->
+<div class="page-header">
+  <h1>Character Mechanics Reference</h1>
+  <p class="page-subtitle">Complete mechanical compendium — Lineages · Callings · Vocations · Resonance · Harmonics · Combat</p>
+</div>
+
+<!-- ══ SEARCH ══════════════════════════════════════════ -->
+<div class="search-wrapper">
+  <div class="search-bar">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="text" id="globalSearch" placeholder="Search all tables… e.g. Aeris, Hybrid, Vitae, Assassin…" autocomplete="off">
+    <span class="search-count" id="searchCount"></span>
+    <button class="search-clear" id="searchClear" title="Clear search"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+</div>
+
+<!-- ══ TAB BAR ═════════════════════════════════════════ -->
+<div class="tab-bar-wrapper">
+  <div class="tab-bar" role="tablist">
+    <button class="tab-btn active" data-tab="dashboard" role="tab">
+      <i class="fa-solid fa-gauge-high"></i> Overview
+    </button>
+    <button class="tab-btn" data-tab="lineages" role="tab">
+      <i class="fa-solid fa-users"></i> Lineages
+    </button>
+    <button class="tab-btn" data-tab="callings" role="tab">
+      <i class="fa-solid fa-shield-halved"></i> Callings
+    </button>
+    <button class="tab-btn" data-tab="vocations" role="tab">
+      <i class="fa-solid fa-hammer"></i> Vocations
+    </button>
+    <button class="tab-btn" data-tab="paths" role="tab">
+      <i class="fa-solid fa-wand-magic-sparkles"></i> Resonance Paths
+    </button>
+    <button class="tab-btn" data-tab="casting" role="tab">
+      <i class="fa-solid fa-fire-flame-curved"></i> Casting
+    </button>
+    <button class="tab-btn" data-tab="harmonics" role="tab">
+      <i class="fa-solid fa-yin-yang"></i> Harmonics
+    </button>
+    <button class="tab-btn" data-tab="combat" role="tab">
+      <i class="fa-solid fa-swords"></i> Combat
+    </button>
+  </div>
+</div>
+
+<!-- ══ CONTENT ═════════════════════════════════════════ -->
+<div class="content-container">
+
+<!-- ─────── TAB: DASHBOARD ──────────────────────────── -->
+<div class="section-panel active" id="tab-dashboard">
+  <p class="section-title">Mechanics at a Glance</p>
+  <p class="section-desc">Quick stats and navigation overview for the complete Rivendawn character system.</p>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number">8</div>
+      <div class="stat-label">Lineages</div>
+      <div class="stat-detail">Aelarii · Avenen · Drauven · Hearthkin · Kardurin · Thalmen · The Chosen · Veylen</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">17</div>
+      <div class="stat-label">Callings</div>
+      <div class="stat-detail">9 Pure Casters · 7 Hybrids · 1 Shield Warden · 1 Songweaver</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">17</div>
+      <div class="stat-label">Vocations</div>
+      <div class="stat-detail">5 Heritage Imprint categories · All Practiced mastery</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">36</div>
+      <div class="stat-label">Harmonic Combos</div>
+      <div class="stat-detail">6 Dynamics × 6 Disciplines</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">6</div>
+      <div class="stat-label">Resonance Paths</div>
+      <div class="stat-detail">Aeris · Aqua · Ignis · Obtenebrate · Terra · Vitae</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">3</div>
+      <div class="stat-label">Combat Identities</div>
+      <div class="stat-detail">Forged · Martial Hybrid · True Resonant Caster</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">3</div>
+      <div class="stat-label">Wellspring Dice</div>
+      <div class="stat-detail">d8 Hybrid · d10 Songweaver · d12 Pure Caster</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">3</div>
+      <div class="stat-label">Dissonance Steps</div>
+      <div class="stat-detail">Discussion → Narrative Shift → Static Veil (TN +3)</div>
+    </div>
+  </div>
+
+  <div class="title-rule"><span>Resonance Paths</span></div>
+  <div class="path-strip">
+    <div class="path-card" style="background:rgba(184,216,232,0.45);">
+      <div class="path-card-name">Aeris</div>
+      <div class="path-card-attr">Governs: Agility</div>
+      <div class="path-card-expr">Motion · Displacement · Speed</div>
+    </div>
+    <div class="path-card" style="background:rgba(184,224,216,0.45);">
+      <div class="path-card-name">Aqua</div>
+      <div class="path-card-attr">Governs: Vitality</div>
+      <div class="path-card-expr">Pressure · Suppression · Endurance</div>
+    </div>
+    <div class="path-card" style="background:rgba(232,200,184,0.45);">
+      <div class="path-card-name">Ignis</div>
+      <div class="path-card-attr">Governs: Intelligence</div>
+      <div class="path-card-expr">Damage · Alteration · Escalation</div>
+    </div>
+    <div class="path-card" style="background:rgba(200,200,200,0.45);">
+      <div class="path-card-name">Obtenebrate</div>
+      <div class="path-card-attr">Governs: Agility</div>
+      <div class="path-card-expr">Concealment · Misdirection · <span class="tag-danger">Non-Combat Only</span></div>
+    </div>
+    <div class="path-card" style="background:rgba(212,184,160,0.45);">
+      <div class="path-card-name">Terra</div>
+      <div class="path-card-attr">Governs: Strength</div>
+      <div class="path-card-expr">Anchoring · Fortification · Force</div>
+    </div>
+    <div class="path-card" style="background:rgba(200,232,184,0.45);">
+      <div class="path-card-name">Vitae</div>
+      <div class="path-card-attr">Governs: Wisdom</div>
+      <div class="path-card-expr">Healing · Restraint · Stabilization</div>
+    </div>
+  </div>
+
+  <div class="title-rule"><span>Calling Distribution</span></div>
+  <div class="table-block">
+    <table>
+      <thead><tr><th>Type</th><th>Count</th><th>Wellspring</th><th>Path Points</th><th>Callings</th></tr></thead>
+      <tbody>
+        <tr class="type-pure"><td class="highlight"><span class="type-badge pure">Pure Caster</span></td><td class="center">9</td><td class="center gold">d12</td><td class="center">6 PP</td><td>Druid ×2, Peacewarden, Physicker, Scribe, Shadow Jailer, Starcaller, Truthseeker, Resonant Architect</td></tr>
+        <tr class="type-hybrid"><td class="highlight"><span class="type-badge hybrid">Hybrid</span></td><td class="center">7</td><td class="center gold">d8</td><td class="center">3 PP</td><td>Ascetic Adept, Assassin, Dawn Sentinel, Druid Thornheart, Mercenary, Ranger, Wayfarer Knight</td></tr>
+        <tr class="type-special"><td class="highlight"><span class="type-badge special">Special</span></td><td class="center">2</td><td class="center gold">d10 / None</td><td class="center">Varies</td><td>Shield Warden (no Resonance), Songweaver (Cadence system)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ─────── TAB: LINEAGES ──────────────────────────── -->
+<div class="section-panel" id="tab-lineages">
+  <p class="section-title">Lineages</p>
+  <p class="section-desc">Eight peoples of Rivendawn — innate gifts, resonance affinities, and path bonuses.</p>
+
+  <div class="collapsible-block" id="col-lineages">
+    <div class="collapsible-header" data-col="col-lineages">
+      <span class="collapsible-title"><i class="fa-solid fa-users"></i> All Lineages</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-lineages">
+          <thead><tr>
+            <th>Lineage</th>
+            <th>Innate Gift 1</th>
+            <th>Bonus</th>
+            <th>Innate Gift 2</th>
+            <th>Bonus</th>
+            <th>Resonance Affinity</th>
+            <th>Path Points</th>
+            <th>Type</th>
+            <th>Notes</th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td class="highlight">Aelarii</td>
+              <td><span data-tip="Knowledge skill — arcane theory">Resonance Theory</span></td><td class="center gold">+2</td>
+              <td><span data-tip="Knowledge skill — governance and factions">Political Theory</span></td><td class="center gold">+2</td>
+              <td><span class="path-badge aeris">Aeris</span></td><td class="center">+1</td>
+              <td><span class="tag-locked">LOCKED</span></td>
+              <td class="muted">Full political and arcane background</td>
+            </tr>
+            <tr>
+              <td class="highlight">Avenen</td>
+              <td><span data-tip="Ability — social negotiation">Diplomacy</span></td><td class="center gold">+2</td>
+              <td><span data-tip="Knowledge — understanding motives">Psychology</span></td><td class="center gold">+2</td>
+              <td><span class="path-badge aeris">Aeris</span> <span class="path-badge obtene">Obtenebrate</span> <span class="path-badge vitae">Vitae</span></td><td class="center">+1</td>
+              <td><span class="tag-choice">CHOICE</span></td>
+              <td class="muted">Choose one affinity at creation</td>
+            </tr>
+            <tr>
+              <td class="highlight">Drauven</td>
+              <td><span data-tip="Ability — moving undetected">Stealth</span></td><td class="center gold">+2</td>
+              <td><span data-tip="Knowledge — shadow and forbidden lore">Occult Knowledge</span></td><td class="center gold">+2</td>
+              <td><span class="path-badge obtene">Obtenebrate</span></td><td class="center">+1</td>
+              <td><span class="tag-locked">LOCKED</span></td>
+              <td class="muted">Shadow-aligned; espionage background</td>
+            </tr>
+            <tr>
+              <td class="highlight">Hearthkin</td>
+              <td><span data-tip="Knowledge — food, resource management">Provisioning</span></td><td class="center gold">+2</td>
+              <td><span data-tip="Knowledge — commerce and barter">Trade</span></td><td class="center gold">+2</td>
+              <td><span class="path-badge vitae">Vitae</span> <span class="path-badge terra">Terra</span></td><td class="center">+1</td>
+              <td><span class="tag-choice">CHOICE</span></td>
+              <td class="muted">Choose one affinity at creation</td>
+            </tr>
+            <tr>
+              <td class="highlight">Kardurin</td>
+              <td><span data-tip="Knowledge — construction and mechanisms">Engineering</span></td><td class="center gold">+2</td>
+              <td><span data-tip="Knowledge — smithing and craftsmanship">Craft</span></td><td class="center gold">+2</td>
+              <td><span class="path-badge ignis">Ignis</span></td><td class="center">+1</td>
+              <td><span class="tag-locked">LOCKED</span></td>
+              <td class="muted">Industrial; forge and structure specialists</td>
+            </tr>
+            <tr>
+              <td class="highlight">Thalmen</td>
+              <td><span data-tip="Ability — physical stamina over time">Endurance</span></td><td class="center gold">+2</td>
+              <td><span data-tip="Ability — projecting menace and dominance">Intimidation</span></td><td class="center gold">+2</td>
+              <td><span style="font-style:italic;color:var(--ink-dim)">Vitality / Strength</span></td><td class="center">+1</td>
+              <td><span class="tag-danger">PHYSICAL</span></td>
+              <td class="muted">NOT a Resonance affinity — Physical attribute bonus</td>
+            </tr>
+            <tr>
+              <td class="highlight">The Chosen</td>
+              <td><span data-tip="Knowledge — world history and myth">Rivendawn Lore</span></td><td class="center gold">+2</td>
+              <td><span data-tip="Ability — examining clues and deductions">Investigation</span></td><td class="center gold">+2</td>
+              <td><span class="path-badge obtene">Obtenebrate</span></td><td class="center">+1</td>
+              <td><span class="tag-locked">LOCKED</span></td>
+              <td class="muted">Marked by fate; shadow-touched lineage</td>
+            </tr>
+            <tr>
+              <td class="highlight">Veylen</td>
+              <td><span data-tip="Knowledge — flora, fauna, wilderness">Nature</span></td><td class="center gold">+2</td>
+              <td><span data-tip="Knowledge — anatomy and treatment">Medicine</span></td><td class="center gold">+2</td>
+              <td><span class="path-badge vitae">Vitae</span></td><td class="center">+1</td>
+              <td><span class="tag-locked">LOCKED</span></td>
+              <td class="muted">Nature-aligned; strong healing lineage</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="no-results-msg" id="nr-lineages"></div>
+</div>
+
+<!-- ─────── TAB: CALLINGS ──────────────────────────── -->
+<div class="section-panel" id="tab-callings">
+  <p class="section-title">Callings</p>
+  <p class="section-desc">Combat identity, wellspring capacity, health, armor, and calling-specific rules.</p>
+
+  <div class="collapsible-block" id="col-pure">
+    <div class="collapsible-header" data-col="col-pure">
+      <span class="collapsible-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Pure Casters (9)</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-pure">
+          <thead><tr>
+            <th>Calling</th>
+            <th><span data-tip="Wellspring die size">WS Die</span></th>
+            <th><span data-tip="Base Wellspring Pool">Base WP</span></th>
+            <th><span data-tip="Total Path Points to allocate">Path Pts</span></th>
+            <th><span data-tip="Max points in any single path">Path Cap</span></th>
+            <th><span data-tip="Ability & Knowledge allocation pool">Pool</span></th>
+            <th><span data-tip="Combat Points">CP</span></th>
+            <th><span data-tip="Health die type">HP Die</span></th>
+            <th>Min HP</th>
+            <th>Max HP</th>
+            <th>Armor Start</th>
+            <th>Armor Max</th>
+            <th>Special Notes</th>
+          </tr></thead>
+          <tbody>
+            <tr class="type-pure"><td class="highlight">Druid — Verdant Cataclysm</td><td class="center gold">d12</td><td class="center">36</td><td class="center">6</td><td class="center">4</td><td class="center">22</td><td class="center">4</td><td class="center">d10</td><td class="center">16</td><td class="center">48</td><td class="center">1</td><td class="center">3</td><td class="muted">No restrictions</td></tr>
+            <tr class="type-pure"><td class="highlight">Druid — Verdant Restoration</td><td class="center gold">d12</td><td class="center">36</td><td class="center">6</td><td class="center">4</td><td class="center">22</td><td class="center">4</td><td class="center">d10</td><td class="center">16</td><td class="center">48</td><td class="center">1</td><td class="center">3</td><td class="muted">Must include ≥1 PP in <span class="path-badge vitae">Vitae</span></td></tr>
+            <tr class="type-pure"><td class="highlight">Peacewarden</td><td class="center gold">d12</td><td class="center">36</td><td class="center">6</td><td class="center">4</td><td class="center">22</td><td class="center">4</td><td class="center">d8</td><td class="center">14</td><td class="center">40</td><td class="center">1</td><td class="center">3</td><td class="muted">Resonance suppression aura</td></tr>
+            <tr class="type-pure"><td class="highlight">Physicker</td><td class="center gold">d12</td><td class="center">36</td><td class="center">6</td><td class="center">4</td><td class="center">22</td><td class="center">4</td><td class="center">d8</td><td class="center">14</td><td class="center">40</td><td class="center">1</td><td class="center">3</td><td class="muted">Must include ≥1 PP <span class="path-badge vitae">Vitae</span>; Healing rules apply</td></tr>
+            <tr class="type-pure"><td class="highlight">Scribe</td><td class="center gold">d12</td><td class="center">36</td><td class="center">6</td><td class="center">4</td><td class="center">22</td><td class="center">4</td><td class="center">d8</td><td class="center">14</td><td class="center">40</td><td class="center">1</td><td class="center">3</td><td class="muted">No restrictions</td></tr>
+            <tr class="type-pure"><td class="highlight">Shadow Jailer</td><td class="center gold">d12</td><td class="center">36</td><td class="center">6</td><td class="center">4</td><td class="center">22</td><td class="center">4</td><td class="center">d10</td><td class="center">16</td><td class="center">48</td><td class="center gold">5</td><td class="center gold">7</td><td class="muted">Higher armor than standard — outlier Pure Caster</td></tr>
+            <tr class="type-pure"><td class="highlight">Starcaller</td><td class="center gold">d12</td><td class="center">36</td><td class="center">6</td><td class="center">4</td><td class="center">22</td><td class="center">4</td><td class="center">d8</td><td class="center">14</td><td class="center">40</td><td class="center">1</td><td class="center">3</td><td class="muted">No restrictions</td></tr>
+            <tr class="type-pure"><td class="highlight">Truthseeker</td><td class="center gold">d12</td><td class="center">36</td><td class="center">6</td><td class="center">4</td><td class="center">22</td><td class="center">4</td><td class="center">d8</td><td class="center">14</td><td class="center">40</td><td class="center">1</td><td class="center">3</td><td class="muted">Follow-up strike (clean damage only)</td></tr>
+            <tr class="type-pure"><td class="highlight">Resonant Architect</td><td class="center gold">d12</td><td class="center">36</td><td class="center">6</td><td class="center">4</td><td class="center">22</td><td class="center">4</td><td class="center">d8</td><td class="center gold">10</td><td class="center gold">24</td><td class="center">1</td><td class="center">3</td><td class="muted">Space control specialist; lower HP range</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible-block" id="col-hybrid">
+    <div class="collapsible-header" data-col="col-hybrid">
+      <span class="collapsible-title"><i class="fa-solid fa-shield-halved"></i> Hybrids (7)</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-hybrid">
+          <thead><tr>
+            <th>Calling</th><th>WS Die</th><th>Base WP</th><th>Path Pts</th><th>Path Cap</th><th>Pool</th><th>CP</th><th>HP Die</th><th>Min HP</th><th>Max HP</th><th>Armor Start</th><th>Armor Max</th><th>Special Notes</th>
+          </tr></thead>
+          <tbody>
+            <tr class="type-hybrid"><td class="highlight">Ascetic Adept</td><td class="center gold">d8</td><td class="center">24</td><td class="center">3</td><td class="center">3</td><td class="center">23</td><td class="center">5</td><td class="center">d10</td><td class="center">17</td><td class="center">50</td><td class="center">2</td><td class="center">4</td><td class="muted">School-locked ability (+15 AP or +3 DR)</td></tr>
+            <tr class="type-hybrid"><td class="highlight">Assassin</td><td class="center gold">d8</td><td class="center">24</td><td class="center">3</td><td class="center">3</td><td class="center">23</td><td class="center">5</td><td class="center">d10</td><td class="center">17</td><td class="center">50</td><td class="center">6</td><td class="center gold">6</td><td class="muted">High armor hard-capped at 6</td></tr>
+            <tr class="type-hybrid"><td class="highlight">Dawn Sentinel</td><td class="center gold">d8</td><td class="center">24</td><td class="center">3</td><td class="center">3</td><td class="center">23</td><td class="center">5</td><td class="center gold">d12</td><td class="center gold">21</td><td class="center gold">60</td><td class="center gold">8</td><td class="center gold">10</td><td class="muted">Highest HP die + armor — defensive archetype</td></tr>
+            <tr class="type-hybrid"><td class="highlight">Druid — Verdant Thornheart</td><td class="center gold">d8</td><td class="center">24</td><td class="center">3</td><td class="center">3</td><td class="center">23</td><td class="center">5</td><td class="center">d10</td><td class="center">17</td><td class="center">50</td><td class="center">6</td><td class="center">9</td><td class="muted">Nature focus; melee + Resonance hybrid</td></tr>
+            <tr class="type-hybrid"><td class="highlight">Mercenary</td><td class="center gold">d8</td><td class="center">24</td><td class="center">3</td><td class="center">3</td><td class="center">23</td><td class="center">5</td><td class="center">d10</td><td class="center">17</td><td class="center">50</td><td class="center">5</td><td class="center">9</td><td class="muted">Flexible combat; adaptable fighter</td></tr>
+            <tr class="type-hybrid"><td class="highlight">Ranger</td><td class="center gold">d8</td><td class="center">24</td><td class="center">3</td><td class="center">3</td><td class="center">23</td><td class="center">5</td><td class="center">d10</td><td class="center">17</td><td class="center">50</td><td class="center">6</td><td class="center">6</td><td class="muted">Ranged specialist; defensive posture user</td></tr>
+            <tr class="type-hybrid"><td class="highlight">Wayfarer Knight</td><td class="center gold">d8</td><td class="center">24</td><td class="center">3</td><td class="center">3</td><td class="center">23</td><td class="center">5</td><td class="center">d10</td><td class="center">17</td><td class="center">50</td><td class="center">6</td><td class="center">6</td><td class="muted">Mobile warrior; momentum-based fighter</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible-block" id="col-special-call">
+    <div class="collapsible-header" data-col="col-special-call">
+      <span class="collapsible-title"><i class="fa-solid fa-star"></i> Special Callings (2)</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-special">
+          <thead><tr><th>Calling</th><th>WS Die</th><th>Base WP</th><th>Path Pts</th><th>Pool</th><th>CP</th><th>HP Die</th><th>Min HP</th><th>Max HP</th><th>Armor Start</th><th>Armor Max</th><th>Special Notes</th></tr></thead>
+          <tbody>
+            <tr class="type-special"><td class="highlight">Shield Warden</td><td class="center muted">None</td><td class="center muted">0</td><td class="center muted">0</td><td class="center">22</td><td class="center gold">6 CP</td><td class="center gold">d12</td><td class="center gold">21</td><td class="center gold">60</td><td class="center gold">9</td><td class="center gold">10</td><td class="muted"><span class="tag-danger">Cannot channel Song</span> · No defensive postures · Structural anchor</td></tr>
+            <tr class="type-special"><td class="highlight">Songweaver</td><td class="center gold">d10</td><td class="center">32</td><td class="center muted">4 CP (Cadence)</td><td class="center">22</td><td class="center">4</td><td class="center">d10</td><td class="center">17</td><td class="center">50</td><td class="center">5</td><td class="center">7</td><td class="muted">Unique Cadence system · 5 WP per cast · CR 1–6</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="no-results-msg" id="nr-callings"></div>
+</div>
+
+<!-- ─────── TAB: VOCATIONS ──────────────────────────── -->
+<div class="section-panel" id="tab-vocations">
+  <p class="section-title">Vocations</p>
+  <p class="section-desc">Background vocations granting Heritage Imprints and selectable skill pools.</p>
+
+  <div class="collapsible-block" id="col-voc-phys">
+    <div class="collapsible-header" data-col="col-voc-phys">
+      <span class="collapsible-title"><i class="fa-solid fa-person-running"></i> Physicality &amp; Environment (6)</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-voc-phys">
+          <thead><tr><th>Vocation</th><th>Skill Type</th><th>Selection</th><th>Skill 1</th><th>Skill 2</th><th>Skill 3</th><th>Skill 4</th></tr></thead>
+          <tbody>
+            <tr class="her-phys"><td class="highlight">Baker</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Endurance <span class="tag-choice">A</span></td><td>Survival <span class="tag-choice">A</span></td><td>Economics &amp; Trade <span class="tag-locked">K</span></td><td>Provisioning <span class="tag-locked">K</span></td></tr>
+            <tr class="her-phys"><td class="highlight">Courier</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Athletics <span class="tag-choice">A</span></td><td>Reaction Timing <span class="tag-choice">A</span></td><td>Navigation <span class="tag-locked">K</span></td><td>Weapon Mastery <span class="tag-choice">A</span></td></tr>
+            <tr class="her-phys"><td class="highlight">Hearthwarden</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Perception <span class="tag-choice">A</span></td><td>Environmental Sci. <span class="tag-locked">K</span></td><td>Endurance <span class="tag-choice">A</span></td><td>Insight <span class="tag-locked">K</span></td></tr>
+            <tr class="her-phys"><td class="highlight">Laborer</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Athletics <span class="tag-choice">A</span></td><td>Endurance <span class="tag-choice">A</span></td><td>Engineering <span class="tag-locked">K</span></td><td>Weapon Mastery <span class="tag-choice">A</span></td></tr>
+            <tr class="her-phys"><td class="highlight">Preserver</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Survival <span class="tag-choice">A</span></td><td>Environmental Sci. <span class="tag-locked">K</span></td><td>Economics &amp; Trade <span class="tag-locked">K</span></td><td>Endurance <span class="tag-choice">A</span></td></tr>
+            <tr class="her-phys"><td class="highlight">Scout</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Stealth <span class="tag-choice">A</span></td><td>Perception <span class="tag-choice">A</span></td><td>Survival <span class="tag-choice">A</span></td><td>Navigation <span class="tag-locked">K</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible-block" id="col-voc-soc">
+    <div class="collapsible-header" data-col="col-voc-soc">
+      <span class="collapsible-title"><i class="fa-solid fa-comments"></i> Social &amp; Perceptual (4)</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-voc-soc">
+          <thead><tr><th>Vocation</th><th>Skill Type</th><th>Selection</th><th>Skill 1</th><th>Skill 2</th><th>Skill 3</th><th>Skill 4</th></tr></thead>
+          <tbody>
+            <tr class="her-soc"><td class="highlight">Caretaker</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Combat Medicine <span class="tag-choice">A</span></td><td>Medicine <span class="tag-locked">K</span></td><td>Endurance <span class="tag-choice">A</span></td><td>Psychology <span class="tag-locked">K</span></td></tr>
+            <tr class="her-soc"><td class="highlight">Manservant</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Insight <span class="tag-locked">K</span></td><td>Deception <span class="tag-choice">A</span></td><td>Perception <span class="tag-choice">A</span></td><td>Psychology <span class="tag-locked">K</span></td></tr>
+            <tr class="her-soc"><td class="highlight">Mediator</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Diplomacy <span class="tag-choice">A</span></td><td>Insight <span class="tag-locked">K</span></td><td>Persuasion <span class="tag-choice">A</span></td><td>Political Theory <span class="tag-locked">K</span></td></tr>
+            <tr class="her-soc"><td class="highlight">Night Watchman</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Perception <span class="tag-choice">A</span></td><td>Weapon Mastery <span class="tag-choice">A</span></td><td>Psychology <span class="tag-locked">K</span></td><td>Insight <span class="tag-locked">K</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible-block" id="col-voc-tact">
+    <div class="collapsible-header" data-col="col-voc-tact">
+      <span class="collapsible-title"><i class="fa-solid fa-chess-rook"></i> Tactical &amp; Martial (3)</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-voc-tact">
+          <thead><tr><th>Vocation</th><th>Skill Type</th><th>Selection</th><th>Skill 1</th><th>Skill 2</th><th>Skill 3</th><th>Skill 4</th></tr></thead>
+          <tbody>
+            <tr class="her-tact"><td class="highlight">Protector</td><td class="sk-ability">Pure Ability</td><td class="muted">Choose 2</td><td>Combat Focus <span class="tag-choice">A</span></td><td>Perception <span class="tag-choice">A</span></td><td>Weapon Mastery <span class="tag-choice">A</span></td><td>Reaction Timing <span class="tag-choice">A</span></td></tr>
+            <tr class="her-tact"><td class="highlight">Steward</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Economics &amp; Trade <span class="tag-locked">K</span></td><td>Insight <span class="tag-locked">K</span></td><td>Tactics <span class="tag-choice">A</span></td><td>Command <span class="tag-choice">A</span></td></tr>
+            <tr class="her-tact"><td class="highlight">Waykeeper</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Engineering <span class="tag-locked">K</span></td><td>Weapon Mastery <span class="tag-choice">A</span></td><td>Survival <span class="tag-choice">A</span></td><td>Tactics <span class="tag-choice">A</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible-block" id="col-voc-meta">
+    <div class="collapsible-header" data-col="col-voc-meta">
+      <span class="collapsible-title"><i class="fa-solid fa-book-open"></i> Metaphysical &amp; Scholarly (3)</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-voc-meta">
+          <thead><tr><th>Vocation</th><th>Skill Type</th><th>Selection</th><th>Skill 1</th><th>Skill 2</th><th>Skill 3</th><th>Skill 4</th></tr></thead>
+          <tbody>
+            <tr class="her-meta"><td class="highlight">Initiate Resonant</td><td class="sk-mixed">Mixed</td><td class="muted">Choose 2</td><td>Resonant Infusion <span class="tag-choice">A</span></td><td>Paths <span class="tag-locked">K</span></td><td>Resonance Theory <span class="tag-locked">K</span></td><td>Soothsaying <span class="tag-choice">A</span></td></tr>
+            <tr class="her-meta"><td class="highlight">Lorekeeper</td><td class="sk-knowledge">Pure Knowledge</td><td class="muted">Choose 2</td><td>History <span class="tag-locked">K</span></td><td>Rivendawn Lore <span class="tag-locked">K</span></td><td>Linguistics <span class="tag-locked">K</span></td><td>Investigation <span class="tag-locked">K</span></td></tr>
+            <tr class="her-meta"><td class="highlight">Student</td><td class="sk-knowledge">Pure Knowledge</td><td class="muted">Choose 2</td><td>Investigation <span class="tag-locked">K</span></td><td>Linguistics <span class="tag-locked">K</span></td><td>Engineering <span class="tag-locked">K</span></td><td>History <span class="tag-locked">K</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible-block" id="col-voc-tech">
+    <div class="collapsible-header" data-col="col-voc-tech">
+      <span class="collapsible-title"><i class="fa-solid fa-screwdriver-wrench"></i> Technical Heritage (1)</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-voc-tech">
+          <thead><tr><th>Vocation</th><th>Skill Type</th><th>Selection</th><th>Skill 1</th><th>Skill 2</th><th>Skill 3</th><th>Skill 4</th></tr></thead>
+          <tbody>
+            <tr class="her-tech"><td class="highlight">Artisan</td><td class="sk-mixed">Mixed</td><td class="gold"><strong>GRANTED all 4</strong></td><td>Engineering <span class="tag-locked">K</span></td><td>Weapon Mastery <span class="tag-choice">A</span></td><td>Economics &amp; Trade <span class="tag-locked">K</span></td><td>Perception <span class="tag-choice">A</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="no-results-msg" id="nr-vocations"></div>
+</div>
+
+<!-- ─────── TAB: RESONANCE PATHS ──────────────────── -->
+<div class="section-panel" id="tab-paths">
+  <p class="section-title">Resonance Paths</p>
+  <p class="section-desc">The six paths of the Song — their first laws, expressions, and prohibitions.</p>
+
+  <div class="collapsible-block" id="col-ws">
+    <div class="collapsible-header" data-col="col-ws">
+      <span class="collapsible-title"><i class="fa-solid fa-droplet"></i> Wellspring Pools by Calling Type</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table>
+          <thead><tr><th>Calling Type</th><th>WS Die</th><th>Base Pool</th><th>Max Pool</th><th>Path Points</th><th>Per-Path Cap</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr class="type-pure"><td class="highlight">True Resonant Caster</td><td class="center gold">d12</td><td class="center">12</td><td class="center">36</td><td class="center">6</td><td class="center">4</td><td class="muted">Full access: Standard / Expanded / Mass magnitude</td></tr>
+            <tr class="type-hybrid"><td class="highlight">Hybrid</td><td class="center gold">d8</td><td class="center">8</td><td class="center">24</td><td class="center">3</td><td class="center">3</td><td class="muted">Standard magnitude only</td></tr>
+            <tr class="type-special"><td class="highlight">Songweaver</td><td class="center gold">d10</td><td class="center">10</td><td class="center">32</td><td class="center muted">Cadence</td><td class="center muted">N/A</td><td class="muted">Unique Cadence system — not standard Paths</td></tr>
+            <tr class="type-special"><td class="highlight">Shield Warden</td><td class="center muted">—</td><td class="center muted">0</td><td class="center muted">0</td><td class="center muted">0</td><td class="center muted">N/A</td><td class="muted">No Wellspring access — Forged identity</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible-block" id="col-paths-detail">
+    <div class="collapsible-header" data-col="col-paths-detail">
+      <span class="collapsible-title"><i class="fa-solid fa-wand-magic-sparkles"></i> Path Details</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-paths">
+          <thead><tr><th>Path</th><th>Attribute</th><th>First Law</th><th>Core Expression</th><th>Excels At</th><th>Refuses</th><th>Drift Danger</th><th>Combat</th></tr></thead>
+          <tbody>
+            <tr class="path-aeris"><td class="highlight"><span class="path-badge aeris">Aeris</span></td><td>Agility</td><td>Displacement</td><td>Motion · repositioning · momentum</td><td>Speed, pursuit, escape</td><td>Anchoring</td><td class="muted">Recklessness</td><td class="success">Permitted</td></tr>
+            <tr class="path-aqua"><td class="highlight"><span class="path-badge aqua">Aqua</span></td><td>Vitality</td><td>Absorption</td><td>Pressure · suppression · endurance</td><td>Pressure regulation, resilience</td><td>Erasure</td><td class="muted">Stagnation</td><td class="success">Permitted</td></tr>
+            <tr class="path-ignis"><td class="highlight"><span class="path-badge ignis">Ignis</span></td><td>Intelligence</td><td>Combustive Transformation</td><td>Damage · alteration · escalation</td><td>Rapid alteration, breakthrough</td><td>Preservation</td><td class="muted">Volatility</td><td class="success">Permitted</td></tr>
+            <tr class="path-obtene"><td class="highlight"><span class="path-badge obtene">Obtenebrate</span></td><td>Agility</td><td>Perceptual Distortion</td><td>Concealment · misdirection · infiltration</td><td>Concealment, infiltration</td><td>Open dominance</td><td class="muted">Manipulation as identity</td><td class="danger"><span class="tag-danger">NON-COMBAT ONLY</span></td></tr>
+            <tr class="path-terra"><td class="highlight"><span class="path-badge terra">Terra</span></td><td>Strength</td><td>Refusal through Solidity</td><td>Anchoring · fortification · force</td><td>Fortification, anchoring</td><td>Flow / Redirection</td><td class="muted">Rigidity</td><td class="success">Permitted</td></tr>
+            <tr class="path-vitae"><td class="highlight"><span class="path-badge vitae">Vitae</span></td><td>Wisdom</td><td>Adaptive Growth</td><td>Healing · restraint · stabilization</td><td>Healing, reinforcement</td><td class="danger">Lethal force [HARD]</td><td class="muted">Overgrowth</td><td class="muted">Non-lethal only</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="no-results-msg" id="nr-paths"></div>
+</div>
+
+<!-- ─────── TAB: CASTING ──────────────────────────── -->
+<div class="section-panel" id="tab-casting">
+  <p class="section-title">Casting Mechanics</p>
+  <p class="section-desc">Resolution formula, WP costs, magnitude tiers, RED system, and per-path effect bands.</p>
+
+  <div class="collapsible-block" id="col-cast-rules">
+    <div class="collapsible-header" data-col="col-cast-rules">
+      <span class="collapsible-title"><i class="fa-solid fa-dice-d20"></i> Core Casting Rules</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-casting">
+          <thead><tr><th>Rule</th><th>Value</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="highlight">Capability Formula</td><td>Attribute + Ability/Knowledge + Path Rating</td><td class="muted">Core dice pool for all resonant actions</td></tr>
+            <tr><td class="highlight">Success Roll</td><td>1d20 ≥ TN</td><td class="muted">Binary pass/fail resolution</td></tr>
+            <tr><td class="highlight">TN Calculation</td><td>Baseline − Capability</td><td class="muted">Higher Capability = easier TN</td></tr>
+            <tr><td class="highlight">Magnitude — Standard</td><td class="center">TN +0</td><td class="muted">Single target or contained effect</td></tr>
+            <tr><td class="highlight">Magnitude — Expanded</td><td class="center">TN +3</td><td class="muted">Multi-target or significant alteration</td></tr>
+            <tr><td class="highlight">Magnitude — Mass</td><td class="center">TN +9</td><td class="muted">Battlefield or environment-wide effect</td></tr>
+            <tr><td class="highlight danger">Magnitude Restriction (Hybrid)</td><td class="danger">Standard only</td><td class="danger">Hybrids cannot access Expanded or Mass magnitude</td></tr>
+            <tr><td class="highlight">Cost — True Caster Success</td><td class="center">5 WP</td><td class="muted">Flat cost regardless of magnitude</td></tr>
+            <tr><td class="highlight">Cost — True Caster Failure</td><td class="center">8 WP</td><td class="muted">Energy engaged but not harmonized</td></tr>
+            <tr><td class="highlight">Cost — Hybrid Success</td><td class="center">7 WP</td><td class="muted">Flat cost — higher than pure caster</td></tr>
+            <tr><td class="highlight">Cost — Hybrid Failure</td><td class="center">9 WP</td><td class="muted">Higher baseline cost than true caster</td></tr>
+            <tr><td class="highlight">Natural 20</td><td class="success">Auto-success</td><td class="muted">Cast succeeds regardless of TN; does not expand scope</td></tr>
+            <tr><td class="highlight danger">Natural 1 — True Caster</td><td class="danger">Harmonic Inversion</td><td class="danger">Effect manifests on caster; ×2 WP lost + Path locked next round</td></tr>
+            <tr><td class="highlight danger">Natural 1 — Hybrid</td><td class="danger">Backlash</td><td class="danger">Effect manifests on self</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible-block" id="col-red">
+    <div class="collapsible-header" data-col="col-red">
+      <span class="collapsible-title"><i class="fa-solid fa-chart-bar"></i> RED System &amp; Band Structure</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <div class="table-label">Resonant Effect Die by Practitioner Type</div>
+        <table>
+          <thead><tr><th>Practitioner</th><th>PR 1–2</th><th>PR 3</th><th>PR 4</th><th>PR 5–6</th><th>Max Band</th></tr></thead>
+          <tbody>
+            <tr class="type-hybrid"><td class="highlight">Hybrid</td><td class="center gold">1d4</td><td class="center gold">1d6</td><td class="center muted">—</td><td class="center muted">—</td><td class="muted">Enhanced Moderate (cap)</td></tr>
+            <tr class="type-pure"><td class="highlight">Pure Caster</td><td class="center gold">1d6</td><td class="center gold">1d8</td><td class="center gold">1d8</td><td class="center gold">1d10</td><td class="muted">Dominant</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-block">
+        <div class="table-label">Band Intensity by Die Roll</div>
+        <table>
+          <thead><tr><th>Die</th><th>1–2</th><th>3–4</th><th>5–6</th><th>7–8</th><th>9–10</th></tr></thead>
+          <tbody>
+            <tr><td class="highlight">d4</td><td class="band-minor">Minor</td><td class="band-moderate">Moderate</td><td class="center muted">—</td><td class="center muted">—</td><td class="center muted">—</td></tr>
+            <tr><td class="highlight">d6</td><td class="band-minor">Minor</td><td class="band-moderate">Moderate</td><td class="band-enhanced">Enhanced Moderate</td><td class="center muted">—</td><td class="center muted">—</td></tr>
+            <tr><td class="highlight">d8</td><td class="band-minor">Minor</td><td class="band-moderate">Moderate</td><td class="band-enhanced">Enhanced Moderate</td><td class="band-severe">Severe+</td><td class="center muted">—</td></tr>
+            <tr><td class="highlight">d10</td><td class="band-minor">Minor</td><td class="band-moderate">Moderate</td><td class="band-enhanced">Enhanced Moderate</td><td class="band-severe">Severe+</td><td class="band-dominant">Dominant ⚠</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:.88rem; color:#8b1a1a; margin-top:.4rem; font-style:italic;">⚠ Only Dominant band effects may be resisted (DC 12 fixed check).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible-block" id="col-path-effects">
+    <div class="collapsible-header" data-col="col-path-effects">
+      <span class="collapsible-title"><i class="fa-solid fa-bolt"></i> Path Effects by Band</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <div class="table-label">Aeris — Directed Momentum</div>
+        <table><thead><tr><th style="background:rgba(184,216,232,0.6)">Band</th><th style="background:rgba(184,216,232,0.6)">Effect</th></tr></thead>
+        <tbody>
+          <tr class="path-aeris band-minor"><td>Minor</td><td>Shift target 5 ft</td></tr>
+          <tr class="path-aeris band-moderate"><td>Moderate</td><td>Shift target 10 ft</td></tr>
+          <tr class="path-aeris band-enhanced"><td>Enhanced Moderate</td><td>Shift 10 ft + target loses reactions</td></tr>
+          <tr class="path-aeris band-severe"><td>Severe</td><td>Shift 15 ft</td></tr>
+          <tr class="path-aeris band-severe-p"><td>Severe+</td><td>Shift 15 ft + target loses reactions</td></tr>
+          <tr class="path-aeris band-dominant"><td>Dominant ⚠</td><td>Shift 20 ft + lose reactions (DC 12 to resist displacement beyond 10 ft)</td></tr>
+        </tbody></table>
+      </div>
+      <div class="table-block">
+        <div class="table-label">Aqua — Suppressive Pressure</div>
+        <table><thead><tr><th style="background:rgba(184,224,216,0.6)">Band</th><th style="background:rgba(184,224,216,0.6)">Effect</th></tr></thead>
+        <tbody>
+          <tr class="path-aqua band-minor"><td>Minor</td><td>Reduce target movement by 5 ft for 1 round</td></tr>
+          <tr class="path-aqua band-moderate"><td>Moderate</td><td>Reduce target movement by 10 ft for 1 round</td></tr>
+          <tr class="path-aqua band-enhanced"><td>Enhanced Moderate</td><td>Reduce movement 10 ft + −1 to attack rolls</td></tr>
+          <tr class="path-aqua band-severe"><td>Severe</td><td>Reduce movement 15 ft + −1 to all checks</td></tr>
+          <tr class="path-aqua band-severe-p"><td>Severe+</td><td>Reduce movement 15 ft + −2 to all checks</td></tr>
+          <tr class="path-aqua band-dominant"><td>Dominant ⚠</td><td>Movement reduced to 0 + −2 to all checks (DC 12 to resist full suppression)</td></tr>
+        </tbody></table>
+      </div>
+      <div class="table-block">
+        <div class="table-label">Ignis — Combustive Force</div>
+        <table><thead><tr><th style="background:rgba(232,200,184,0.6)">Band</th><th style="background:rgba(232,200,184,0.6)">Effect</th></tr></thead>
+        <tbody>
+          <tr class="path-ignis band-minor"><td>Minor</td><td>Deal 1d6 fire damage</td></tr>
+          <tr class="path-ignis band-moderate"><td>Moderate</td><td>Deal 1d8 fire damage</td></tr>
+          <tr class="path-ignis band-enhanced"><td>Enhanced Moderate</td><td>Deal 1d10 fire damage</td></tr>
+          <tr class="path-ignis band-severe"><td>Severe</td><td>Deal 1d12 fire damage + ignite (1d4 ongoing)</td></tr>
+          <tr class="path-ignis band-severe-p"><td>Severe+</td><td>Deal 1d12+1d6 fire damage + ignite (1d4 ongoing)</td></tr>
+          <tr class="path-ignis band-dominant"><td>Dominant ⚠</td><td>Deal 2d10 fire damage + ignite + −2 to target saves (DC 12 to resist ignite)</td></tr>
+        </tbody></table>
+      </div>
+      <div class="table-block">
+        <div class="table-label">Terra — Anchoring Force</div>
+        <table><thead><tr><th style="background:rgba(212,184,160,0.6)">Band</th><th style="background:rgba(212,184,160,0.6)">Effect</th></tr></thead>
+        <tbody>
+          <tr class="path-terra band-minor"><td>Minor</td><td>Difficult terrain in 5 ft radius for 1 round</td></tr>
+          <tr class="path-terra band-moderate"><td>Moderate</td><td>Difficult terrain in 10 ft radius for 1 round</td></tr>
+          <tr class="path-terra band-enhanced"><td>Enhanced Moderate</td><td>Difficult terrain + −1 to target Agility checks</td></tr>
+          <tr class="path-terra band-severe"><td>Severe</td><td>Difficult terrain + target movement halved</td></tr>
+          <tr class="path-terra band-severe-p"><td>Severe+</td><td>Difficult terrain + movement halved + prone</td></tr>
+          <tr class="path-terra band-dominant"><td>Dominant ⚠</td><td>Target is rooted (cannot move) for 1 round (DC 12 to resist root)</td></tr>
+        </tbody></table>
+      </div>
+      <div class="table-block">
+        <div class="table-label">Vitae — Adaptive Growth</div>
+        <table><thead><tr><th style="background:rgba(200,232,184,0.6)">Band</th><th style="background:rgba(200,232,184,0.6)">Effect</th></tr></thead>
+        <tbody>
+          <tr class="path-vitae band-minor"><td>Minor</td><td>Restore 1d4 HP</td></tr>
+          <tr class="path-vitae band-moderate"><td>Moderate</td><td>Restore 1d8 HP</td></tr>
+          <tr class="path-vitae band-enhanced"><td>Enhanced Moderate</td><td>Restore 1d10 HP + remove one minor condition</td></tr>
+          <tr class="path-vitae band-severe"><td>Severe</td><td>Restore 1d12 HP + remove one condition</td></tr>
+          <tr class="path-vitae band-severe-p"><td>Severe+</td><td>Restore 1d12+1d6 HP + remove up to two conditions</td></tr>
+          <tr class="path-vitae band-dominant"><td>Dominant ⚠</td><td>Restore 2d10 HP + remove conditions + stabilize dying target (DC 12 to resist forced healing)</td></tr>
+        </tbody></table>
+      </div>
+      <div class="table-block">
+        <div class="table-label">Obtenebrate — Perceptual Distortion</div>
+        <table><thead><tr><th style="background:rgba(200,200,200,0.6)">Band</th><th style="background:rgba(200,200,200,0.6)">Effect</th></tr></thead>
+        <tbody>
+          <tr class="path-obtene band-minor"><td>Minor</td><td>Target has −1 Perception checks for 1 round</td></tr>
+          <tr class="path-obtene band-moderate"><td>Moderate</td><td>Target has −2 Perception checks for 1 round</td></tr>
+          <tr class="path-obtene band-enhanced"><td>Enhanced Moderate</td><td>Target blinded for 1 round (cannot see caster)</td></tr>
+          <tr class="path-obtene band-severe"><td>Severe</td><td>Target confused for 1 round (must spend action to reorient)</td></tr>
+          <tr class="path-obtene band-severe-p"><td>Severe+</td><td>Target confused + −2 to all checks for 1 round</td></tr>
+          <tr class="path-obtene band-dominant"><td>Dominant ⚠</td><td>Target fully disoriented 1 round; all actions at TN +4 (DC 12 to resist disorientation)</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+  </div>
+  <div class="no-results-msg" id="nr-casting"></div>
+</div>
+
+<!-- ─────── TAB: HARMONICS ──────────────────────────── -->
+<div class="section-panel" id="tab-harmonics">
+  <p class="section-title">Harmonics &amp; Dissonance</p>
+  <p class="section-desc">Dynamics, Disciplines, identity pairings, and the consequences of Dissonance.</p>
+
+  <div class="collapsible-block" id="col-dynamics">
+    <div class="collapsible-header" data-col="col-dynamics">
+      <span class="collapsible-title"><i class="fa-solid fa-bolt"></i> Dynamics (6)</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-dynamics">
+          <thead><tr><th>Dynamic</th><th>Expression</th><th>Resonant Feel</th><th>Table Presence</th></tr></thead>
+          <tbody>
+            <tr><td class="highlight">Quieted</td><td>Gentle, careful, steady strength held in reserve</td><td class="muted">Warm hum in chest</td><td>De-escalation, calm</td></tr>
+            <tr><td class="highlight">Assertive</td><td>Bold, confident power expressed with clarity</td><td class="muted">Sharp spark along arms</td><td>Clear directive leadership</td></tr>
+            <tr><td class="highlight">Unbridled</td><td>Wild, instinctual energy that erupts when demanded</td><td class="muted">Electric thrill through veins</td><td>Burst of raw power under pressure</td></tr>
+            <tr><td class="highlight">Surging</td><td>Sudden bursts of overwhelming intensity</td><td class="muted">Pressure building then bursting outward</td><td>Sudden turn-reversal</td></tr>
+            <tr><td class="highlight">Enduring</td><td>Steady resilience that persists through hardship</td><td class="muted">Grounding warmth in bones</td><td>Keeps group moving when others falter</td></tr>
+            <tr><td class="highlight">Flowing</td><td>Adaptive power that responds fluidly to change</td><td class="muted">Fluid current through limbs</td><td>Instant plan adaptation</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible-block" id="col-disciplines">
+    <div class="collapsible-header" data-col="col-disciplines">
+      <span class="collapsible-title"><i class="fa-solid fa-scale-balanced"></i> Disciplines (6)</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table id="tbl-disciplines">
+          <thead><tr><th>Discipline</th><th>Expression</th><th>Resonant Feel</th><th>Decision Philosophy</th></tr></thead>
+          <tbody>
+            <tr><td class="highlight">Ordinate</td><td>Bound by oath, code, or lawful order</td><td class="muted">Cool precise thread through veins</td><td>Rule-driven choices</td></tr>
+            <tr><td class="highlight">Custodial</td><td>Dedicated to protecting what matters most</td><td class="muted">Warm protective glow around heart</td><td>Protection-centered</td></tr>
+            <tr><td class="highlight">Judicial</td><td>Measured and balanced in pursuit of fairness</td><td class="muted">Steady even pulse in chest</td><td>Fairness-driven</td></tr>
+            <tr><td class="highlight">Witnessed</td><td>Transparent, accountable, openly behind every action</td><td class="muted">Bright warmth across shoulders</td><td>Accountability-focused</td></tr>
+            <tr><td class="highlight">Necessary</td><td>Acting only when required — deliberate restraint</td><td class="muted">Cool focused clarity in mind</td><td>Restraint-driven</td></tr>
+            <tr><td class="highlight">Redemptive</td><td>Offering mercy, healing, second chances</td><td class="muted">Gentle golden warmth in hands</td><td>Mercy-centered</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible-block" id="col-dissonance">
+    <div class="collapsible-header" data-col="col-dissonance">
+      <span class="collapsible-title"><i class="fa-solid fa-triangle-exclamation"></i> Dissonance Escalation &amp; Static Veil</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <div class="table-label">Dissonance Escalation Protocol</div>
+        <table>
+          <thead><tr><th>Step</th><th>Trigger</th><th>Watcher Action</th><th>Mechanical Effect</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr style="background:rgba(212,240,212,0.6)"><td class="highlight">1st Instance</td><td>Declared Harmonics contradict repeated behavior</td><td>Discussion with Player</td><td class="success">None yet</td><td class="muted">Narrative resolution opportunity</td></tr>
+            <tr style="background:rgba(255,232,180,0.6)"><td class="highlight">2nd Instance</td><td>Pattern continues after discussion</td><td>Player may pursue Narrative Shift</td><td class="muted">None yet</td><td class="muted">Narrative Shift becomes available</td></tr>
+            <tr style="background:rgba(255,200,200,0.6)"><td class="highlight">3rd Instance</td><td>Pattern is sustained and consistent</td><td>Static Veil applied</td><td class="danger"><strong>TN +3 on ALL checks</strong></td><td class="muted">Full mechanical penalty</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-block">
+        <div class="table-label">Static Veil Details</div>
+        <table>
+          <thead><tr><th>Aspect</th><th>Rule</th></tr></thead>
+          <tbody>
+            <tr><td class="highlight">Mechanical Effect</td><td class="danger"><strong>TN +3 on ALL Ability, Knowledge, and Resonant Cast checks</strong></td></tr>
+            <tr><td class="highlight">Duration</td><td>Persists until realignment or Narrative Shift</td></tr>
+            <tr><td class="highlight">Clearing Method</td><td>Sustained realignment with harmonic truth OR formal Harmonic redefinition (Watcher approval)</td></tr>
+            <tr><td class="highlight">Capability Impact</td><td class="muted">Does NOT alter Capability or Baseline — only modifies TN upward</td></tr>
+            <tr><td class="highlight">Narrative Shift</td><td>Meaningful character evolution through story; requires Watcher approval</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="no-results-msg" id="nr-harmonics"></div>
+</div>
+
+<!-- ─────── TAB: COMBAT ──────────────────────────── -->
+<div class="section-panel" id="tab-combat">
+  <p class="section-title">Combat Mechanics</p>
+  <p class="section-desc">Combat identity profiles, armor tiers, defensive postures, and calling-specific abilities.</p>
+
+  <div class="collapsible-block" id="col-combat-ids">
+    <div class="collapsible-header" data-col="col-combat-ids">
+      <span class="collapsible-title"><i class="fa-solid fa-id-card"></i> Combat Identity Profiles</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table>
+          <thead><tr><th>Identity</th><th>CP</th><th>WS Die</th><th>Path Cap</th><th>Magnitude</th><th>Pool</th><th>Special Rules</th></tr></thead>
+          <tbody>
+            <tr class="type-special"><td class="highlight">Forged Combatant</td><td class="center gold">6</td><td class="center muted">None</td><td class="center muted">N/A</td><td class="center muted">None</td><td class="center">25 pts</td><td>+5 FP, +1 free Primary Rating; no Resonance</td></tr>
+            <tr class="type-hybrid"><td class="highlight">Martial Hybrid</td><td class="center gold">5</td><td class="center gold">d8</td><td class="center">3/path</td><td class="center">Standard</td><td class="center">23 pts</td><td>Choose lane per strike: Mundane or Channeled</td></tr>
+            <tr class="type-pure"><td class="highlight">True Resonant Caster</td><td class="center gold">4</td><td class="center gold">d12</td><td class="center">4/path</td><td class="center">All</td><td class="center">22 pts</td><td>Unspent CP converts: 2→+1 PP or 1→+5 WP</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible-block" id="col-armor">
+    <div class="collapsible-header" data-col="col-armor">
+      <span class="collapsible-title"><i class="fa-solid fa-shield"></i> Armor &amp; Damage Mechanics</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table>
+          <thead><tr><th>Tier</th><th>Damage Split</th><th>Rule</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td class="highlight">Tier 1–6</td><td>50% AP / 50% HP</td><td>Armor Points and Health Points split equally</td><td class="muted">14 damage → 7 AP + 7 HP</td></tr>
+            <tr><td class="highlight">Tier 7+</td><td>AP first, then HP</td><td>Armor depletes before Health; overflow to HP</td><td class="muted">4 AP + 10 damage → AP depleted, 6 HP damage</td></tr>
+            <tr><td class="highlight">Bonus Armor</td><td>Reduced first</td><td>Bonus Armor is consumed before base Armor</td><td class="muted">Sources: Absorption Shield (Xd4), Stone Mountain (+15 AP), X Stance (+15 AP)</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible-block" id="col-postures">
+    <div class="collapsible-header" data-col="col-postures">
+      <span class="collapsible-title"><i class="fa-solid fa-person-running"></i> Defensive Postures</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <div class="table-label">Standard Melee — Available to most Hybrids (not Shield Warden)</div>
+        <table>
+          <thead><tr><th>Posture</th><th>Mechanic</th><th>Value</th><th>Condition / Trigger</th></tr></thead>
+          <tbody>
+            <tr class="atype-def-pos"><td class="highlight">Dodge</td><td>Base Defensive Rating</td><td class="success">+2 BDR</td><td class="muted">Unlocked at creation</td></tr>
+            <tr class="atype-def-pos"><td class="highlight">Parry</td><td>Own TN vs. that opponent</td><td class="success">TN −2</td><td class="muted">Trigger: opponent misses</td></tr>
+            <tr class="atype-def-pos"><td class="highlight">Riposte</td><td>Attacker TN + Attack of Opportunity</td><td class="success">Attacker TN −1; if miss → full AoO</td><td class="muted">Trade-off: attacker easier to hit</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-block">
+        <div class="table-label">Resonant Defensive Postures — Pure Casters only; Requires Path Rating 4</div>
+        <table>
+          <thead><tr><th>Posture</th><th>Path</th><th>Mechanic</th><th>Value</th><th>Duration</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr class="path-aqua"><td class="highlight">Absorption Shield</td><td><span class="path-badge aqua">Aqua</span> / <span class="path-badge terra">Terra</span></td><td>Roll Xd4 (X = Path Rating); add to AP</td><td class="success">Bonus Armor</td><td>Encounter</td><td class="muted">Reduced before base Armor; 50/50 split still applies</td></tr>
+            <tr class="path-ignis"><td class="highlight">Damage Shield</td><td><span class="path-badge ignis">Ignis</span></td><td>Retaliatory damage on melee hit</td><td class="gold">PR4=d10 / PR5=d12 / PR6=d12+d6</td><td>Encounter</td><td class="muted">No avoidance bonus — pure retaliation</td></tr>
+            <tr class="path-aeris"><td class="highlight">Dodge (Resonant)</td><td><span class="path-badge aeris">Aeris</span></td><td>Total Defensive Rating</td><td class="success">+2 TDR</td><td>Encounter</td><td class="muted">No Damage Shield; No Absorption Shield — pure avoidance</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible-block" id="col-ascetic">
+    <div class="collapsible-header" data-col="col-ascetic">
+      <span class="collapsible-title"><i class="fa-solid fa-fist-raised"></i> Ascetic Adept — Calling Abilities</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table>
+          <thead><tr><th>Ability</th><th>Type</th><th>Target</th><th>Value</th><th>Condition / Notes</th></tr></thead>
+          <tbody>
+            <tr class="atype-school"><td class="highlight">Stone Mountain (Terra)</td><td>School Ability</td><td>Armor Points</td><td class="gold">+15 AP (Bonus)</td><td class="muted">Activation: 1 turn, must hold position; Duration: 1 round</td></tr>
+            <tr class="atype-school"><td class="highlight">Aeris Breeze (Aeris)</td><td>School Ability</td><td>Defensive Rating</td><td class="gold">+3 DR</td><td class="muted">Activation: 1 turn; Duration: 2 rounds</td></tr>
+            <tr class="atype-school"><td class="highlight">X Stance (Forged)</td><td>School Ability</td><td>Armor Points</td><td class="gold">+15 AP (Bonus)</td><td class="muted">1-turn activation, hold position; Duration: 1 round; No Resonant req.</td></tr>
+            <tr class="atype-def-surge"><td class="highlight">Iron Breath</td><td>Defensive Surge</td><td>Incoming Damage</td><td class="success">Reduce by 50%</td><td class="muted">Trigger: when taking damage; Cannot use while stunned/disoriented/unconscious/surprised</td></tr>
+            <tr class="atype-off-gift"><td class="highlight">Conduit Disruption</td><td>Offensive Gift</td><td>Enemy Action</td><td class="gold">Disarm (armed) or TN −3 (unarmed)</td><td class="muted">Trigger: Natural 20; Once per event</td></tr>
+            <tr class="atype-off-surge"><td class="highlight">Meridian Break</td><td>Offensive Surge</td><td>Damage / TN</td><td class="gold">+50% damage or enemy TN +4</td><td class="muted">Trigger: after successful hit; choose one effect</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible-block" id="col-ranger">
+    <div class="collapsible-header" data-col="col-ranger">
+      <span class="collapsible-title"><i class="fa-solid fa-bow-arrow"></i> Ranger — Calling Abilities</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table>
+          <thead><tr><th>Ability</th><th>Type</th><th>Target</th><th>Value</th><th>Condition / Notes</th></tr></thead>
+          <tbody>
+            <tr class="atype-def-pos"><td class="highlight">Evade / Cover</td><td>Defensive Posture</td><td>Attacker TN</td><td class="success">+2 TN to attacker</td><td class="muted">Requires functional cover available</td></tr>
+            <tr class="atype-def-pos"><td class="highlight">Braced</td><td>Defensive Posture</td><td>Return Fire TN</td><td class="success">−1 TN on return attack</td><td class="muted">No defensive bonus; return fire only if attacker misses</td></tr>
+            <tr class="atype-def-pos"><td class="highlight">Steady Aim</td><td>Defensive Posture</td><td>Return Fire TN</td><td class="success">−3 TN on return attack</td><td class="muted">Must remain stationary; return fire only if attacker misses</td></tr>
+            <tr class="atype-def-gift"><td class="highlight">Master of Cover</td><td>Defensive Gift</td><td>Defensive Rating</td><td class="success">+1 DR</td><td class="muted">Always active when functional cover available; Passive</td></tr>
+            <tr class="atype-def-surge"><td class="highlight">Ghost of the Wilds</td><td>Defensive Surge</td><td>DR + Movement</td><td class="success">+5 DR / 4m free move</td><td class="muted">Trigger: when targeted; Free move only if attack misses</td></tr>
+            <tr class="atype-off-gift"><td class="highlight">Horizon's Mark</td><td>Offensive Gift</td><td>Damage</td><td class="gold">+1d6 on next ranged attack</td><td class="muted">Trigger: Natural 20</td></tr>
+            <tr class="atype-off-surge"><td class="highlight">Sovereign Volley</td><td>Offensive Surge</td><td>Attacks</td><td class="gold">+1 additional ranged attack</td><td class="muted">Declare at start of turn; 3rd attack TN +2</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapsible-block" id="col-warden">
+    <div class="collapsible-header" data-col="col-warden">
+      <span class="collapsible-title"><i class="fa-solid fa-shield-halved"></i> Shield Warden — Calling Abilities</span>
+      <i class="fa-solid fa-chevron-down collapsible-chevron"></i>
+    </div>
+    <div class="collapsible-body">
+      <div class="table-block">
+        <table>
+          <thead><tr><th>Ability</th><th>Type</th><th>Target</th><th>Value</th><th>Condition / Notes</th></tr></thead>
+          <tbody>
+            <tr class="atype-control"><td class="highlight">Shield Bash</td><td>Threat / Control</td><td>Enemy TN</td><td class="gold">TN +3 to attack anyone but Warden</td><td class="muted">Duration: until end of enemy's next turn; Usable 2×/round</td></tr>
+            <tr class="atype-control"><td class="highlight">Resonant Shield Mimic</td><td>Threat / Control</td><td>Bounce Targets</td><td class="gold">1d6 / 1d4 arc</td><td class="muted">Force arcs to 2 additional targets within 20 ft; Usable 2×/round</td></tr>
+            <tr class="atype-restrict"><td class="highlight danger">No Defensive Postures</td><td>Restriction</td><td>Dodge/Parry/Riposte</td><td class="danger">Locked out entirely</td><td class="danger">Structural anchor — not evasive; unique class restriction</td></tr>
+            <tr class="atype-def-gift"><td class="highlight">Retributive Anchor</td><td>Defensive Gift</td><td>Attack of Opportunity</td><td class="success">Free Shield Bash</td><td class="muted">Trigger: attacker rolls Natural 1 against Warden</td></tr>
+            <tr class="atype-off-gift"><td class="highlight">Entrenched Momentum</td><td>Offensive Gift</td><td>Defensive Rating</td><td class="gold">DR +3 for 3 rounds</td><td class="muted">Trigger: Shield Warden rolls Natural 20</td></tr>
+            <tr class="atype-off-surge"><td class="highlight">Crushing Reversal</td><td>Offensive Surge</td><td>Condition + Damage</td><td class="gold">Prone or +50% damage</td><td class="muted">Trigger: after enemy misses; perform immediate Shield Bash</td></tr>
+            <tr class="atype-def-surge"><td class="highlight">Bulwark of the Line</td><td>Defensive Surge</td><td>Ally Redirect</td><td class="success">Become target; reduce damage by 60%</td><td class="muted">Trigger: ally within 3m targeted; Cannot use while stunned/disoriented/unconscious/surprised</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="no-results-msg" id="nr-combat"></div>
+</div>
+
+<!-- END content-container -->
+</div>
+</main>
+
+<footer>
+  <div>
+    Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    © 2026 jpcauthor. All rights reserved.
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    <a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+  </div>
+</footer>
+
+</div><!-- .page-wrapper -->
+
+<script>
+/* ══════════════════════════════════════════════
+   TAB SWITCHING
+══════════════════════════════════════════════ */
+const tabBtns = document.querySelectorAll('.tab-btn');
+const panels  = document.querySelectorAll('.section-panel');
+
+function switchTab(tabId) {
+  tabBtns.forEach(b => b.classList.toggle('active', b.dataset.tab === tabId));
+  panels.forEach(p  => p.classList.toggle('active', p.id === 'tab-' + tabId));
+  // clear search when switching tabs
+  if (searchInput.value) {
+    searchInput.value = '';
+    clearSearch();
+  }
+}
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+});
+
+/* ══════════════════════════════════════════════
+   COLLAPSIBLE SECTIONS
+══════════════════════════════════════════════ */
+document.querySelectorAll('.collapsible-header').forEach(header => {
+  header.addEventListener('click', () => {
+    const block = document.getElementById(header.dataset.col);
+    block.classList.toggle('collapsed');
+  });
+});
+
+/* ══════════════════════════════════════════════
+   GLOBAL SEARCH
+══════════════════════════════════════════════ */
+const searchInput = document.getElementById('globalSearch');
+const searchClear = document.getElementById('searchClear');
+const searchCount = document.getElementById('searchCount');
+
+// All searchable tables mapped to their parent tab
+const TABLE_MAP = {
+  'tbl-lineages':   'lineages',
+  'tbl-pure':       'callings',
+  'tbl-hybrid':     'callings',
+  'tbl-special':    'callings',
+  'tbl-voc-phys':   'vocations',
+  'tbl-voc-soc':    'vocations',
+  'tbl-voc-tact':   'vocations',
+  'tbl-voc-meta':   'vocations',
+  'tbl-voc-tech':   'vocations',
+  'tbl-paths':      'paths',
+  'tbl-casting':    'casting',
+  'tbl-dynamics':   'harmonics',
+  'tbl-disciplines':'harmonics',
+};
+
+function clearSearch() {
+  document.querySelectorAll('tr.search-hidden').forEach(r => r.classList.remove('search-hidden'));
+  document.querySelectorAll('.collapsible-block.collapsed').forEach(b => b.classList.remove('collapsed'));
+  document.querySelectorAll('.no-results-msg').forEach(m => { m.textContent = ''; m.classList.remove('visible'); });
+  searchCount.textContent = '';
+  searchClear.style.display = 'none';
+}
+
+function runSearch(query) {
+  if (!query) { clearSearch(); return; }
+  searchClear.style.display = 'block';
+  const q = query.toLowerCase();
+
+  // Expand all collapsibles so hidden rows become filterable
+  document.querySelectorAll('.collapsible-block.collapsed').forEach(b => b.classList.remove('collapsed'));
+
+  let totalVisible = 0;
+  const tabHits = {};
+
+  Object.entries(TABLE_MAP).forEach(([tblId, tabId]) => {
+    const tbl = document.getElementById(tblId);
+    if (!tbl) return;
+    const rows = tbl.querySelectorAll('tbody tr');
+    let tblVisible = 0;
+    rows.forEach(row => {
+      const text = row.textContent.toLowerCase();
+      const match = text.includes(q);
+      row.classList.toggle('search-hidden', !match);
+      if (match) { tblVisible++; totalVisible++; }
+    });
+    tabHits[tabId] = (tabHits[tabId] || 0) + tblVisible;
+  });
+
+  // Auto-switch to first tab with results
+  const firstHitTab = Object.keys(tabHits).find(t => tabHits[t] > 0);
+  if (firstHitTab) switchTab(firstHitTab);
+
+  // Show no-results messages per tab
+  const nrIds = {
+    lineages:'nr-lineages', callings:'nr-callings', vocations:'nr-vocations',
+    paths:'nr-paths', casting:'nr-casting', harmonics:'nr-harmonics', combat:'nr-combat'
+  };
+  Object.entries(nrIds).forEach(([tabId, nrId]) => {
+    const msg = document.getElementById(nrId);
+    if (!msg) return;
+    if (!tabHits[tabId]) {
+      msg.textContent = `No results found for "${query}" in this section.`;
+      msg.classList.add('visible');
+    } else {
+      msg.textContent = '';
+      msg.classList.remove('visible');
+    }
+  });
+
+  searchCount.textContent = totalVisible > 0 ? `${totalVisible} row${totalVisible !== 1 ? 's' : ''}` : 'No results';
+}
+
+let searchTimer;
+searchInput.addEventListener('input', () => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => runSearch(searchInput.value.trim()), 180);
+});
+searchClear.addEventListener('click', () => {
+  searchInput.value = '';
+  clearSearch();
+  searchInput.focus();
+});
+
+/* ══════════════════════════════════════════════
+   HAMBURGER MENU
+══════════════════════════════════════════════ */
+const burger = document.getElementById('navHamburger');
+const mobileMenu = document.getElementById('navMobileMenu');
+burger.addEventListener('click', () => {
+  const open = mobileMenu.classList.toggle('open');
+  burger.setAttribute('aria-expanded', open);
+});
+</script>
+
+</body>
+</html>
