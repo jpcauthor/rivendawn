@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Thalmen Reach — Geography of Rivendawn</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+:root {
+--header-height: 72px;
+--footer-height: 72px;
+--content-max-width: 960px;
+--page-max-width: 1400px;
+--ink-color: #3a2a1a;
+--nav-color: #f2e3c6;
+--footer-bg: rgba(0,0,0,0.88);
+--gold-light: #e0b965;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+
+body{
+font-family:'Crimson Text',Georgia,serif;
+color:var(--ink-color);
+min-height:100dvh;
+background:#000;
+line-height:1.75;
+font-size:1.18rem;
+}
+
+.page-wrapper{
+min-height:100dvh;
+display:flex;
+flex-direction:column;
+max-width:var(--page-max-width);
+margin:0 auto;
+background-color:#000;
+background-image:url('../../images/bg.jpg');
+background-size:contain;
+background-position:center top;
+background-repeat:no-repeat;
+background-attachment:fixed;
+box-shadow:0 0 80px rgba(0,0,0,0.85);
+position:relative;
+}
+
+/* ── NAVIGATION ─────────────────────────────── */
+header{position:fixed;top:0;left:50%;transform:translateX(-50%);width:min(100%,var(--page-max-width));height:var(--header-height);background:var(--footer-bg);border-bottom:1px solid rgba(200,151,58,0.15);backdrop-filter:blur(4px);z-index:1000;}
+nav{max-width:var(--content-max-width);width:100%;height:100%;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:2.25rem;padding:0 1.5rem;}
+nav a{color:var(--nav-color);text-decoration:none;font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.22em;text-transform:uppercase;transition:color .25s ease,transform .25s ease;position:relative;display:inline-flex;align-items:center;gap:0.45rem;padding:0.25rem 0.1rem;white-space:nowrap;}
+nav a i{color:inherit;font-size:0.82rem;opacity:0.85;position:relative;top:-1px;}
+nav a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:1px;background:var(--gold-light);transition:width .28s ease;}
+nav a:hover{color:var(--gold-light);transform:translateY(-1px);}
+nav a:hover::after{width:100%;}
+nav a.nav-active{color:#e8b84b;}
+nav a.nav-active::after{width:100%;background:#e8b84b;height:1.5px;}
+.nav-hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;background:none;border:1px solid rgba(200,151,58,0.32);border-radius:4px;cursor:pointer;padding:0;position:absolute;right:1rem;top:50%;transform:translateY(-50%);z-index:1010;transition:border-color .2s ease;}
+.nav-hamburger:hover{border-color:rgba(200,151,58,0.65);}
+.nav-hamburger span{display:block;width:18px;height:1.5px;background:var(--nav-color);border-radius:2px;transition:transform .3s ease,opacity .3s ease,width .3s ease;transform-origin:center;}
+header.menu-open .nav-hamburger span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+header.menu-open .nav-hamburger span:nth-child(2){opacity:0;width:0;}
+header.menu-open .nav-hamburger span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+.nav-mobile-menu{display:none;position:fixed;top:var(--header-height);left:50%;transform:translateX(-50%);width:min(100%,var(--page-max-width));background:rgba(0,0,0,0.97);border-bottom:1px solid rgba(200,151,58,0.15);z-index:999;max-height:0;overflow:hidden;transition:max-height .38s cubic-bezier(0.4,0,0.2,1),opacity .28s ease;opacity:0;}
+.nav-mobile-menu.open{max-height:400px;opacity:1;}
+.nav-mobile-menu a{display:flex;align-items:center;gap:0.9rem;padding:1rem 2rem;color:var(--nav-color);text-decoration:none;font-family:'Cinzel',serif;font-size:0.78rem;letter-spacing:0.22em;text-transform:uppercase;border-bottom:1px solid rgba(200,151,58,0.12);transition:color .2s ease,background .2s ease,padding-left .2s ease;}
+.nav-mobile-menu a:last-child{border-bottom:none;}
+.nav-mobile-menu a i{color:#c8973a;font-size:0.9rem;width:18px;text-align:center;flex-shrink:0;}
+.nav-mobile-menu a:hover{color:#f5d978;background:rgba(200,151,58,0.06);padding-left:2.4rem;}
+.nav-mobile-menu a.nav-active{color:#e8b84b;background:rgba(200,151,58,0.08);}
+.nav-mobile-menu a.nav-active i{color:#e8b84b;}
+@media(max-width:680px){nav a{display:none;}.nav-hamburger{display:flex;}.nav-mobile-menu{display:block;}}
+@media(max-width:820px) and (min-width:681px){nav{gap:1.4rem;}nav a{font-size:0.72rem;letter-spacing:0.16em;}}
+/* ── END NAVIGATION ──────────────────────────── */
+
+main{
+flex:1;
+margin-top:var(--header-height);
+padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+display:flex;
+justify-content:center;
+}
+
+.content-container{
+max-width:var(--content-max-width);
+width:100%;
+padding:40px 80px 180px;
+color:var(--ink-color);
+margin:0 auto;
+border-radius:8px;
+box-shadow:0 20px 60px rgba(0,0,0,0.55);
+background-image:url('../../images/content-scroll-bg.png');
+background-repeat:repeat-y;
+background-position:top center;
+background-size:100% auto;
+}
+
+.content-container h1{
+font-family:'Cinzel Decorative',serif;
+font-size:3rem;
+text-align:center;
+margin:0 0 .75rem;
+letter-spacing:.06em;
+}
+
+.content-container p{ margin-bottom:1.4rem; }
+
+/* ── IMAGE + TEXT BLOCKS ─────────────────────── */
+.geo-block-right{ margin:2rem 0 2.5rem; overflow:hidden; }
+.geo-block-right .geo-img{
+  float:right; width:42%; margin:0 0 1.2rem 1.8rem;
+  border-radius:6px; overflow:hidden;
+  box-shadow:0 8px 28px rgba(0,0,0,0.4);
+  border:1px solid rgba(139,90,43,0.3);
+}
+
+.geo-block-left{ margin:2rem 0 2.5rem; overflow:hidden; }
+.geo-block-left .geo-img{
+  float:left; width:42%; margin:0 1.8rem 1.2rem 0;
+  border-radius:6px; overflow:hidden;
+  box-shadow:0 8px 28px rgba(0,0,0,0.4);
+  border:1px solid rgba(139,90,43,0.3);
+}
+
+.geo-img img{ width:100%; height:auto; display:block; }
+
+.geo-img figcaption{
+  font-size:0.82rem; font-style:italic; color:#7a5c3a;
+  text-align:center; padding:0.45rem 0.75rem 0.5rem;
+  background:rgba(255,248,235,0.6);
+  border-top:1px solid rgba(139,90,43,0.15);
+}
+
+.geo-block-full{ margin:2rem 0 2.5rem; clear:both; }
+
+.geo-divider{
+  clear:both; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(139,90,43,0.35), transparent);
+  margin:2rem 0;
+}
+
+/* ── FILM STRIP ──────────────────────────────── */
+.film-strip-wrapper{ clear:both; width:100%; margin:2.5rem 0 1.5rem; position:relative; }
+
+.film-strip-label{
+  font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:0.22em;
+  text-transform:uppercase; color:#8a6847; text-align:center; margin-bottom:0.75rem;
+}
+
+.film-strip{
+  width:100%; overflow:hidden; position:relative; background:#000;
+  border-top:2px solid rgba(200,146,42,0.45);
+  border-bottom:2px solid rgba(200,146,42,0.45);
+  box-shadow:0 6px 24px rgba(0,0,0,0.35);
+}
+
+.film-strip::before,.film-strip::after{
+  content:''; position:absolute; top:0; bottom:0; width:60px; z-index:5; pointer-events:none;
+}
+.film-strip::before{ left:0; background:linear-gradient(to right, rgba(0,0,0,0.7), transparent); }
+.film-strip::after{ right:0; background:linear-gradient(to left, rgba(0,0,0,0.7), transparent); }
+
+.film-track{ display:flex; gap:10px; padding:4px; will-change:transform; }
+.film-track.animating{ transition:none; }
+
+.film-frame{
+  flex-shrink:0; width:calc(25% - 6px); aspect-ratio:4/3;
+  overflow:hidden; cursor:pointer; border-radius:2px; position:relative;
+}
+
+.film-frame img{
+  width:100%; height:100%; object-fit:cover; object-position:center 20%;
+  display:block; transition:transform 0.4s ease; pointer-events:none;
+}
+
+.film-frame:hover img{ transform:scale(1.05); }
+
+.film-frame::after{
+  content:''; position:absolute; inset:0;
+  background:rgba(0,0,0,0); transition:background 0.3s ease;
+}
+.film-frame:hover::after{ background:rgba(200,146,42,0.08); }
+
+.film-dots{ display:flex; justify-content:center; gap:4px; margin-top:0.55rem; flex-wrap:wrap; }
+
+.film-dot{
+  width:5px; height:5px; border-radius:50%;
+  background:rgba(94,62,33,0.28);
+  transition:background 0.3s ease, transform 0.3s ease;
+}
+.film-dot.active{ background:#c8922a; transform:scale(1.4); }
+
+/* ── LIGHTBOX ────────────────────────────────── */
+.lineage-lightbox{
+  position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:3000;
+  display:flex; align-items:center; justify-content:center; padding:1.5rem;
+  opacity:0; pointer-events:none; transition:opacity 0.28s ease;
+}
+.lineage-lightbox.active{ opacity:1; pointer-events:auto; }
+
+.lineage-lightbox img{
+  max-width:90vw; max-height:88vh; object-fit:contain;
+  border-radius:6px; box-shadow:0 0 80px rgba(0,0,0,0.8);
+  transform:scale(0.96); transition:transform 0.28s ease;
+}
+.lineage-lightbox.active img{ transform:scale(1); }
+
+.lightbox-close{
+  position:fixed; top:1.2rem; right:1.5rem;
+  width:36px; height:36px; border-radius:50%;
+  background:rgba(42,22,8,0.85); border:1px solid rgba(242,227,198,0.3);
+  color:#f2e3c6; font-size:1rem; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:all 0.2s ease; z-index:3001;
+}
+.lightbox-close:hover{ background:rgba(42,22,8,1); border-color:rgba(242,227,198,0.6); }
+
+/* ── FOOTER ──────────────────────────────────── */
+footer{
+  position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+  width:min(100%,var(--page-max-width)); height:var(--footer-height);
+  background:var(--footer-bg); color:#ccc;
+  display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:0 1rem; font-size:.95rem;
+  border-top:1px solid #444; z-index:1000;
+}
+footer a{ color:#d4a373; text-decoration:none; }
+footer a:hover{ text-decoration:underline; }
+
+/* ── RESPONSIVE ──────────────────────────────── */
+@media (max-width:768px){
+  .content-container{ padding:36px 32px 150px; }
+  .content-container h1{ font-size:2.2rem; }
+  .geo-block-right .geo-img,
+  .geo-block-left .geo-img{ float:none; width:100%; margin:0 0 1.2rem 0; }
+}
+@media (max-width:480px){
+  body{ font-size:1.05rem; }
+  .content-container{ padding:28px 20px 130px; }
+}
+
+</style>
+</head>
+
+<body data-page="lore">
+<div class="page-wrapper">
+
+<header>
+  <nav>
+    <a href="/rivendawn/rivendawn/rivendawn.html" data-nav="rivendawn"><i class="fa-solid fa-dungeon"></i>Rivendawn</a>
+    <a href="/rivendawn/lore/lore.html" data-nav="lore"><i class="fa-solid fa-scroll"></i>Lore</a>
+    <a href="/rivendawn/rules/rules.html" data-nav="rules"><i class="fa-solid fa-book"></i>Rules</a>
+    <a href="/rivendawn/create/create.html" data-nav="create"><i class="fa-solid fa-user-pen"></i>Create</a>
+    <a href="/rivendawn/main_tables.html" data-nav="tables"><i class="fa-solid fa-dice-d20"></i>Tables</a>
+    <a href="/rivendawn/about/about.html" data-nav="about"><i class="fa-solid fa-circle-info"></i>About</a>
+  </nav>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<div class="nav-mobile-menu" id="navMobileMenu">
+  <a href="/rivendawn/rivendawn/rivendawn.html" data-nav="rivendawn"><i class="fa-solid fa-dungeon"></i>Rivendawn</a>
+  <a href="/rivendawn/lore/lore.html" data-nav="lore"><i class="fa-solid fa-scroll"></i>Lore</a>
+  <a href="/rivendawn/rules/rules.html" data-nav="rules"><i class="fa-solid fa-book"></i>Rules</a>
+  <a href="/rivendawn/create/create.html" data-nav="create"><i class="fa-solid fa-user-pen"></i>Create</a>
+  <a href="/rivendawn/main_tables.html" data-nav="tables"><i class="fa-solid fa-dice-d20"></i>Tables</a>
+  <a href="/rivendawn/about/about.html" data-nav="about"><i class="fa-solid fa-circle-info"></i>About</a>
+</div>
+
+<main>
+<div class="content-container">
+
+  <h1>The Thalmen Reach</h1>
+
+  <!-- ── BLOCK 1 — Image right ── -->
+  <div class="geo-block-right">
+    <figure class="geo-img">
+      <img src="images/01.png" alt="The Thalmen Reach — frozen coastline">
+      <figcaption>The northern coast — where the ice meets the open water</figcaption>
+    </figure>
+    <p>The Thalmen Reach is the name given to the vast northern territories that stretch beyond the settled regions of Rivendawn — and it is a name the settled world gave to it, because the people who actually live there have never needed one. To the Thálmen, the north is not a place that requires a label. It is simply where they are, and it is enormous. The plains alone span distances that most people in the settled world would describe as impossible. The coastlines are long, broken, and brutal in winter. The interior is open in a way that feels less like freedom and more like exposure.</p>
+    <p>The defining geographic feature of the Reach is scale. There are no mountain ranges here to create drama, no river networks to organize the landscape. What there is instead is space — flat or rolling terrain stretching to horizons that take days to reach, seasonally frozen lakes that become highways in winter and impassable bogs in summer, and a sky that in the deepest months of the year offers more darkness than light.</p>
+  </div>
+
+  <div class="geo-divider"></div>
+
+  <!-- ── BLOCK 2 — Image left ── -->
+  <div class="geo-block-left">
+    <figure class="geo-img">
+      <img src="images/02.png" alt="The Thalmen Reach — storm coast and ice">
+      <figcaption>Winter on the Reach — the season that tests everything</figcaption>
+    </figure>
+    <p>Winter in the Reach is not a season. It is a condition that the land enters and the people must enter with it or die. Temperatures drop far enough to freeze moving water. Snow accumulates to depths that bury landmarks and erase trails overnight. The wind that crosses the open plains without any terrain to slow it is a force the settled world has no equivalent for — it does not gust, it simply pushes, continuously, for days at a time. Thálmen communities orient their entire yearly cycle around managing this reality: where to be when winter closes in, what supplies are needed, which routes remain passable and which do not.</p>
+    <p>The shorter seasons bring a landscape that is almost unrecognizable by comparison. The plains turn green. Migratory animals move through in numbers large enough to sustain communities for months. The lakes open. Travel becomes possible across distances that winter makes lethal. The Thálmen do not waste this window. Everything that needs to happen — gathering, trading, moving, reconnecting with distant kin — happens in the brief seasons when the Reach allows it.</p>
+  </div>
+
+  <div class="geo-divider"></div>
+
+  <!-- ── BLOCK 3 — Full width ── -->
+  <div class="geo-block-full">
+    <p>For any traveller from the settled world, the Thalmen Reach is a place that requires a guide and deserves profound respect. The absence of landmarks means that navigation depends on knowledge the Thálmen carry in memory — star positions, wind patterns, the behavior of animals, subtle changes in snow texture that indicate what lies beneath. Without that knowledge, the Reach does not threaten travellers so much as simply ignore them. It is indifferent to preparation and ignorance in equal measure. What it is not, is empty. Those who learn to read it find a landscape as richly mapped as any city — just mapped in ways that do not survive being written down.</p>
+  </div>
+
+  <!-- ── FILM STRIP ── -->
+  <div class="film-strip-wrapper">
+    <p class="film-strip-label">Further Views</p>
+    <div class="film-strip" id="film-strip">
+      <div class="film-track" id="film-track"></div>
+    </div>
+    <div class="film-dots" id="film-dots"></div>
+  </div>
+
+</div>
+</main>
+
+<!-- Lightbox -->
+<div class="lineage-lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+  <img id="lightbox-img" src="" alt="The Thalmen Reach">
+</div>
+
+<footer>
+<div>
+Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+&nbsp;&nbsp;•&nbsp;&nbsp;
+© 2026 jpcauthor. All rights reserved.
+&nbsp;&nbsp;•&nbsp;&nbsp;
+<a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+</div>
+</footer>
+
+</div>
+
+<script>
+const IMAGES = [];
+const COUNT  = 10;
+const EXT    = '.png';
+for (let i = 1; i <= COUNT; i++) {
+  IMAGES.push('images/' + String(i).padStart(2, '0') + EXT);
+}
+
+const track       = document.getElementById('film-track');
+const dotsWrapper = document.getElementById('film-dots');
+const filmStrip   = document.getElementById('film-strip');
+const lightbox    = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const closeBtn    = document.getElementById('lightbox-close');
+
+let offset = 0, rafId = null, frameW = 0, totalW = 0, activeIdx = 0;
+const SPEED = 0.4;
+const dots = [];
+
+IMAGES.forEach((src, i) => {
+  const dot = document.createElement('div');
+  dot.classList.add('film-dot');
+  if (i === 0) dot.classList.add('active');
+  dotsWrapper.appendChild(dot);
+  dots.push(dot);
+});
+
+function buildFrames() {
+  track.innerHTML = '';
+  [...IMAGES, ...IMAGES].forEach((src, i) => {
+    const frame = document.createElement('div');
+    frame.classList.add('film-frame');
+    frame.dataset.index = i % IMAGES.length;
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = 'The Thalmen Reach ' + ((i % IMAGES.length) + 1);
+    img.loading = 'lazy';
+    frame.appendChild(img);
+    track.appendChild(frame);
+    frame.addEventListener('click', () => {
+      lightboxImg.src = IMAGES[parseInt(frame.dataset.index)];
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+}
+buildFrames();
+
+function getFrameWidth() { const f = track.querySelector('.film-frame'); return f ? f.offsetWidth + 10 : 0; }
+function updateDot() {
+  const idx = Math.round(offset / frameW) % IMAGES.length;
+  if (idx !== activeIdx && idx >= 0 && idx < IMAGES.length) {
+    dots[activeIdx].classList.remove('active');
+    activeIdx = idx;
+    dots[activeIdx].classList.add('active');
+  }
+}
+function animate() {
+  frameW = getFrameWidth();
+  totalW = frameW * IMAGES.length;
+  offset += SPEED;
+  if (offset >= totalW) offset -= totalW;
+  track.style.transform = 'translateX(-' + offset + 'px)';
+  updateDot();
+  rafId = requestAnimationFrame(animate);
+}
+
+window.addEventListener('load', () => { frameW = getFrameWidth(); animate(); });
+filmStrip.addEventListener('mouseenter', () => cancelAnimationFrame(rafId));
+filmStrip.addEventListener('mouseleave', () => { rafId = requestAnimationFrame(animate); });
+
+function closeLightbox() { lightbox.classList.remove('active'); document.body.style.overflow = ''; }
+closeBtn.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+
+<script>
+(function(){
+  var page=document.body.dataset.page;
+  if(page){document.querySelectorAll('[data-nav="'+page+'"]').forEach(function(e){e.classList.add('nav-active');});}
+  var btn=document.getElementById('navHamburger');
+  var menu=document.getElementById('navMobileMenu');
+  var hdr=document.querySelector('header');
+  if(!btn||!menu)return;
+  btn.addEventListener('click',function(){var o=menu.classList.toggle('open');hdr.classList.toggle('menu-open',o);btn.setAttribute('aria-expanded',o);});
+  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');});});
+  document.addEventListener('click',function(e){if(!hdr.contains(e.target)&&!menu.contains(e.target)){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');}});
+  window.addEventListener('scroll',function(){if(menu.classList.contains('open')){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');}},{passive:true});
+})();
+</script>
+</body>
+</html>
