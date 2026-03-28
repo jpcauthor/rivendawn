@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bestiary — Geography of Rivendawn</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+:root {
+--header-height: 72px;
+--footer-height: 72px;
+--content-max-width: 960px;
+--page-max-width: 1400px;
+--ink-color: #3a2a1a;
+--nav-color: #f2e3c6;
+--footer-bg: rgba(0,0,0,0.88);
+--gold-light: #e0b965;
+--r1: #6a8a5a;
+--r2: #7a8a4a;
+--r3: #a07a30;
+--r4: #a05030;
+--r5: #8a2a2a;
+--r6: #3a0a0a;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+
+body{
+font-family:'Crimson Text',Georgia,serif;
+color:var(--ink-color);
+min-height:100dvh;
+background:#000;
+line-height:1.75;
+font-size:1.18rem;
+}
+
+.page-wrapper{
+min-height:100dvh;
+display:flex;
+flex-direction:column;
+max-width:var(--page-max-width);
+margin:0 auto;
+background-color:#000;
+background-image:url('../../images/bg.jpg');
+background-size:contain;
+background-position:center top;
+background-repeat:no-repeat;
+background-attachment:fixed;
+box-shadow:0 0 80px rgba(0,0,0,0.85);
+position:relative;
+}
+
+/* ── NAVIGATION ─────────────────────────────── */
+header{position:fixed;top:0;left:50%;transform:translateX(-50%);width:min(100%,var(--page-max-width));height:var(--header-height);background:var(--footer-bg);border-bottom:1px solid rgba(200,151,58,0.15);backdrop-filter:blur(4px);z-index:1000;}
+nav{max-width:var(--content-max-width);width:100%;height:100%;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:2.25rem;padding:0 1.5rem;}
+nav a{color:var(--nav-color);text-decoration:none;font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.22em;text-transform:uppercase;transition:color .25s ease,transform .25s ease;position:relative;display:inline-flex;align-items:center;gap:0.45rem;padding:0.25rem 0.1rem;white-space:nowrap;}
+nav a i{color:inherit;font-size:0.82rem;opacity:0.85;position:relative;top:-1px;}
+nav a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:1px;background:var(--gold-light);transition:width .28s ease;}
+nav a:hover{color:var(--gold-light);transform:translateY(-1px);}
+nav a:hover::after{width:100%;}
+nav a.nav-active{color:#e8b84b;}
+nav a.nav-active::after{width:100%;background:#e8b84b;height:1.5px;}
+.nav-hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;background:none;border:1px solid rgba(200,151,58,0.32);border-radius:4px;cursor:pointer;padding:0;position:absolute;right:1rem;top:50%;transform:translateY(-50%);z-index:1010;transition:border-color .2s ease;}
+.nav-hamburger:hover{border-color:rgba(200,151,58,0.65);}
+.nav-hamburger span{display:block;width:18px;height:1.5px;background:var(--nav-color);border-radius:2px;transition:transform .3s ease,opacity .3s ease,width .3s ease;transform-origin:center;}
+header.menu-open .nav-hamburger span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+header.menu-open .nav-hamburger span:nth-child(2){opacity:0;width:0;}
+header.menu-open .nav-hamburger span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+.nav-mobile-menu{display:none;position:fixed;top:var(--header-height);left:50%;transform:translateX(-50%);width:min(100%,var(--page-max-width));background:rgba(0,0,0,0.97);border-bottom:1px solid rgba(200,151,58,0.15);z-index:999;max-height:0;overflow:hidden;transition:max-height .38s cubic-bezier(0.4,0,0.2,1),opacity .28s ease;opacity:0;}
+.nav-mobile-menu.open{max-height:400px;opacity:1;}
+.nav-mobile-menu a{display:flex;align-items:center;gap:0.9rem;padding:1rem 2rem;color:var(--nav-color);text-decoration:none;font-family:'Cinzel',serif;font-size:0.78rem;letter-spacing:0.22em;text-transform:uppercase;border-bottom:1px solid rgba(200,151,58,0.12);transition:color .2s ease,background .2s ease,padding-left .2s ease;}
+.nav-mobile-menu a:last-child{border-bottom:none;}
+.nav-mobile-menu a i{color:#c8973a;font-size:0.9rem;width:18px;text-align:center;flex-shrink:0;}
+.nav-mobile-menu a:hover{color:#f5d978;background:rgba(200,151,58,0.06);padding-left:2.4rem;}
+.nav-mobile-menu a.nav-active{color:#e8b84b;background:rgba(200,151,58,0.08);}
+.nav-mobile-menu a.nav-active i{color:#e8b84b;}
+@media(max-width:680px){nav a{display:none;}.nav-hamburger{display:flex;}.nav-mobile-menu{display:block;}}
+@media(max-width:820px) and (min-width:681px){nav{gap:1.4rem;}nav a{font-size:0.72rem;letter-spacing:0.16em;}}
+/* ── END NAVIGATION ──────────────────────────── */
+
+main{
+flex:1;
+margin-top:var(--header-height);
+padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
+display:flex;
+justify-content:center;
+}
+
+.content-container{
+max-width:var(--content-max-width);
+width:100%;
+padding:40px 80px 180px;
+color:var(--ink-color);
+margin:0 auto;
+border-radius:8px;
+box-shadow:0 20px 60px rgba(0,0,0,0.55);
+background-image:url('../../images/content-scroll-bg.png');
+background-repeat:repeat-y;
+background-position:top center;
+background-size:100% auto;
+}
+
+.content-container h1{
+font-family:'Cinzel Decorative',serif;
+font-size:3rem;
+text-align:center;
+margin:0 0 .75rem;
+letter-spacing:.06em;
+}
+
+.content-container h2{
+font-family:'Cinzel Decorative',serif;
+font-size:1.6rem;
+margin:3rem 0 1.2rem;
+letter-spacing:.06em;
+border-bottom:1px solid rgba(139,0,0,0.15);
+padding-bottom:.5rem;
+}
+
+.content-container p{ margin-bottom:1.4rem; }
+
+/* ── WATCHER BLOCK ───────────────────────────── */
+.watcher-block{
+margin:0 0 2.5rem;
+padding:1.5rem 1.75rem;
+background:rgba(42,22,8,0.06);
+border-left:3px solid rgba(139,90,43,0.45);
+border-radius:0 8px 8px 0;
+}
+
+.watcher-block p{
+font-size:1.08rem;
+line-height:1.85;
+color:#4a2d18;
+margin-bottom:1rem;
+font-style:italic;
+}
+
+.watcher-block p:last-of-type{ margin-bottom:0; }
+
+.watcher-cite{
+display:block;
+text-align:right;
+font-family:'Cinzel',serif;
+font-size:0.78rem;
+letter-spacing:0.18em;
+text-transform:uppercase;
+color:#8a6847;
+margin-top:1.1rem;
+font-style:normal;
+}
+
+/* ── RANK LEGEND ─────────────────────────────── */
+.rank-legend{
+display:flex;
+flex-wrap:wrap;
+gap:0.6rem;
+margin:0 0 2.5rem;
+}
+
+.rank-pip{
+display:flex;
+align-items:center;
+gap:0.5rem;
+padding:0.4rem 0.85rem;
+border-radius:4px;
+font-family:'Cinzel',serif;
+font-size:0.72rem;
+letter-spacing:0.14em;
+text-transform:uppercase;
+color:#fff;
+}
+
+.rank-pip.r1{ background:var(--r1); }
+.rank-pip.r2{ background:var(--r2); }
+.rank-pip.r3{ background:var(--r3); }
+.rank-pip.r4{ background:var(--r4); }
+.rank-pip.r5{ background:var(--r5); }
+.rank-pip.r6{ background:var(--r6); border:1px solid rgba(255,100,50,0.4); }
+
+/* ── BESTIARY TABLE ──────────────────────────── */
+.bestiary-table{
+width:100%;
+border-collapse:collapse;
+margin:0 0 2rem;
+font-size:0.98rem;
+}
+
+.bestiary-table thead tr{
+background:rgba(42,22,8,0.08);
+border-bottom:2px solid rgba(139,90,43,0.3);
+}
+
+.bestiary-table thead th{
+font-family:'Cinzel',serif;
+font-size:0.72rem;
+letter-spacing:0.16em;
+text-transform:uppercase;
+color:#6b4c2a;
+padding:0.6rem 0.75rem;
+text-align:left;
+}
+
+.bestiary-table tbody tr{
+border-bottom:1px solid rgba(139,90,43,0.12);
+transition:background 0.2s ease;
+}
+
+.bestiary-table tbody tr:hover{
+background:rgba(255,245,220,0.4);
+}
+
+.bestiary-table tbody td{
+padding:0.55rem 0.75rem;
+vertical-align:middle;
+color:#3a2a1a;
+line-height:1.5;
+}
+
+.bestiary-table tbody td:first-child{
+font-family:'Cinzel',serif;
+font-size:0.88rem;
+font-weight:bold;
+color:#4a2d18;
+white-space:nowrap;
+}
+
+/* rank badge in table */
+.rank-badge{
+display:inline-block;
+padding:0.15rem 0.5rem;
+border-radius:3px;
+font-family:'Cinzel',serif;
+font-size:0.7rem;
+letter-spacing:0.1em;
+color:#fff;
+font-weight:bold;
+white-space:nowrap;
+}
+
+.rank-badge.r1{ background:var(--r1); }
+.rank-badge.r2{ background:var(--r2); }
+.rank-badge.r3{ background:var(--r3); }
+.rank-badge.r4{ background:var(--r4); }
+.rank-badge.r5{ background:var(--r5); }
+.rank-badge.r6{ background:var(--r6); border:1px solid rgba(255,100,50,0.4); }
+
+/* ── UNIQUE CREATURES ────────────────────────── */
+.unique-table{
+width:100%;
+border-collapse:collapse;
+margin:0 0 2rem;
+font-size:0.98rem;
+}
+
+.unique-table thead tr{
+background:rgba(42,22,8,0.08);
+border-bottom:2px solid rgba(139,90,43,0.3);
+}
+
+.unique-table thead th{
+font-family:'Cinzel',serif;
+font-size:0.72rem;
+letter-spacing:0.16em;
+text-transform:uppercase;
+color:#6b4c2a;
+padding:0.6rem 0.75rem;
+text-align:left;
+}
+
+.unique-table tbody tr{
+border-bottom:1px solid rgba(139,90,43,0.15);
+transition:background 0.2s ease;
+}
+
+.unique-table tbody tr:hover{
+background:rgba(255,245,220,0.4);
+}
+
+.unique-table tbody td{
+padding:0.75rem;
+vertical-align:middle;
+color:#3a2a1a;
+line-height:1.5;
+}
+
+.creature-portrait{
+width:72px;
+height:72px;
+object-fit:cover;
+object-position:center top;
+border-radius:4px;
+border:1px solid rgba(139,90,43,0.3);
+box-shadow:0 2px 8px rgba(0,0,0,0.3);
+display:block;
+}
+
+.creature-name{
+font-family:'Cinzel Decorative',serif;
+font-size:0.95rem;
+color:#4a2d18;
+margin-bottom:0.2rem;
+}
+
+.creature-sub{
+font-size:0.82rem;
+font-style:italic;
+color:#7a5c3a;
+}
+
+/* ── SECTION DIVIDER ─────────────────────────── */
+.section-rule{
+height:1px;
+background:linear-gradient(90deg, transparent, rgba(139,90,43,0.35), transparent);
+margin:2.5rem 0;
+}
+
+/* ── FOOTER ──────────────────────────────────── */
+footer{
+position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+width:min(100%,var(--page-max-width)); height:var(--footer-height);
+background:var(--footer-bg); color:#ccc;
+display:flex; align-items:center; justify-content:center;
+text-align:center; padding:0 1rem; font-size:.95rem;
+border-top:1px solid #444; z-index:1000;
+}
+footer a{ color:#d4a373; text-decoration:none; }
+footer a:hover{ text-decoration:underline; }
+
+/* ── RESPONSIVE ──────────────────────────────── */
+@media (max-width:768px){
+.content-container{ padding:36px 32px 150px; }
+.content-container h1{ font-size:2.2rem; }
+.content-container h2{ font-size:1.3rem; }
+.bestiary-table, .unique-table{ font-size:0.88rem; }
+.creature-portrait{ width:52px; height:52px; }
+.rank-legend{ gap:0.4rem; }
+}
+
+@media (max-width:480px){
+body{ font-size:1.05rem; }
+.content-container{ padding:28px 20px 130px; }
+.bestiary-table thead, .unique-table thead{ display:none; }
+.bestiary-table td, .unique-table td{ display:block; padding:0.3rem 0.5rem; }
+}
+
+</style>
+</head>
+
+<body data-page="lore">
+<div class="page-wrapper">
+
+<header>
+  <nav>
+    <a href="/rivendawn/rivendawn/rivendawn.html" data-nav="rivendawn"><i class="fa-solid fa-dungeon"></i>Rivendawn</a>
+    <a href="/rivendawn/lore/lore.html" data-nav="lore"><i class="fa-solid fa-scroll"></i>Lore</a>
+    <a href="/rivendawn/rules/rules.html" data-nav="rules"><i class="fa-solid fa-book"></i>Rules</a>
+    <a href="/rivendawn/create/create.html" data-nav="create"><i class="fa-solid fa-user-pen"></i>Create</a>
+    <a href="/rivendawn/main_tables.html" data-nav="tables"><i class="fa-solid fa-dice-d20"></i>Tables</a>
+    <a href="/rivendawn/about/about.html" data-nav="about"><i class="fa-solid fa-circle-info"></i>About</a>
+  </nav>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<div class="nav-mobile-menu" id="navMobileMenu">
+  <a href="/rivendawn/rivendawn/rivendawn.html" data-nav="rivendawn"><i class="fa-solid fa-dungeon"></i>Rivendawn</a>
+  <a href="/rivendawn/lore/lore.html" data-nav="lore"><i class="fa-solid fa-scroll"></i>Lore</a>
+  <a href="/rivendawn/rules/rules.html" data-nav="rules"><i class="fa-solid fa-book"></i>Rules</a>
+  <a href="/rivendawn/create/create.html" data-nav="create"><i class="fa-solid fa-user-pen"></i>Create</a>
+  <a href="/rivendawn/main_tables.html" data-nav="tables"><i class="fa-solid fa-dice-d20"></i>Tables</a>
+  <a href="/rivendawn/about/about.html" data-nav="about"><i class="fa-solid fa-circle-info"></i>About</a>
+</div>
+
+<main>
+<div class="content-container">
+
+  <h1>Bestiary</h1>
+
+  <!-- WATCHER INTRO -->
+  <div class="watcher-block">
+    <p>The creatures of Rivendawn do not care that you exist. This is important to understand before you leave the road.</p>
+    <p>What follows is a catalogue of what shares this world with you — organized, for the sake of those who prefer their mortality clearly labeled, by threat. Rank 1 creatures will not kill you unless you are extraordinarily careless or extraordinarily unlucky. Rank 6 creatures will kill you regardless. Everything between is a matter of preparation, awareness, and the wisdom to know when running is not a failure of character but a demonstration of it.</p>
+    <p>The natural world is well documented. The corrupted world is less so, because those who study it closely tend not to return with notes. What I have recorded here is accurate to the best of my considerable knowledge. Whether that knowledge is sufficient to keep you alive is, as always, entirely your problem.</p>
+    <cite class="watcher-cite">— The Watcher</cite>
+  </div>
+
+  <!-- RANK LEGEND -->
+  <div class="rank-legend">
+    <span class="rank-pip r1"><i class="fa-solid fa-circle"></i> Rank 1 — Nuisance</span>
+    <span class="rank-pip r2"><i class="fa-solid fa-circle"></i> Rank 2 — Common Threat</span>
+    <span class="rank-pip r3"><i class="fa-solid fa-circle"></i> Rank 3 — Dangerous</span>
+    <span class="rank-pip r4"><i class="fa-solid fa-circle"></i> Rank 4 — Lethal</span>
+    <span class="rank-pip r5"><i class="fa-solid fa-circle"></i> Rank 5 — Apex</span>
+    <span class="rank-pip r6"><i class="fa-solid fa-circle"></i> Rank 6 — Do Not</span>
+  </div>
+
+  <!-- ══════════════════════════════════════════
+       PART I — NATURAL CREATURES
+  ══════════════════════════════════════════ -->
+  <h2>Part I — Natural Creatures</h2>
+  <p>These are the animals of the known world — present in every region in varying numbers, studied by Citadel scholars, and dangerous in proportion to their size, temperament, and proximity to a Riven. A wolf near a settlement is a nuisance. The same wolf after three seasons near a Riven boundary is something else entirely.</p>
+
+  <table class="bestiary-table">
+    <thead>
+      <tr>
+        <th>Creature</th>
+        <th>Description</th>
+        <th>Habitat</th>
+        <th>Rank</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- RANK 1 -->
+      <tr><td>Bat</td><td>Cave and ruin dweller. Harmless alone, disorienting in numbers.</td><td>Caves, ruins, limestone caverns</td><td><span class="rank-badge r1">Rank 1</span></td></tr>
+      <tr><td>Bee</td><td>Pollinators throughout the Cradle farmlands. Hives are territorial.</td><td>Cradle valleys, forest edges</td><td><span class="rank-badge r1">Rank 1</span></td></tr>
+      <tr><td>Carp</td><td>Common river fish. Present in nearly every Cradle waterway.</td><td>Rivers, lakes, Cradle region</td><td><span class="rank-badge r1">Rank 1</span></td></tr>
+      <tr><td>Frog</td><td>Abundant near water sources. Some species produce mild toxins.</td><td>Wetlands, riverbanks</td><td><span class="rank-badge r1">Rank 1</span></td></tr>
+      <tr><td>Horse</td><td>Essential for travel between regions. Domesticated throughout the settled world.</td><td>Stables, open plains, Cradle</td><td><span class="rank-badge r1">Rank 1</span></td></tr>
+      <tr><td>Pigeon</td><td>Used for communication across regions. Harmless.</td><td>Settlements, citadels, ruins</td><td><span class="rank-badge r1">Rank 1</span></td></tr>
+      <tr><td>Rabbit</td><td>Common prey animal. Fast and difficult to catch without preparation.</td><td>Grasslands, forest edges, Limestone uplands</td><td><span class="rank-badge r1">Rank 1</span></td></tr>
+      <tr><td>Rat</td><td>Found wherever food is stored. Carriers of disease in large populations.</td><td>Settlements, sewers, grain stores</td><td><span class="rank-badge r1">Rank 1</span></td></tr>
+      <tr><td>Raven</td><td>Intelligent scavenger. Follows armies and predators for scraps.</td><td>Forests, open country, ruins</td><td><span class="rank-badge r1">Rank 1</span></td></tr>
+      <tr><td>Scorpion</td><td>Desert and rock dweller. Sting is painful; rarely fatal to adults.</td><td>Limestone rocky terrain, dry regions</td><td><span class="rank-badge r1">Rank 1</span></td></tr>
+      <tr><td>Skunk</td><td>Non-aggressive unless threatened. The threat is not physical.</td><td>Forest edges, grasslands</td><td><span class="rank-badge r1">Rank 1</span></td></tr>
+      <tr><td>Spider</td><td>Widespread. Most species are harmless. Several are not.</td><td>Forests, caves, ruins, everywhere</td><td><span class="rank-badge r1">Rank 1</span></td></tr>
+      <tr><td>Weasel</td><td>Fast, aggressive for its size. Targets small livestock and stores.</td><td>Forests, farmland edges</td><td><span class="rank-badge r1">Rank 1</span></td></tr>
+      <!-- RANK 2 -->
+      <tr><td>Badger</td><td>Territorial and stubborn. Will not retreat from anything.</td><td>Grasslands, forest edges, Limestone</td><td><span class="rank-badge r2">Rank 2</span></td></tr>
+      <tr><td>Boar</td><td>Aggressive when cornered. Tusks cause serious injury at close range.</td><td>Forests, Cradle farmland edges</td><td><span class="rank-badge r2">Rank 2</span></td></tr>
+      <tr><td>Eagle</td><td>Apex aerial predator. Territorial around nesting sites.</td><td>Mountains, Forge peaks, open country</td><td><span class="rank-badge r2">Rank 2</span></td></tr>
+      <tr><td>Falcon</td><td>Used in hunting by Cradle nobility. Wild specimens are fast and precise.</td><td>Open plains, mountain thermals</td><td><span class="rank-badge r2">Rank 2</span></td></tr>
+      <tr><td>Otter</td><td>River-dwelling. Playful until defending territory or young.</td><td>Rivers, lakes, Cradle waterways</td><td><span class="rank-badge r2">Rank 2</span></td></tr>
+      <tr><td>Owl</td><td>Silent nocturnal hunter. Rarely a threat to people; hazardous to small animals.</td><td>Forests, ruins, all regions</td><td><span class="rank-badge r2">Rank 2</span></td></tr>
+      <tr><td>Porcupine</td><td>Passive until threatened. Quills cause infection if not removed promptly.</td><td>Forests, Limestone uplands</td><td><span class="rank-badge r2">Rank 2</span></td></tr>
+      <tr><td>Snake, Constrictor</td><td>Ambush predator. Targets prey up to the size of a large dog.</td><td>Forests, wetlands, Cradle region</td><td><span class="rank-badge r2">Rank 2</span></td></tr>
+      <tr><td>Snake, Venomous</td><td>Variable venom potency by species. All require prompt treatment.</td><td>Limestone rocky terrain, forests</td><td><span class="rank-badge r2">Rank 2</span></td></tr>
+      <tr><td>Vugle</td><td>Undead pest. Will not kill you. Will eat your rations, soil your pack, and scream until you question your life choices. Travels in flocks.</td><td>Riven boundaries, wilderness, everywhere unfortunate</td><td><span class="rank-badge r2">Rank 2</span></td></tr>
+      <tr><td>Vulture</td><td>Scavenger. Aggressive around carrion. Occasionally opportunistic with the injured.</td><td>Open country, battlefields, Limestone</td><td><span class="rank-badge r2">Rank 2</span></td></tr>
+      <tr><td>Wolf</td><td>Pack hunters. Individually manageable; in coordinated groups, significantly less so.</td><td>Forests, Thalmen plains, Limestone</td><td><span class="rank-badge r2">Rank 2</span></td></tr>
+      <!-- RANK 3 -->
+      <tr><td>Bear, Black</td><td>Common in forested regions. Avoids confrontation unless surprised or protecting cubs.</td><td>Forests, Cradle edges, Limestone</td><td><span class="rank-badge r3">Rank 3</span></td></tr>
+      <tr><td>Bear, Brown</td><td>Larger and more aggressive than the black bear. Forge mountain variant is particularly formidable.</td><td>Forge mountains, northern forests</td><td><span class="rank-badge r3">Rank 3</span></td></tr>
+      <tr><td>Crocodile</td><td>Ambush predator in and near water. Deceptively fast over short distances.</td><td>Cradle rivers, wetlands</td><td><span class="rank-badge r3">Rank 3</span></td></tr>
+      <tr><td>Honey Badger</td><td>Fears nothing. This is not an exaggeration. Documented attacking creatures twenty times its size.</td><td>Forests, grasslands, Limestone</td><td><span class="rank-badge r3">Rank 3</span></td></tr>
+      <tr><td>Lion</td><td>Apex ambush predator. Pride hunting tactics make them extremely dangerous in open terrain.</td><td>Limestone grasslands, open plains</td><td><span class="rank-badge r3">Rank 3</span></td></tr>
+      <tr><td>Panther</td><td>Silent, solitary, and patient. Rarely seen before the attack.</td><td>Dense forests, Cradle region edges</td><td><span class="rank-badge r3">Rank 3</span></td></tr>
+      <tr><td>Shark</td><td>Coastal and river-mouth predator. Several species have been documented in Cradle waterways.</td><td>Coastal waters, large rivers</td><td><span class="rank-badge r3">Rank 3</span></td></tr>
+      <tr><td>Swarm, Bats</td><td>Disorienting and capable of causing falls in confined spaces. Individually harmless.</td><td>Caves, ruins, Limestone caverns</td><td><span class="rank-badge r3">Rank 3</span></td></tr>
+      <tr><td>Swarm, Bees</td><td>Provoked hive will pursue for significant distance. Stings accumulate rapidly.</td><td>Forests, Cradle farmland</td><td><span class="rank-badge r3">Rank 3</span></td></tr>
+      <tr><td>Swarm, Rats</td><td>A large enough swarm can overwhelm a person. Carry disease. Strip stored food in hours.</td><td>Settlements, ruins, grain stores</td><td><span class="rank-badge r3">Rank 3</span></td></tr>
+      <tr><td>Swarm, Ravens</td><td>Coordinated and intelligent. Target eyes and exposed skin. Disorienting in numbers.</td><td>Open country, ruins, battlefields</td><td><span class="rank-badge r3">Rank 3</span></td></tr>
+      <tr><td>Tiger</td><td>Solitary ambush predator. Larger than the lion and considerably more patient.</td><td>Dense forests, northern Cradle edges</td><td><span class="rank-badge r3">Rank 3</span></td></tr>
+      <!-- RANK 4 -->
+      <tr><td>Giant Crab</td><td>Coastal ambush predator. Claws exert enough pressure to crush bone.</td><td>Coastal regions, rocky shores</td><td><span class="rank-badge r4">Rank 4</span></td></tr>
+      <tr><td>Giant Squid</td><td>Deep water predator. Occasionally surfaces near Cradle river mouths. Reason unclear.</td><td>Deep coastal waters, large lakes</td><td><span class="rank-badge r4">Rank 4</span></td></tr>
+      <tr><td>Gorilla</td><td>Territorial and immensely strong. Charges are not always bluffs.</td><td>Dense forests, wilderness regions</td><td><span class="rank-badge r4">Rank 4</span></td></tr>
+      <tr><td>Hippopotamus</td><td>Responsible for more deaths in the Cradle riverlands than any other natural animal. Deceptively aggressive.</td><td>Cradle rivers, wetlands</td><td><span class="rank-badge r4">Rank 4</span></td></tr>
+      <tr><td>Killer Whale</td><td>Apex ocean predator. Documented attacking small watercraft near the western coast.</td><td>Open ocean, western coastline</td><td><span class="rank-badge r4">Rank 4</span></td></tr>
+      <tr><td>Polar Bear</td><td>The largest natural bear. Thalmen Reach exclusive. Actively hunts people when food is scarce.</td><td>Thalmen Reach, far northern coast</td><td><span class="rank-badge r4">Rank 4</span></td></tr>
+      <tr><td>Rhinoceros</td><td>Nearly unstoppable in a charge. Territorial and unpredictable.</td><td>Open plains, Limestone grasslands</td><td><span class="rank-badge r4">Rank 4</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-rule"></div>
+
+  <!-- ══════════════════════════════════════════
+       PART II — CREATURES OF RIVENDAWN
+  ══════════════════════════════════════════ -->
+  <h2>Part II — Creatures of Rivendawn</h2>
+  <p>These are not animals in any ordinary sense. They are what the world produces when the Song is disrupted, when Riven corruption spreads into an ecosystem long enough, or when something evolves in the deep wilderness without the moderating influence of human presence. Several of these entries represent species unique to Rivendawn. Others are what familiar species become when the world breaks around them.</p>
+  <p>Treat all of them with extreme caution. Treat the Rank 6 entries as information for your surviving companions rather than personal guidance.</p>
+
+  <table class="unique-table">
+    <thead>
+      <tr>
+        <th style="width:80px;">Image</th>
+        <th style="width:180px;">Creature</th>
+        <th>Description</th>
+        <th style="width:100px;">Habitat</th>
+        <th style="width:80px;">Rank</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- VUU'ZCLAW -->
+      <tr>
+        <td><img src="images/05.png" alt="Vuu'zclaw" class="creature-portrait"></td>
+        <td>
+          <div class="creature-name">Vuu'zclaw</div>
+          <div class="creature-sub">Natural Form</div>
+        </td>
+        <td>A mustelid-type predator found in forested and wilderness regions. White-faced, amber-eyed, and equipped with saber teeth disproportionate to its size. Fast, aggressive when cornered, and considerably smarter than it has any right to be. Hunts alone. Does not warn before striking.</td>
+        <td>Forests, wilderness</td>
+        <td><span class="rank-badge r3">Rank 3</span></td>
+      </tr>
+
+      <!-- VUU'ZCLAW CORRUPTED -->
+      <tr>
+        <td><img src="images/08.png" alt="Vuu'zclaw Corrupted" class="creature-portrait"></td>
+        <td>
+          <div class="creature-name">Vuu'zclaw</div>
+          <div class="creature-sub">Corrupted Form</div>
+        </td>
+        <td>Riven-exposed Vuu'zclaw. Red eyes, degraded fur, behavioral changes consistent with advanced corruption. Loses the natural form's caution entirely — charges without hesitation, does not retreat, does not tire. The intelligence remains. The restraint does not.</td>
+        <td>Riven boundaries, corrupted forest</td>
+        <td><span class="rank-badge r5">Rank 5</span></td>
+      </tr>
+
+
+      <!-- THORNBACK CRAWLER -->
+      <tr>
+        <td><img src="images/03.png" alt="Thornback Crawler" class="creature-portrait"></td>
+        <td>
+          <div class="creature-name">Thornback Crawler</div>
+          <div class="creature-sub">Cave Predator</div>
+        </td>
+        <td>An arachnid predator found in Riven-adjacent cave systems. Multiple green-luminescent eyes, oversized foreclaws, and an exoskeleton that resists conventional weapons. Wades through toxic Riven fluid without apparent discomfort. Does not pursue prey beyond the cave boundary — which is the only comfort available regarding this creature.</td>
+        <td>Riven caves, deep Limestone caverns</td>
+        <td><span class="rank-badge r5">Rank 5</span></td>
+      </tr>
+
+      <!-- GREYMAW -->
+      <tr>
+        <td><img src="images/02.png" alt="Greymaw" class="creature-portrait"></td>
+        <td>
+          <div class="creature-name">Greymaw</div>
+          <div class="creature-sub">Aquatic Predator</div>
+        </td>
+        <td>A pale, deep-water fish of abnormal size found in Cradle river systems and the lakes of the northern territories. Three eyes, bioluminescent spots, and teeth arranged in multiple rows. Blind to surface light — hunts by vibration. Do not enter water where Greymaw have been reported. Do not trail a hand from a boat. Do not assume the water is safe because you cannot see the bottom.</td>
+        <td>Deep rivers, northern lakes, Cradle waterways</td>
+        <td><span class="rank-badge r5">Rank 5</span></td>
+      </tr>
+
+      <!-- VUGLE -->
+      <tr>
+        <td><img src="images/11.jpg" alt="Vugle" class="creature-portrait"></td>
+        <td>
+          <div class="creature-name">Vugle</div>
+          <div class="creature-sub">Undead Pest</div>
+        </td>
+        <td>A Vugle. It will not kill you. It will eat your rations, soil your pack, steal anything that catches its eye, and emit a sound that defies adequate description at intervals timed to prevent sleep. Travels in flocks. Smells like a Riven and a seagull reached an unfortunate agreement. I have nothing further to add. Neither, shortly, will you.</td>
+        <td>Riven boundaries, wilderness, anywhere inconvenient</td>
+        <td><span class="rank-badge r2">Rank 2</span></td>
+      </tr>
+
+      <!-- SOUL MINDER — HUMANOID -->
+      <tr>
+        <td><img src="images/15.png" alt="Soul Minder" class="creature-portrait"></td>
+        <td>
+          <div class="creature-name">Soul Minder</div>
+          <div class="creature-sub">Humanoid Form</div>
+        </td>
+        <td>The most commonly encountered form of the Soul Minder — gaunt, pale, hollow-eyed, with black veins visible beneath translucent skin. Whether this is the creature's base form or a transitional state is unknown. What is known is that proximity causes disorientation, that it does not appear to require sustenance in any conventional sense, and that those who survive encounters describe a persistent sense of absence afterward — as if something was removed that has not yet been identified.</td>
+        <td>Riven interiors, deep wilderness, ruins</td>
+        <td><span class="rank-badge r5">Rank 5</span></td>
+      </tr>
+
+      <!-- SOUL MINDER — SERPENT -->
+      <tr>
+        <td><img src="images/01.jpg" alt="Soul Minder Serpent" class="creature-portrait"></td>
+        <td>
+          <div class="creature-name">Soul Minder</div>
+          <div class="creature-sub">Serpent Forms</div>
+        </td>
+        <td>The larger manifestations of the Soul Minder family — scaled, multi-spiked, dripping with Riven corruption, and ranging from the size of a large constrictor to something considerably larger. Whether these are the same creature in a different state, related species, or something the Soul Minder becomes under specific conditions remains an open question that I strongly recommend you not investigate personally. All serpent forms are venomous. All are aggressive. All represent a Rank 6 encounter without exception.</td>
+        <td>Riven interiors, corrupted terrain</td>
+        <td><span class="rank-badge r6">Rank 6</span></td>
+      </tr>
+
+      <!-- RIVENBEAR -->
+      <tr>
+        <td><img src="images/16.png" alt="Rivenbear" class="creature-portrait"></td>
+        <td>
+          <div class="creature-name">Rivenbear</div>
+          <div class="creature-sub">Riven Apex Predator</div>
+        </td>
+        <td>What a bear becomes after sufficient Riven exposure and sufficient time. The Rivenbear is armored. It is spiked. Its eyes glow with the same orange-red luminescence visible at a Riven's heart. It has been documented shrugging off weapons that would kill a polar bear. It does not appear to sleep, does not appear to tire, and has been observed breaking through fortified structures to reach prey inside. There is no tactical advice for a Rivenbear encounter that does not begin with the word "run." Run now. Run far. Do not look back to see if it is still following. It is still following.</td>
+        <td>Riven interiors, deep corrupted wilderness</td>
+        <td><span class="rank-badge r6">Rank 6</span></td>
+      </tr>
+
+    </tbody>
+  </table>
+
+</div>
+</main>
+
+<footer>
+<div>
+Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
+&nbsp;&nbsp;•&nbsp;&nbsp;
+© 2026 jpcauthor. All rights reserved.
+&nbsp;&nbsp;•&nbsp;&nbsp;
+<a href="https://amazon.com/rivendawn" target="_blank">Read the Novel</a>
+</div>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  var page=document.body.dataset.page;
+  if(page){document.querySelectorAll('[data-nav="'+page+'"]').forEach(function(e){e.classList.add('nav-active');});}
+  var btn=document.getElementById('navHamburger');
+  var menu=document.getElementById('navMobileMenu');
+  var hdr=document.querySelector('header');
+  if(!btn||!menu)return;
+  btn.addEventListener('click',function(){var o=menu.classList.toggle('open');hdr.classList.toggle('menu-open',o);btn.setAttribute('aria-expanded',o);});
+  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');});});
+  document.addEventListener('click',function(e){if(!hdr.contains(e.target)&&!menu.contains(e.target)){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');}});
+  window.addEventListener('scroll',function(){if(menu.classList.contains('open')){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');}},{passive:true});
+})();
+</script>
+</body>
+</html>
