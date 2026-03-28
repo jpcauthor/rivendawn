@@ -138,9 +138,7 @@ margin-bottom:1rem;
 font-style:italic;
 }
 
-.watcher-block p:last-of-type{
-margin-bottom:0;
-}
+.watcher-block p:last-of-type{ margin-bottom:0; }
 
 .watcher-cite{
 display:block;
@@ -154,12 +152,61 @@ margin-top:1.1rem;
 font-style:normal;
 }
 
+/* ── MAP BLOCK ───────────────────────────────── */
+.map-block{
+margin:0 0 2rem;
+}
+
+.map-label{
+font-family:'Cinzel',serif;
+font-size:.78rem;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:#8a6847;
+text-align:center;
+margin-bottom:.75rem;
+}
+
+.map-frame{
+border:1px solid rgba(139,90,43,0.35);
+border-radius:6px;
+overflow:hidden;
+box-shadow:0 8px 32px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,220,150,0.08);
+background:#0a0603;
+line-height:0;
+}
+
+.map-frame img{
+width:100%;
+height:auto;
+display:block;
+border-radius:5px;
+transition:transform .4s ease;
+}
+
+.map-frame:hover img{ transform:scale(1.012); }
+
+.map-caption{
+font-size:.88rem;
+font-style:italic;
+color:#7a5c3a;
+text-align:center;
+margin-top:.6rem;
+line-height:1.5;
+}
+
+.map-divider{
+height:1px;
+background:linear-gradient(90deg, transparent, rgba(139,90,43,0.3), transparent);
+margin:1.5rem 0 2rem;
+}
+
 /* ── ARCHIVE BLADES ──────────────────────────── */
 .archive-grid{
 display:flex;
 flex-direction:column;
 gap:1rem;
-margin:2rem 0 3rem;
+margin:0 0 2rem;
 }
 
 .archive-blade{
@@ -265,6 +312,55 @@ border-color:rgba(94,62,33,0.45);
 }
 .archive-blade.blade-bestiary .archive-kicker{ color:#6b4c2a; }
 
+/* ── MAP BLOCK ───────────────────────────────── */
+.map-block{
+margin:0 0 2rem;
+}
+
+.map-label{
+font-family:'Cinzel',serif;
+font-size:.78rem;
+letter-spacing:.22em;
+text-transform:uppercase;
+color:#8a6847;
+text-align:center;
+margin-bottom:.75rem;
+}
+
+.map-frame{
+border:1px solid rgba(139,90,43,0.35);
+border-radius:6px;
+overflow:hidden;
+box-shadow:0 8px 32px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,220,150,0.08);
+background:#0a0603;
+line-height:0;
+}
+
+.map-frame img{
+width:100%;
+height:auto;
+display:block;
+border-radius:5px;
+transition:transform .4s ease;
+}
+
+.map-frame:hover img{ transform:scale(1.012); }
+
+.map-caption{
+font-size:.88rem;
+font-style:italic;
+color:#7a5c3a;
+text-align:center;
+margin-top:.6rem;
+line-height:1.5;
+}
+
+.map-divider{
+height:1px;
+background:linear-gradient(90deg, transparent, rgba(139,90,43,0.3), transparent);
+margin:1.5rem 0 2rem;
+}
+
 footer{
 position:fixed;
 bottom:0; left:50%;
@@ -338,6 +434,7 @@ body{ font-size:1.05rem; }
 
   <h1>The Geography of Rivendawn</h1>
 
+  <!-- WATCHER INTRO -->
   <div class="watcher-block">
     <p>You want to understand the land. Good. Most people don't bother until it kills them.</p>
     <p>Rivendawn is not a backdrop. It is not the quiet stage upon which interesting people do interesting things. The mountains do not care that you have somewhere to be. The Rivens do not pause for the unprepared. The north does not distinguish between the brave and the foolish — it simply takes them both with equal indifference.</p>
@@ -345,6 +442,17 @@ body{ font-size:1.05rem; }
     <p>Learn the land before you walk it. The land already knows you.</p>
     <cite class="watcher-cite">— The Watcher</cite>
   </div>
+
+  <!-- PHYSICAL MAP -->
+  <div class="map-block">
+    <p class="map-label">The Physical World</p>
+    <div class="map-frame">
+      <img src="../images/maps/rivendawn-world-map.png" alt="Rivendawn — Physical Map" loading="lazy">
+    </div>
+    <p class="map-caption">Terrain, Rivens, and the natural geography of the known world.</p>
+  </div>
+
+  <div class="map-divider"></div>
 
   <section class="archive-grid">
 
@@ -392,6 +500,22 @@ body{ font-size:1.05rem; }
       </div>
       <span class="archive-arrow"><i class="fa-solid fa-angle-right"></i></span>
     </a>
+
+  </section>
+
+  <!-- POLITICAL MAP -->
+  <div class="map-block">
+    <p class="map-label">The Political World</p>
+    <div class="map-frame">
+      <img src="../images/maps/political-map-of-rivendawn.png" alt="Rivendawn — Political Map" loading="lazy">
+    </div>
+    <p class="map-caption">Regional boundaries as recognized in 877 RC. The Forge in white, Limestone in green, the Cradle in blue, the Thalmen Lands in red.</p>
+  </div>
+
+  <div class="map-divider"></div>
+
+  <!-- BLADES VI–VIII -->
+  <section class="archive-grid">
 
     <a href="the-rivens/the-rivens-atlas.html" class="archive-blade">
       <div class="archive-blade-content">
