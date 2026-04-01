@@ -760,13 +760,13 @@ footer a:hover { text-decoration: underline; }
   <div class="tracker" id="tracker">
     <div class="tracker-group">
       <div class="tracker-label">Remaining</div>
-      <div class="tracker-val" id="fpRemaining">10</div>
+      <div class="tracker-val" id="fpRemaining">15</div>
     </div>
     <div class="tracker-divider"></div>
     <div class="tracker-bar-wrap">
       <div class="tracker-bar-label">
         <span>Freebie Points</span>
-        <span id="fpBarLabel">10 / 10</span>
+        <span id="fpBarLabel">15 / 15</span>
       </div>
       <div class="tracker-bar-track">
         <div class="tracker-bar-fill" id="fpBar" style="width:100%"></div>
@@ -788,12 +788,12 @@ footer a:hover { text-decoration: underline; }
   <p class="section-label">At a Glance</p>
   <div class="quick-stats">
     <div class="stat-card">
-      <div class="stat-num">10</div>
+      <div class="stat-num">15</div>
       <div class="stat-label">Base Pool</div>
       <div class="stat-note">All characters start here</div>
     </div>
     <div class="stat-card">
-      <div class="stat-num">15</div>
+      <div class="stat-num">20</div>
       <div class="stat-label">Forged Combatant Pool</div>
       <div class="stat-note">+5 bonus points at creation</div>
     </div>
@@ -868,43 +868,68 @@ footer a:hover { text-decoration: underline; }
   <!-- ── EXAMPLE ── -->
   <p class="section-label">Example Spend</p>
   <div class="example-block">
-    <p class="example-label">A Hybrid Ranger — 10 Freebie Points</p>
+    <p class="example-label">A Hybrid Ranger — 15 Freebie Points</p>
     <p>
       Raises <strong>Agility</strong> by 1
-      <span class="fp-tag">8 FP</span>
-      — 2 points remaining.
-    </p>
-    <p>
-      Raises <strong>Stealth</strong> (Ability) by 1
-      <span class="fp-tag">2 FP</span>
-      — 0 points remaining.
-    </p>
-    <p style="margin-top:0.6rem; color:#a08050;">All points spent. Character sheet locked.</p>
-  </div>
-
-  <div class="example-block">
-    <p class="example-label">A Forged Combatant — 15 Freebie Points</p>
-    <p>
-      Raises <strong>Strength</strong> by 1
       <span class="fp-tag">8 FP</span>
       — 7 points remaining.
     </p>
     <p>
-      Raises <strong>Weapon Mastery</strong> (Ability) by 1
+      Raises <strong>Survival</strong> (Ability) by 1
       <span class="fp-tag">2 FP</span>
       — 5 points remaining.
     </p>
     <p>
-      Purchases <strong>Finances Rank 1</strong>
+      Raises <strong>Perception</strong> (Ability) by 1
       <span class="fp-tag">2 FP</span>
       — 3 points remaining.
     </p>
     <p>
-      Raises <strong>Athletics</strong> (Ability) by 1
+      Purchases <strong>Finances Rank 1</strong>
       <span class="fp-tag">2 FP</span>
       — 1 point remaining.
     </p>
     <p style="margin-top:0.6rem; color:#a08050;">1 point unspent — lost at end of creation.</p>
+  </div>
+
+  <div class="example-block">
+    <p class="example-label">A Forged Combatant — 20 Freebie Points</p>
+    <p>
+      Raises <strong>Strength</strong> by 1
+      <span class="fp-tag">8 FP</span>
+      — 12 points remaining.
+    </p>
+    <p>
+      Raises <strong>Weapon Mastery</strong> (Ability) by 1
+      <span class="fp-tag">2 FP</span>
+      — 10 points remaining.
+    </p>
+    <p>
+      Raises <strong>Athletics</strong> (Ability) by 1
+      <span class="fp-tag">2 FP</span>
+      — 8 points remaining.
+    </p>
+    <p>
+      Raises <strong>Endurance</strong> (Ability) by 1
+      <span class="fp-tag">2 FP</span>
+      — 6 points remaining.
+    </p>
+    <p>
+      Purchases <strong>Finances Rank 1</strong>
+      <span class="fp-tag">2 FP</span>
+      — 4 points remaining.
+    </p>
+    <p>
+      Purchases <strong>Finances Rank 2</strong>
+      <span class="fp-tag">2 FP</span>
+      — 2 points remaining.
+    </p>
+    <p>
+      Raises <strong>Intimidation</strong> (Ability) by 1
+      <span class="fp-tag">2 FP</span>
+      — 0 points remaining.
+    </p>
+    <p style="margin-top:0.6rem; color:#a08050;">All points spent. Character sheet locked.</p>
   </div>
 
   <!-- ── ORDER OF OPERATIONS ── -->
@@ -959,7 +984,7 @@ footer a:hover { text-decoration: underline; }
 </div>
 
 <script>
-const TOTAL_FP = 10;
+const TOTAL_FP = 15;
 let spent = 0;
 
 function buildPips() {
