@@ -820,11 +820,12 @@ footer a:hover { text-decoration: underline; }
           <ol>
             <li style="margin-bottom:0.85rem;"><strong>Confirm your Calling type.</strong> — True Resonant, Hybrid, or Songweaver. &nbsp;<a href="#section-ii" class="anchor-link" onclick="openSection('section-ii')">Resonant Types &amp; Path Points →</a></li>
             <li style="margin-bottom:0.85rem;"><strong>Record your Path Point pool.</strong> — 6 (True Resonant) · 3 (Hybrid) · 4 (Songweaver). &nbsp;<a href="#section-ii" class="anchor-link" onclick="openSection('section-ii')">Resonant Types &amp; Path Points →</a></li>
-            <li style="margin-bottom:0.85rem;"><strong>Choose your Paths.</strong> Distribute Path Points across the six lawful Paths. No single Path may exceed your per-Path cap — <span class="mech">cap of 3 per Path for Hybrids</span>, cap of 4 per Path for True Resonants. &nbsp;<a href="#section-iii" class="anchor-link" onclick="openSection('section-iii')">The Six Lawful Paths →</a></li>
+            <li style="margin-bottom:0.85rem;"><strong>Choose your Paths.</strong> Distribute Path Points across the six lawful Paths. No single Path may exceed your per-Path cap — <span class="mech">cap of 3 per Path for Hybrids</span>, cap of 4 per Path for True Resonants. &nbsp;<a href="#section-iv" class="anchor-link" onclick="openSection('section-iv')">The Six Lawful Paths →</a></li>
             <li style="margin-bottom:0.85rem;"><strong>Apply Lineage Path Affinity.</strong> (+1 to the Path listed on your Lineage.) Hybrids: this bonus does not raise any single Path above <span class="mech">3</span>. &nbsp;<a href="#section-ii" class="anchor-link" onclick="openSection('section-ii')">Resonant Types &amp; Path Points →</a></li>
+            <li style="margin-bottom:0.85rem;"><strong>Select your Resonant Defense.</strong> True Resonant Casters only — you must have a Path Rating of 2 or higher in the relevant Path. Choose one and record it on your character sheet. &nbsp;<a href="#section-iii-defense" class="anchor-link" onclick="openSection('section-iii-defense')">Resonant Defense →</a></li>
             <li style="margin-bottom:0.85rem;"><strong>Note your Governing Attribute</strong> for each Path you invested in. This feeds directly into your Capability formula. &nbsp;<a href="#section-ii" class="anchor-link" onclick="openSection('section-ii')">Governing Attributes →</a></li>
-            <li style="margin-bottom:0.85rem;"><strong>Record your Wellspring Pool.</strong> Fixed by your Calling type (36 / 24 / 4 Cadence). &nbsp;<a href="#section-iv" class="anchor-link" onclick="openSection('section-iv')">Determining Your Wellspring →</a></li>
-            <li style="margin-bottom:0.85rem;"><strong>Understand Cast resolution.</strong> Your Path Rating, Governing Attribute, and Wellspring all interact during play. &nbsp;<a href="#section-v" class="anchor-link" onclick="openSection('section-v')">Resolving a Cast →</a></li>
+            <li style="margin-bottom:0.85rem;"><strong>Record your Wellspring Pool.</strong> Fixed by your Calling type (36 / 24 / 4 Cadence). &nbsp;<a href="#section-v" class="anchor-link" onclick="openSection('section-v')">Determining Your Wellspring →</a></li>
+            <li style="margin-bottom:0.85rem;"><strong>Understand Cast resolution.</strong> Your Path Rating, Governing Attribute, and Wellspring all interact during play. &nbsp;<a href="#section-vi" class="anchor-link" onclick="openSection('section-vi')">Resolving a Cast →</a></li>
             <li><strong>Songweavers:</strong> You use the Cadence Discipline system, not Path-based Resonance. See the Songweaver Calling page.</li>
           </ol>
 
@@ -928,10 +929,51 @@ footer a:hover { text-decoration: underline; }
         </div>
       </details>
 
-      <!-- ═══ SECTION III — THE SIX PATHS ═══ -->
-      <details class="step" id="section-iii">
+
+      <!-- ═══ SECTION III — RESONANT DEFENSE ═══ -->
+      <details class="step" id="section-iii-defense">
         <summary>
           <span class="step-badge core">III</span>
+          <h2 class="step-title">Resonant Defense</h2>
+          <span class="step-chevron"><i class="fa-solid fa-chevron-down"></i></span>
+        </summary>
+        <div class="step-body">
+          <p class="step-directive">True Resonant Casters only. You must have a Path Rating of 2 or higher in the relevant Path. Choose one defense and record it — this choice is made at creation and does not change without Watcher approval.</p>
+
+          <div class="callout">
+            <strong>Requirement:</strong> Path Rating of <span class="mech">2 or higher</span> in the governing Path. You may only select one Resonant Defense. Choose wisely.
+          </div>
+
+          <ul>
+            <li style="margin-bottom:1rem;">
+              <strong>Absorption Shield (Aqua or Terra):</strong> Roll Xd4. X equals your relevant Path Rating. Add the result to your Armor Points as Bonus Armor.
+              <ul style="margin-top:0.5rem;">
+                <li><em>Example:</em> Aqua Rating is 3. Roll 3d4. Results: 2, 1, 4. Add 7 temporary armor points.</li>
+              </ul>
+            </li>
+            <li style="margin-bottom:1rem;">
+              <strong>Damage Shield (Ignis):</strong> When struck in melee, the attacker takes retaliatory Ignis damage. Roll your Resonant Effect Die (RED). Every physical strike against the caster deals that result back to the attacker.
+              <ul style="margin-top:0.5rem;">
+                <li><em>Example:</em> Ignis Rating is 3. RED is 1d6. Result: 5. Each time the caster is struck physically, the attacker takes 5 points of damage.</li>
+              </ul>
+            </li>
+            <li style="margin-bottom:1rem;">
+              <strong>Dodge (Aeris):</strong> +2 to Total Defensive Rating.
+            </li>
+            <li style="margin-bottom:0;">
+              <strong>Regeneration (Vitae):</strong> When taking damage, the regeneration shield restores 1 point of Health for every 3 points of damage taken.
+              <ul style="margin-top:0.5rem;">
+                <li><em>Example:</em> A character with Regeneration active takes 5 points of damage. On their next turn they regenerate 1 point of Health.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </details>
+
+      <!-- ═══ SECTION IV — THE SIX PATHS ═══ -->
+      <details class="step" id="section-iv">
+        <summary>
+          <span class="step-badge core">IV</span>
           <h2 class="step-title">The Six Lawful Paths</h2>
           <span class="step-chevron"><i class="fa-solid fa-chevron-down"></i></span>
         </summary>
@@ -1012,10 +1054,10 @@ footer a:hover { text-decoration: underline; }
         </div>
       </details>
 
-      <!-- ═══ SECTION IV — WELLSPRING ═══ -->
-      <details class="step" id="section-iv">
+      <!-- ═══ SECTION V — WELLSPRING ═══ -->
+      <details class="step" id="section-v">
         <summary>
-          <span class="step-badge core">IV</span>
+          <span class="step-badge core">V</span>
           <h2 class="step-title">Determining Your Wellspring</h2>
           <span class="step-chevron"><i class="fa-solid fa-chevron-down"></i></span>
         </summary>
@@ -1067,10 +1109,10 @@ footer a:hover { text-decoration: underline; }
         </div>
       </details>
 
-      <!-- ═══ SECTION V — RESOLVING A CAST ═══ -->
-      <details class="step" id="section-v">
+      <!-- ═══ SECTION VI — RESOLVING A CAST ═══ -->
+      <details class="step" id="section-vi">
         <summary>
-          <span class="step-badge core">V</span>
+          <span class="step-badge core">VI</span>
           <h2 class="step-title">Resolving a Cast</h2>
           <span class="step-chevron"><i class="fa-solid fa-chevron-down"></i></span>
         </summary>
