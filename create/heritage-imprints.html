@@ -5,16 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Heritage Imprints — The Echo That Stays</title>
 
-<!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
-<!-- Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
-
 :root {
   --header-height: 72px;
   --footer-height: 72px;
@@ -25,506 +21,341 @@
   --nav-color: #f2e3c6;
   --nav-shadow: rgba(0,0,0,0.85);
   --footer-bg: rgba(0,0,0,0.88);
+  --gold: #c8922a;
+  --gold-light: #e8b84b;
+  --gold-dim: rgba(200,146,42,0.18);
+  --ink-mid: #4a2d18;
   --calling-primary: #4a2e06;
-  --calling-dark: #5a3a08;
   --calling-light: #d4a84a;
   --calling-muted: #a07828;
   --calling-bg-tint: rgba(200,150,40,0.07);
   --calling-border: rgba(139,105,20,0.22);
 }
 
-*{ margin:0; padding:0; box-sizing:border-box; }
-html{ scroll-behavior:smooth; }
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
 
-body{
-  font-family:'Crimson Text',Georgia,serif;
-  color:var(--ink-color);
-  min-height:100dvh;
-  background:#000;
-  line-height:1.75;
-  font-size:1.18rem;
+body {
+  font-family: 'Crimson Text', Georgia, serif;
+  color: var(--ink-color);
+  min-height: 100dvh;
+  background: #000;
+  line-height: 1.75;
+  font-size: 1.18rem;
 }
 
-.page-wrapper{
-  min-height:100dvh;
-  display:flex; flex-direction:column;
-  max-width:var(--page-max-width);
-  margin:0 auto;
-  background-color:#000;
-  background-image:url('../../images/bg.jpg');
-  background-size:contain;
-  background-position:center top;
-  background-repeat:no-repeat;
-  background-attachment:fixed;
-  box-shadow:0 0 80px rgba(0,0,0,0.85);
-  position:relative;
+.page-wrapper {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  background-color: #000;
+  background-image: url('../images/bg.jpg');
+  background-size: contain;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  box-shadow: 0 0 80px rgba(0,0,0,0.85);
+  position: relative;
 }
 
-header {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(100%, var(--page-max-width));
-  height: var(--header-height);
-  background: var(--footer-bg);
-  border-bottom: 1px solid rgba(200, 151, 58, 0.15);
-  backdrop-filter: blur(4px);
-  z-index: 1000;
+/* ── NAVIGATION ─────────────────────────────── */
+header{position:fixed;top:0;left:50%;transform:translateX(-50%);width:min(100%,var(--page-max-width));height:var(--header-height);background:var(--footer-bg);border-bottom:1px solid rgba(200,151,58,0.15);backdrop-filter:blur(4px);z-index:1000;}
+nav{max-width:var(--content-max-width);width:100%;height:100%;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:2.25rem;padding:0 1.5rem;}
+nav a{color:var(--nav-color);text-decoration:none;font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.22em;text-transform:uppercase;transition:color .25s ease,transform .25s ease;position:relative;display:inline-flex;align-items:center;gap:0.45rem;padding:0.25rem 0.1rem;white-space:nowrap;}
+nav a i{color:inherit;font-size:0.82rem;opacity:0.85;position:relative;top:-1px;}
+nav a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:1px;background:var(--gold-light);transition:width .28s ease;}
+nav a:hover{color:var(--gold-light);transform:translateY(-1px);}
+nav a:hover::after{width:100%;}
+nav a.nav-active{color:#e8b84b;}
+nav a.nav-active::after{width:100%;background:#e8b84b;height:1.5px;}
+.nav-hamburger{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:40px;height:40px;background:none;border:1px solid rgba(200,151,58,0.32);border-radius:4px;cursor:pointer;padding:0;position:absolute;right:1rem;top:50%;transform:translateY(-50%);z-index:1010;transition:border-color .2s ease;}
+.nav-hamburger:hover{border-color:rgba(200,151,58,0.65);}
+.nav-hamburger span{display:block;width:18px;height:1.5px;background:var(--nav-color);border-radius:2px;transition:transform .3s ease,opacity .3s ease,width .3s ease;transform-origin:center;}
+header.menu-open .nav-hamburger span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+header.menu-open .nav-hamburger span:nth-child(2){opacity:0;width:0;}
+header.menu-open .nav-hamburger span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+.nav-mobile-menu{display:none;position:fixed;top:var(--header-height);left:50%;transform:translateX(-50%);width:min(100%,var(--page-max-width));background:rgba(0,0,0,0.97);border-bottom:1px solid rgba(200,151,58,0.15);z-index:999;max-height:0;overflow:hidden;transition:max-height .38s cubic-bezier(0.4,0,0.2,1),opacity .28s ease;opacity:0;}
+.nav-mobile-menu.open{max-height:400px;opacity:1;}
+.nav-mobile-menu a{display:flex;align-items:center;gap:0.9rem;padding:1rem 2rem;color:var(--nav-color);text-decoration:none;font-family:'Cinzel',serif;font-size:0.78rem;letter-spacing:0.22em;text-transform:uppercase;border-bottom:1px solid rgba(200,151,58,0.12);transition:color .2s ease,background .2s ease,padding-left .2s ease;}
+.nav-mobile-menu a:last-child{border-bottom:none;}
+.nav-mobile-menu a i{color:#c8973a;font-size:0.9rem;width:18px;text-align:center;flex-shrink:0;}
+.nav-mobile-menu a:hover{color:#f5d978;background:rgba(200,151,58,0.06);padding-left:2.4rem;}
+.nav-mobile-menu a.nav-active{color:#e8b84b;background:rgba(200,151,58,0.08);}
+.nav-mobile-menu a.nav-active i{color:#e8b84b;}
+@media(max-width:680px){nav a{display:none;}.nav-hamburger{display:flex;}.nav-mobile-menu{display:block;}}
+@media(max-width:820px) and (min-width:681px){nav{gap:1.4rem;}nav a{font-size:0.72rem;letter-spacing:0.16em;}}
+/* ── END NAVIGATION ──────────────────────────── */
+
+main {
+  flex: 1;
+  margin-top: var(--header-height);
+  padding: 3.25rem 1rem calc(var(--footer-height) + 3rem);
+  display: flex;
+  justify-content: center;
 }
 
-nav {
+.content-container {
   max-width: var(--content-max-width);
   width: 100%;
-  height: 100%;
+  padding: 40px 80px 180px;
   margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2.25rem;
-  padding: 0 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.55);
+  background-image: url('../images/content-scroll-bg.png');
+  background-repeat: repeat-y;
+  background-position: top center;
+  background-size: 100% auto;
 }
 
-nav a {
-  color: var(--nav-color);
-  text-decoration: none;
-  font-family: 'Cinzel', serif;
-  font-size: 0.8rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  transition: color .25s ease, transform .25s ease;
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.25rem 0.1rem;
-  white-space: nowrap;
-}
-
-nav a i {
-  color: inherit;
-  font-size: 0.82rem;
-  opacity: 0.85;
-  position: relative;
-  top: -1px;
-}
-
-nav a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -5px;
-  width: 0;
-  height: 1px;
-  background: var(--gold-light);
-  transition: width .28s ease;
-}
-
-nav a:hover {
-  color: var(--gold-light);
-  transform: translateY(-1px);
-}
-
-nav a:hover::after {
-  width: 100%;
-}
-
-nav a.nav-active {
-  color: #e8b84b;
-}
-
-nav a.nav-active::after {
-  width: 100%;
-  background: #e8b84b;
-  height: 1.5px;
-}
-
-.nav-hamburger {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  width: 40px;
-  height: 40px;
-  background: none;
-  border: 1px solid rgba(200, 151, 58, 0.32);
-  border-radius: 4px;
-  cursor: pointer;
-  padding: 0;
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 1010;
-  transition: border-color .2s ease;
-}
-
-.nav-hamburger:hover {
-  border-color: rgba(200, 151, 58, 0.65);
-}
-
-.nav-hamburger span {
-  display: block;
-  width: 18px;
-  height: 1.5px;
-  background: var(--nav-color);
-  border-radius: 2px;
-  transition: transform .3s ease, opacity .3s ease, width .3s ease;
-  transform-origin: center;
-}
-
-header.menu-open .nav-hamburger span:nth-child(1) {
-  transform: translateY(6.5px) rotate(45deg);
-}
-
-header.menu-open .nav-hamburger span:nth-child(2) {
-  opacity: 0;
-  width: 0;
-}
-
-header.menu-open .nav-hamburger span:nth-child(3) {
-  transform: translateY(-6.5px) rotate(-45deg);
-}
-
-.nav-mobile-menu {
-  display: none;
-  position: fixed;
-  top: var(--header-height);
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(100%, var(--page-max-width));
-  background: rgba(0, 0, 0, 0.97);
-  border-bottom: 1px solid rgba(200, 151, 58, 0.15);
-  z-index: 999;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height .38s cubic-bezier(0.4, 0, 0.2, 1), opacity .28s ease;
-  opacity: 0;
-}
-
-.nav-mobile-menu.open {
-  max-height: 400px;
-  opacity: 1;
-}
-
-.nav-mobile-menu a {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-  padding: 1rem 2rem;
-  color: var(--nav-color);
-  text-decoration: none;
-  font-family: 'Cinzel', serif;
-  font-size: 0.78rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  border-bottom: 1px solid rgba(200, 151, 58, 0.12);
-  transition: color .2s ease, background .2s ease, padding-left .2s ease;
-}
-
-.nav-mobile-menu a:last-child {
-  border-bottom: none;
-}
-
-.nav-mobile-menu a i {
-  color: #c8973a;
-  font-size: 0.9rem;
-  width: 18px;
+.content-container h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.8rem;
   text-align: center;
-  flex-shrink: 0;
+  margin: 0 0 .4rem;
+  letter-spacing: .06em;
 }
 
-.nav-mobile-menu a:hover {
-  color: #f5d978;
-  background: rgba(200, 151, 58, 0.06);
-  padding-left: 2.4rem;
-}
-
-.nav-mobile-menu a.nav-active {
-  color: #e8b84b;
-  background: rgba(200, 151, 58, 0.08);
-}
-
-.nav-mobile-menu a.nav-active i {
-  color: #e8b84b;
-}
-
-@media(max-width:680px) {
-  nav a {
-    display: none;
-  }
-
-  .nav-hamburger {
-    display: flex;
-  }
-
-  .nav-mobile-menu {
-    display: block;
-  }
-}
-
-@media(max-width:820px) and (min-width:681px) {
-  nav {
-    gap: 1.4rem;
-  }
-
-  nav a {
-    font-size: 0.72rem;
-    letter-spacing: 0.16em;
-  }
-}
-
-/* ── END NAVIGATION ──────────────────────────── */
-main{
-  flex:1;
-  margin-top:var(--header-height);
-  padding:3.25rem 1rem calc(var(--footer-height) + 3rem);
-  display:flex; justify-content:center;
-}
-
-.content-container{
-  max-width:var(--content-max-width);
-  width:100%; padding:40px 80px 180px;
-  color:var(--ink-color); margin:0 auto;
-  border-radius:8px;
-  box-shadow:0 20px 60px rgba(0,0,0,0.55);
-  background-image:url('../../images/content-scroll-bg.png');
-  background-repeat:repeat-y;
-  background-position:top center;
-  background-size:100% auto;
-}
-
-.content-container h1{
-  font-family:'Cinzel Decorative',serif;
-  font-size:2.8rem; text-align:center;
-  margin:0 0 .4rem; letter-spacing:.06em;
-}
-
-.content-container p{ margin-bottom:1.25rem; }
+.content-container p { margin-bottom: 1.25rem; }
 
 /* ── Page subtitle ── */
-.page-subtitle{
-  font-family:'Crimson Text',serif;
-  font-size:1.1rem; font-style:italic;
-  color:#4a2e06;
-  text-align:center; letter-spacing:0.08em;
-  margin:0 0 0.5rem;
+.page-subtitle {
+  font-family: 'Crimson Text', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #4a2e06;
+  text-align: center;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.5rem;
 }
 
-.page-divider{
-  display:flex; align-items:center; gap:0.75rem;
-  margin:0.5rem auto 2.5rem; max-width:420px;
+.page-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.5rem auto 2.5rem;
+  max-width: 420px;
 }
-.page-divider span{ flex:1; height:1px; background:linear-gradient(to right,transparent,rgba(139,105,20,0.45)); }
-.page-divider span:last-child{ background:linear-gradient(to left,transparent,rgba(139,105,20,0.45)); }
-.page-divider em{ color:#4a2e06; font-size:0.65rem; font-style:normal; }
+.page-divider span { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(139,105,20,0.45)); }
+.page-divider span:last-child { background: linear-gradient(to left, transparent, rgba(139,105,20,0.45)); }
+.page-divider em { color: #4a2e06; font-size: 0.65rem; font-style: normal; }
 
 /* ── Section label ── */
-.section-label{
-  font-family:'Cinzel Decorative',serif;
-  font-size:0.6rem; letter-spacing:0.22em;
-  text-transform:uppercase;
-  color:#4a2e06;
-  text-align:center;
-  margin:2.5rem 0 0.8rem;
-}
-
-/* ── Intro soul block ── */
-.soul-block{
-  background:var(--calling-bg-tint);
-  border:1px solid var(--calling-border);
-  border-left:4px solid var(--calling-light);
-  border-radius:0 10px 10px 0;
-  padding:1.3rem 1.6rem; margin-bottom:2rem;
-  font-style:italic; font-size:1.05rem;
-  color:#4a3010; line-height:1.75;
+.section-label {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #4a2e06;
+  text-align: center;
+  margin: 2.5rem 0 0.8rem;
 }
 
 /* ── Allocation box ── */
-.allocation-block{
-  background:var(--calling-bg-tint);
-  border:1px solid var(--calling-border);
-  border-radius:10px;
-  padding:1.3rem 1.6rem;
-  margin-bottom:2rem;
+.allocation-block {
+  background: var(--calling-bg-tint);
+  border: 1px solid var(--calling-border);
+  border-radius: 10px;
+  padding: 1.3rem 1.6rem;
+  margin-bottom: 2rem;
 }
-
-.allocation-block p{
-  font-family:'Crimson Text',serif;
-  font-size:0.97rem; color:#4a3010;
-  line-height:1.7; margin-bottom:0.5rem;
+.allocation-block p {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.97rem;
+  color: #4a3010;
+  line-height: 1.7;
+  margin-bottom: 0.5rem;
 }
-.allocation-block p:last-child{ margin-bottom:0; }
+.allocation-block p:last-child { margin-bottom: 0; }
 
-.allocation-row{
-  display:flex; align-items:baseline;
-  justify-content:space-between;
-  padding:0.3rem 0;
-  border-bottom:1px solid rgba(139,105,20,0.10);
-  font-family:'Crimson Text',serif;
-  font-size:0.95rem; color:#4a3010;
+.allocation-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid rgba(139,105,20,0.10);
+  font-family: 'Crimson Text', serif;
+  font-size: 0.95rem;
+  color: #4a3010;
 }
-.allocation-row:last-child{ border-bottom:none; }
-
-.allocation-name{ font-style:italic; }
-.allocation-val{
-  font-family:'Cinzel Decorative',serif;
-  font-size:0.85rem; color:#4a2e06;
-  font-weight:700;
+.allocation-row:last-child { border-bottom: none; }
+.allocation-name { font-style: italic; }
+.allocation-val {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.85rem;
+  color: #4a2e06;
+  font-weight: 700;
 }
-.allocation-locked{
-  font-family:'Cinzel Decorative',serif;
-  font-size:0.55rem; letter-spacing:0.14em;
-  text-transform:uppercase;
-  background:rgba(139,80,20,0.10);
-  color:#8b5014;
-  border:1px solid rgba(139,80,20,0.25);
-  border-radius:20px;
-  padding:0.1rem 0.5rem;
-  margin-left:0.5rem;
-}
-
-/* ── Imprint cards ── */
-.imprint-card{
-  background:rgba(255,248,235,0.6);
-  border:1px solid var(--calling-border);
-  border-radius:10px;
-  padding:1.4rem 1.6rem 1.3rem;
-  margin-bottom:1.4rem;
-  position:relative; overflow:hidden;
-  transition:box-shadow 0.2s ease, transform 0.2s ease;
-}
-.imprint-card:hover{ box-shadow:0 6px 20px rgba(139,105,20,0.12); transform:translateY(-2px); }
-
-.imprint-card::before{
-  content:""; position:absolute;
-  top:0; left:0; width:5px; height:100%;
-  border-radius:10px 0 0 10px;
-}
-
-/* Each imprint gets its own accent color */
-.imprint-card.physicality::before{ background:#7a8c42; }
-.imprint-card.social::before{ background:#8b6030; }
-.imprint-card.technical::before{ background:#507890; }
-.imprint-card.tactical::before{ background:#8b3a2a; }
-.imprint-card.metaphysical::before{ background:#6a4a90; }
-
-.imprint-header{
-  display:flex; align-items:center;
-  gap:0.8rem; margin-bottom:0.8rem;
-}
-
-.imprint-icon{
-  width:36px; height:36px;
-  border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  font-size:0.95rem; flex-shrink:0;
-}
-.imprint-card.physicality .imprint-icon{ background:rgba(122,140,66,0.15); color:#5a7030; border:1px solid rgba(122,140,66,0.3); }
-.imprint-card.social .imprint-icon{ background:rgba(139,96,48,0.12); color:#8b6030; border:1px solid rgba(139,96,48,0.28); }
-.imprint-card.technical .imprint-icon{ background:rgba(80,120,144,0.12); color:#507890; border:1px solid rgba(80,120,144,0.28); }
-.imprint-card.tactical .imprint-icon{ background:rgba(139,58,42,0.12); color:#8b3a2a; border:1px solid rgba(139,58,42,0.28); }
-.imprint-card.metaphysical .imprint-icon{ background:rgba(106,74,144,0.12); color:#6a4a90; border:1px solid rgba(106,74,144,0.28); }
-
-.imprint-title{
-  font-family:'Cinzel Decorative',serif;
-  font-size:1rem; color:var(--ink-color);
-  letter-spacing:0.05em;
-}
-
-.imprint-summary{
-  font-family:'Crimson Text',serif;
-  font-size:0.97rem; color:#4a3010;
-  line-height:1.7; margin-bottom:0.9rem;
-}
-
-.imprint-whisper{
-  font-family:'Crimson Text',serif;
-  font-size:0.92rem; font-style:italic;
-  color:#4a2e06;
-  border-top:1px solid rgba(139,105,20,0.15);
-  padding-top:0.7rem; margin-bottom:0.9rem;
-  line-height:1.65;
-}
-
-/* Vocation pills inside imprint card */
-.vocation-row{
-  display:flex; flex-wrap:wrap; gap:0.5rem;
-  margin-top:0.3rem;
-}
-
-.vocation-pill{
-  font-family:'Cinzel Decorative',serif;
-  font-size:0.52rem; letter-spacing:0.12em;
-  text-transform:uppercase;
-  padding:0.25rem 0.75rem;
-  border-radius:20px;
-  background:rgba(200,150,40,0.08);
-  border:1px solid rgba(139,105,20,0.22);
-  color:#4a2e06;
-}
-
-.vocation-label{
-  font-family:'Cinzel Decorative',serif;
-  font-size:0.52rem; letter-spacing:0.16em;
-  text-transform:uppercase;
-  color:#4a2e06;
-  margin-bottom:0.4rem;
-  display:block;
+.allocation-locked {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.55rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: rgba(139,80,20,0.10);
+  color: #8b5014;
+  border: 1px solid rgba(139,80,20,0.25);
+  border-radius: 20px;
+  padding: 0.1rem 0.5rem;
+  margin-left: 0.5rem;
 }
 
 /* ── Cap note ── */
-.cap-note{
-  background:rgba(139,80,20,0.06);
-  border:1px solid rgba(139,80,20,0.20);
-  border-radius:10px;
-  padding:1.1rem 1.4rem;
-  margin-bottom:2rem;
-  font-family:'Crimson Text',serif;
-  font-size:0.95rem; color:#4a3010;
-  line-height:1.7;
-  text-align:center;
-  font-style:italic;
+.cap-note {
+  background: rgba(139,80,20,0.06);
+  border: 1px solid rgba(139,80,20,0.20);
+  border-radius: 10px;
+  padding: 1.1rem 1.4rem;
+  margin-bottom: 2rem;
+  font-family: 'Crimson Text', serif;
+  font-size: 0.95rem;
+  color: #4a3010;
+  line-height: 1.7;
+  text-align: center;
+  font-style: italic;
+}
+
+/* ── Imprint cards ── */
+.imprint-card {
+  background: rgba(255,248,235,0.6);
+  border: 1px solid var(--calling-border);
+  border-radius: 10px;
+  padding: 1.4rem 1.6rem 1.3rem;
+  margin-bottom: 1.4rem;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.imprint-card:hover { box-shadow: 0 6px 20px rgba(139,105,20,0.12); transform: translateY(-2px); }
+
+.imprint-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 5px; height: 100%;
+  border-radius: 10px 0 0 10px;
+}
+.imprint-card.physicality::before  { background: #7a8c42; }
+.imprint-card.social::before       { background: #8b6030; }
+.imprint-card.technical::before    { background: #507890; }
+.imprint-card.tactical::before     { background: #8b3a2a; }
+.imprint-card.metaphysical::before { background: #6a4a90; }
+
+.imprint-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+.imprint-icon {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+.imprint-card.physicality .imprint-icon  { background: rgba(122,140,66,0.15);  color: #5a7030; border: 1px solid rgba(122,140,66,0.3); }
+.imprint-card.social .imprint-icon       { background: rgba(139,96,48,0.12);   color: #8b6030; border: 1px solid rgba(139,96,48,0.28); }
+.imprint-card.technical .imprint-icon    { background: rgba(80,120,144,0.12);  color: #507890; border: 1px solid rgba(80,120,144,0.28); }
+.imprint-card.tactical .imprint-icon     { background: rgba(139,58,42,0.12);   color: #8b3a2a; border: 1px solid rgba(139,58,42,0.28); }
+.imprint-card.metaphysical .imprint-icon { background: rgba(106,74,144,0.12);  color: #6a4a90; border: 1px solid rgba(106,74,144,0.28); }
+
+.imprint-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1rem;
+  color: var(--ink-color);
+  letter-spacing: 0.05em;
+}
+
+.imprint-summary {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.97rem;
+  color: #4a3010;
+  line-height: 1.7;
+  margin-bottom: 0.9rem;
+}
+
+.imprint-whisper {
+  font-family: 'Crimson Text', serif;
+  font-size: 0.92rem;
+  font-style: italic;
+  color: #4a2e06;
+  border-top: 1px solid rgba(139,105,20,0.15);
+  padding-top: 0.7rem;
+  margin-bottom: 0.9rem;
+  line-height: 1.65;
+}
+
+.vocation-label {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.52rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #4a2e06;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+.vocation-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+}
+.vocation-pill {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.52rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  background: rgba(200,150,40,0.08);
+  border: 1px solid rgba(139,105,20,0.22);
+  color: #4a2e06;
 }
 
 /* ── Closing hook ── */
-.closing-hook{
-  background:var(--calling-bg-tint);
-  border:1px solid var(--calling-border);
-  border-radius:10px;
-  padding:1.4rem 1.6rem;
-  text-align:center;
-  font-style:italic;
-  font-size:1.05rem;
-  color:#4a3010;
-  line-height:1.75;
-  margin-top:0.5rem;
+.closing-hook {
+  background: var(--calling-bg-tint);
+  border: 1px solid var(--calling-border);
+  border-radius: 10px;
+  padding: 1.4rem 1.6rem;
+  text-align: center;
+  font-style: italic;
+  font-size: 1.05rem;
+  color: #4a3010;
+  line-height: 1.75;
+  margin-top: 0.5rem;
 }
 
-footer{
-  position:fixed; bottom:0; left:50%; transform:translateX(-50%);
-  width:min(100%,var(--page-max-width));
-  height:var(--footer-height);
-  background:var(--footer-bg);
-  color:#ccc; display:flex; align-items:center; justify-content:center;
-  text-align:center; padding:0 1rem; font-size:.95rem;
-  border-top:1px solid #444; z-index:1000;
+footer {
+  position: fixed;
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: min(100%, var(--page-max-width));
+  height: var(--footer-height);
+  background: var(--footer-bg);
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 1rem;
+  font-size: .95rem;
+  border-top: 1px solid #444;
+  z-index: 1000;
 }
-footer a{ color:#d4a373; text-decoration:none; }
-footer a:hover{ text-decoration:underline; }
+footer a { color: #d4a373; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
 
-@media(max-width:768px){
-  nav{ gap:1rem; padding:0 1rem; flex-wrap:wrap; }
-  nav a{ font-size:.9rem; }
-  .content-container{ padding:36px 32px 150px; }
-  .content-container h1{ font-size:2rem; }
+@media(max-width:768px) {
+  .content-container { padding: 36px 32px 150px; }
+  .content-container h1 { font-size: 2rem; }
 }
-@media(max-width:480px){
-  body{ font-size:1.05rem; }
-  .content-container{ padding:28px 20px 130px; }
+@media(max-width:480px) {
+  body { font-size: 1.05rem; }
+  .content-container { padding: 28px 20px 130px; }
 }
-
 </style>
 </head>
 
@@ -582,6 +413,23 @@ footer a:hover{ text-decoration:underline; }
   <!-- The Five Imprints -->
   <p class="section-label">The Five Heritage Imprints</p>
 
+  <!-- Metaphysical & Scholarly -->
+  <div class="imprint-card metaphysical">
+    <div class="imprint-header">
+      <div class="imprint-icon"><i class="fa-solid fa-scroll"></i></div>
+      <span class="imprint-title">Metaphysical &amp; Scholarly</span>
+    </div>
+    <p class="imprint-summary">The quiet attunement to the Song, history, and hidden patterns — hearing echoes of what was, sensing what might be, understanding the deeper truths beneath the surface. This is the echo of those who once kept the world's memory alive, lives spent in pursuit of meaning: studying, remembering, interpreting, guarding knowledge so the past is not lost.</p>
+    <p class="imprint-summary">You carry the quiet fire of the seeker — the instinct to ask "what does this mean?" when others shrug and move on, the patience to sit with mystery until it speaks, the ache when something ancient begins to fade. This imprint is not detached academia; it is devotion to the invisible threads that bind past to present, truth to dream, the Song to the souls who hear it.</p>
+    <p class="imprint-whisper">"I remember. I understand. And I will not let it be lost."</p>
+    <span class="vocation-label">Vocations in this Imprint</span>
+    <div class="vocation-row">
+      <span class="vocation-pill">Initiate Resonant</span>
+      <span class="vocation-pill">Lorekeeper</span>
+      <span class="vocation-pill">Student</span>
+    </div>
+  </div>
+
   <!-- Physicality & Environment -->
   <div class="imprint-card physicality">
     <div class="imprint-header">
@@ -595,6 +443,7 @@ footer a:hover{ text-decoration:underline; }
     <div class="vocation-row">
       <span class="vocation-pill">Baker</span>
       <span class="vocation-pill">Courier</span>
+      <span class="vocation-pill">Hearthwarden</span>
       <span class="vocation-pill">Laborer</span>
       <span class="vocation-pill">Preserver</span>
       <span class="vocation-pill">Scout</span>
@@ -612,26 +461,10 @@ footer a:hover{ text-decoration:underline; }
     <p class="imprint-whisper">"I see you. I know what moves you. And I know how to reach you."</p>
     <span class="vocation-label">Vocations in this Imprint</span>
     <div class="vocation-row">
-      <span class="vocation-pill">Hearthwarden</span>
+      <span class="vocation-pill">Caretaker</span>
       <span class="vocation-pill">Manservant</span>
       <span class="vocation-pill">Mediator</span>
       <span class="vocation-pill">Nightwatchman</span>
-    </div>
-  </div>
-
-  <!-- Technical -->
-  <div class="imprint-card technical">
-    <div class="imprint-header">
-      <div class="imprint-icon"><i class="fa-solid fa-gear"></i></div>
-      <span class="imprint-title">Technical</span>
-    </div>
-    <p class="imprint-summary">The patient mastery of systems and tools — knowing how things fit, break, mend, and endure, turning chaos into order with steady hands. This is the echo of those who once built and mended the world piece by piece, lives spent in the logic of making and fixing: crafting, healing, studying, preserving through precision and care.</p>
-    <p class="imprint-summary">You carry the quiet certainty of the maker and healer — the instinct to see not just the object, but the sequence that brought it to this moment, and the sequence that will carry it forward. This imprint is not flashy brilliance; it is steady, methodical care.</p>
-    <p class="imprint-whisper">"There is a cause. There is a way. Let me find it."</p>
-    <span class="vocation-label">Vocations in this Imprint</span>
-    <div class="vocation-row">
-      <span class="vocation-pill">Artisan</span>
-      <span class="vocation-pill">Caretaker</span>
     </div>
   </div>
 
@@ -652,20 +485,18 @@ footer a:hover{ text-decoration:underline; }
     </div>
   </div>
 
-  <!-- Metaphysical & Scholarly -->
-  <div class="imprint-card metaphysical">
+  <!-- Technical -->
+  <div class="imprint-card technical">
     <div class="imprint-header">
-      <div class="imprint-icon"><i class="fa-solid fa-scroll"></i></div>
-      <span class="imprint-title">Metaphysical &amp; Scholarly</span>
+      <div class="imprint-icon"><i class="fa-solid fa-gear"></i></div>
+      <span class="imprint-title">Technical</span>
     </div>
-    <p class="imprint-summary">The quiet attunement to the Song, history, and hidden patterns — hearing echoes of what was, sensing what might be, understanding the deeper truths beneath the surface. This is the echo of those who once kept the world's memory alive, lives spent in pursuit of meaning: studying, remembering, interpreting, guarding knowledge so the past is not lost.</p>
-    <p class="imprint-summary">You carry the quiet fire of the seeker — the instinct to ask "what does this mean?" when others shrug and move on, the patience to sit with mystery until it speaks, the ache when something ancient begins to fade. This imprint is not detached academia; it is devotion to the invisible threads that bind past to present, truth to dream, the Song to the souls who hear it.</p>
-    <p class="imprint-whisper">"I remember. I understand. And I will not let it be lost."</p>
+    <p class="imprint-summary">The patient mastery of systems and tools — knowing how things fit, break, mend, and endure, turning chaos into order with steady hands. This is the echo of those who once built and mended the world piece by piece, lives spent in the logic of making and fixing: crafting, healing, studying, preserving through precision and care.</p>
+    <p class="imprint-summary">You carry the quiet certainty of the maker and healer — the instinct to see not just the object, but the sequence that brought it to this moment, and the sequence that will carry it forward. This imprint is not flashy brilliance; it is steady, methodical care.</p>
+    <p class="imprint-whisper">"There is a cause. There is a way. Let me find it."</p>
     <span class="vocation-label">Vocations in this Imprint</span>
     <div class="vocation-row">
-      <span class="vocation-pill">Initiate Resonant</span>
-      <span class="vocation-pill">Lorekeeper</span>
-      <span class="vocation-pill">Student</span>
+      <span class="vocation-pill">Artisan</span>
     </div>
   </div>
 
@@ -679,29 +510,51 @@ footer a:hover{ text-decoration:underline; }
 </main>
 
 <footer>
-<div>
-  Email: <a href="mailto:contact@rivendawn.com">contact@rivendawn.com</a>
-  &nbsp;&nbsp;•&nbsp;&nbsp;
-  © 2026 jpcauthor. All rights reserved.
-  &nbsp;&nbsp;•&nbsp;&nbsp;
-  <a href="https://jpcauthor.github.io/resonant-echoes/" target="_blank">Read the Novel</a>
-</div>
+  <div>
+    Email: <a href="mailto:jpcauthor@rivendawn.com">jpcauthor@rivendawn.com</a>
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    © 2026 jpcauthor. All rights reserved.
+    &nbsp;&nbsp;•&nbsp;&nbsp;
+    <a href="https://jpcauthor.github.io/resonant-echoes/" target="_blank">Read the Novel</a>
+  </div>
 </footer>
 
 </div>
 
 <script>
 (function(){
-  var page=document.body.dataset.page;
-  if(page){document.querySelectorAll('[data-nav="'+page+'"]').forEach(function(e){e.classList.add('nav-active');});}
-  var btn=document.getElementById('navHamburger');
-  var menu=document.getElementById('navMobileMenu');
-  var hdr=document.querySelector('header');
-  if(!btn||!menu)return;
-  btn.addEventListener('click',function(){var o=menu.classList.toggle('open');hdr.classList.toggle('menu-open',o);btn.setAttribute('aria-expanded',o);});
-  menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');});});
-  document.addEventListener('click',function(e){if(!hdr.contains(e.target)&&!menu.contains(e.target)){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');}});
-  window.addEventListener('scroll',function(){if(menu.classList.contains('open')){menu.classList.remove('open');hdr.classList.remove('menu-open');btn.setAttribute('aria-expanded','false');}},{passive:true});
+  var page = document.body.dataset.page;
+  if(page){ document.querySelectorAll('[data-nav="'+page+'"]').forEach(function(e){ e.classList.add('nav-active'); }); }
+  var btn  = document.getElementById('navHamburger');
+  var menu = document.getElementById('navMobileMenu');
+  var hdr  = document.querySelector('header');
+  if(!btn||!menu) return;
+  btn.addEventListener('click', function(){
+    var o = menu.classList.toggle('open');
+    hdr.classList.toggle('menu-open', o);
+    btn.setAttribute('aria-expanded', o);
+  });
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      menu.classList.remove('open');
+      hdr.classList.remove('menu-open');
+      btn.setAttribute('aria-expanded','false');
+    });
+  });
+  document.addEventListener('click', function(e){
+    if(!hdr.contains(e.target) && !menu.contains(e.target)){
+      menu.classList.remove('open');
+      hdr.classList.remove('menu-open');
+      btn.setAttribute('aria-expanded','false');
+    }
+  });
+  window.addEventListener('scroll', function(){
+    if(menu.classList.contains('open')){
+      menu.classList.remove('open');
+      hdr.classList.remove('menu-open');
+      btn.setAttribute('aria-expanded','false');
+    }
+  },{passive:true});
 })();
 </script>
 
