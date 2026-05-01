@@ -42,9 +42,6 @@
   --intel-c:     #c47a20;
   --wisdom-c:    #7a6abf;
   --social-c:    #8b6a3a;
-
-  --page-w: 8.5in;
-  --margin: 0.52in;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -149,14 +146,12 @@ body {
     radial-gradient(ellipse at 90% 90%, rgba(180,140,60,0.10) 0%, transparent 60%),
     radial-gradient(ellipse at 50% 50%, rgba(255,248,220,0.4) 0%, transparent 80%);
 }
-
 .page-inner {
   width: 100%;
   padding: 0.52in 0.55in;
   position: relative;
   transform-origin: top left;
 }
-
 .sheet-page::before {
   content: '';
   position: absolute;
@@ -173,7 +168,6 @@ body {
   pointer-events: none;
   z-index: 10;
 }
-
 .corner-tl, .corner-tr, .corner-bl, .corner-br {
   position: absolute;
   width: 10px; height: 10px;
@@ -186,7 +180,6 @@ body {
 .corner-tr { top: calc(0.28in - 5px); right: calc(0.28in - 5px); }
 .corner-bl { bottom: calc(0.28in - 5px); left: calc(0.28in - 5px); }
 .corner-br { bottom: calc(0.28in - 5px); right: calc(0.28in - 5px); }
-
 .page-footer-num {
   position: absolute;
   bottom: 0.15in; left: 50%;
@@ -200,10 +193,7 @@ body {
 /* ═══════════════════════════════════════════
    PAGE TITLE
 ═══════════════════════════════════════════ */
-.page-title {
-  text-align: center;
-  margin-bottom: 4px;
-}
+.page-title { text-align: center; margin-bottom: 4px; }
 .page-title h1 {
   font-family: 'Cinzel Decorative', serif;
   font-size: 1.5rem;
@@ -229,9 +219,7 @@ body {
   height: 1px;
   background: linear-gradient(to right, transparent, var(--border));
 }
-.title-rule::after {
-  background: linear-gradient(to left, transparent, var(--border));
-}
+.title-rule::after { background: linear-gradient(to left, transparent, var(--border)); }
 .title-rule .diamond {
   width: 8px; height: 8px;
   background: var(--border);
@@ -253,7 +241,6 @@ body {
   padding: 3px 8px;
   margin-bottom: 5px;
 }
-
 .section-rule {
   border: none;
   border-top: 1px solid var(--border-light);
@@ -280,7 +267,6 @@ input[type="text"]:focus, textarea:focus {
   border-color: var(--amber);
   background: #fffdf5;
 }
-
 .field-label {
   font-family: 'Cinzel', serif;
   font-size: 0.5rem;
@@ -290,9 +276,7 @@ input[type="text"]:focus, textarea:focus {
   display: block;
   margin-bottom: 2px;
 }
-
 .field-wrap { display: flex; flex-direction: column; }
-
 .write-line {
   border: none;
   border-bottom: 0.5px solid var(--line);
@@ -307,18 +291,6 @@ input[type="text"]:focus, textarea:focus {
   margin-bottom: 7px;
 }
 .write-line:focus { border-bottom-color: var(--amber); }
-
-.write-line-label {
-  font-family: 'Cinzel', serif;
-  font-size: 0.46rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--ink-dim);
-  text-align: center;
-  display: block;
-  margin-top: -6px;
-  margin-bottom: 5px;
-}
 
 /* Stat boxes */
 .stat-box {
@@ -413,6 +385,15 @@ input[type="text"]:focus, textarea:focus {
   font-size: 0.78rem;
   color: var(--ink);
 }
+.posture-group-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.52rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  white-space: nowrap;
+  margin-right: 4px;
+}
 
 /* ═══════════════════════════════════════════
    GRID HELPERS
@@ -453,12 +434,7 @@ input[type="text"]:focus, textarea:focus {
 .primary-card.intelligence::before { background: var(--intel-c); }
 .primary-card.wisdom::before     { background: var(--wisdom-c); }
 .primary-card.social::before     { background: var(--social-c); }
-
-.primary-card-inner {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
+.primary-card-inner { display: flex; align-items: center; gap: 6px; }
 .primary-card-info { flex: 1; }
 .primary-name {
   font-family: 'Cinzel', serif;
@@ -475,10 +451,7 @@ input[type="text"]:focus, textarea:focus {
   color: var(--amber);
   margin-bottom: 3px;
 }
-.primary-rating-box {
-  width: 28px;
-  flex-shrink: 0;
-}
+.primary-rating-box { width: 28px; flex-shrink: 0; }
 .primary-rating-box input {
   text-align: center;
   font-family: 'Cinzel Decorative', serif;
@@ -502,7 +475,6 @@ input[type="text"]:focus, textarea:focus {
   gap: 8px;
   margin-bottom: 4px;
 }
-
 .domain-block { margin-bottom: 5px; }
 .domain-header {
   background: var(--parchment3);
@@ -515,7 +487,6 @@ input[type="text"]:focus, textarea:focus {
   color: var(--ink-dim);
   padding: 2px 4px;
 }
-
 .ability-row {
   display: flex;
   align-items: center;
@@ -524,7 +495,6 @@ input[type="text"]:focus, textarea:focus {
 }
 .ability-row:nth-child(odd)  { background: #fdf4e0; }
 .ability-row:nth-child(even) { background: #f8edce; }
-
 .ability-name {
   flex: 1;
   font-family: 'Crimson Text', serif;
@@ -534,12 +504,6 @@ input[type="text"]:focus, textarea:focus {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.ability-name.knowledge {
-  font-style: italic;
-  color: var(--ink-dim);
-}
-.ability-name.knowledge::before { content: '◆ '; }
-
 .ability-pips { display: flex; gap: 2px; flex-shrink: 0; }
 .ability-pips .pip { width: 9px; height: 9px; }
 
@@ -569,7 +533,6 @@ input[type="text"]:focus, textarea:focus {
 .path-card-header.terra       { background: var(--terra); }
 .path-card-header.vitae       { background: var(--vitae); }
 .path-card-header.obtenebrate { background: var(--obtenebrate); }
-
 .path-name {
   font-family: 'Cinzel', serif;
   font-size: 0.65rem;
@@ -591,10 +554,7 @@ input[type="text"]:focus, textarea:focus {
   color: var(--ink-dim);
   margin-bottom: 3px;
 }
-.path-rating-box {
-  width: 24px;
-  flex-shrink: 0;
-}
+.path-rating-box { width: 24px; flex-shrink: 0; }
 .path-rating-box input {
   text-align: center;
   font-family: 'Cinzel Decorative', serif;
@@ -612,11 +572,7 @@ input[type="text"]:focus, textarea:focus {
 /* ═══════════════════════════════════════════
    LIABILITIES & BOONS
 ═══════════════════════════════════════════ */
-.liab-boon-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
+.liab-boon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .liab-col-header {
   font-family: 'Cinzel', serif;
   font-size: 0.6rem;
@@ -627,7 +583,6 @@ input[type="text"]:focus, textarea:focus {
 }
 .liab-col-header.liab { color: var(--red-accent); }
 .liab-col-header.boon { color: var(--green-accent); }
-
 .liab-row {
   display: flex;
   align-items: center;
@@ -672,7 +627,6 @@ input[type="text"]:focus, textarea:focus {
   outline: none;
 }
 .liab-name-line:focus { border-bottom-color: var(--amber); }
-
 .tracker-row {
   display: flex;
   align-items: center;
@@ -703,10 +657,7 @@ input[type="text"]:focus, textarea:focus {
   font-weight: 700;
   white-space: nowrap;
 }
-.fp-spent-cell {
-  width: 36px;
-  text-align: center;
-}
+.fp-spent-cell { width: 36px; text-align: center; }
 .fp-spent-cell input {
   width: 30px;
   text-align: center;
@@ -772,14 +723,10 @@ input[type="text"]:focus, textarea:focus {
 <!-- ═══ PRINT BAR ═══ -->
 <div class="print-bar">
   <span class="print-bar-title">Rivendawn — Character Record Sheet</span>
-  <span class="print-bar-hint">Your sheet saves automatically. Chrome: Margins → None · Uncheck Headers and footers</span>
+  <span class="print-bar-hint">Your sheet saves automatically · Chrome: Margins → None · Uncheck Headers and footers</span>
   <div class="print-bar-actions">
-    <button class="btn-bar btn-clear" onclick="clearSheet()">
-      ✕ Clear Sheet
-    </button>
-    <button class="btn-bar btn-print" onclick="window.print()">
-      ⬡ Print / Save PDF
-    </button>
+    <button class="btn-bar btn-clear" onclick="clearSheet()">✕ Clear Sheet</button>
+    <button class="btn-bar btn-print" onclick="window.print()">⬡ Print / Save PDF</button>
   </div>
 </div>
 
@@ -792,7 +739,6 @@ input[type="text"]:focus, textarea:focus {
   <span class="corner-tl"></span><span class="corner-tr"></span>
   <span class="corner-bl"></span><span class="corner-br"></span>
   <div class="page-footer-num">— 1 —</div>
-
   <div class="page-inner">
 
   <div class="page-title">
@@ -803,24 +749,20 @@ input[type="text"]:focus, textarea:focus {
 
   <!-- IDENTITY -->
   <div class="section-header">Character Identity</div>
-
   <div class="field-wrap" style="margin-bottom:4px;">
     <label class="field-label">Character Name</label>
-    <input type="text" id="cs-name" placeholder="Enter character name...">
+    <input type="text" id="cs-name">
   </div>
-
   <div class="grid-3" style="margin-bottom:4px;">
     <div class="field-wrap"><label class="field-label">Lineage</label><input type="text" id="cs-lineage"></div>
     <div class="field-wrap"><label class="field-label">Vocation</label><input type="text" id="cs-vocation"></div>
     <div class="field-wrap"><label class="field-label">Calling</label><input type="text" id="cs-calling"></div>
   </div>
-
   <div class="grid-3" style="margin-bottom:4px;">
     <div class="field-wrap"><label class="field-label">Dynamic</label><input type="text" id="cs-dynamic"></div>
     <div class="field-wrap"><label class="field-label">Discipline</label><input type="text" id="cs-discipline"></div>
     <div class="field-wrap"><label class="field-label">Primary Heritage Imprint</label><input type="text" id="cs-heritage"></div>
   </div>
-
   <div class="grid-5" style="margin-bottom:4px;">
     <div class="field-wrap"><label class="field-label">Health Die</label><input type="text" id="cs-health-die"></div>
     <div class="field-wrap"><label class="field-label">Armor Tier (Start)</label><input type="text" id="cs-armor-tier"></div>
@@ -833,7 +775,6 @@ input[type="text"]:focus, textarea:focus {
 
   <!-- PRIMARY RATINGS -->
   <div class="section-header">Primary Ratings &nbsp;·&nbsp; Creation Cap: 4 &nbsp;·&nbsp; Roll 2d8 → Take Highest → ÷2 Round Down</div>
-
   <div class="primary-grid" style="margin-bottom:3px;">
     <div class="primary-card agility">
       <div class="primary-card-inner">
@@ -843,7 +784,7 @@ input[type="text"]:focus, textarea:focus {
           <div class="pip-row" data-max="6" data-group="primary-agi"></div>
           <div class="pip-label">Rating</div>
         </div>
-        <div class="primary-rating-box"><input type="text" id="cs-rat-agility" maxlength="1" placeholder="—"></div>
+        <div class="primary-rating-box"><input type="text" id="cs-rat-agility" maxlength="1"></div>
       </div>
     </div>
     <div class="primary-card strength">
@@ -854,7 +795,7 @@ input[type="text"]:focus, textarea:focus {
           <div class="pip-row" data-max="6" data-group="primary-str"></div>
           <div class="pip-label">Rating</div>
         </div>
-        <div class="primary-rating-box"><input type="text" id="cs-rat-strength" maxlength="1" placeholder="—"></div>
+        <div class="primary-rating-box"><input type="text" id="cs-rat-strength" maxlength="1"></div>
       </div>
     </div>
     <div class="primary-card vitality">
@@ -865,7 +806,7 @@ input[type="text"]:focus, textarea:focus {
           <div class="pip-row" data-max="6" data-group="primary-vit"></div>
           <div class="pip-label">Rating</div>
         </div>
-        <div class="primary-rating-box"><input type="text" id="cs-rat-vitality" maxlength="1" placeholder="—"></div>
+        <div class="primary-rating-box"><input type="text" id="cs-rat-vitality" maxlength="1"></div>
       </div>
     </div>
     <div class="primary-card intelligence">
@@ -876,7 +817,7 @@ input[type="text"]:focus, textarea:focus {
           <div class="pip-row" data-max="6" data-group="primary-int"></div>
           <div class="pip-label">Rating</div>
         </div>
-        <div class="primary-rating-box"><input type="text" id="cs-rat-intelligence" maxlength="1" placeholder="—"></div>
+        <div class="primary-rating-box"><input type="text" id="cs-rat-intelligence" maxlength="1"></div>
       </div>
     </div>
     <div class="primary-card wisdom">
@@ -887,7 +828,7 @@ input[type="text"]:focus, textarea:focus {
           <div class="pip-row" data-max="6" data-group="primary-wis"></div>
           <div class="pip-label">Rating</div>
         </div>
-        <div class="primary-rating-box"><input type="text" id="cs-rat-wisdom" maxlength="1" placeholder="—"></div>
+        <div class="primary-rating-box"><input type="text" id="cs-rat-wisdom" maxlength="1"></div>
       </div>
     </div>
     <div class="primary-card social">
@@ -898,11 +839,10 @@ input[type="text"]:focus, textarea:focus {
           <div class="pip-row" data-max="6" data-group="primary-soc"></div>
           <div class="pip-label">Rating</div>
         </div>
-        <div class="primary-rating-box"><input type="text" id="cs-rat-social" maxlength="1" placeholder="—"></div>
+        <div class="primary-rating-box"><input type="text" id="cs-rat-social" maxlength="1"></div>
       </div>
     </div>
   </div>
-
   <div style="display:grid; grid-template-columns:repeat(6,1fr); gap:2px; margin-bottom:5px;">
     <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.62rem; color:var(--ink-dim);">1 · Minimal</div>
     <div style="text-align:center; font-family:'Crimson Text',serif; font-size:0.62rem; color:var(--ink-dim);">2 · Basic</div>
@@ -916,19 +856,17 @@ input[type="text"]:focus, textarea:focus {
 
   <!-- DEFENSIVE PROFILE -->
   <div class="section-header">Defensive Profile</div>
-
   <div class="formula-strip" style="margin-bottom:4px;">
     <strong>HP:</strong> 24 + (Health Die Roll × 3) &nbsp;&nbsp;
     <strong>AP:</strong> Max HP × (0.Tier) rounded up &nbsp;&nbsp;
     <em style="color:var(--ink-dim);">While AP &gt; 0: damage split 50/50</em>
   </div>
-
   <div class="grid-5" style="margin-bottom:5px;">
-    <div class="stat-box" style="height:38px;"><input type="text" id="cs-max-hp" placeholder="—"><div class="stat-label">Max HP</div></div>
-    <div class="stat-box" style="height:38px;"><input type="text" id="cs-current-hp" placeholder="—"><div class="stat-label">Current HP</div></div>
-    <div class="stat-box" style="height:38px;"><input type="text" id="cs-max-ap" placeholder="—"><div class="stat-label">Max AP</div></div>
-    <div class="stat-box" style="height:38px;"><input type="text" id="cs-current-ap" placeholder="—"><div class="stat-label">Current AP</div></div>
-    <div class="stat-box" style="height:38px;"><input type="text" id="cs-armor-tier-calc" placeholder="—"><div class="stat-label">Armor Tier Used</div></div>
+    <div class="stat-box" style="height:38px;"><input type="text" id="cs-max-hp"><div class="stat-label">Max HP</div></div>
+    <div class="stat-box" style="height:38px;"><input type="text" id="cs-current-hp"><div class="stat-label">Current HP</div></div>
+    <div class="stat-box" style="height:38px;"><input type="text" id="cs-max-ap"><div class="stat-label">Max AP</div></div>
+    <div class="stat-box" style="height:38px;"><input type="text" id="cs-current-ap"><div class="stat-label">Current AP</div></div>
+    <div class="stat-box" style="height:38px;"><input type="text" id="cs-armor-tier-calc"><div class="stat-label">Armor Tier Used</div></div>
   </div>
 
   <hr class="section-rule">
@@ -941,7 +879,7 @@ input[type="text"]:focus, textarea:focus {
   </div>
   <div style="display:flex; align-items:center; gap:8px; margin-bottom:5px;">
     <span style="font-family:'Cinzel',serif; font-size:0.52rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--ink-dim);">Your Initiative Rating Value:</span>
-    <div class="stat-box" style="width:36px; height:26px;"><input type="text" id="cs-initiative-rating" placeholder="—" style="font-size:0.9rem;"></div>
+    <div class="stat-box" style="width:36px; height:26px;"><input type="text" id="cs-initiative-rating" style="font-size:0.9rem;"></div>
     <span style="font-family:'Crimson Text',serif; font-size:0.8rem; color:var(--ink-dim); font-style:italic;">+ d20 each combat round</span>
   </div>
 
@@ -950,30 +888,36 @@ input[type="text"]:focus, textarea:focus {
   <!-- COMBAT CONFIGURATION -->
   <div class="section-header">Combat Configuration</div>
 
-  <div style="display:flex; align-items:center; gap:4px; margin-bottom:5px; flex-wrap:wrap;">
-    <span style="font-family:'Cinzel',serif; font-size:0.54rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--ink-dim); white-space:nowrap;">Offensive Category:</span>
-    <label class="check-option"><div class="check-box" id="cb-forged" onclick="toggleCheck(this, 'offensive-category')"></div><span class="check-label">Forged Combatant (6 CP)</span></label>
-    <label class="check-option"><div class="check-box" id="cb-hybrid" onclick="toggleCheck(this, 'offensive-category')"></div><span class="check-label">Resonant Hybrid (5 CP)</span></label>
-    <label class="check-option"><div class="check-box" id="cb-pure" onclick="toggleCheck(this, 'offensive-category')"></div><span class="check-label">True Resonant Caster (4 CP)</span></label>
-    <label class="check-option"><div class="check-box" id="cb-cadence" onclick="toggleCheck(this, 'offensive-category')"></div><span class="check-label">Cadence Discipline</span></label>
-    <label class="check-option"><div class="check-box" id="cb-stands-alone" onclick="toggleCheck(this, 'offensive-category')"></div><span class="check-label">Stands Alone</span></label>
+  <div style="display:flex; align-items:center; gap:4px; margin-bottom:6px; flex-wrap:wrap;">
+    <span class="posture-group-label">Offensive Category:</span>
+    <label class="check-option"><div class="check-box" id="cb-forged" onclick="toggleCheck(this,'offensive-category')"></div><span class="check-label">Forged Combatant (6 CP)</span></label>
+    <label class="check-option"><div class="check-box" id="cb-hybrid" onclick="toggleCheck(this,'offensive-category')"></div><span class="check-label">Resonant Hybrid (5 CP)</span></label>
+    <label class="check-option"><div class="check-box" id="cb-pure" onclick="toggleCheck(this,'offensive-category')"></div><span class="check-label">True Resonant Caster (4 CP)</span></label>
+    <label class="check-option"><div class="check-box" id="cb-cadence" onclick="toggleCheck(this,'offensive-category')"></div><span class="check-label">Cadence Discipline</span></label>
+    <label class="check-option"><div class="check-box" id="cb-stands-alone" onclick="toggleCheck(this,'offensive-category')"></div><span class="check-label">Stands Alone</span></label>
   </div>
 
   <div class="grid-5 mb-4">
-    <div class="stat-box" style="height:36px;"><input type="text" id="cs-or" placeholder="—"><div class="stat-label">Offensive Rating (OR)</div></div>
-    <div class="stat-box" style="height:36px;"><input type="text" id="cs-bdr" placeholder="—"><div class="stat-label">Base Defensive Rating (BDR)</div></div>
-    <div class="stat-box" style="height:36px;"><input type="text" id="cs-tdr" placeholder="—"><div class="stat-label">Total Defensive Rating (TDR)</div></div>
-    <div class="stat-box" style="height:36px;"><input type="text" id="cs-combat-pts" placeholder="—"><div class="stat-label">Combat Points</div></div>
-    <div class="stat-box" style="height:36px;"><input type="text" id="cs-wellspring-die" placeholder="—"><div class="stat-label">Wellspring Die</div></div>
+    <div class="stat-box" style="height:36px;"><input type="text" id="cs-or"><div class="stat-label">Offensive Rating (OR)</div></div>
+    <div class="stat-box" style="height:36px;"><input type="text" id="cs-bdr"><div class="stat-label">Base Defensive Rating (BDR)</div></div>
+    <div class="stat-box" style="height:36px;"><input type="text" id="cs-tdr"><div class="stat-label">Total Defensive Rating (TDR)</div></div>
+    <div class="stat-box" style="height:36px;"><input type="text" id="cs-combat-pts"><div class="stat-label">Combat Points</div></div>
+    <div class="stat-box" style="height:36px;"><input type="text" id="cs-wellspring-die"><div class="stat-label">Wellspring Die</div></div>
+  </div>
+
+  <div style="display:flex; align-items:center; gap:4px; margin-bottom:4px; flex-wrap:wrap;">
+    <span class="posture-group-label">Melee Defense Posture:</span>
+    <label class="check-option"><div class="check-box" id="cb-dodge" onclick="toggleCheck(this,'melee-posture')"></div><span class="check-label">Dodge</span></label>
+    <label class="check-option"><div class="check-box" id="cb-parry" onclick="toggleCheck(this,'melee-posture')"></div><span class="check-label">Parry</span></label>
+    <label class="check-option"><div class="check-box" id="cb-riposte" onclick="toggleCheck(this,'melee-posture')"></div><span class="check-label">Riposte</span></label>
   </div>
 
   <div style="display:flex; align-items:center; gap:4px; margin-bottom:5px; flex-wrap:wrap;">
-    <span style="font-family:'Cinzel',serif; font-size:0.54rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--ink-dim); white-space:nowrap;">Defensive Posture:</span>
-    <label class="check-option"><div class="check-box" id="cb-dodge" onclick="toggleCheck(this, 'defensive-posture')"></div><span class="check-label">Dodge</span></label>
-    <label class="check-option"><div class="check-box" id="cb-parry" onclick="toggleCheck(this, 'defensive-posture')"></div><span class="check-label">Parry</span></label>
-    <label class="check-option"><div class="check-box" id="cb-riposte" onclick="toggleCheck(this, 'defensive-posture')"></div><span class="check-label">Riposte</span></label>
-    <label class="check-option"><div class="check-box" id="cb-absorption" onclick="toggleCheck(this, 'defensive-posture')"></div><span class="check-label">Absorption Shield</span></label>
-    <label class="check-option"><div class="check-box" id="cb-damage-shield" onclick="toggleCheck(this, 'defensive-posture')"></div><span class="check-label">Damage Shield</span></label>
+    <span class="posture-group-label">Resonant Caster Posture:</span>
+    <label class="check-option"><div class="check-box" id="cb-absorption" onclick="toggleCheck(this,'caster-posture')"></div><span class="check-label">Absorption Shield (Aqua/Terra)</span></label>
+    <label class="check-option"><div class="check-box" id="cb-damage-shield" onclick="toggleCheck(this,'caster-posture')"></div><span class="check-label">Damage Shield (Ignis)</span></label>
+    <label class="check-option"><div class="check-box" id="cb-caster-dodge" onclick="toggleCheck(this,'caster-posture')"></div><span class="check-label">Dodge (Aeris)</span></label>
+    <label class="check-option"><div class="check-box" id="cb-regen" onclick="toggleCheck(this,'caster-posture')"></div><span class="check-label">Regeneration (Vitae)</span></label>
   </div>
 
   <hr class="section-rule">
@@ -981,186 +925,33 @@ input[type="text"]:focus, textarea:focus {
   <!-- GIFTS & SURGES -->
   <div class="section-header">Calling Gifts &amp; Surges</div>
   <div class="grid-4" style="margin-bottom:4px;">
-    <div class="field-wrap"><label class="field-label">Offensive Gift</label><input type="text" id="cs-offensive-gift" placeholder=""></div>
-    <div class="field-wrap"><label class="field-label">Defensive Gift</label><input type="text" id="cs-defensive-gift" placeholder=""></div>
-    <div class="field-wrap"><label class="field-label">Offensive Surge</label><input type="text" id="cs-offensive-surge" placeholder=""></div>
-    <div class="field-wrap"><label class="field-label">Defensive Surge</label><input type="text" id="cs-defensive-surge" placeholder=""></div>
+    <div class="field-wrap"><label class="field-label">Defensive Gift</label><input type="text" id="cs-defensive-gift"></div>
+    <div class="field-wrap"><label class="field-label">Defensive Surge</label><input type="text" id="cs-defensive-surge"></div>
+    <div class="field-wrap"><label class="field-label">Offensive Gift</label><input type="text" id="cs-offensive-gift"></div>
+    <div class="field-wrap"><label class="field-label">Offensive Surge</label><input type="text" id="cs-offensive-surge"></div>
   </div>
-
-  <hr class="section-rule">
-
-  <!-- CHARACTER NOTES -->
-  <div class="section-header">Character Notes</div>
-  <input class="write-line" type="text" id="cs-notes-1" placeholder="Backstory note, motivation, or character concept...">
-  <input class="write-line" type="text" id="cs-notes-2">
-  <input class="write-line" type="text" id="cs-notes-3">
-  <input class="write-line" type="text" id="cs-notes-4">
-  <input class="write-line" type="text" id="cs-notes-5">
 
   </div><!-- /page-inner -->
 </div><!-- /page1 -->
 
 
 <!-- ══════════════════════════════════════════════════════════════
-     PAGE II — Abilities, Knowledges & Heritage Imprints
+     PAGE II — Resonance, Liabilities & Resources
 ══════════════════════════════════════════════════════════════ -->
 <div class="sheet-page" id="page2">
   <span class="corner-tl"></span><span class="corner-tr"></span>
   <span class="corner-bl"></span><span class="corner-br"></span>
   <div class="page-footer-num">— 2 —</div>
-
-  <div class="page-inner">
-
-  <div class="page-title" style="margin-bottom:2px;">
-    <h1 style="font-size:1.1rem;">Abilities, Knowledges &amp; Heritage Imprints</h1>
-    <div class="subtitle">Page II of III</div>
-  </div>
-  <div class="title-rule"><span class="diamond"></span></div>
-
-  <div class="section-header">Abilities &amp; Knowledges &nbsp;·&nbsp; Pool: 22 pts (Forged: 25 pts) &nbsp;·&nbsp; Cap: 4 &nbsp;·&nbsp; ◆ = Knowledge</div>
-  <div style="font-family:'Crimson Text',serif; font-style:italic; font-size:0.72rem; color:var(--ink-dim); margin-bottom:5px;">
-    Spend pool, then apply Vocation (+1 × 2) and Lineage (+2 × 2) bonuses. Final totals cannot exceed 4.
-    &nbsp;|&nbsp; Lineage bonuses: <input type="text" id="cs-lineage-bonus-note" style="width:120px; font-size:0.72rem; display:inline; border:none; border-bottom:0.5px solid var(--line); background:transparent;">
-    &nbsp;Vocation bonuses: <input type="text" id="cs-vocation-bonus-note" style="width:120px; font-size:0.72rem; display:inline; border:none; border-bottom:0.5px solid var(--line); background:transparent;">
-  </div>
-
-  <div class="abilities-grid">
-
-    <!-- LEFT COLUMN -->
-    <div>
-      <div class="domain-block">
-        <div class="domain-header">Physicality &amp; Environment</div>
-        <div class="ability-row"><span class="ability-name">Acrobatics</span><div class="ability-pips pip-row" data-max="6" data-group="ab-acrobatics"></div></div>
-        <div class="ability-row"><span class="ability-name">Athletics</span><div class="ability-pips pip-row" data-max="6" data-group="ab-athletics"></div></div>
-        <div class="ability-row"><span class="ability-name">Climb</span><div class="ability-pips pip-row" data-max="6" data-group="ab-climb"></div></div>
-        <div class="ability-row"><span class="ability-name">Endurance</span><div class="ability-pips pip-row" data-max="6" data-group="ab-endurance"></div></div>
-        <div class="ability-row"><span class="ability-name">Stealth</span><div class="ability-pips pip-row" data-max="6" data-group="ab-stealth"></div></div>
-        <div class="ability-row"><span class="ability-name">Swim</span><div class="ability-pips pip-row" data-max="6" data-group="ab-swim"></div></div>
-        <div class="ability-row"><span class="ability-name">Survival</span><div class="ability-pips pip-row" data-max="6" data-group="ab-survival"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Nature</span><div class="ability-pips pip-row" data-max="6" data-group="ab-nature"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Environmental Science</span><div class="ability-pips pip-row" data-max="6" data-group="ab-enviro"></div></div>
-      </div>
-
-      <div class="domain-block">
-        <div class="domain-header">Social &amp; Perceptual</div>
-        <div class="ability-row"><span class="ability-name">Command</span><div class="ability-pips pip-row" data-max="6" data-group="ab-command"></div></div>
-        <div class="ability-row"><span class="ability-name">Deception</span><div class="ability-pips pip-row" data-max="6" data-group="ab-deception"></div></div>
-        <div class="ability-row"><span class="ability-name">Diplomacy</span><div class="ability-pips pip-row" data-max="6" data-group="ab-diplomacy"></div></div>
-        <div class="ability-row"><span class="ability-name">Intimidation</span><div class="ability-pips pip-row" data-max="6" data-group="ab-intimidation"></div></div>
-        <div class="ability-row"><span class="ability-name">Performance</span><div class="ability-pips pip-row" data-max="6" data-group="ab-performance"></div></div>
-        <div class="ability-row"><span class="ability-name">Persuasion</span><div class="ability-pips pip-row" data-max="6" data-group="ab-persuasion"></div></div>
-        <div class="ability-row"><span class="ability-name">Perception</span><div class="ability-pips pip-row" data-max="6" data-group="ab-perception"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Insight</span><div class="ability-pips pip-row" data-max="6" data-group="ab-insight"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Psychology</span><div class="ability-pips pip-row" data-max="6" data-group="ab-psychology"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Political Theory</span><div class="ability-pips pip-row" data-max="6" data-group="ab-political-theory"></div></div>
-      </div>
-
-      <div class="domain-block">
-        <div class="domain-header">Tactical &amp; Martial</div>
-        <div class="ability-row"><span class="ability-name">Combat Focus</span><div class="ability-pips pip-row" data-max="6" data-group="ab-combatfocus"></div></div>
-        <div class="ability-row"><span class="ability-name">Reaction Timing</span><div class="ability-pips pip-row" data-max="6" data-group="ab-reaction"></div></div>
-        <div class="ability-row"><span class="ability-name">Tactics</span><div class="ability-pips pip-row" data-max="6" data-group="ab-tactics"></div></div>
-        <div class="ability-row"><span class="ability-name">Weapon Mastery</span><div class="ability-pips pip-row" data-max="6" data-group="ab-weapon"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Navigation</span><div class="ability-pips pip-row" data-max="6" data-group="ab-navigation"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Military History</span><div class="ability-pips pip-row" data-max="6" data-group="ab-milhistory"></div></div>
-      </div>
-    </div>
-
-    <!-- RIGHT COLUMN -->
-    <div>
-      <div class="domain-block">
-        <div class="domain-header">Technical</div>
-        <div class="ability-row"><span class="ability-name">Combat Medicine</span><div class="ability-pips pip-row" data-max="6" data-group="ab-combatmed"></div></div>
-        <div class="ability-row"><span class="ability-name">Disable Device</span><div class="ability-pips pip-row" data-max="6" data-group="ab-disable"></div></div>
-        <div class="ability-row"><span class="ability-name">Sleight of Hand</span><div class="ability-pips pip-row" data-max="6" data-group="ab-sleight"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Engineering</span><div class="ability-pips pip-row" data-max="6" data-group="ab-engineering"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Medicine</span><div class="ability-pips pip-row" data-max="6" data-group="ab-medicine"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Investigation</span><div class="ability-pips pip-row" data-max="6" data-group="ab-investigation"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Inscribing</span><div class="ability-pips pip-row" data-max="6" data-group="ab-inscribing"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Provisioning</span><div class="ability-pips pip-row" data-max="6" data-group="ab-provisioning"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Craft</span><div class="ability-pips pip-row" data-max="6" data-group="ab-craft"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Blacksmithing</span><div class="ability-pips pip-row" data-max="6" data-group="ab-blacksmith"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Alchemy</span><div class="ability-pips pip-row" data-max="6" data-group="ab-alchemy"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Leatherworking</span><div class="ability-pips pip-row" data-max="6" data-group="ab-leather"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Tailoring</span><div class="ability-pips pip-row" data-max="6" data-group="ab-tailoring"></div></div>
-      </div>
-
-      <div class="domain-block">
-        <div class="domain-header">Metaphysical &amp; Scholarly</div>
-        <div class="ability-row"><span class="ability-name">Resonant Infusion</span><div class="ability-pips pip-row" data-max="6" data-group="ab-resinfusion"></div></div>
-        <div class="ability-row"><span class="ability-name">Soothsaying</span><div class="ability-pips pip-row" data-max="6" data-group="ab-soothsaying"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">History</span><div class="ability-pips pip-row" data-max="6" data-group="ab-history"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Linguistics</span><div class="ability-pips pip-row" data-max="6" data-group="ab-linguistics"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Occultism</span><div class="ability-pips pip-row" data-max="6" data-group="ab-occultism"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Religion</span><div class="ability-pips pip-row" data-max="6" data-group="ab-religion"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Resonance Theory</span><div class="ability-pips pip-row" data-max="6" data-group="ab-restheory"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Paths (Resonant)</span><div class="ability-pips pip-row" data-max="6" data-group="ab-paths"></div></div>
-        <div class="ability-row"><span class="ability-name knowledge">Rivendawn Lore</span><div class="ability-pips pip-row" data-max="6" data-group="ab-rdlore"></div></div>
-      </div>
-    </div>
-
-  </div><!-- /abilities-grid -->
-
-  <hr class="section-rule">
-
-  <!-- HERITAGE IMPRINTS -->
-  <div class="section-header">Heritage Imprints &nbsp;·&nbsp; Set by Vocation</div>
-  <div class="grid-5" style="margin-bottom:4px;">
-    <div class="field-wrap"><label class="field-label">Primary (Locked @ 4)</label><input type="text" id="cs-heritage-primary" style="height:24px;"></div>
-    <div class="field-wrap"><label class="field-label">Secondary (3)</label><input type="text" id="cs-heritage-secondary" style="height:24px;"></div>
-    <div class="field-wrap"><label class="field-label">Third (2)</label><input type="text" id="cs-heritage-third" style="height:24px;"></div>
-    <div class="field-wrap"><label class="field-label">Fourth (1)</label><input type="text" id="cs-heritage-fourth" style="height:24px;"></div>
-    <div class="field-wrap"><label class="field-label">Fifth (1)</label><input type="text" id="cs-heritage-fifth" style="height:24px;"></div>
-  </div>
-
-  <hr class="section-rule">
-
-  <!-- BACKGROUND -->
-  <div class="section-header">Background &amp; Personality</div>
-  <div class="grid-2" style="margin-bottom:5px;">
-    <div>
-      <input class="write-line" type="text" id="cs-motivation" placeholder="Motivation / Drive">
-      <input class="write-line" type="text" id="cs-fear" placeholder="Greatest Fear">
-      <input class="write-line" type="text" id="cs-bond" placeholder="Bond or Obligation">
-    </div>
-    <div>
-      <input class="write-line" type="text" id="cs-trait" placeholder="Personality Trait">
-      <input class="write-line" type="text" id="cs-dissonance" placeholder="Dissonance Trigger">
-      <input class="write-line" type="text" id="cs-backstory" placeholder="Backstory Note">
-    </div>
-  </div>
-
-  <div style="font-family:'Cinzel',serif; font-size:0.5rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:3px;">Equipment &amp; Inventory</div>
-  <input class="write-line" type="text" id="cs-inv-1">
-  <input class="write-line" type="text" id="cs-inv-2">
-  <input class="write-line" type="text" id="cs-inv-3">
-  <input class="write-line" type="text" id="cs-inv-4">
-  <input class="write-line" type="text" id="cs-inv-5">
-  <input class="write-line" type="text" id="cs-inv-6">
-
-  </div><!-- /page-inner -->
-</div><!-- /page2 -->
-
-
-<!-- ══════════════════════════════════════════════════════════════
-     PAGE III — Resonance, Liabilities & Resources
-══════════════════════════════════════════════════════════════ -->
-<div class="sheet-page" id="page3">
-  <span class="corner-tl"></span><span class="corner-tr"></span>
-  <span class="corner-bl"></span><span class="corner-br"></span>
-  <div class="page-footer-num">— 3 —</div>
-
   <div class="page-inner">
 
   <div class="page-title">
     <h1 style="font-size:1.2rem;">Resonance, Liabilities &amp; Resources</h1>
-    <div class="subtitle">Page III of III</div>
+    <div class="subtitle">Page II of III</div>
   </div>
   <div class="title-rule"><span class="diamond"></span></div>
 
   <!-- RESONANCE -->
   <div class="section-header">Resonance — Path Rating &amp; Wellspring</div>
-
   <div style="display:grid; grid-template-columns:1fr auto; gap:8px; margin-bottom:6px; align-items:start;">
     <div>
       <div class="formula-strip">
@@ -1172,10 +963,10 @@ input[type="text"]:focus, textarea:focus {
       </div>
     </div>
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:4px;">
-      <div class="stat-box" style="height:44px; width:64px;"><input type="text" id="cs-wellspring-die-p3" placeholder="—"><div class="stat-label">Wellspring Die</div></div>
-      <div class="stat-box" style="height:44px; width:64px;"><input type="text" id="cs-wellspring-base" placeholder="—"><div class="stat-label">Base Wellspring</div></div>
-      <div class="stat-box" style="height:44px; width:64px;"><input type="text" id="cs-wellspring-max" placeholder="—"><div class="stat-label">Max Wellspring</div></div>
-      <div class="stat-box" style="height:44px; width:64px;"><input type="text" id="cs-wellspring-current" placeholder="—"><div class="stat-label">Current</div></div>
+      <div class="stat-box" style="height:44px; width:64px;"><input type="text" id="cs-wellspring-die-p2"><div class="stat-label">Wellspring Die</div></div>
+      <div class="stat-box" style="height:44px; width:64px;"><input type="text" id="cs-wellspring-base"><div class="stat-label">Base Wellspring</div></div>
+      <div class="stat-box" style="height:44px; width:64px;"><input type="text" id="cs-wellspring-max"><div class="stat-label">Max Wellspring</div></div>
+      <div class="stat-box" style="height:44px; width:64px;"><input type="text" id="cs-wellspring-current"><div class="stat-label">Current</div></div>
     </div>
   </div>
 
@@ -1185,42 +976,42 @@ input[type="text"]:focus, textarea:focus {
       <div class="path-card-header aeris"><span class="path-name">Aeris</span><span style="font-family:'Crimson Text',serif; font-size:0.65rem; font-style:italic; color:rgba(255,255,255,0.85);">Displacement</span></div>
       <div class="path-card-body">
         <div class="path-card-meta"><div class="path-attr">Gov. Attr: Agility</div><div class="pip-row" data-max="6" data-group="path-aeris"></div><div class="pip-label">Path Rating</div></div>
-        <div class="path-rating-box"><input type="text" id="cs-path-aeris" maxlength="1" placeholder="—"></div>
+        <div class="path-rating-box"><input type="text" id="cs-path-aeris" maxlength="1"></div>
       </div>
     </div>
     <div class="path-card">
       <div class="path-card-header aqua"><span class="path-name">Aqua</span><span style="font-family:'Crimson Text',serif; font-size:0.65rem; font-style:italic; color:rgba(255,255,255,0.85);">Pressure &amp; Absorption</span></div>
       <div class="path-card-body">
         <div class="path-card-meta"><div class="path-attr">Gov. Attr: Vitality</div><div class="pip-row" data-max="6" data-group="path-aqua"></div><div class="pip-label">Path Rating</div></div>
-        <div class="path-rating-box"><input type="text" id="cs-path-aqua" maxlength="1" placeholder="—"></div>
+        <div class="path-rating-box"><input type="text" id="cs-path-aqua" maxlength="1"></div>
       </div>
     </div>
     <div class="path-card">
       <div class="path-card-header ignis"><span class="path-name">Ignis</span><span style="font-family:'Crimson Text',serif; font-size:0.65rem; font-style:italic; color:rgba(255,255,255,0.85);">Combustive Transformation</span></div>
       <div class="path-card-body">
         <div class="path-card-meta"><div class="path-attr">Gov. Attr: Intelligence</div><div class="pip-row" data-max="6" data-group="path-ignis"></div><div class="pip-label">Path Rating</div></div>
-        <div class="path-rating-box"><input type="text" id="cs-path-ignis" maxlength="1" placeholder="—"></div>
+        <div class="path-rating-box"><input type="text" id="cs-path-ignis" maxlength="1"></div>
       </div>
     </div>
     <div class="path-card">
       <div class="path-card-header terra"><span class="path-name">Terra</span><span style="font-family:'Crimson Text',serif; font-size:0.65rem; font-style:italic; color:rgba(255,255,255,0.85);">Stability &amp; Mass</span></div>
       <div class="path-card-body">
         <div class="path-card-meta"><div class="path-attr">Gov. Attr: Strength</div><div class="pip-row" data-max="6" data-group="path-terra"></div><div class="pip-label">Path Rating</div></div>
-        <div class="path-rating-box"><input type="text" id="cs-path-terra" maxlength="1" placeholder="—"></div>
+        <div class="path-rating-box"><input type="text" id="cs-path-terra" maxlength="1"></div>
       </div>
     </div>
     <div class="path-card">
       <div class="path-card-header vitae"><span class="path-name">Vitae</span><span style="font-family:'Crimson Text',serif; font-size:0.65rem; font-style:italic; color:rgba(255,255,255,0.85);">Adaptive Life</span></div>
       <div class="path-card-body">
         <div class="path-card-meta"><div class="path-attr">Gov. Attr: Wisdom</div><div class="pip-row" data-max="6" data-group="path-vitae"></div><div class="pip-label">Path Rating</div></div>
-        <div class="path-rating-box"><input type="text" id="cs-path-vitae" maxlength="1" placeholder="—"></div>
+        <div class="path-rating-box"><input type="text" id="cs-path-vitae" maxlength="1"></div>
       </div>
     </div>
     <div class="path-card">
       <div class="path-card-header obtenebrate"><span class="path-name">Obtenebrate</span><span style="font-family:'Crimson Text',serif; font-size:0.65rem; font-style:italic; color:rgba(255,255,255,0.85);">Perceptual Distortion</span></div>
       <div class="path-card-body">
         <div class="path-card-meta"><div class="path-attr">Gov. Attr: Agility</div><div class="pip-row" data-max="6" data-group="path-obtene"></div><div class="pip-label">Path Rating</div></div>
-        <div class="path-rating-box"><input type="text" id="cs-path-obtene" maxlength="1" placeholder="—"></div>
+        <div class="path-rating-box"><input type="text" id="cs-path-obtene" maxlength="1"></div>
       </div>
     </div>
   </div>
@@ -1232,7 +1023,6 @@ input[type="text"]:focus, textarea:focus {
   <div style="font-family:'Crimson Text',serif; font-style:italic; font-size:0.72rem; color:var(--ink-dim); margin-bottom:5px;">
     Liabilities are permanent. Severity points → spend on Boons and/or convert remainder to Freebie Points 1:1.
   </div>
-
   <div class="liab-boon-grid">
     <div>
       <div class="liab-col-header liab">Liabilities</div>
@@ -1257,7 +1047,7 @@ input[type="text"]:focus, textarea:focus {
       <div class="liab-row"><span class="sev-label">Cost:</span><div class="sev-box"><input type="text" id="cs-boon-cost-6" maxlength="1"></div><input class="liab-name-line" type="text" id="cs-boon-name-6" placeholder="Boon name..."></div>
       <div class="tracker-row">
         <span class="tracker-label">Pts to Freebie Points:</span>
-        <div class="stat-box" style="width:30px; height:20px; display:inline-flex;"><input type="text" id="cs-liability-fp-carry" placeholder="0" style="font-size:0.75rem;"></div>
+        <div class="stat-box" style="width:30px; height:20px; display:inline-flex;"><input type="text" id="cs-liability-fp-carry" style="font-size:0.75rem;"></div>
       </div>
     </div>
   </div>
@@ -1266,53 +1056,191 @@ input[type="text"]:focus, textarea:focus {
 
   <!-- FREEBIE POINTS + RESOURCES -->
   <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:6px;">
-
     <div>
       <div class="section-header">Freebie Points &nbsp;·&nbsp; Base: 15 pts &nbsp;·&nbsp; Forged: +5 (total 20)</div>
       <table class="fp-table">
-        <tr><td>Primary Rating</td><td class="fp-cost">8 FP / +1</td><td class="fp-spent-cell"><input type="text" id="cs-fp-ratings" placeholder="0"></td></tr>
-        <tr><td>Ability / Knowledge</td><td class="fp-cost">2 FP / +1</td><td class="fp-spent-cell"><input type="text" id="cs-fp-abilities" placeholder="0"></td></tr>
-        <tr><td>Path Point</td><td class="fp-cost">10 FP / +1</td><td class="fp-spent-cell"><input type="text" id="cs-fp-paths" placeholder="0"></td></tr>
-        <tr><td>Resources / Finances</td><td class="fp-cost">Varies</td><td class="fp-spent-cell"><input type="text" id="cs-fp-resources" placeholder="0"></td></tr>
-        <tr><td>From Liabilities</td><td class="fp-cost">+X carry</td><td class="fp-spent-cell"><input type="text" id="cs-fp-from-liabilities" placeholder="0"></td></tr>
+        <tr><td>Ability / Knowledge</td><td class="fp-cost">2 FP / +1</td><td class="fp-spent-cell"><input type="text" id="cs-fp-abilities"></td></tr>
+        <tr><td>From Liabilities</td><td class="fp-cost">+X carry</td><td class="fp-spent-cell"><input type="text" id="cs-fp-from-liabilities"></td></tr>
+        <tr><td>Path Point</td><td class="fp-cost">10 FP / +1</td><td class="fp-spent-cell"><input type="text" id="cs-fp-paths"></td></tr>
+        <tr><td>Primary Rating</td><td class="fp-cost">8 FP / +1</td><td class="fp-spent-cell"><input type="text" id="cs-fp-ratings"></td></tr>
+        <tr><td>Resources / Finances</td><td class="fp-cost">Varies</td><td class="fp-spent-cell"><input type="text" id="cs-fp-resources"></td></tr>
       </table>
       <div style="display:flex; align-items:center; gap:6px; margin-top:5px;">
         <span style="font-family:'Crimson Text',serif; font-size:0.76rem; color:var(--ink-dim);">Total Pool:</span>
-        <div class="stat-box" style="width:36px; height:24px;"><input type="text" id="cs-fp-total" placeholder="—" style="font-size:0.8rem;"></div>
+        <div class="stat-box" style="width:36px; height:24px;"><input type="text" id="cs-fp-total" style="font-size:0.8rem;"></div>
         <span style="font-family:'Crimson Text',serif; font-size:0.76rem; color:var(--ink-dim);">FP Remaining:</span>
-        <div class="stat-box" style="width:36px; height:24px;"><input type="text" id="cs-fp-remaining" placeholder="—" style="font-size:0.8rem;"></div>
+        <div class="stat-box" style="width:36px; height:24px;"><input type="text" id="cs-fp-remaining" style="font-size:0.8rem;"></div>
       </div>
     </div>
-
     <div>
       <div class="section-header">Resources &amp; Finances &nbsp;·&nbsp; FP only &nbsp;·&nbsp; Cap: Rank 3</div>
       <div style="font-family:'Crimson Text',serif; font-style:italic; font-size:0.7rem; color:var(--ink-dim); margin-bottom:4px;">Financial Rank — purchased with Freebie Points exclusively.</div>
       <div class="grid-4 mb-6">
-        <div class="stat-box" style="height:36px;"><input type="text" id="cs-wealth-rank" placeholder="0" style="font-size:0.85rem;"><div class="stat-label">Wealth Rank</div></div>
-        <div class="stat-box" style="height:36px;"><input type="text" id="cs-wealth-marks" placeholder="0 MK" style="font-size:0.72rem;"><div class="stat-label">Starting Marks</div></div>
-        <div class="stat-box" style="height:36px;"><input type="text" id="cs-wealth-fp-cost" placeholder="FP" style="font-size:0.72rem;"><div class="stat-label">FP Cost</div></div>
-        <div class="stat-box" style="height:36px;"><input type="text" id="cs-current-marks" placeholder="—"><div class="stat-label">Current Marks</div></div>
+        <div class="stat-box" style="height:36px;"><input type="text" id="cs-wealth-rank" style="font-size:0.85rem;"><div class="stat-label">Wealth Rank</div></div>
+        <div class="stat-box" style="height:36px;"><input type="text" id="cs-wealth-marks" style="font-size:0.72rem;"><div class="stat-label">Starting Marks</div></div>
+        <div class="stat-box" style="height:36px;"><input type="text" id="cs-wealth-fp-cost" style="font-size:0.72rem;"><div class="stat-label">FP Cost</div></div>
+        <div class="stat-box" style="height:36px;"><input type="text" id="cs-current-marks"><div class="stat-label">Current Marks</div></div>
       </div>
       <div style="font-family:'Cinzel',serif; font-size:0.5rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:3px;">Social Resources</div>
-      <input class="write-line" type="text" id="cs-social-resource-1" placeholder="">
-      <input class="write-line" type="text" id="cs-social-resource-2" placeholder="">
-      <input class="write-line" type="text" id="cs-social-resource-3" placeholder="">
-      <input class="write-line" type="text" id="cs-social-resource-4" placeholder="">
-      <input class="write-line" type="text" id="cs-social-resource-5" placeholder="">
+      <input class="write-line" type="text" id="cs-social-resource-1">
+      <input class="write-line" type="text" id="cs-social-resource-2">
+      <input class="write-line" type="text" id="cs-social-resource-3">
+      <input class="write-line" type="text" id="cs-social-resource-4">
+      <input class="write-line" type="text" id="cs-social-resource-5">
+    </div>
+  </div>
+
+  </div><!-- /page-inner -->
+</div><!-- /page2 -->
+
+
+<!-- ══════════════════════════════════════════════════════════════
+     PAGE III — Abilities, Knowledges, Heritage & Character Notes
+══════════════════════════════════════════════════════════════ -->
+<div class="sheet-page" id="page3">
+  <span class="corner-tl"></span><span class="corner-tr"></span>
+  <span class="corner-bl"></span><span class="corner-br"></span>
+  <div class="page-footer-num">— 3 —</div>
+  <div class="page-inner">
+
+  <div class="page-title" style="margin-bottom:2px;">
+    <h1 style="font-size:1.1rem;">Abilities, Knowledges &amp; Heritage Imprints</h1>
+    <div class="subtitle">Page III of III</div>
+  </div>
+  <div class="title-rule"><span class="diamond"></span></div>
+
+  <div class="section-header">Abilities &amp; Knowledges &nbsp;·&nbsp; Pool: 22 pts (Forged: 25 pts) &nbsp;·&nbsp; Cap: 4 &nbsp;·&nbsp; All abilities start at 1</div>
+  <div style="font-family:'Crimson Text',serif; font-style:italic; font-size:0.72rem; color:var(--ink-dim); margin-bottom:5px;">
+    Spend pool, then apply Vocation (+1 × 2) and Lineage (+2 × 2) bonuses. Final totals cannot exceed 4.
+    &nbsp;|&nbsp; Lineage bonuses: <input type="text" id="cs-lineage-bonus-note" style="width:120px; font-size:0.72rem; display:inline; border:none; border-bottom:0.5px solid var(--line); background:transparent;">
+    &nbsp;Vocation bonuses: <input type="text" id="cs-vocation-bonus-note" style="width:120px; font-size:0.72rem; display:inline; border:none; border-bottom:0.5px solid var(--line); background:transparent;">
+  </div>
+
+  <div class="abilities-grid">
+
+    <!-- LEFT COLUMN -->
+    <div>
+      <div class="domain-block">
+        <div class="domain-header">Physicality &amp; Environment</div>
+        <div class="ability-row"><span class="ability-name">Acrobatics</span><div class="ability-pips pip-row" data-max="6" data-group="ab-acrobatics" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Athletics</span><div class="ability-pips pip-row" data-max="6" data-group="ab-athletics" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Climb</span><div class="ability-pips pip-row" data-max="6" data-group="ab-climb" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Endurance</span><div class="ability-pips pip-row" data-max="6" data-group="ab-endurance" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Environmental Science</span><div class="ability-pips pip-row" data-max="6" data-group="ab-enviro" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Nature</span><div class="ability-pips pip-row" data-max="6" data-group="ab-nature" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Stealth</span><div class="ability-pips pip-row" data-max="6" data-group="ab-stealth" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Survival</span><div class="ability-pips pip-row" data-max="6" data-group="ab-survival" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Swim</span><div class="ability-pips pip-row" data-max="6" data-group="ab-swim" data-min="1"></div></div>
+      </div>
+
+      <div class="domain-block">
+        <div class="domain-header">Social &amp; Perceptual</div>
+        <div class="ability-row"><span class="ability-name">Command</span><div class="ability-pips pip-row" data-max="6" data-group="ab-command" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Deception</span><div class="ability-pips pip-row" data-max="6" data-group="ab-deception" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Diplomacy</span><div class="ability-pips pip-row" data-max="6" data-group="ab-diplomacy" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Insight</span><div class="ability-pips pip-row" data-max="6" data-group="ab-insight" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Intimidation</span><div class="ability-pips pip-row" data-max="6" data-group="ab-intimidation" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Perception</span><div class="ability-pips pip-row" data-max="6" data-group="ab-perception" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Performance</span><div class="ability-pips pip-row" data-max="6" data-group="ab-performance" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Persuasion</span><div class="ability-pips pip-row" data-max="6" data-group="ab-persuasion" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Political Theory</span><div class="ability-pips pip-row" data-max="6" data-group="ab-political-theory" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Psychology</span><div class="ability-pips pip-row" data-max="6" data-group="ab-psychology" data-min="1"></div></div>
+      </div>
+
+      <div class="domain-block">
+        <div class="domain-header">Tactical &amp; Martial</div>
+        <div class="ability-row"><span class="ability-name">Combat Focus</span><div class="ability-pips pip-row" data-max="6" data-group="ab-combatfocus" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Military History</span><div class="ability-pips pip-row" data-max="6" data-group="ab-milhistory" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Navigation</span><div class="ability-pips pip-row" data-max="6" data-group="ab-navigation" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Reaction Timing</span><div class="ability-pips pip-row" data-max="6" data-group="ab-reaction" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Tactics</span><div class="ability-pips pip-row" data-max="6" data-group="ab-tactics" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Weapon Mastery</span><div class="ability-pips pip-row" data-max="6" data-group="ab-weapon" data-min="1"></div></div>
+      </div>
     </div>
 
+    <!-- RIGHT COLUMN -->
+    <div>
+      <div class="domain-block">
+        <div class="domain-header">Technical</div>
+        <div class="ability-row"><span class="ability-name">Alchemy</span><div class="ability-pips pip-row" data-max="6" data-group="ab-alchemy" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Blacksmithing</span><div class="ability-pips pip-row" data-max="6" data-group="ab-blacksmith" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Combat Medicine</span><div class="ability-pips pip-row" data-max="6" data-group="ab-combatmed" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Craft</span><div class="ability-pips pip-row" data-max="6" data-group="ab-craft" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Disable Device</span><div class="ability-pips pip-row" data-max="6" data-group="ab-disable" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Engineering</span><div class="ability-pips pip-row" data-max="6" data-group="ab-engineering" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Inscribing</span><div class="ability-pips pip-row" data-max="6" data-group="ab-inscribing" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Investigation</span><div class="ability-pips pip-row" data-max="6" data-group="ab-investigation" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Leatherworking</span><div class="ability-pips pip-row" data-max="6" data-group="ab-leather" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Medicine</span><div class="ability-pips pip-row" data-max="6" data-group="ab-medicine" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Provisioning</span><div class="ability-pips pip-row" data-max="6" data-group="ab-provisioning" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Sleight of Hand</span><div class="ability-pips pip-row" data-max="6" data-group="ab-sleight" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Tailoring</span><div class="ability-pips pip-row" data-max="6" data-group="ab-tailoring" data-min="1"></div></div>
+      </div>
+
+      <div class="domain-block">
+        <div class="domain-header">Metaphysical &amp; Scholarly</div>
+        <div class="ability-row"><span class="ability-name">History</span><div class="ability-pips pip-row" data-max="6" data-group="ab-history" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Linguistics</span><div class="ability-pips pip-row" data-max="6" data-group="ab-linguistics" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Occultism</span><div class="ability-pips pip-row" data-max="6" data-group="ab-occultism" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Paths (Resonant)</span><div class="ability-pips pip-row" data-max="6" data-group="ab-paths" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Religion</span><div class="ability-pips pip-row" data-max="6" data-group="ab-religion" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Resonance Theory</span><div class="ability-pips pip-row" data-max="6" data-group="ab-restheory" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Resonant Infusion</span><div class="ability-pips pip-row" data-max="6" data-group="ab-resinfusion" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Rivendawn Lore</span><div class="ability-pips pip-row" data-max="6" data-group="ab-rdlore" data-min="1"></div></div>
+        <div class="ability-row"><span class="ability-name">Soothsaying</span><div class="ability-pips pip-row" data-max="6" data-group="ab-soothsaying" data-min="1"></div></div>
+      </div>
+    </div>
+
+  </div><!-- /abilities-grid -->
+
+  <hr class="section-rule">
+
+  <!-- HERITAGE IMPRINTS -->
+  <div class="section-header">Heritage Imprints &nbsp;·&nbsp; Set by Vocation</div>
+  <div class="grid-5" style="margin-bottom:4px;">
+    <div class="field-wrap"><label class="field-label">Primary (Locked @ 4)</label><input type="text" id="cs-heritage-primary" style="height:24px;"></div>
+    <div class="field-wrap"><label class="field-label">Secondary (3)</label><input type="text" id="cs-heritage-secondary" style="height:24px;"></div>
+    <div class="field-wrap"><label class="field-label">Third (2)</label><input type="text" id="cs-heritage-third" style="height:24px;"></div>
+    <div class="field-wrap"><label class="field-label">Fourth (1)</label><input type="text" id="cs-heritage-fourth" style="height:24px;"></div>
+    <div class="field-wrap"><label class="field-label">Fifth (1)</label><input type="text" id="cs-heritage-fifth" style="height:24px;"></div>
   </div>
 
   <hr class="section-rule">
 
-  <!-- SESSION NOTES -->
-  <div class="section-header">Session Notes</div>
-  <input class="write-line" type="text" id="cs-session-1">
-  <input class="write-line" type="text" id="cs-session-2">
-  <input class="write-line" type="text" id="cs-session-3">
-  <input class="write-line" type="text" id="cs-session-4">
-  <input class="write-line" type="text" id="cs-session-5">
-  <input class="write-line" type="text" id="cs-session-6">
+  <!-- BACKGROUND -->
+  <div class="section-header">Background &amp; Personality</div>
+  <div class="grid-2" style="margin-bottom:5px;">
+    <div>
+      <input class="write-line" type="text" id="cs-bond" placeholder="Bond or Obligation">
+      <input class="write-line" type="text" id="cs-fear" placeholder="Greatest Fear">
+      <input class="write-line" type="text" id="cs-motivation" placeholder="Motivation / Drive">
+    </div>
+    <div>
+      <input class="write-line" type="text" id="cs-backstory" placeholder="Backstory Note">
+      <input class="write-line" type="text" id="cs-dissonance" placeholder="Dissonance Trigger">
+      <input class="write-line" type="text" id="cs-trait" placeholder="Personality Trait">
+    </div>
+  </div>
+
+  <div style="font-family:'Cinzel',serif; font-size:0.5rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:3px;">Equipment &amp; Inventory</div>
+  <input class="write-line" type="text" id="cs-inv-1">
+  <input class="write-line" type="text" id="cs-inv-2">
+  <input class="write-line" type="text" id="cs-inv-3">
+  <input class="write-line" type="text" id="cs-inv-4">
+  <input class="write-line" type="text" id="cs-inv-5">
+  <input class="write-line" type="text" id="cs-inv-6">
+
+  <hr class="section-rule">
+
+  <!-- CHARACTER NOTES -->
+  <div class="section-header">Character Notes</div>
+  <input class="write-line" type="text" id="cs-notes-1">
+  <input class="write-line" type="text" id="cs-notes-2">
+  <input class="write-line" type="text" id="cs-notes-3">
+  <input class="write-line" type="text" id="cs-notes-4">
+  <input class="write-line" type="text" id="cs-notes-5">
+  <input class="write-line" type="text" id="cs-notes-6">
+  <input class="write-line" type="text" id="cs-notes-7">
 
   </div><!-- /page-inner -->
 </div><!-- /page3 -->
@@ -1324,23 +1252,31 @@ input[type="text"]:focus, textarea:focus {
    PIP INITIALIZATION
 ════════════════════════════════════════════════════ */
 document.querySelectorAll('.pip-row[data-max]').forEach(row => {
-  const max = parseInt(row.dataset.max);
+  const max  = parseInt(row.dataset.max);
+  const min  = parseInt(row.dataset.min) || 0;
   const group = row.dataset.group;
   for (let i = 1; i <= max; i++) {
     const pip = document.createElement('span');
     pip.className = 'pip';
-    pip.dataset.val = i;
+    pip.dataset.val   = i;
     pip.dataset.group = group;
-    pip.addEventListener('click', () => handlePipClick(group, i));
+    pip.addEventListener('click', () => handlePipClick(group, i, min));
     row.appendChild(pip);
+  }
+  // Pre-fill minimum pips
+  if (min > 0 && !(pipState[group] > 0)) {
+    pipState[group] = min;
+    syncPips(group);
   }
 });
 
 const pipState = {};
 
-function handlePipClick(group, val) {
+function handlePipClick(group, val, min) {
+  min = min || 0;
   const current = pipState[group] || 0;
-  pipState[group] = (current === val) ? 0 : val;
+  // Clicking the currently-set pip toggles back to min (not 0)
+  pipState[group] = (current === val) ? min : Math.max(val, min);
   syncPips(group);
   // Sync rating input if present in same card
   const card = document.querySelector(`[data-group="${group}"]`)?.closest('.primary-card, .path-card');
@@ -1378,7 +1314,7 @@ document.querySelectorAll('.primary-rating-box input, .path-rating-box input').f
 ════════════════════════════════════════════════════ */
 function toggleCheck(el, group) {
   if (group) {
-    document.querySelectorAll(`[onclick*="${group}"]`).forEach(other => {
+    document.querySelectorAll(`[onclick*="'${group}'"]`).forEach(other => {
       other.classList.remove('checked');
     });
   }
@@ -1393,27 +1329,18 @@ const STORAGE_KEY = 'rivendawn_sheet_v2';
 
 function collectState() {
   const state = { fields: {}, pips: {}, checks: [] };
-
-  // Text inputs
   document.querySelectorAll('input[type="text"][id]').forEach(el => {
     state.fields[el.id] = el.value;
   });
-
-  // Pip states
   Object.assign(state.pips, pipState);
-
-  // Checked checkboxes
   document.querySelectorAll('.check-box.checked[id]').forEach(el => {
     state.checks.push(el.id);
   });
-
   return state;
 }
 
 function saveToStorage() {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(collectState()));
-  } catch(e) { /* storage full or unavailable — fail silently */ }
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(collectState())); } catch(e) {}
 }
 
 function loadFromStorage() {
@@ -1421,38 +1348,29 @@ function loadFromStorage() {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return;
     const state = JSON.parse(raw);
-
-    // Restore text fields
     if (state.fields) {
       Object.entries(state.fields).forEach(([id, val]) => {
         const el = document.getElementById(id);
         if (el) el.value = val;
       });
     }
-
-    // Restore pip states
     if (state.pips) {
       Object.entries(state.pips).forEach(([group, val]) => {
         pipState[group] = val;
         syncPips(group);
       });
     }
-
-    // Restore checkboxes
     if (state.checks) {
       state.checks.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.add('checked');
       });
     }
-  } catch(e) { /* corrupted storage — ignore */ }
+  } catch(e) {}
 }
 
-// Save on any text input change
 document.addEventListener('input', (e) => {
-  if (e.target.tagName === 'INPUT' && e.target.type === 'text') {
-    saveToStorage();
-  }
+  if (e.target.tagName === 'INPUT' && e.target.type === 'text') saveToStorage();
 });
 
 /* ════════════════════════════════════════════════════
@@ -1462,8 +1380,11 @@ function clearSheet() {
   if (!confirm('Clear all fields on this sheet? This cannot be undone.')) return;
   document.querySelectorAll('input[type="text"]').forEach(el => el.value = '');
   document.querySelectorAll('.check-box').forEach(el => el.classList.remove('checked'));
-  Object.keys(pipState).forEach(group => {
-    pipState[group] = 0;
+  // Reset pips — ability pips return to min=1, others to 0
+  document.querySelectorAll('.pip-row[data-group]').forEach(row => {
+    const group = row.dataset.group;
+    const min   = parseInt(row.dataset.min) || 0;
+    pipState[group] = min;
     syncPips(group);
   });
   try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
@@ -1475,13 +1396,12 @@ function clearSheet() {
 const PAGE_H_PX = 11 * 96;
 
 function scalePages() {
-  const inners = [...document.querySelectorAll('.page-inner')];
-  inners.forEach(inner => {
+  document.querySelectorAll('.page-inner').forEach(inner => {
     inner.style.transform = '';
     inner.style.transformOrigin = '';
     inner.style.width = '';
   });
-  inners.forEach(inner => {
+  document.querySelectorAll('.page-inner').forEach(inner => {
     const h = inner.scrollHeight;
     const scale = PAGE_H_PX / h;
     if (Math.abs(scale - 1) > 0.005) {
@@ -1501,6 +1421,14 @@ function resetPages() {
 }
 
 window.addEventListener('load', () => {
+  // Initialize ability pips at min=1 before loading storage
+  document.querySelectorAll('.pip-row[data-min="1"][data-group]').forEach(row => {
+    const group = row.dataset.group;
+    if (!pipState[group]) {
+      pipState[group] = 1;
+      syncPips(group);
+    }
+  });
   loadFromStorage();
   scalePages();
 });
