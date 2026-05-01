@@ -1304,12 +1304,15 @@ document.querySelectorAll('.primary-rating-box input, .path-rating-box input').f
    CHECKBOX TOGGLE (radio-style per group)
 ════════════════════════════════════════════════════ */
 function toggleCheck(el, group) {
+  const alreadyChecked = el.classList.contains('checked');
   if (group) {
     document.querySelectorAll(`[onclick*="'${group}'"]`).forEach(other => {
       other.classList.remove('checked');
     });
   }
-  el.classList.toggle('checked');
+  if (!alreadyChecked) {
+    el.classList.add('checked');
+  }
   saveToStorage();
 }
 
