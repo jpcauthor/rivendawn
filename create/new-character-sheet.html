@@ -288,7 +288,7 @@ input[type="text"]:focus, textarea:focus {
   color: var(--ink);
   outline: none;
   display: block;
-  margin-bottom: 7px;
+  margin-bottom: 5px;
 }
 .write-line:focus { border-bottom-color: var(--amber); }
 
@@ -1239,8 +1239,6 @@ input[type="text"]:focus, textarea:focus {
   <input class="write-line" type="text" id="cs-notes-3">
   <input class="write-line" type="text" id="cs-notes-4">
   <input class="write-line" type="text" id="cs-notes-5">
-  <input class="write-line" type="text" id="cs-notes-6">
-  <input class="write-line" type="text" id="cs-notes-7">
 
   </div><!-- /page-inner -->
 </div><!-- /page3 -->
@@ -1249,11 +1247,13 @@ input[type="text"]:focus, textarea:focus {
 
 <script>
 /* ════════════════════════════════════════════════════
-   PIP INITIALIZATION
+   PIP STATE & INITIALIZATION
 ════════════════════════════════════════════════════ */
+const pipState = {};
+
 document.querySelectorAll('.pip-row[data-max]').forEach(row => {
-  const max  = parseInt(row.dataset.max);
-  const min  = parseInt(row.dataset.min) || 0;
+  const max   = parseInt(row.dataset.max);
+  const min   = parseInt(row.dataset.min) || 0;
   const group = row.dataset.group;
   for (let i = 1; i <= max; i++) {
     const pip = document.createElement('span');
@@ -1269,8 +1269,6 @@ document.querySelectorAll('.pip-row[data-max]').forEach(row => {
     syncPips(group);
   }
 });
-
-const pipState = {};
 
 function handlePipClick(group, val, min) {
   min = min || 0;
